@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompTIA A+ Core 2 (V15) Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007AC3; /* CompTIA Blue */
+            --accent-color: #D9232E; /* CompTIA Red */
+            --light-grey: #f8f9fa;
+            --dark-grey: #343a40;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #e9f2f9 0%, #f4f7f9 100%);
+            color: var(--dark-grey);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top */
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        
+        header {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background-color: var(--accent-color); 
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(217, 35, 46, 0.4);
+        }
+        
+        .logo span {
+            transform: translateY(-2px);
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+        
+        header p {
+            margin: 5px 0 0;
+            color: #6c757d;
+            font-weight: 300;
+        }
+
+        main {
+            padding: 20px 40px;
+            text-align: left;
+        }
+        
+        h2 {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .details-list {
+            line-height: 1.8;
+        }
+        
+        .details-list dt {
+            font-weight: 500;
+            color: var(--dark-grey);
+            float: left;
+            width: 200px;
+            clear: left;
+        }
+        
+        .details-list dd {
+            margin-left: 220px;
+            color: #555;
+            padding-bottom: 10px;
+        }
+
+        .objective-card {
+            background-color: var(--light-grey);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .objective-card h3 {
+            margin: 0 0 10px;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .objective-card h3 span {
+            color: #6c757d;
+            font-weight: 400;
+        }
+        
+        .objective-card ul {
+            list-style-position: inside;
+            padding-left: 0;
+            margin: 0;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .skills-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skills-list li {
+            padding: 8px 0 8px 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        .skills-list li::before {
+            content: '✓';
+            color: #28a745;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 8px;
+        }
+        
+        footer {
+            padding: 20px;
+            font-size: 0.9em;
+            color: #aaa;
+            background-color: #f8f9fa;
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 600px) {
+            main { padding: 15px 25px; }
+            .details-list dt { width: 100%; float: none; font-weight: bold; }
+            .details-list dd { margin-left: 0; padding-left: 10px; border-left: 3px solid var(--border-color);}
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span>A+</span>
+            </div>
+            <h1>A+ Core 2 V15 (New Version)</h1>
+            <p>Exam Details & Objectives</p>
+        </header>
+
+        <main>
+            <section id="details">
+                <h2>Exam details</h2>
+                <dl class="details-list">
+                    <dt>Exam version:</dt>
+                    <dd>V15; Core 1 and Core 2 exams must be taken from the same version, no mixing allowed</dd>
+                    <dt>Exam series code:</dt>
+                    <dd>220-1202 (Core 2)</dd>
+                    <dt>Launch date:</dt>
+                    <dd>March 25, 2025</dd>
+                    <dt>Number of questions:</dt>
+                    <dd>Maximum of 90 per exam, including multiple-choice, drag-and-drop, and performance-based questions</dd>
+                    <dt>Length of test:</dt>
+                    <dd>90 minutes</dd>
+                    <dt>Passing score:</dt>
+                    <dd>700 (on a scale of 900)</dd>
+                    <dt>Recommended experience:</dt>
+                    <dd>12 months of hands-on experience in an IT support specialist job role</dd>
+                    <dt>Languages:</dt>
+                    <dd>English</dd>
+                    <dt>Retirement:</dt>
+                    <dd>Usually three years after launch (estimated 2028)</dd>
+                    <dt>DoD 8140 approved roles:</dt>
+                    <dd>Technical support specialist, system administrator, and cyber defense infrastructure support specialist</dd>
+                </dl>
+            </section>
+
+            <section id="objectives">
+                <h2>A+ Core 2 (V15) exam objectives summary</h2>
+                <div class="objective-card">
+                    <h3>Operating systems <span>(28%)</span></h3>
+                    <ul>
+                        <li>OS installation: working with Windows, macOS, Linux, and mobile operating systems.</li>
+                        <li>Windows tools: managing systems with Task Manager, Command Prompt, and Disk Management.</li>
+                        <li>File systems: handling file systems, updates, and OS upgrades.</li>
+                    </ul>
+                </div>
+                <div class="objective-card">
+                    <h3>Security <span>(28%)</span></h3>
+                    <ul>
+                        <li>Security measures: using encryption, access controls, and wireless security protocols.</li>
+                        <li>Malware prevention: detecting, removing, and preventing malware threats.</li>
+                    </ul>
+                </div>
+                <div class="objective-card">
+                    <h3>Software troubleshooting <span>(23%)</span></h3>
+                    <ul>
+                        <li>OS issues: diagnosing and resolving problems with operating systems and applications.</li>
+                        <li>Mobile troubleshooting: addressing connectivity, app, and performance issues.</li>
+                        <li>Security concerns: fixing unauthorized access and malware issues.</li>
+                    </ul>
+                </div>
+                <div class="objective-card">
+                    <h3>Operational procedures <span>(21%)</span></h3>
+                    <ul>
+                        <li>Documentation: using best practices for system changes and documentation.</li>
+                        <li>Safety and communication: following safety protocols and communicating effectively.</li>
+                        <li>Backup and recovery: setting up workstation backups and recovery processes.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="skills">
+                <h2>Skills learned</h2>
+                <ul class="skills-list">
+                    <li>Install, configure, and manage operating systems, including Windows, macOS, and Linux.</li>
+                    <li>Apply security measures to protect systems and mitigate threats.</li>
+                    <li>Troubleshoot software and operating system issues.</li>
+                    <li>Follow operational procedures for safety, documentation, and change management.</li>
+                    <li>Implement backup and recovery methods to ensure data integrity.</li>
+                </ul>
+            </section>
+        </main>
+        
+        <footer>
+            Created by: BLaborte
+        </footer>
+    </div>
+</body>
+</html>
