@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshooting Tickets | A+ Core 2 Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #f4f7f9;
+            --primary-accent: #0072C6;
+            --secondary-accent: #D9232E;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --card-bg: #ffffff;
+            --border-color: #e9ecef;
+            --success-color: #155724;
+            --error-color: #721c24;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #game-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            border-top: 5px solid var(--primary-accent);
+        }
+
+        h1 {
+            color: var(--primary-accent);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        #ticket-problem {
+            background-color: var(--bg-main);
+            border-left: 5px solid var(--primary-accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        #ticket-problem strong {
+            color: var(--secondary-accent);
+            font-weight: 700;
+        }
+
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            font-size: 1em;
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            background-color: var(--card-bg);
+            color: var(--primary-accent);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .option-btn:hover {
+            background-color: #e9f5ff;
+            border-color: var(--primary-accent);
+        }
+        
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        #feedback {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-top: 20px;
+            height: 30px;
+        }
+
+        .correct { color: var(--success-color); }
+        .incorrect { color: var(--error-color); }
+
+        #score-display, #timer-display {
+            font-size: 1.2em;
+            margin-top: 15px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        #timer-display {
+            font-weight: 700;
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: var(--primary-accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <h1>Troubleshooting Tickets</h1>
+        <div id="ticket-problem">Loading ticket...</div>
+        <div id="options-container"></div>
+        <div id="feedback"></div>
+        <div id="score-display">Score: 0</div>
+        <div id="timer-display">Time Left: 15</div>
+    </div>
+    <a href="index.html" class="home-link">&larr; Back to Main Menu</a>
+
+    <script>
+        const tickets = [
+            {
+                problem: "A user reports their Windows desktop takes 15 minutes to appear after they log in. The issue seems to be related to their network profile.",
+                options: {
+                    a: "Slow profile load",
+                    b: "Incorrect boot order",
+                    c: "Faulty RAM"
+                },
+                answer: "a"
+            },
+            {
+                problem: "A user's computer displays 'Missing operating system' on boot. You notice a USB drive is plugged in.",
+                options: {
+                    a: "Run 'sfc /scannow'",
+                    b: "Modify the BIOS boot order",
+                    c: "Reinstall Windows"
+                },
+                answer: "b"
+            },
+            {
+                problem: "A computer on the manufacturing floor was identified as part of a botnet. What should be your absolute FIRST step?",
+                options: {
+                    a: "Run an anti-virus scan",
+                    b: "Disconnect the network cable",
+                    c: "Educate the end-user"
+                },
+                answer: "b"
+            },
+            {
+                problem: "A user cannot access any HTTPS websites, getting a certificate error on all of them. HTTP sites work fine. What is a likely client-side cause?",
+                options: {
+                    a: "Incorrect IP address",
+                    b: "Browser cache is full",
+                    c: "System date and time is wrong"
+                },
+                answer: "c"
+            },
+            {
+                problem: "An administrator needs to see which Group Policies are being applied to a specific workstation. Which command-line tool should they use?",
+                options: {
+                    a: "gpupdate /force",
+                    b: "netstat",
+                    c: "gpresult /r"
+                },
+                answer: "c"
+            },
+            {
+                problem: "A user complains that after a driver update, Windows shows a Blue Screen of Death before the login screen appears. What feature can revert this change?",
+                options: {
+                    a: "System Restore",
+                    b: "Disk Cleanup",
+                    c: "Windows Reset"
+                },
+                answer: "a"
+            },
+             {
+                problem: "A Linux administrator needs to change both the user and group ownership of a file named 'report.log' to 'jdoe' and 'sales' respectively.",
+                options: {
+                    a: "chmod jdoe:sales report.log",
+                    b: "chown jdoe:sales report.log",
+                    c: "mv report.log jdoe/sales"
+                },
+                answer: "b"
+            }
+        ];
+
+        let currentTicketIndex = 0;
+        let score = 0;
+        let timeLeft = 15;
+        let timerInterval;
+
+        const problemEl = document.getElementById('ticket-problem');
+        const optionsContainerEl = document.getElementById('options-container');
+        const feedbackEl = document.getElementById('feedback');
+        const scoreDisplayEl = document.getElementById('score-display');
+        const timerDisplayEl = document.getElementById('timer-display');
+
+        function loadTicket() {
+            // Reset state
+            feedbackEl.textContent = '';
+            feedbackEl.className = '';
+            optionsContainerEl.innerHTML = '';
+            timeLeft = 15;
+            timerDisplayEl.textContent = `Time Left: ${timeLeft}`;
+
+            if (currentTicketIndex >= tickets.length) {
+                endGame();
+                return;
+            }
+
+            const currentTicket = tickets[currentTicketIndex];
+            problemEl.innerHTML = `<strong>User Complaint:</strong> ${currentTicket.problem}`;
+
+            for (const key in currentTicket.options) {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = currentTicket.options[key];
+                button.dataset.answer = key;
+                button.addEventListener('click', selectAnswer);
+                optionsContainerEl.appendChild(button);
+            }
+
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplayEl.textContent = `Time Left: ${timeLeft}`;
+                if (timeLeft < 0) {
+                    feedbackEl.textContent = 'Time is up! Moving to next.';
+                    feedbackEl.className = 'incorrect';
+                    clearInterval(timerInterval);
+                    document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+                    setTimeout(nextTicket, 2000);
+                }
+            }, 1000);
+        }
+
+        function selectAnswer(e) {
+            clearInterval(timerInterval);
+            const selected = e.target.dataset.answer;
+            const correct = tickets[currentTicketIndex].answer;
+
+            if (selected === correct) {
+                score++;
+                feedbackEl.textContent = 'Correct!';
+                feedbackEl.className = 'correct';
+            } else {
+                feedbackEl.textContent = 'Incorrect!';
+                feedbackEl.className = 'incorrect';
+            }
+            scoreDisplayEl.textContent = `Score: ${score}`;
+            
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.disabled = true;
+                if(btn.dataset.answer === correct) {
+                    btn.style.borderColor = 'var(--success-color)';
+                    btn.style.backgroundColor = '#d4edda';
+                } else if (btn.dataset.answer === selected) {
+                    btn.style.borderColor = 'var(--error-color)';
+                    btn.style.backgroundColor = '#f8d7da';
+                }
+            });
+
+            setTimeout(nextTicket, 2000);
+        }
+
+        function nextTicket() {
+            currentTicketIndex++;
+            loadTicket();
+        }
+
+        function endGame() {
+            clearInterval(timerInterval);
+            problemEl.innerHTML = `<strong>Simulation Complete!</strong>`;
+            optionsContainerEl.innerHTML = `<h2>Your final score is ${score} out of ${tickets.length}.</h2>`;
+            feedbackEl.textContent = '';
+            timerDisplayEl.style.display = 'none';
+        }
+
+        // Start the game by shuffling tickets
+        tickets.sort(() => 0.5 - Math.random());
+        loadTicket();
+    </script>
+</body>
+</html>

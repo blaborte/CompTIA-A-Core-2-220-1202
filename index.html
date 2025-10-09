@@ -31,8 +31,8 @@
 
     body {
         font-family: "Poppins", sans-serif;
-        background-color: var(--bg-main); /* CHANGED to light background */
-        color: var(--text-main); /* CHANGED to dark text */
+        background-color: var(--bg-main);
+        color: var(--text-main);
         line-height: 1.6;
         display: flex;
         justify-content: center;
@@ -77,24 +77,23 @@
     .logo-inner {
         font-size: 2em;
         font-weight: 700;
-        color: var(--text-light); /* Kept white for contrast on blue */
+        color: var(--text-light);
         background-color: var(--primary-accent);
         padding: 5px 15px;
         border-radius: 8px;
         letter-spacing: 2px;
     }
     
-    /* NEW: Disclaimer Banner Style */
     .disclaimer-banner {
         background-color: var(--secondary-accent); 
-        color: var(--text-light); /* Kept white for contrast on red */
+        color: var(--text-light);
         padding: 12px 25px;
         text-align: center;
         font-weight: 500;
         font-size: 1.1em;
         margin-bottom: 30px; 
         border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(217, 35, 46, 0.3); /* Adjusted shadow for light background */
+        box-shadow: 0 4px 10px rgba(217, 35, 46, 0.3);
         border: 1px solid var(--secondary-accent);
     }
 
@@ -103,27 +102,31 @@
         text-align: center;
         margin-bottom: 40px;
         padding: 20px;
-        background-color: var(--card-bg); /* CHANGED to white */
+        background-color: var(--card-bg);
         border-radius: 8px;
         border: 1px solid var(--border-color);
     }
     
     .hero-text {
         font-size: 1.2em;
-        color: var(--text-main); /* CHANGED to dark text */
+        color: var(--text-main);
         margin: 5px 0;
     }
     .hero-text strong {
         color: var(--primary-accent);
     }
 
-    /* EXAM CARDS */
-    .exam-selection-section h2 {
+    /* SELECTION SECTION STYLES */
+    .selection-section h2 {
         text-align: center;
         color: var(--primary-accent);
         margin-bottom: 25px;
         font-size: 1.8em;
         font-weight: 500;
+    }
+
+    .selection-section {
+        margin-bottom: 50px;
     }
 
     .card-grid {
@@ -135,8 +138,8 @@
     .exam-card {
         display: flex;
         flex-direction: column;
-        background-color: var(--card-bg); /* CHANGED to white */
-        color: var(--text-main); /* CHANGED to dark text */
+        background-color: var(--card-bg);
+        color: var(--text-main);
         text-decoration: none;
         padding: 25px;
         border-radius: 10px;
@@ -216,7 +219,7 @@
     }
     
     .trust-section h3 {
-        color: var(--text-main); /* CHANGED to dark text */
+        color: var(--text-main);
         margin-bottom: 15px;
         font-weight: 500;
         font-size: 1.5em;
@@ -232,13 +235,13 @@
     }
     
     .trust-points li {
-        background-color: var(--card-bg); /* CHANGED to white */
+        background-color: var(--card-bg);
         padding: 10px 20px;
         border-radius: 6px;
         font-weight: 500;
         border-left: 3px solid var(--primary-accent);
-        color: var(--text-main); /* CHANGED to dark text */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Added subtle shadow */
+        color: var(--text-main);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
     
     .credits-section p {
@@ -248,7 +251,7 @@
     }
     
     .credits-section strong {
-        color: var(--text-main); /* CHANGED to dark text */
+        color: var(--text-main);
     }
 
     /* FOOTER */
@@ -300,10 +303,25 @@
             <p class="hero-text">Select a module below to begin your practice drills.</p>
         </section>
 
-        <section class="exam-selection-section">
+        <section class="selection-section">
+            <h2>INTERACTIVE GAMES & SIMULATIONS</h2>
+            <div class="card-grid">
+                <a href="game-troubleshoot.html" class="exam-card pbq-card">
+                    <h3>TROUBLESHOOTING TICKETS</h3>
+                    <p>A fast-paced game where you're presented with user support tickets. Choose the correct first step or tool to solve the problem before time runs out!</p>
+                    <div class="card-footer">LAUNCH SIMULATION <span>&rarr;</span></div>
+                </a>
+                <a href="game-cli.html" class="exam-card">
+                    <h3>COMMAND-LINE CHALLENGE</h3>
+                    <p>Test your recall of essential Windows commands. Read the objective and type the correct command and switches into the terminal before the timer hits zero!</p>
+                    <div class="card-footer">OPEN TERMINAL <span>&rarr;</span></div>
+                </a>
+            </div>
+        </section>
+        
+        <section class="selection-section">
             <h2>PRACTICE MODULE DEPLOYMENT</h2>
             <div class="card-grid">
-                
                 <a href="quiz-a.html" class="exam-card">
                     <h3>PRACTICE TEST A</h3>
                     <p>The first set of questions to test your foundational knowledge across all exam domains. **(10 Questions)**</p>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command-Line Challenge | A+ Core 2 Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #f4f7f9;
+            --primary-accent: #0072C6;
+            --secondary-accent: #D9232E;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --card-bg: #ffffff;
+            --border-color: #e9ecef;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --terminal-bg: #212529;
+            --terminal-text: #f8f9fa;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #game-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px;
+            padding: 30px;
+            border-top: 5px solid var(--primary-accent);
+        }
+
+        h1 {
+            color: var(--primary-accent);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        #task-prompt {
+            background-color: var(--bg-main);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            text-align: center;
+            border-left: 5px solid var(--primary-accent);
+        }
+
+        .terminal {
+            background-color: var(--terminal-bg);
+            color: var(--terminal-text);
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            text-align: left;
+        }
+
+        .prompt-user {
+            color: var(--success-color);
+        }
+
+        #command-input {
+            background: transparent;
+            border: none;
+            color: var(--terminal-text);
+            font-family: inherit;
+            font-size: 1em;
+            width: 70%;
+        }
+
+        #command-input:focus {
+            outline: none;
+        }
+        
+        #feedback {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-top: 20px;
+            height: 30px;
+        }
+        
+        .correct { color: var(--success-color); }
+        .incorrect { color: var(--error-color); }
+        
+        #score-display, #timer-display {
+            font-size: 1.2em;
+            margin-top: 15px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: var(--primary-accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <h1>Command-Line Challenge</h1>
+        <div id="task-prompt">Loading challenge...</div>
+        
+        <div class="terminal">
+            <label for="command-input" class="prompt-user">C:\Users\Admin&gt;</label>
+            <input type="text" id="command-input" autocomplete="off" spellcheck="false">
+        </div>
+
+        <div id="feedback"></div>
+        <div id="score-display">Score: 0</div>
+        <div id="timer-display">Time Left: 20</div>
+    </div>
+    <a href="index.html" class="home-link">&larr; Back to Main Menu</a>
+
+    <script>
+        const challenges = [
+            { task: "Display the IP configuration for all network adapters on a Windows machine.", answer: "ipconfig /all" },
+            { task: "Test connectivity to the google.com server by sending four echo requests.", answer: "ping google.com" },
+            { task: "Force an immediate update of all Group Policy settings on a client computer.", answer: "gpupdate /force" },
+            { task: "Scan all protected system files to check their integrity and repair them.", answer: "sfc /scannow" },
+            { task: "Check the 'C:' drive for file system errors and attempt to fix them.", answer: "chkdsk /f" },
+            { task: "Display the route that network packets take to reach the host 'professormesser.com'.", answer: "tracert professormesser.com" },
+            { task: "Display all active network connections and listening ports.", answer: "netstat -a" },
+            { task: "Map the network share '\\\\SERVER\\Data' to the 'G:' drive.", answer: "net use g: \\\\server\\data" }
+        ];
+
+        let currentChallengeIndex = 0;
+        let score = 0;
+        let timeLeft = 20;
+        let timerInterval;
+
+        const taskEl = document.getElementById('task-prompt');
+        const inputEl = document.getElementById('command-input');
+        const feedbackEl = document.getElementById('feedback');
+        const scoreDisplayEl = document.getElementById('score-display');
+        const timerDisplayEl = document.getElementById('timer-display');
+        
+        function loadChallenge() {
+            if (currentChallengeIndex >= challenges.length) {
+                endGame();
+                return;
+            }
+            
+            feedbackEl.textContent = '';
+            inputEl.value = '';
+            inputEl.disabled = false;
+            timeLeft = 20;
+            timerDisplayEl.textContent = `Time Left: ${timeLeft}`;
+            
+            taskEl.textContent = challenges[currentChallengeIndex].task;
+            inputEl.focus();
+
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplayEl.textContent = `Time Left: ${timeLeft}`;
+                if (timeLeft < 0) {
+                    handleAnswer(true); // Handle timeout as incorrect
+                }
+            }, 1000);
+        }
+        
+        function handleAnswer(isTimeout = false) {
+            clearInterval(timerInterval);
+            inputEl.disabled = true;
+
+            const userAnswer = inputEl.value.trim().toLowerCase();
+            const correctAnswer = challenges[currentChallengeIndex].answer.toLowerCase();
+
+            if (!isTimeout && userAnswer === correctAnswer) {
+                score++;
+                feedbackEl.textContent = 'Correct!';
+                feedbackEl.className = 'correct';
+            } else {
+                if(isTimeout) {
+                    feedbackEl.textContent = `Time's up! The command was: ${correctAnswer}`;
+                } else {
+                    feedbackEl.textContent = `Incorrect! The command was: ${correctAnswer}`;
+                }
+                feedbackEl.className = 'incorrect';
+            }
+            scoreDisplayEl.textContent = `Score: ${score}`;
+            
+            setTimeout(() => {
+                currentChallengeIndex++;
+                loadChallenge();
+            }, 3000); // Wait 3 seconds to show the correct answer
+        }
+
+        function endGame() {
+            taskEl.textContent = 'Challenge Complete!';
+            inputEl.style.display = 'none';
+            document.querySelector('.prompt-user').style.display = 'none';
+            feedbackEl.textContent = `Your final score is ${score} out of ${challenges.length}.`;
+            timerDisplayEl.style.display = 'none';
+        }
+
+        inputEl.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                handleAnswer();
+            }
+        });
+        
+        // Start the game
+        challenges.sort(() => 0.5 - Math.random());
+        loadChallenge();
+    </script>
+</body>
+</html>
