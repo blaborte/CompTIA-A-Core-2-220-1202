@@ -38,6 +38,7 @@
         border-radius: 12px;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         padding: 30px;
+        position: relative; /* ADDED: Necessary for positioning the home button */
     } 
     
     header h1 {
@@ -46,6 +47,24 @@
         padding-bottom: 15px;
         border-bottom: 3px solid var(--accent-color);
         margin-bottom: 30px;
+    }
+    
+    /* NEW STYLE FOR HOME BUTTON */
+    .home-button {
+        text-decoration: none;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-weight: 500;
+        position: absolute; 
+        top: 30px; /* Aligned with container padding */
+        left: 30px; /* Aligned with container padding */
+        z-index: 10;
+        transition: background-color 0.2s;
+    }
+    .home-button:hover {
+        background-color: #005a9e;
     }
 
     /* Configuration Panel Styles */
@@ -278,6 +297,13 @@
             flex-direction: column;
             align-items: stretch;
         }
+        .home-button {
+            position: static;
+            margin-bottom: 15px;
+        }
+        header h1 {
+            margin-top: 15px;
+        }
     }
 </style>
 </head>
@@ -285,6 +311,8 @@
 
 <div class="container">
     <header>
+        <a href="index.html" class="home-button">🏠 Home</a> 
+
         <h1>A+ Core 2 PBQ Simulator (30 Questions)</h1>
         <p style="text-align: center; color: var(--text-muted);">Customize your practice session below.</p>
     </header>
@@ -521,7 +549,7 @@
         timeGroup.classList.toggle('hidden', mode === 'untimed');
     }
 
-    // --- DRAG AND DROP HANDLERS (Missing in original file) ---
+    // --- DRAG AND DROP HANDLERS ---
     let draggedItem = null;
 
     function handleDragStart(e) {
@@ -602,7 +630,6 @@
 
     // --- QUIZ CHECKING FUNCTIONS ---
     
-    // Function to check Drag Match answers (q1, q4)
     function checkDragMatch(qId, section) {
         const correctMapping = correctAnswers[qId];
         let isCorrect = true;
@@ -612,15 +639,12 @@
             const droppedItem = dropPlaceholder.querySelector('.draggable');
 
             if (!droppedItem) {
-                // Not all items were dropped
                 isCorrect = false;
                 return;
             }
 
-            // Get the name of the drop zone (e.g., 'SaaS', 'MSCONFIG') from the span, cleaning up formatting
             const dropZoneName = target.querySelector('span').textContent.replace(/\*\*| \(.+\) ->/g, '').trim();
 
-            // Check if the dropped item's data-value matches the correct value for that drop zone
             if (droppedItem.dataset.value !== correctMapping[dropZoneName]) {
                 isCorrect = false;
             }
@@ -629,24 +653,19 @@
         return isCorrect;
     }
 
-    // Function to check Text Input answers (q2, q5)
     function checkInputAnswers(qId, section) {
         const expectedAnswers = correctAnswers[qId]; 
         let allCorrect = true;
 
         section.querySelectorAll('input[type="text"]').forEach((input, index) => {
             const userAnswer = input.value.trim().toLowerCase();
-            
-            // expectedAnswers is an array of arrays (one for each input field)
             const correctSet = expectedAnswers[index].map(a => a.trim().toLowerCase());
             
-            // Complex cleaning of user input to allow for various correct forms (e.g., removing quotes, extra spaces)
             const cleanUserAnswer = userAnswer.replace(/["';\\]/g, '').replace(/\s+/g, ' ').trim();
 
             let matchFound = false;
             correctSet.forEach(correct => {
                 const cleanCorrect = correct.replace(/["';\\]/g, '').replace(/\s+/g, ' ').trim();
-                // Check if the cleaned user answer matches any of the cleaned correct options
                 if (cleanUserAnswer === cleanCorrect) {
                     matchFound = true;
                 }
@@ -659,7 +678,6 @@
         return allCorrect;
     }
     
-    // Function to check Drag Order answers (q3, q6)
     function checkDragOrder(qId, section) {
         const correctOrder = correctAnswers[qId];
         let currentOrder = [];
@@ -686,7 +704,6 @@
 
         let isCorrect = false;
         
-        // Execute the correct checking function based on the data-type attribute
         if (type === 'drag-match') {
             isCorrect = checkDragMatch(qId, section);
         } else if (type === 'text-input') {
@@ -698,7 +715,6 @@
             return;
         }
 
-        // Display feedback and explanation
         if (isCorrect) {
             score++;
             feedbackEl.className = 'feedback correct';
@@ -708,11 +724,9 @@
             feedbackEl.textContent = '❌ Incorrect. Review the explanation below.';
         }
 
-        // Show explanation box
         explanationEl.innerHTML = `<strong>Explanation:</strong> ${correctAnswers.explanations[qId]}`;
         explanationEl.style.display = 'block';
 
-        // Disable submit button and prepare for next question
         submitBtn.textContent = 'Next Question →';
         submitBtn.onclick = showNextQuestion;
     }
@@ -723,20 +737,27 @@
         
         currentQuestionIndex++;
         
-        if (currentQuestionIndex < QUESTIONS.length) {
-            const nextSection = document.querySelector(`.question-section[data-question-id="${QUESTIONS[currentQuestionIndex]}"]`);
+        const questionCount = parseInt(document.getElementById('question-count').value);
+
+        if (currentQuestionIndex < questionCount && currentQuestionIndex < QUESTIONS.length) {
+            const nextQuestionId = QUESTIONS[currentQuestionIndex];
+            const nextSection = document.querySelector(`.question-section[data-question-id="${nextQuestionId}"]`);
             
-            // Check if the question is actually defined (useful if question-count is low)
             if (nextSection) {
                 nextSection.style.display = 'block';
-                // Reset submit button state for the next question
                 const submitBtn = nextSection.querySelector('.submit-question-button');
-                submitBtn.textContent = 'Submit Answer';
-                submitBtn.onclick = () => checkQuestion(QUESTIONS[currentQuestionIndex]);
                 
+                // Reset submit button state for the next question
+                submitBtn.textContent = 'Submit Answer';
+                submitBtn.onclick = () => checkQuestion(nextQuestionId);
+                
+                // Reset feedback and explanation boxes
+                document.getElementById(`${nextQuestionId}-feedback`).textContent = '';
+                document.getElementById(`${nextQuestionId}-explanation`).style.display = 'none';
+
+
                 setupDragDropListeners(); // Re-initialize listeners for the new question
             } else {
-                 // If the next section isn't found, end the quiz.
                  endQuiz();
             }
 
@@ -752,11 +773,14 @@
         const finalScoreEl = document.getElementById('final-score');
         const finalScoreText = document.getElementById('final-score-text');
         
+        const totalQuestions = parseInt(document.getElementById('question-count').value);
+        
         // Hide the last question container
-        const currentSection = document.querySelector(`.question-section[data-question-id="${QUESTIONS[currentQuestionIndex-1]}"]`);
+        const lastQuestionId = QUESTIONS[currentQuestionIndex-1];
+        const currentSection = document.querySelector(`.question-section[data-question-id="${lastQuestionId}"]`);
         if(currentSection) currentSection.style.display = 'none';
         
-        finalScoreText.innerHTML = `You scored ${score} out of ${QUESTIONS.length} (${((score / QUESTIONS.length) * 100).toFixed(0)}%)`;
+        finalScoreText.innerHTML = `You scored ${score} out of ${totalQuestions} (${((score / totalQuestions) * 100).toFixed(0)}%)`;
         finalScoreEl.style.display = 'block';
     }
 
@@ -783,6 +807,8 @@
         const firstQuestion = document.querySelector(`.question-section[data-question-id="${QUESTIONS[0]}"]`);
         if (firstQuestion) {
             firstQuestion.style.display = 'block';
+            
+            // Re-bind the submit button function to handle resets
             firstQuestion.querySelector('.submit-question-button').onclick = () => checkQuestion(QUESTIONS[0]);
         }
 
