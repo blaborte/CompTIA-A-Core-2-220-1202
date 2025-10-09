@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A+ Core 2 PBQ Simulator (30 Questions, Timed/Untimed)</title>
+
+<meta name="description" content="Customizable, interactive PBQ simulator for CompTIA A+ Core 2 (220-1202) with 30 questions, timed/untimed modes, and instant feedback.">
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --primary-color: #0072C6;
+        --accent-color: #D9232E;
+        --success-color: #28a745;
+        --bg-light: #f8f9fa;
+        --text-dark: #212529;
+        --card-bg: #ffffff;
+        --pbq-bg: #fffbe6;
+        --pbq-border: #ffd700;
+        --explanation-bg: #e6f7ff; /* Light blue for explanation box */
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: "Roboto", sans-serif;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+        line-height: 1.6;
+        padding: 40px 20px;
+    }
+
+    .container { 
+        max-width: 960px; 
+        margin: 0 auto; 
+        background-color: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+    } 
+    
+    header h1 {
+        text-align: center;
+        color: var(--primary-color);
+        padding-bottom: 15px;
+        border-bottom: 3px solid var(--accent-color);
+        margin-bottom: 30px;
+    }
+
+    /* Configuration Panel Styles */
+    #config-panel {
+        background-color: #e9f2f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    .config-group {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 200px;
+    }
+
+    .config-group label {
+        font-weight: 500;
+        margin-bottom: 5px;
+        color: var(--text-dark);
+    }
+
+    .config-group select, #start-quiz-button {
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        font-size: 1em;
+    }
+    
+    #start-quiz-button {
+        background-color: var(--accent-color);
+        color: white;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        flex-grow: 1;
+    }
+    #start-quiz-button:hover {
+        background-color: #a71b23;
+    }
+
+    /* Timer Styles */
+    #timer-display {
+        font-size: 1.8em;
+        font-weight: 700;
+        color: var(--accent-color);
+        text-align: center;
+        padding: 10px;
+        border: 2px solid var(--accent-color);
+        border-radius: 6px;
+        background-color: #fff0f0;
+        margin-bottom: 20px;
+        display: none; /* Hidden by default */
+    }
+
+    .question-section {
+        margin-bottom: 40px;
+        padding: 20px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        background-color: #fcfcfc;
+        display: none; /* Hidden by default until quiz starts */
+    }
+    
+    .question-section h3 {
+        color: var(--accent-color);
+        font-size: 1.4em;
+        margin-bottom: 15px;
+        border-left: 5px solid var(--accent-color);
+        padding-left: 10px;
+    }
+
+    .scenario {
+        background-color: var(--pbq-bg);
+        border: 2px dashed var(--pbq-border);
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        font-style: italic;
+        line-height: 1.5;
+    }
+
+    .pbq-task {
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 10px;
+        margin-top: 15px;
+    }
+
+    /* DRAG AND DROP STYLES */
+    .drag-zone, .drop-zone {
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        border: 1px solid var(--border-color);
+    }
+    .drag-zone {
+        background-color: #e3f2fd;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .draggable {
+        cursor: grab;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-weight: 500;
+        transition: opacity 0.2s;
+    }
+    .draggable:active {
+        opacity: 0.8;
+        cursor: grabbing;
+    }
+
+    .drop-zone {
+        background-color: #fff;
+        min-height: 50px;
+        padding: 15px;
+        border: 2px dashed var(--primary-color);
+    }
+    .drop-target {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px dotted #ccc;
+        padding: 10px 0;
+    }
+    .drop-placeholder {
+        padding: 5px;
+        background-color: var(--bg-light);
+        min-width: 150px;
+        min-height: 35px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* INPUT STYLES (for command-line) */
+    .command-input input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-family: monospace;
+    }
+    
+    /* FEEDBACK & EXPLANATION STYLES */
+    .submit-question-button {
+        display: block;
+        width: 200px;
+        padding: 8px 15px;
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: 700;
+        border: none;
+        border-radius: 5px;
+        margin-top: 15px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    .submit-question-button:hover {
+        background-color: #005a9e;
+    }
+    .back-home, #final-score-button {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 12px 20px;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+    #final-score-button {
+        background-color: var(--accent-color);
+        color: white;
+    }
+    .back-home {
+        background-color: var(--primary-color);
+        color: white;
+        margin-top: 15px;
+    }
+
+    #score-display {
+        text-align: center;
+        font-size: 1.5em;
+        margin-top: 30px;
+        padding: 15px;
+        border: 2px solid var(--success-color);
+        background-color: #e6ffe6;
+        border-radius: 8px;
+        font-weight: 500;
+        display: none;
+    }
+
+    .feedback.correct { color: var(--success-color); font-weight: 700; margin-top: 5px; }
+    .feedback.incorrect { color: var(--accent-color); font-weight: 700; margin-top: 5px; }
+
+    .explanation-box {
+        margin-top: 15px;
+        padding: 15px;
+        border-left: 5px solid var(--primary-color);
+        background-color: var(--explanation-bg);
+        border-radius: 4px;
+        display: none; /* Hidden by default */
+        font-size: 0.95em;
+    }
+    .explanation-box strong {
+        color: var(--primary-color);
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    .hidden { display: none !important; }
+
+    @media (max-width: 600px) {
+        #config-panel {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>A+ Core 2 PBQ Simulator (30 Questions)</h1>
+        <p style="text-align: center; color: var(--text-muted);">Customize your practice session below.</p>
+    </header>
+
+    <main>
+        <div id="config-panel">
+            <div class="config-group">
+                <label for="question-count">Number of PBQs:</label>
+                <select id="question-count">
+                    <option value="5">5 PBQs</option>
+                    <option value="10">10 PBQs</option>
+                    <option value="15">15 PBQs</option>
+                </select>
+            </div>
+            
+            <div class="config-group">
+                <label for="quiz-mode">Mode:</label>
+                <select id="quiz-mode" onchange="toggleTimeSelector()">
+                    <option value="untimed">Untimed</option>
+                    <option value="timed">Timed</option>
+                </select>
+            </div>
+            
+            <div class="config-group hidden" id="time-group">
+                <label for="time-limit">Time Limit (Minutes):</label>
+                <select id="time-limit">
+                    <option value="10">10 Minutes</option>
+                    <option value="20">20 Minutes</option>
+                    <option value="30">30 Minutes</option>
+                </select>
+            </div>
+            
+            <button id="start-quiz-button" onclick="startQuiz()">START QUIZ</button>
+        </div>
+        
+        <div id="timer-display"></div>
+        
+        <div id="questions-container">
+            
+            <section class="question-section" data-type="drag-match" data-question-id="q1">
+                <h3>PBQ 1: Cloud Service Matching (User Responsibility)</h3>
+                <div class="scenario">A business is moving services to the cloud and needs to understand its responsibilities for managing the environment.</div>
+                <div class="pbq-task">Task: Drag the primary user responsibility to the correct cloud service model.</div>
+                <div class="drag-zone" id="q1-options">
+                    <div class="draggable" draggable="true" data-value="Data only">Data Only</div>
+                    <div class="draggable" draggable="true" data-value="Apps and Data">Applications and Data</div>
+                    <div class="draggable" draggable="true" data-value="OS, Apps, and Data">OS, Applications, and Data</div>
+                </div>
+                <div class="drop-zone">
+                    <div class="drop-target"><span>**SaaS** (Software as a Service) -></span><div class="drop-placeholder" data-correct-value="Data only">Drop Here</div></div>
+                    <div class="drop-target"><span>**PaaS** (Platform as a Service) -></span><div class="drop-placeholder" data-correct-value="Apps and Data">Drop Here</div></div>
+                    <div class="drop-target"><span>**IaaS** (Infrastructure as a Service) -></span><div class="drop-placeholder" data-correct-value="OS, Apps, and Data">Drop Here</div></div>
+                </div>
+                <button class="submit-question-button" onclick="checkQuestion('q1')">Submit Answer</button>
+                <div class="feedback" id="q1-feedback" style="margin-top: 10px;"></div>
+                <div class="explanation-box" id="q1-explanation"></div>
+            </section>
+
+            <section class="question-section" data-type="text-input" data-question-id="q2">
+                <h3>PBQ 2: Linux File System Commands (Input)</h3>
+                <div class="scenario">You are managing a Linux file system and need to quickly view files, change your location, and copy a file to a different directory.</div>
+                <div class="pbq-task">Task: Provide the command line utility for each action:</div>
+                <div class="command-input">
+                    <p>1. View the contents of the current directory: <input type="text" data-q-index="0" placeholder="e.g., ls -l"></p>
+                    <p>2. Change directory to the user's home directory: <input type="text" data-q-index="1" placeholder="e.g., cd /home/user"></p>
+                    <p>3. Copy a file named 'report.pdf' to the /tmp folder: <input type="text" data-q-index="2" placeholder="e.g., cp source dest"></p>
+                </div>
+                <button class="submit-question-button" onclick="checkQuestion('q2')">Submit Answer</button>
+                <div class="feedback" id="q2-feedback" style="margin-top: 10px;"></div>
+                <div class="explanation-box" id="q2-explanation"></div>
+            </section>
+
+            <section class="question-section" data-type="drag-order" data-question-id="q3">
+                <h3>PBQ 3: BIOS/UEFI Security Order (Drag & Order)</h3>
+                <div class="scenario">A high-security workstation must be locked down to prevent unauthorized changes to the operating system or hardware boot sequence.</div>
+                <div class="pbq-task">Task: Drag and place the security settings in order of priority (most critical first):</div>
+                <div class="drag-zone" id="q3-options">
+                    <div class="draggable" draggable="true" data-value="Supervisor Password">Set Supervisor/Admin Password</div>
+                    <div class="draggable" draggable="true" data-value="Disable Unused Ports">Disable Unused Ports (USB/eSATA)</div>
+                    <div class="draggable" draggable="true" data-value="Secure Boot">Enable Secure Boot</div>
+                </div>
+                <div class="drop-zone" id="q3-drop-target">
+                    <div class="drop-target-item" data-order="1">1. <span class="drop-placeholder">Drop Here</span></div>
+                    <div class="drop-target-item" data-order="2">2. <span class="drop-placeholder">Drop Here</span></div>
+                    <div class="drop-target-item" data-order="3">3. <span class="drop-placeholder">Drop Here</span></div>
+                </div>
+                <button class="submit-question-button" onclick="checkQuestion('q3')">Submit Answer</button>
+                <div class="feedback" id="q3-feedback" style="margin-top: 10px;"></div>
+                <div class="explanation-box" id="q3-explanation"></div>
+            </section>
+
+            <section class="question-section" data-type="drag-match" data-question-id="q4">
+                <h3>PBQ 4: Windows Tool Matching (Function)</h3>
+                <div class="scenario">A user's Windows system is experiencing slow startup, application errors, and potential file corruption.</div>
+                <div class="pbq-task">Task: Drag the function to its primary Windows troubleshooting tool.</div>
+                <div class="drag-zone" id="q4-options">
+                    <div class="draggable" draggable="true" data-value="Startup Manager">Manage startup programs/services</div>
+                    <div class="draggable" draggable="true" data-value="System File Repair">Scan and repair protected system files</div>
+                    <div class="draggable" draggable="true" data-value="Disk Check">Check disk and file system health</div>
+                </div>
+                <div class="drop-zone">
+                    <div class="drop-target"><span>**MSCONFIG** -></span><div class="drop-placeholder" data-correct-value="Startup Manager">Drop Here</div></div>
+                    <div class="drop-target"><span>**SFC** -></span><div class="drop-placeholder" data-correct-value="System File Repair">Drop Here</div></div>
+                    <div class="drop-target"><span>**CHKDSK** -></span><div class="drop-placeholder" data-correct-value="Disk Check">Drop Here</div></div>
+                </div>
+                <button class="submit-question-button" onclick="checkQuestion('q4')">Submit Answer</button>
+                <div class="feedback" id="q4-feedback" style="margin-top: 10px;"></div>
+                <div class="explanation-box" id="q4-explanation"></div>
+            </section>
+            
+            <section class="question-section" data-type="text-input" data-question-id="q5">
+                <h3>PBQ 5: Network Share and Route Commands (Input)</h3>
+                <div class="scenario">You are troubleshooting a connection issue on a Windows workstation and need to check local configuration, the routing table, and map a network drive.</div>
+                <div class="pbq-task">Task: Provide the command line utility for each action:</div>
+                <div class="command-input">
+                    <p>1. View the IP address and adapter configuration on Windows: <input type="text" data-q-index="0" placeholder="e.g., ipconfig /all"></p>
+                    <p>2. View the local system's routing table on Linux: <input type="text" data-q-index="1" placeholder="e.g., route"></p>
+                    <p>3. Map a network drive 'Z:' to a share on a server: <input type="text" data-q-index="2" placeholder="e.g., net use"></p>
+                </div>
+                <button class="submit-question-button" onclick="checkQuestion('q5')">Submit Answer</button>
+                <div class="feedback" id="q5-feedback" style="margin-top: 10px;"></div>
+                <div class="explanation-box" id="q5-explanation"></div>
+            </section>
+            
+            <section class="question-section" data-type="drag-order" data-question-id="q6">
+                <h3>PBQ 6: Mobile Device Troubleshooting Order (Drag & Order)</h3>
+                <div class="scenario">A user reports that their Android phone is overheating and an application keeps crashing unexpectedly.</div>
+                <div class="pbq-task">Task: Drag and place the troubleshooting steps in the most logical order (first step first):</div>
+                <div class="drag-zone" id="q6-options">
+                    <div class="draggable" draggable="true" data-value="Physical Check">Check for physical damage or heat sources</div>
+                    <div class="draggable" draggable="true" data-value="Software Update">Ensure OS and App software are fully updated</div>
+                    <div class="draggable" draggable="true" data-value="App Check">Force close/clear cache for the crashing app</div>
+                </div>
+                <div class="drop-zone" id="q6-drop-target">
+                    <div class="drop-target-item" data-order="1">1. <span class="drop-placeholder">Drop Here</span></div>
+                    <div class="drop-target-item" data-order="2">2. <span class="drop-placeholder">Drop Here</span></div>
+                    <div class="drop-target-item" data-order="3">3. <span class="drop-placeholder">Drop Here</span></div>
+                </div>
+                <button class="submit-question-button" onclick="checkQuestion('q6')">Submit Answer</button>
+                <div class="feedback" id="q6-feedback" style="margin-top: 10px;"></div>
+                <div class="explanation-box" id="q6-explanation"></div>
+            </section>
+            
+            <div id="final-score" style="display: none;">
+                <h2>Quiz Complete!</h2>
+                <p id="final-score-text"></p>
+                <button onclick="window.location.reload()" class="back-home">RESTART QUIZ</button>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p style="text-align: center; margin-top: 30px; font-size: 0.8em; color: #6c757d;">© 2024 PBQ Simulator | Based on CompTIA A+ 220-1202 Objectives</p>
+    </footer>
+
+</div>
+
+<script>
+    // --- QUIZ DATA ---
+    const QUESTIONS = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6']; // All defined questions
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let timerInterval;
+
+    // Define all correct answers, indexed by question ID (data-question-id)
+    const correctAnswers = {
+        // PBQ 1 & 4: drag-match (Key: Drop Zone text value, Value: Draggable data-value)
+        'q1': { // Cloud Service Matching
+            'SaaS': 'Data only',
+            'PaaS': 'Apps and Data',
+            'IaaS': 'OS, Apps, and Data'
+        },
+        'q4': { // Windows Tool Matching
+            'MSCONFIG': 'Startup Manager',
+            'SFC': 'System File Repair',
+            'CHKDSK': 'Disk Check'
+        },
+        
+        // PBQ 2 & 5: text-input (Each inner array is a set of valid answers for that input field)
+        'q2': [ // Linux File System Commands
+            ['ls', 'ls -l', 'ls -a'], 
+            ['cd ~', 'cd', 'cd /home'], 
+            ['cp report.pdf /tmp', 'cp /tmp'] 
+        ],
+        'q5': [ // Network Share Commands
+            ['ipconfig', 'ipconfig /all'], 
+            ['netstat -rn', 'route', 'netstat'], 
+            ['net use', 'net use Z: \\\\server\\share /persistent:yes'] 
+        ],
+        
+        // PBQ 3 & 6: drag-order (A single ordered array of the correct data-value strings)
+        'q3': ['Supervisor Password', 'Secure Boot', 'Disable Unused Ports'], // BIOS Security Order
+        'q6': ['Physical Check', 'App Check', 'Software Update'], // Mobile Troubleshooting Order
+        
+        'explanations': {
+            'q1': 'In **SaaS**, the user is only responsible for the data. **PaaS** users manage applications and data. **IaaS** users are responsible for the OS, applications, and data.',
+            'q2': '`ls` views directory contents. `cd ~` or `cd` changes to the home directory. `cp` copies files.',
+            'q3': 'A **Supervisor Password** locks the BIOS/UEFI entirely. **Secure Boot** prevents malicious OS loading. **Disabling Ports** is a good but lower-priority security measure.',
+            'q4': 'MSCONFIG manages startup. SFC scans and repairs system files. CHKDSK checks disk and file system health.',
+            'q5': '`ipconfig` shows Windows adapter config. `netstat -rn` or `route` shows the Linux routing table. `net use` maps a network drive.',
+            'q6': 'The logical order starts with the easiest/physical check (damage/heat), followed by software diagnostics (app check), and then updates.',
+        }
+    };
+
+
+    // --- TIMER FUNCTIONS ---
+    function formatTime(totalSeconds) {
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+    
+    function startTimer(duration) {
+        let timeRemaining = duration * 60;
+        const display = document.getElementById('timer-display');
+        display.style.display = 'block';
+
+        timerInterval = setInterval(() => {
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                alert("Time's up! The quiz has ended.");
+                endQuiz();
+                return;
+            }
+            display.textContent = `Time Remaining: ${formatTime(timeRemaining)}`;
+            timeRemaining--;
+        }, 1000);
+    }
+
+    function toggleTimeSelector() {
+        const mode = document.getElementById('quiz-mode').value;
+        const timeGroup = document.getElementById('time-group');
+        timeGroup.classList.toggle('hidden', mode === 'untimed');
+    }
+
+    // --- DRAG AND DROP HANDLERS (Missing in original file) ---
+    let draggedItem = null;
+
+    function handleDragStart(e) {
+        draggedItem = e.target;
+        e.dataTransfer.setData('text/plain', e.target.dataset.value); // Set data for Firefox/IE
+        setTimeout(() => e.target.style.opacity = '0.5', 0);
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault(); // This is crucial to allow a drop
+    }
+
+    function handleDragEnter(e) {
+        const dropPlaceholder = e.target.closest('.drop-placeholder');
+        if (dropPlaceholder) {
+            dropPlaceholder.style.border = '2px solid var(--success-color)';
+        }
+    }
+
+    function handleDragLeave(e) {
+        const dropPlaceholder = e.target.closest('.drop-placeholder');
+        if (dropPlaceholder) {
+            dropPlaceholder.style.border = '1px solid #ccc'; // Reset border
+        }
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        const dropPlaceholder = e.target.closest('.drop-placeholder');
+
+        if (dropPlaceholder && draggedItem) {
+            // Check if a draggable item is already in the placeholder
+            const existingDraggable = dropPlaceholder.querySelector('.draggable');
+            if (existingDraggable) {
+                // Return the existing item to its original drag-zone
+                const parentSection = existingDraggable.closest('.question-section');
+                const originalDragZone = parentSection.querySelector('.drag-zone');
+                originalDragZone.appendChild(existingDraggable);
+            }
+
+            // Move the dragged item to the drop placeholder
+            draggedItem.style.opacity = '1';
+            draggedItem.remove(); // Remove from old location
+            dropPlaceholder.appendChild(draggedItem);
+        }
+        
+        // Reset styles for all placeholders
+        document.querySelectorAll('.drop-placeholder').forEach(p => p.style.border = '1px solid #ccc');
+        draggedItem = null;
+    }
+
+    function setupDragDropListeners() {
+        // Remove existing listeners to prevent duplicates (important for 'Next Question')
+        document.querySelectorAll('.draggable').forEach(item => {
+            item.removeEventListener('dragstart', handleDragStart);
+        });
+        document.querySelectorAll('.drop-placeholder').forEach(dropArea => {
+            dropArea.removeEventListener('dragover', handleDragOver);
+            dropArea.removeEventListener('dragenter', handleDragEnter);
+            dropArea.removeEventListener('dragleave', handleDragLeave);
+            dropArea.removeEventListener('drop', handleDrop);
+        });
+        
+        // Add new listeners to all draggables
+        document.querySelectorAll('.draggable').forEach(item => {
+            item.addEventListener('dragstart', handleDragStart);
+        });
+
+        // Add new listeners to all drop placeholders
+        document.querySelectorAll('.drop-placeholder').forEach(dropArea => {
+            dropArea.addEventListener('dragover', handleDragOver);
+            dropArea.addEventListener('dragenter', handleDragEnter);
+            dropArea.addEventListener('dragleave', handleDragLeave);
+            dropArea.addEventListener('drop', handleDrop);
+        });
+    }
+
+
+    // --- QUIZ CHECKING FUNCTIONS ---
+    
+    // Function to check Drag Match answers (q1, q4)
+    function checkDragMatch(qId, section) {
+        const correctMapping = correctAnswers[qId];
+        let isCorrect = true;
+        
+        section.querySelectorAll('.drop-target').forEach(target => {
+            const dropPlaceholder = target.querySelector('.drop-placeholder');
+            const droppedItem = dropPlaceholder.querySelector('.draggable');
+
+            if (!droppedItem) {
+                // Not all items were dropped
+                isCorrect = false;
+                return;
+            }
+
+            // Get the name of the drop zone (e.g., 'SaaS', 'MSCONFIG') from the span, cleaning up formatting
+            const dropZoneName = target.querySelector('span').textContent.replace(/\*\*| \(.+\) ->/g, '').trim();
+
+            // Check if the dropped item's data-value matches the correct value for that drop zone
+            if (droppedItem.dataset.value !== correctMapping[dropZoneName]) {
+                isCorrect = false;
+            }
+        });
+
+        return isCorrect;
+    }
+
+    // Function to check Text Input answers (q2, q5)
+    function checkInputAnswers(qId, section) {
+        const expectedAnswers = correctAnswers[qId]; 
+        let allCorrect = true;
+
+        section.querySelectorAll('input[type="text"]').forEach((input, index) => {
+            const userAnswer = input.value.trim().toLowerCase();
+            
+            // expectedAnswers is an array of arrays (one for each input field)
+            const correctSet = expectedAnswers[index].map(a => a.trim().toLowerCase());
+            
+            // Complex cleaning of user input to allow for various correct forms (e.g., removing quotes, extra spaces)
+            const cleanUserAnswer = userAnswer.replace(/["';\\]/g, '').replace(/\s+/g, ' ').trim();
+
+            let matchFound = false;
+            correctSet.forEach(correct => {
+                const cleanCorrect = correct.replace(/["';\\]/g, '').replace(/\s+/g, ' ').trim();
+                // Check if the cleaned user answer matches any of the cleaned correct options
+                if (cleanUserAnswer === cleanCorrect) {
+                    matchFound = true;
+                }
+            });
+
+            if (!matchFound) {
+                 allCorrect = false;
+            }
+        });
+        return allCorrect;
+    }
+    
+    // Function to check Drag Order answers (q3, q6)
+    function checkDragOrder(qId, section) {
+        const correctOrder = correctAnswers[qId];
+        let currentOrder = [];
+        
+        section.querySelectorAll('.drop-target-item').forEach(target => {
+            const droppedItem = target.querySelector('.draggable');
+            if (droppedItem) {
+                currentOrder.push(droppedItem.dataset.value);
+            }
+        });
+        
+        if (currentOrder.length !== correctOrder.length) return false;
+        
+        return currentOrder.every((value, index) => value === correctOrder[index]);
+    }
+    
+    // Main function called by the 'Submit Answer' buttons
+    function checkQuestion(qId) {
+        const section = document.querySelector(`.question-section[data-question-id="${qId}"]`);
+        const type = section.dataset.type;
+        const feedbackEl = document.getElementById(`${qId}-feedback`);
+        const explanationEl = document.getElementById(`${qId}-explanation`);
+        const submitBtn = section.querySelector('.submit-question-button');
+
+        let isCorrect = false;
+        
+        // Execute the correct checking function based on the data-type attribute
+        if (type === 'drag-match') {
+            isCorrect = checkDragMatch(qId, section);
+        } else if (type === 'text-input') {
+            isCorrect = checkInputAnswers(qId, section);
+        } else if (type === 'drag-order') {
+            isCorrect = checkDragOrder(qId, section);
+        } else {
+            console.error(`Unknown question type: ${type}`);
+            return;
+        }
+
+        // Display feedback and explanation
+        if (isCorrect) {
+            score++;
+            feedbackEl.className = 'feedback correct';
+            feedbackEl.textContent = '✅ Correct! Well done.';
+        } else {
+            feedbackEl.className = 'feedback incorrect';
+            feedbackEl.textContent = '❌ Incorrect. Review the explanation below.';
+        }
+
+        // Show explanation box
+        explanationEl.innerHTML = `<strong>Explanation:</strong> ${correctAnswers.explanations[qId]}`;
+        explanationEl.style.display = 'block';
+
+        // Disable submit button and prepare for next question
+        submitBtn.textContent = 'Next Question →';
+        submitBtn.onclick = showNextQuestion;
+    }
+
+    function showNextQuestion() {
+        const currentSection = document.querySelector(`.question-section[data-question-id="${QUESTIONS[currentQuestionIndex]}"]`);
+        currentSection.style.display = 'none';
+        
+        currentQuestionIndex++;
+        
+        if (currentQuestionIndex < QUESTIONS.length) {
+            const nextSection = document.querySelector(`.question-section[data-question-id="${QUESTIONS[currentQuestionIndex]}"]`);
+            
+            // Check if the question is actually defined (useful if question-count is low)
+            if (nextSection) {
+                nextSection.style.display = 'block';
+                // Reset submit button state for the next question
+                const submitBtn = nextSection.querySelector('.submit-question-button');
+                submitBtn.textContent = 'Submit Answer';
+                submitBtn.onclick = () => checkQuestion(QUESTIONS[currentQuestionIndex]);
+                
+                setupDragDropListeners(); // Re-initialize listeners for the new question
+            } else {
+                 // If the next section isn't found, end the quiz.
+                 endQuiz();
+            }
+
+        } else {
+            endQuiz();
+        }
+    }
+
+    function endQuiz() {
+        clearInterval(timerInterval);
+        document.getElementById('timer-display').style.display = 'none';
+
+        const finalScoreEl = document.getElementById('final-score');
+        const finalScoreText = document.getElementById('final-score-text');
+        
+        // Hide the last question container
+        const currentSection = document.querySelector(`.question-section[data-question-id="${QUESTIONS[currentQuestionIndex-1]}"]`);
+        if(currentSection) currentSection.style.display = 'none';
+        
+        finalScoreText.innerHTML = `You scored ${score} out of ${QUESTIONS.length} (${((score / QUESTIONS.length) * 100).toFixed(0)}%)`;
+        finalScoreEl.style.display = 'block';
+    }
+
+    // --- INITIALIZATION ---
+    function startQuiz() {
+        // Hide configuration panel
+        document.getElementById('config-panel').style.display = 'none';
+
+        // Start timer if mode is timed
+        const mode = document.getElementById('quiz-mode').value;
+        if (mode === 'timed') {
+            const timeLimit = document.getElementById('time-limit').value;
+            startTimer(parseInt(timeLimit));
+        }
+
+        // Reset state and show the first question
+        currentQuestionIndex = 0;
+        score = 0;
+        
+        // Hide all questions first
+        document.querySelectorAll('.question-section').forEach(q => q.style.display = 'none');
+        
+        // Show the first question and initialize its button
+        const firstQuestion = document.querySelector(`.question-section[data-question-id="${QUESTIONS[0]}"]`);
+        if (firstQuestion) {
+            firstQuestion.style.display = 'block';
+            firstQuestion.querySelector('.submit-question-button').onclick = () => checkQuestion(QUESTIONS[0]);
+        }
+
+        // Setup initial drag/drop listeners
+        setupDragDropListeners();
+    }
+
+    // Initial load: ensure time group is hidden unless 'Timed' is selected
+    document.addEventListener('DOMContentLoaded', () => {
+        toggleTimeSelector(); 
+        
+        // Hide all questions on load, only config panel is visible
+        document.querySelectorAll('.question-section').forEach(q => q.style.display = 'none');
+        document.getElementById('config-panel').style.display = 'flex';
+    });
+</script>
+</body>
+</html>

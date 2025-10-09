@@ -3,9 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CompTIA A+ Practice Exams</title>
+<title>CompTIA A+ Core 2 (220-1202) Practice Exams | Free Quizzes</title>
+
+<meta name="description" content="Free practice exams and quizzes for the CompTIA A+ Core 2 (220-1202) certification, based on Professor Messer's objectives. Start your prep now!">
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="/favicon.png">
 
 <style>
     :root {
@@ -29,13 +32,13 @@
         line-height: 1.6;
     }
 
-    .container { max-width: 960px; margin: 0 auto; padding: 0 20px; } /* Removed top/bottom padding here */
+    .container { max-width: 960px; margin: 0 auto; padding: 0 20px; } 
     
-    /* NEW HEADER STYLES */
+    /* HEADER STYLES */
     .site-header {
         background: var(--card-bg);
         border-bottom: 1px solid var(--border-color);
-        padding: 15px 0; /* Padding handled by container */
+        padding: 15px 0; 
         position: sticky;
         top: 0;
         z-index: 1000;
@@ -63,9 +66,8 @@
         color: var(--primary-color);
     }
     
-    /* END NEW HEADER STYLES */
     
-    .main-content-area { padding-top: 40px; } /* Added padding back to main content */
+    .main-content-area { padding-top: 40px; } 
     
     .hero {
         position: relative;
@@ -106,8 +108,9 @@
     .exam-section { padding-top: 20px; }
     .exam-section h2 { text-align: center; font-size: 2.2em; margin-bottom: 40px; color: var(--text-dark); }
     .exam-grid {
+        /* Adjusted to handle the fifth card gracefully */
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 30px;
     }
     .exam-card {
@@ -119,19 +122,57 @@
         color: var(--text-dark);
         transition: all 0.3s ease;
         box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        display: flex; /* Added for layout */
-        flex-direction: column; /* Added for layout */
+        display: flex; 
+        flex-direction: column; 
     }
     .exam-card:hover {
         transform: translateY(-8px);
         border-color: var(--primary-color);
         box-shadow: 0 15px 30px rgba(0,0,0,0.1);
     }
-    .exam-card h3 { font-size: 1.5em; margin-bottom: 15px; color: var(--primary-color); }
+    .exam-card h3 { 
+        font-size: 1.5em; 
+        margin-bottom: 15px; 
+        color: var(--primary-color); 
+        /* IMPROVEMENT: Adding a subtle visual cue */
+        border-bottom: 2px solid var(--bg-light); 
+        padding-bottom: 10px;
+    }
     .exam-card p { font-size: 1em; color: var(--text-muted); line-height: 1.6; flex-grow: 1;}
     .card-footer { margin-top: 20px; font-weight: 500; color: var(--primary-color); }
     .card-footer span { transition: transform 0.3s ease; display: inline-block; }
     .exam-card:hover .card-footer span { transform: translateX(5px); }
+    
+    /* TRUST SECTION STYLES */
+    .trust-section {
+        margin-top: 60px;
+        padding: 40px;
+        background: #e3f2fd; /* Light blue background */
+        border-radius: 12px;
+        text-align: center;
+    }
+    .trust-section h3 {
+        color: var(--secondary-color);
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+    .trust-points {
+        display: flex;
+        justify-content: space-around;
+        gap: 20px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        color: var(--text-dark);
+    }
+    .trust-points li {
+        flex: 1;
+        padding: 15px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        font-weight: 500;
+    }
     
     footer { text-align: center; padding: 20px 0; font-size: 0.9em; color: var(--text-muted); margin-top: 80px; border-top: 1px solid var(--border-color); }
     
@@ -141,6 +182,7 @@
         .header-content { flex-direction: column; }
         .logo { margin-bottom: 10px; }
         .nav-link { margin-left: 10px; margin-right: 10px; }
+        .trust-points { flex-direction: column; }
     }
 
 </style>
@@ -152,8 +194,8 @@
         <a href="#" class="logo">A+ Prep Hub</a>
         <nav>
             <a href="#" class="nav-link">Home</a>
-            <a href="#exams" class="nav-link">Practice Exams</a>
-            <a href="A+ Core 2 V15 (New Version).html" class="nav-link">Objectives</a>
+            <a href="#exams" class="nav-link">Core 2 Exams</a>
+            <a href="A+ Core 2 V15 (New Version).html" class="nav-link">Core 2 Objectives</a>
         </nav>
     </div>
 </header>
@@ -162,7 +204,7 @@
         <section class="hero">
             <div class="hero-content">
                 <h1>Master CompTIA A+ Core 2</h1>
-                <p>Your journey to certification starts here. Use these interactive tools and resources to prepare for the 220-1202 by Professor Messer.</p>
+                <p>Your journey to certification starts here. Use these interactive tools and resources to prepare for the 220-1202, including **Performance-Based Questions (PBQs)**. Quizzes are based on the latest **Professor Messer** objectives.</p>
                 <a href="#exams">Start Practice Now!</a>
                 <p style="font-size: 0.9em; margin-top: 15px; margin-bottom: 0;"><a href="A+ Core 2 V15 (New Version).html" style="background: none; color: #fff; box-shadow: none; font-weight: 400; padding: 5px 0;">View Exam Objectives &rarr;</a></p>
             </div>
@@ -173,27 +215,43 @@
             <div class="exam-grid">
                 <a href="quiz-a.html" class="exam-card">
                     <h3>Practice Test A</h3>
-                    <p>The first set of questions to test your foundational knowledge across all exam domains.</p>
+                    <p>The first set of questions to test your foundational knowledge across all exam domains. **(35 Questions)**</p>
                     <div class="card-footer">Begin Test <span>&rarr;</span></div>
                 </a>
                 <a href="quiz-b.html" class="exam-card">
                     <h3>Practice Test B</h3>
-                    <p>A second set of practice questions to challenge your understanding and identify weak spots.</p>
+                    <p>A second set of practice questions to challenge your understanding and identify weak spots. **(35 Questions)**</p>
                     <div class="card-footer">Begin Test <span>&rarr;</span></div>
                 </a>
                 <a href="quiz-c.html" class="exam-card">
                     <h3>Practice Test C</h3>
-                    <p>The final set of questions, designed to simulate the real exam experience and build confidence.</p>
+                    <p>The final set of questions, designed to simulate the real exam experience and build confidence. **(35 Questions)**</p>
                     <div class="card-footer">Begin Test <span>&rarr;</span></div>
                 </a>
                 <a href="quiz-random.html" class="exam-card">
                     <h3>Mixed Review Quiz</h3>
-                    <p>A random set of questions pulled from all practice exams for a comprehensive review session.</p>
+                    <p>A random set of questions pulled from all practice exams for a comprehensive review session. **(Custom Length)**</p>
                     <div class="card-footer">Start Random Quiz <span>&rarr;</span></div>
                 </a>
+                
+                <a href="quiz-pbq.html" class="exam-card" style="border-color: #D9232E;">
+                    <h3 style="color: #D9232E;">PBQ Scenario Challenge</h3>
+                    <p>A dedicated section for Performance-Based Questions (PBQs) focusing on drag-and-drop and troubleshooting simulations.</p>
+                    <div class="card-footer" style="color: #D9232E; font-weight: 700;">Start PBQ Practice <span>&rarr;</span></div>
+                </a>
+                
             </div>
         </section>
-    </main>
+        
+        <section class="trust-section">
+            <h3>Why Choose Our Free Quizzes?</h3>
+            <ul class="trust-points">
+                <li>✅ **Updated for 220-1202**</li>
+                <li>📝 **Based on Official Objectives**</li>
+                <li>💯 **Instant Feedback & Scoring**</li>
+            </ul>
+        </section>
+        </main>
 
     <footer>
         © 2025 • Designed by <strong>BLaborte</strong>
