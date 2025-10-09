@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>macOS Icon Challenge | A+ Core 2 Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #f4f7f9;
+            --primary-accent: #0072C6;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --card-bg: #ffffff;
+            --border-color: #e9ecef;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #game-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            border-top: 5px solid var(--primary-accent);
+        }
+
+        h1 {
+            color: var(--primary-accent);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        #icon-display {
+            font-size: 5rem; /* Make icon large */
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            background-color: var(--card-bg);
+            color: var(--primary-accent);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .option-btn:not(:disabled):hover {
+            background-color: #e9f5ff;
+            border-color: var(--primary-accent);
+        }
+        
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        #feedback {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-top: 20px;
+            height: 30px;
+        }
+
+        .correct { color: var(--success-color); }
+        .incorrect { color: var(--error-color); }
+
+        #score-display, #timer-display {
+            font-size: 1.2em;
+            margin-top: 15px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: var(--primary-accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <h1>Menu Bar Icon Challenge</h1>
+        <div id="icon-display">?</div>
+        <div id="options-container"></div>
+        <div id="feedback"></div>
+        <div id="score-display">Score: 0</div>
+        <div id="timer-display">Time Left: 10</div>
+    </div>
+    <a href="index.html" class="home-link">&larr; Back to Main Menu</a>
+
+    <script>
+        // Using simple text/emojis as stand-ins for icons.
+        // For real icons, you would use SVG paths or an icon font.
+        const icons = [
+            { icon: '🔍', name: 'Spotlight', id: 'spotlight' },
+            { icon: 'Wi-Fi', name: 'Wi-Fi', id: 'wifi' }, // Placeholder for Wi-Fi icon
+            { icon: '🔊', name: 'Sound/Volume', id: 'sound' },
+            { icon: '🔋', name: 'Battery', id: 'battery' },
+            { icon: '🌀', name: 'Time Machine', id: 'timemachine' },
+            { icon: 'B', name: 'Bluetooth', id: 'bluetooth' } // Placeholder for Bluetooth icon
+        ];
+
+        let currentIcon;
+        let score = 0;
+        let timeLeft = 10;
+        let timerInterval;
+        let gameActive = true;
+        let rounds = 0;
+        const maxRounds = 10;
+
+        const iconDisplayEl = document.getElementById('icon-display');
+        const optionsContainerEl = document.getElementById('options-container');
+        const feedbackEl = document.getElementById('feedback');
+        const scoreDisplayEl = document.getElementById('score-display');
+        const timerDisplayEl = document.getElementById('timer-display');
+
+        function generateOptions(correctAnswer) {
+            const options = [correctAnswer];
+            while (options.length < 4) {
+                const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+                if (!options.some(opt => opt.id === randomIcon.id)) {
+                    options.push(randomIcon);
+                }
+            }
+            return options.sort(() => 0.5 - Math.random());
+        }
+
+        function loadRound() {
+            if (rounds >= maxRounds) {
+                endGame();
+                return;
+            }
+            rounds++;
+
+            feedbackEl.textContent = '';
+            optionsContainerEl.innerHTML = '';
+            timeLeft = 10;
+            timerDisplayEl.textContent = `Time Left: ${timeLeft}`;
+
+            currentIcon = icons[Math.floor(Math.random() * icons.length)];
+            
+            // Special styling for placeholder icons
+            if (currentIcon.id === 'wifi') {
+                iconDisplayEl.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16"><path d="M15.384 6.115a.485.485 0 0 0-.047-.736C12.518 2.525 8.047 1.5 4.5 1.5s-8.018 1.025-10.837 3.879a.485.485 0 0 0-.048.736.518.518 0 0 0 .735.047c2.46-2.525 6.382-3.5 9.15-3.5s6.69 1.025 9.15 3.5c.209.21.527.21.735-.047z"/><path d="M9.708 8.163a.5.5 0 0 0-.708 0l-1.5 1.5a.5.5 0 0 0 0 .708l1.5 1.5a.5.5 0 0 0 .708 0l1.5-1.5a.5.5 0 0 0 0-.708l-1.5-1.5z"/><path d="M13.229 8.271a.482.482 0 0 0-.063-.745C11.316 5.922 8.047 5 4.5 5s-6.816.922-8.666 2.526a.482.482 0 0 0-.063.745.525.525 0 0 0 .75.063c1.6-1.425 4.472-2.34 7.979-2.34s6.379.915 7.979 2.34c.224.198.526.18.75-.063z"/></svg>`;
+            } else if (currentIcon.id === 'bluetooth') {
+                 iconDisplayEl.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.5 2.134a.5.5 0 0 0-.904.26L5.223 6.03H2.073a.5.5 0 0 0-.37.843l3.563 2.964-2.54 4.143a.5.5 0 0 0 .758.638L7.5 11.233v2.633a.5.5 0 0 0 .904.26l2.373-3.84-1.332.888a.5.5 0 0 0-.232.899l.48.32a.5.5 0 0 0 .758-.638L8 8.003l2.54 2.112a.5.5 0 0 0 .758-.638l-2.54-4.143 3.563-2.964a.5.5 0 0 0-.37-.843H10.777L8.5 2.134zM7.148 6.533l.852-1.372v2.744L7.148 6.533zm1.704 0l.852 1.372L8.852 5.16v2.744z"/></svg>`;
+            } else {
+                iconDisplayEl.textContent = currentIcon.icon;
+            }
+
+            const options = generateOptions(currentIcon);
+            options.forEach(opt => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = opt.name;
+                button.dataset.id = opt.id;
+                button.addEventListener('click', selectAnswer);
+                optionsContainerEl.appendChild(button);
+            });
+
+            startTimer();
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplayEl.textContent = `Time Left: ${timeLeft}`;
+                if (timeLeft < 0) {
+                    selectAnswer({ target: { dataset: { id: 'timeout' } } }); // Simulate a wrong answer on timeout
+                }
+            }, 1000);
+        }
+
+        function selectAnswer(e) {
+            if (!gameActive) return;
+            clearInterval(timerInterval);
+            
+            const selectedId = e.target.dataset.id;
+            
+            document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+
+            if (selectedId === currentIcon.id) {
+                score++;
+                feedbackEl.textContent = 'Correct!';
+                feedbackEl.className = 'correct';
+            } else {
+                feedbackEl.textContent = 'Incorrect!';
+                feedbackEl.className = 'incorrect';
+            }
+            scoreDisplayEl.textContent = `Score: ${score}`;
+
+            setTimeout(loadRound, 1500);
+        }
+
+        function endGame() {
+            gameActive = false;
+            iconDisplayEl.style.display = 'none';
+            optionsContainerEl.innerHTML = `<h2>Game Over!</h2><p>Your final score is ${score} out of ${maxRounds}.</p>`;
+            feedbackEl.textContent = '';
+            timerDisplayEl.style.display = 'none';
+        }
+        
+        // Start Game
+        loadRound();
+
+    </script>
+</body>
+</html>

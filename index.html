@@ -13,15 +13,17 @@
 <style>
     /* LIGHT PROFESSIONAL MODE PALETTE */
     :root {
-        --bg-main: #f4f7f9; /* Very light blue-gray background (Off-white) */
-        --primary-accent: #0072C6; /* Professional CompTIA Blue */
-        --secondary-accent: #D9232E; /* Professional CompTIA Red for highlights/PBQ */
+        --bg-main: #f4f7f9;
+        --primary-accent: #0072C6; /* Windows Blue */
+        --secondary-accent: #D9232E; /* Red for highlights/PBQ */
         --flashcard-accent: #f7b731; /* Amber/Gold for Flashcards */
-        --text-main: #212529; /* Dark text for high contrast */
-        --text-muted: #6c757d; /* Muted grey for secondary text */
-        --text-light: #ffffff; /* White text for accent backgrounds */
-        --card-bg: #ffffff; /* Crisp white card background */
-        --border-color: #e9ecef; /* Very light border color */
+        --macos-accent: #555555; /* macOS Grey */
+        --linux-accent: #FFA500; /* Linux Orange */
+        --text-main: #212529;
+        --text-muted: #6c757d;
+        --text-light: #ffffff;
+        --card-bg: #ffffff;
+        --border-color: #e9ecef;
         --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
 
@@ -94,7 +96,6 @@
         margin-bottom: 30px; 
         border-radius: 8px;
         box-shadow: 0 4px 10px rgba(217, 35, 46, 0.3);
-        border: 1px solid var(--secondary-accent);
     }
 
     /* HERO SECTION */
@@ -124,7 +125,7 @@
         font-size: 1.8em;
         font-weight: 500;
     }
-
+    
     .selection-section {
         margin-bottom: 50px;
     }
@@ -147,60 +148,40 @@
         transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
     }
 
-    .exam-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-subtle);
+    /* Hover States */
+    .exam-card:hover { 
+        transform: translateY(-5px); 
+        box-shadow: var(--shadow-subtle); 
         border-color: var(--primary-accent);
     }
-    
-    .exam-card.pbq-card:hover {
-        border-color: var(--secondary-accent);
-    }
-    
-    .exam-card.flashcard-card:hover {
-        border-color: var(--flashcard-accent);
-        box-shadow: 0 0 15px rgba(247, 183, 49, 0.3);
-    }
+    .exam-card.pbq-card:hover { border-color: var(--secondary-accent); }
+    .exam-card.flashcard-card:hover { border-color: var(--flashcard-accent); }
 
-    .exam-card h3 {
-        color: var(--primary-accent);
-        font-size: 1.4em;
-        margin-bottom: 10px;
-        font-weight: 700;
-    }
+    /* Card Title Colors */
+    .exam-card h3 { font-size: 1.4em; margin-bottom: 10px; font-weight: 700; color: var(--primary-accent);}
+    .exam-card.pbq-card h3 { color: var(--secondary-accent); }
+    .exam-card.flashcard-card h3 { color: var(--flashcard-accent); }
     
-    .exam-card.pbq-card h3 {
-        color: var(--secondary-accent);
-    }
-    
-    .exam-card.flashcard-card h3 {
-        color: var(--flashcard-accent);
-    }
-
     .exam-card p {
         color: var(--text-muted);
-        flex-grow: 1; /* Push footer down */
+        flex-grow: 1;
         margin-bottom: 15px;
     }
 
+    /* Card Footer Colors */
     .card-footer {
         margin-top: auto;
         padding-top: 15px;
         border-top: 1px solid var(--border-color);
         font-weight: 600;
-        color: var(--primary-accent);
         display: flex;
         justify-content: space-between;
         align-items: center;
+        color: var(--primary-accent);
     }
-    
-    .exam-card.pbq-card .card-footer {
-        color: var(--secondary-accent);
-    }
-    
-    .exam-card.flashcard-card .card-footer {
-        color: var(--flashcard-accent);
-    }
+    .exam-card.pbq-card .card-footer { color: var(--secondary-accent); }
+    .exam-card.flashcard-card .card-footer { color: var(--flashcard-accent); }
+
 
     .card-footer span {
         font-size: 1.2em;
@@ -218,21 +199,9 @@
         text-align: center;
     }
     
-    .trust-section h3 {
-        color: var(--text-main);
-        margin-bottom: 15px;
-        font-weight: 500;
-        font-size: 1.5em;
-    }
+    .trust-section h3 { color: var(--text-main); margin-bottom: 15px; font-weight: 500; font-size: 1.5em; }
     
-    .trust-points {
-        list-style: none;
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        padding: 0;
-        flex-wrap: wrap;
-    }
+    .trust-points { list-style: none; display: flex; justify-content: center; gap: 30px; padding: 0; flex-wrap: wrap; }
     
     .trust-points li {
         background-color: var(--card-bg);
@@ -244,42 +213,18 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
     
-    .credits-section p {
-        font-size: 0.9em;
-        color: var(--text-muted);
-        margin-bottom: 5px;
-    }
-    
-    .credits-section strong {
-        color: var(--text-main);
-    }
+    .credits-section p { font-size: 0.9em; color: var(--text-muted); margin-bottom: 5px; }
+    .credits-section strong { color: var(--text-main); }
 
     /* FOOTER */
-    footer {
-        text-align: center;
-        padding: 20px 0;
-        margin-top: 40px;
-        border-top: 1px solid var(--border-color);
-        color: var(--text-muted);
-        font-size: 0.85em;
-    }
-
+    footer { text-align: center; padding: 20px 0; margin-top: 40px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.85em; }
 
     /* RESPONSIVE DESIGN */
     @media (max-width: 768px) {
-        header h1 {
-            font-size: 2em;
-        }
-        .card-grid {
-            grid-template-columns: 1fr;
-        }
-        .trust-points {
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-        }
+        header h1 { font-size: 2em; }
+        .card-grid { grid-template-columns: 1fr; }
+        .trust-points { flex-direction: column; gap: 15px; align-items: center; }
     }
-
 </style>
 </head>
 <body>
@@ -303,24 +248,21 @@
             <p class="hero-text">Select a module below to begin your practice drills.</p>
         </section>
 
+        <!-- UNIFIED GAME SECTION -->
         <section class="selection-section">
-            <h2>INTERACTIVE GAMES & SIMULATIONS</h2>
+            <h2>Interactive Games & Simulations</h2>
             <div class="card-grid">
-                <a href="game-troubleshoot.html" class="exam-card pbq-card">
-                    <h3>TROUBLESHOOTING TICKETS</h3>
-                    <p>A fast-paced game where you're presented with user support tickets. Choose the correct first step or tool to solve the problem before time runs out!</p>
-                    <div class="card-footer">LAUNCH SIMULATION <span>&rarr;</span></div>
-                </a>
-                <a href="game-cli.html" class="exam-card">
-                    <h3>COMMAND-LINE CHALLENGE</h3>
-                    <p>Test your recall of essential Windows commands. Read the objective and type the correct command and switches into the terminal before the timer hits zero!</p>
-                    <div class="card-footer">OPEN TERMINAL <span>&rarr;</span></div>
+                <a href="games.html" class="exam-card pbq-card">
+                    <h3>GAME ARCADE</h3>
+                    <p>Launch the simulation hub to access all interactive games for Windows, macOS, and Linux, including command-line and troubleshooting challenges.</p>
+                    <div class="card-footer">ENTER ARCADE <span>&rarr;</span></div>
                 </a>
             </div>
         </section>
         
+        <!-- GENERAL PRACTICE MODULES -->
         <section class="selection-section">
-            <h2>PRACTICE MODULE DEPLOYMENT</h2>
+            <h2>General Practice Modules</h2>
             <div class="card-grid">
                 <a href="quiz-a.html" class="exam-card">
                     <h3>PRACTICE TEST A</h3>
@@ -357,7 +299,6 @@
                     <p>Dedicated simulation interface for **troubleshooting** and **config deployment** via drag-and-drop mechanics (Performance-Based Questions).</p>
                     <div class="card-footer">ACTIVATE SIMULATION <span>&rarr;</span></div>
                 </a>
-                
             </div>
         </section>
         
@@ -374,7 +315,7 @@
             <p><strong>Practice Tests A, B, and C</strong> were prepared using materials based on the publicly available **Professor Messer** CompTIA A+ Core 2 (220-1202) study objectives.</p>
             <p>The **PBQ Simulation Challenge** scenarios and questions are randomly created using **Gemini AI** for dynamic practice.</p>
         </section>
-        </main>
+    </main>
 
     <footer>
         CONSOLE LOG: © 2025 • INTERFACE DESIGN BY <strong>BLABORTE</strong>
@@ -383,3 +324,4 @@
 
 </body>
 </html>
+

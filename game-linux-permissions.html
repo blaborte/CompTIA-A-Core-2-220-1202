@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Permissions Puzzle | A+ Core 2 Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #f4f7f9;
+            --primary-accent: #0072C6;
+            --linux-accent: #FFA500;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --card-bg: #ffffff;
+            --border-color: #e9ecef;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --terminal-bg: #212529;
+            --terminal-text: #f8f9fa;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #game-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px;
+            padding: 30px;
+            border-top: 5px solid var(--linux-accent);
+        }
+
+        h1 {
+            color: var(--linux-accent);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .info-box {
+            background-color: var(--bg-main);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            border-left: 5px solid var(--linux-accent);
+        }
+        
+        .info-box h3 {
+            margin: 0 0 10px;
+            color: var(--text-muted);
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        #current-permissions {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--primary-accent);
+        }
+
+        #task-prompt {
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .terminal {
+            background-color: var(--terminal-bg);
+            color: var(--terminal-text);
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            text-align: left;
+            margin-top: 25px;
+        }
+        
+        .prompt-symbol { color: var(--terminal-text); }
+        .prompt-user { color: #8AE234; }
+
+
+        #command-input {
+            background: transparent;
+            border: none;
+            color: var(--terminal-text);
+            font-family: inherit;
+            font-size: 1em;
+            width: 70%;
+        }
+
+        #command-input:focus { outline: none; }
+        
+        #feedback { font-size: 1.2em; font-weight: 700; margin-top: 20px; height: 30px; }
+        .correct { color: var(--success-color); }
+        .incorrect { color: var(--error-color); }
+        
+        #score-display, #timer-display { font-size: 1.2em; margin-top: 15px; color: var(--text-muted); font-weight: 500; }
+
+        .home-link { display: inline-block; margin-top: 25px; color: var(--primary-accent); text-decoration: none; font-weight: 500; }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <h1>Linux Permissions Puzzle</h1>
+
+        <div class="info-box">
+            <h3>CURRENT PERMISSIONS</h3>
+            <div id="current-permissions">-rwx-r-xr--</div>
+        </div>
+
+        <div class="info-box">
+            <h3>YOUR TASK</h3>
+            <div id="task-prompt">Loading task...</div>
+        </div>
+        
+        <div class="terminal">
+            <label for="command-input">
+                <span class="prompt-user">user@a-plus-exam</span><span class="prompt-symbol">:~$ </span>
+            </label>
+            <input type="text" id="command-input" autocomplete="off" spellcheck="false" autofocus>
+        </div>
+
+        <div id="feedback"></div>
+        <div id="score-display">Score: 0</div>
+        <div id="timer-display">Time Left: 25</div>
+    </div>
+    <a href="index.html" class="home-link">&larr; Back to Main Menu</a>
+
+    <script>
+        const challenges = [
+            { start: "-rw-r--r--", task: "Add execute permission for the Owner.", answers: ["chmod u+x file.txt", "chmod 744 file.txt"] },
+            { start: "-rwxr-xr-x", task: "Remove write permission for the Owner.", answers: ["chmod u-w file.txt", "chmod 555 file.txt"] },
+            { start: "-rw-rw-r--", task: "Add execute permission for the Group.", answers: ["chmod g+x file.txt", "chmod 674 file.txt"] },
+            { start: "-rwxrwx---", task: "Add read permission for Others.", answers: ["chmod o+r file.txt", "chmod 774 file.txt"] },
+            { start: "-r--r--r--", task: "Set permissions to read, write, and execute for Owner ONLY.", answers: ["chmod 700 file.txt", "chmod u=rwx,go= file.txt"] },
+            { start: "-rw-r--r--", task: "Set full permissions for everyone (read, write, execute).", answers: ["chmod 777 file.txt", "chmod a=rwx file.txt"] },
+            { start: "-rwxr-xr-x", task: "Remove the execute permission for Others.", answers: ["chmod o-x file.txt", "chmod 754 file.txt"] },
+            { start: "drw-r-----", task: "Add execute permission for the Owner (needed to enter a directory).", answers: ["chmod u+x dir", "chmod 740 dir"] },
+        ];
+
+        let currentChallengeIndex = 0;
+        let score = 0;
+        let timeLeft = 25;
+        let timerInterval;
+
+        const taskEl = document.getElementById('task-prompt');
+        const permsEl = document.getElementById('current-permissions');
+        const inputEl = document.getElementById('command-input');
+        const feedbackEl = document.getElementById('feedback');
+        const scoreDisplayEl = document.getElementById('score-display');
+        const timerDisplayEl = document.getElementById('timer-display');
+        
+        function loadChallenge() {
+            if (currentChallengeIndex >= challenges.length) {
+                endGame();
+                return;
+            }
+            
+            feedbackEl.textContent = '';
+            inputEl.value = '';
+            inputEl.disabled = false;
+            timeLeft = 25;
+            timerDisplayEl.textContent = `Time Left: ${timeLeft}`;
+            
+            const current = challenges[currentChallengeIndex];
+            permsEl.textContent = `${current.start}  file.txt`;
+            if (current.start.startsWith('d')) {
+                 permsEl.textContent = `${current.start}  dir`;
+            }
+            taskEl.textContent = current.task;
+            inputEl.focus();
+
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplayEl.textContent = `Time Left: ${timeLeft}`;
+                if (timeLeft < 0) {
+                    handleAnswer(true); // Handle timeout as incorrect
+                }
+            }, 1000);
+        }
+        
+        function handleAnswer(isTimeout = false) {
+            clearInterval(timerInterval);
+            inputEl.disabled = true;
+
+            const userAnswer = inputEl.value.trim().toLowerCase();
+            const correctAnswers = challenges[currentChallengeIndex].answers.map(a => a.toLowerCase());
+
+            if (!isTimeout && correctAnswers.includes(userAnswer)) {
+                score++;
+                feedbackEl.textContent = 'Correct!';
+                feedbackEl.className = 'correct';
+            } else {
+                if(isTimeout) {
+                    feedbackEl.textContent = `Time's up! One correct answer was: ${challenges[currentChallengeIndex].answers[0]}`;
+                } else {
+                    feedbackEl.textContent = `Incorrect! One correct answer was: ${challenges[currentChallengeIndex].answers[0]}`;
+                }
+                feedbackEl.className = 'incorrect';
+            }
+            scoreDisplayEl.textContent = `Score: ${score}`;
+            
+            setTimeout(() => {
+                currentChallengeIndex++;
+                loadChallenge();
+            }, 3500);
+        }
+
+        function endGame() {
+            taskEl.textContent = 'Challenge Complete!';
+            document.querySelector('.terminal').style.display = 'none';
+            permsEl.style.display = 'none';
+            document.querySelectorAll('.info-box h3')[0].style.display = 'none';
+            feedbackEl.textContent = `Your final score is ${score} out of ${challenges.length}.`;
+            timerDisplayEl.style.display = 'none';
+        }
+
+        inputEl.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                handleAnswer();
+            }
+        });
+        
+        challenges.sort(() => 0.5 - Math.random());
+        loadChallenge();
+    </script>
+</body>
+</html>

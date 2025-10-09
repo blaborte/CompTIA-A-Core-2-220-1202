@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>macOS Feature Match | A+ Core 2 Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #f4f7f9;
+            --primary-accent: #0072C6;
+            --flashcard-accent: #f7b731;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --card-bg: #ffffff;
+            --border-color: #e9ecef;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #game-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            padding: 30px;
+            border-top: 5px solid var(--flashcard-accent);
+        }
+
+        h1 {
+            color: var(--flashcard-accent);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .game-area {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        #descriptions-container, #options-container {
+            width: 48%;
+            padding: 10px;
+        }
+        
+        #descriptions-container h3, #options-container h3 {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .description-box {
+            background-color: var(--bg-main);
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .feature-option {
+            background-color: #e9f5ff;
+            border: 2px solid var(--primary-accent);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-weight: 500;
+            cursor: grab;
+        }
+        
+        .feature-option:active {
+            cursor: grabbing;
+        }
+
+        .dragging {
+            opacity: 0.5;
+        }
+
+        .drag-over {
+            border-style: solid;
+            border-color: var(--primary-accent);
+            background-color: #e9f5ff;
+        }
+        
+        #feedback {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-top: 20px;
+            height: 30px;
+        }
+
+        .correct { color: var(--success-color); }
+        .incorrect { color: var(--error-color); }
+
+        #score-display {
+            font-size: 1.2em;
+            margin-top: 15px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: var(--primary-accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <h1>macOS Feature Match</h1>
+        <div class="game-area">
+            <div id="descriptions-container">
+                <h3>DESCRIPTIONS</h3>
+            </div>
+            <div id="options-container">
+                <h3>FEATURES</h3>
+            </div>
+        </div>
+        <div id="feedback"></div>
+        <div id="score-display">Score: 0</div>
+    </div>
+    <a href="index.html" class="home-link">&larr; Back to Main Menu</a>
+
+    <script>
+        const features = [
+            { id: 'time-machine', name: 'Time Machine', description: 'Creates incremental backups of files, allowing the user to restore their Mac to any point in the past.' },
+            { id: 'spotlight', name: 'Spotlight', description: 'A system-wide search feature that finds files, apps, emails, and other content on the Mac.' },
+            { id: 'filevault', name: 'FileVault', description: 'Provides full-disk encryption for the startup volume to protect data at rest.' },
+            { id: 'keychain', name: 'Keychain', description: 'A secure password management system that stores passwords, certificates, and other sensitive information.' },
+            { id: 'disk-utility', name: 'Disk Utility', description: 'A tool for managing hard drives and storage volumes, including formatting, partitioning, and repairing disks.' }
+        ];
+
+        let score = 0;
+        let matchedCount = 0;
+
+        const descriptionsContainer = document.getElementById('descriptions-container');
+        const optionsContainer = document.getElementById('options-container');
+        const scoreDisplay = document.getElementById('score-display');
+        const feedback = document.getElementById('feedback');
+
+        function initializeGame() {
+            const shuffledFeatures = [...features].sort(() => 0.5 - Math.random());
+            const shuffledDescriptions = [...features].sort(() => 0.5 - Math.random());
+
+            shuffledDescriptions.forEach(item => {
+                const descBox = document.createElement('div');
+                descBox.classList.add('description-box');
+                descBox.dataset.id = item.id;
+                descBox.textContent = item.description;
+                
+                descBox.addEventListener('dragover', e => e.preventDefault());
+                descBox.addEventListener('dragenter', () => descBox.classList.add('drag-over'));
+                descBox.addEventListener('dragleave', () => descBox.classList.remove('drag-over'));
+                descBox.addEventListener('drop', handleDrop);
+
+                descriptionsContainer.appendChild(descBox);
+            });
+
+            shuffledFeatures.forEach(item => {
+                const option = document.createElement('div');
+                option.classList.add('feature-option');
+                option.id = item.id;
+                option.textContent = item.name;
+                option.draggable = true;
+
+                option.addEventListener('dragstart', handleDragStart);
+                option.addEventListener('dragend', handleDragEnd);
+
+                optionsContainer.appendChild(option);
+            });
+        }
+        
+        function handleDragStart(e) {
+            e.target.classList.add('dragging');
+            e.dataTransfer.setData('text/plain', e.target.id);
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+        
+        function handleDrop(e) {
+            e.preventDefault();
+            const droppedFeatureId = e.dataTransfer.getData('text/plain');
+            const targetDescriptionId = e.target.dataset.id;
+            
+            e.target.classList.remove('drag-over');
+            
+            const featureElement = document.getElementById(droppedFeatureId);
+
+            if (droppedFeatureId === targetDescriptionId) {
+                // Correct match
+                score++;
+                matchedCount++;
+                feedback.textContent = "Correct Match!";
+                feedback.className = 'correct';
+                
+                e.target.style.border = `2px solid var(--success-color)`;
+                e.target.style.backgroundColor = '#d4edda';
+                featureElement.style.display = 'none'; // Hide the dragged element
+            } else {
+                // Incorrect match
+                feedback.textContent = "Incorrect, try again!";
+                feedback.className = 'incorrect';
+            }
+            
+            scoreDisplay.textContent = `Score: ${score}`;
+            
+            if (matchedCount === features.length) {
+                endGame();
+            }
+        }
+        
+        function endGame() {
+            feedback.textContent = `All matched! Final Score: ${score}/${features.length}`;
+            feedback.className = 'correct';
+        }
+
+        initializeGame();
+    </script>
+</body>
+</html>
