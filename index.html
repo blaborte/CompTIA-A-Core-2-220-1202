@@ -9,7 +9,7 @@
 
 <style>
     :root {
-        --primary-color: #0072C6; /* A professional blue */
+        --primary-color: #0072C6;
         --secondary-color: #005A9E;
         --bg-light: #f8f9fa;
         --text-dark: #212529;
@@ -20,9 +20,7 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    html {
-        scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
         font-family: "Roboto", sans-serif;
@@ -31,14 +29,7 @@
         line-height: 1.6;
     }
 
-    /* Main Container */
-    .container {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 40px 20px;
-    }
-
-    /* Hero Section */
+    .container { max-width: 960px; margin: 0 auto; padding: 40px 20px; }
     .hero {
         position: relative;
         background: url('https://images.unsplash.com/photo-1550745165-9bc0b252726a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80') center/cover no-repeat;
@@ -49,7 +40,6 @@
         overflow: hidden;
         text-align: center;
     }
-
     .hero::before {
         content: "";
         position: absolute;
@@ -57,27 +47,9 @@
         width:100%; height:100%;
         background: linear-gradient(to right, rgba(0, 114, 198, 0.8), rgba(0, 90, 158, 0.6));
     }
-
-    .hero-content {
-        position: relative;
-        z-index: 1;
-    }
-
-    .hero h1 { 
-        font-size: 3em; 
-        margin-bottom: 15px; 
-        text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
-        font-weight: 700;
-    }
-    .hero p { 
-        font-size: 1.2em; 
-        opacity: 0.95; 
-        margin-bottom: 30px; 
-        font-weight: 300;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero h1 { font-size: 3em; margin-bottom: 15px; text-shadow: 1px 1px 5px rgba(0,0,0,0.2); font-weight: 700; }
+    .hero p { font-size: 1.2em; opacity: 0.95; margin-bottom: 30px; font-weight: 300; max-width: 600px; margin-left: auto; margin-right: auto; }
     .hero a {
         display: inline-block;
         padding: 15px 35px;
@@ -94,25 +66,13 @@
         transform: translateY(-3px);
         box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
-    
-    /* Exam Card Section */
-    .exam-section {
-        padding-top: 20px;
-    }
-    
-    .exam-section h2 {
-        text-align: center;
-        font-size: 2.2em;
-        margin-bottom: 40px;
-        color: var(--text-dark);
-    }
-    
+    .exam-section { padding-top: 20px; }
+    .exam-section h2 { text-align: center; font-size: 2.2em; margin-bottom: 40px; color: var(--text-dark); }
     .exam-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 30px;
     }
-    
     .exam-card {
         background: var(--card-bg);
         border: 1px solid var(--border-color);
@@ -122,35 +82,24 @@
         color: var(--text-dark);
         transition: all 0.3s ease;
         box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        display: flex; /* Added for layout */
+        flex-direction: column; /* Added for layout */
     }
     .exam-card:hover {
         transform: translateY(-8px);
         border-color: var(--primary-color);
         box-shadow: 0 15px 30px rgba(0,0,0,0.1);
     }
+    .exam-card h3 { font-size: 1.5em; margin-bottom: 15px; color: var(--primary-color); }
+    .exam-card p { font-size: 1em; color: var(--text-muted); line-height: 1.6; flex-grow: 1;}
+    .card-footer { margin-top: 20px; font-weight: 500; color: var(--primary-color); }
+    .card-footer span { transition: transform 0.3s ease; display: inline-block; }
+    .exam-card:hover .card-footer span { transform: translateX(5px); }
     
-    .exam-card h3 { 
-        font-size: 1.5em; 
-        margin-bottom: 15px; 
-        color: var(--primary-color); 
+    footer { text-align: center; padding: 20px; font-size: 0.9em; color: var(--text-muted); margin-top: 80px; border-top: 1px solid var(--border-color); }
+    @media (max-width: 960px) {
+        .exam-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
     }
-    .exam-card p { 
-        font-size: 1em; 
-        color: var(--text-muted); 
-        line-height: 1.6; 
-    }
-
-    /* Footer */
-    footer {
-        text-align: center;
-        padding: 20px;
-        font-size: 0.9em;
-        color: var(--text-muted);
-        margin-top: 80px;
-        border-top: 1px solid var(--border-color);
-    }
-
-    /* Responsive */
     @media (max-width: 768px) {
         .hero { padding: 80px 20px; }
         .hero h1 { font-size: 2.2em; }
@@ -173,17 +122,25 @@
         <section class="exam-section" id="exams">
             <h2>Practice Exams</h2>
             <div class="exam-grid">
-                <a href="Practice Exam A.html" class="exam-card">
+                <a href="quiz-a.html" class="exam-card">
                     <h3>Practice Test A</h3>
                     <p>The first set of questions to test your foundational knowledge across all exam domains.</p>
+                    <div class="card-footer">Begin Test <span>&rarr;</span></div>
                 </a>
-                <a href="Practice Exam B.html" class="exam-card">
+                <a href="quiz-b.html" class="exam-card">
                     <h3>Practice Test B</h3>
                     <p>A second set of practice questions to challenge your understanding and identify weak spots.</p>
+                    <div class="card-footer">Begin Test <span>&rarr;</span></div>
                 </a>
-                <a href="Practice Exam C.html" class="exam-card">
+                <a href="quiz-c.html" class="exam-card">
                     <h3>Practice Test C</h3>
                     <p>The final set of questions, designed to simulate the real exam experience and build confidence.</p>
+                    <div class="card-footer">Begin Test <span>&rarr;</span></div>
+                </a>
+                <a href="quiz-random.html" class="exam-card">
+                    <h3>Mixed Review Quiz</h3>
+                    <p>A random set of questions pulled from all practice exams for a comprehensive review session.</p>
+                    <div class="card-footer">Start Random Quiz <span>&rarr;</span></div>
                 </a>
             </div>
         </section>

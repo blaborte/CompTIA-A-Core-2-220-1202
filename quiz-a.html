@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor Messer's CompTIA A+ Core 2 (220-1202) Practice Test C</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f4f7f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        #quiz-container { background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); width: 100%; max-width: 700px; overflow: hidden; position: relative; }
+        .home-link { position: absolute; top: 20px; left: 20px; color: white; text-decoration: none; font-weight: 500; background-color: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 6px; transition: background-color 0.2s; z-index: 10; }
+        .home-link:hover { background-color: rgba(0,0,0,0.4); }
+        #timer { position: absolute; top: 20px; right: 20px; background-color: rgba(0,0,0,0.2); color: white; padding: 5px 10px; border-radius: 6px; font-weight: 500; font-size: 1.1em; z-index: 10; }
+        #quiz-header { background-color: #4a90e2; color: white; padding: 20px; text-align: center; }
+        #quiz-header h1 { margin-bottom: 5px; font-size: 1.4em; padding-top: 30px; padding-left: 80px; padding-right: 80px; }
+        #creator-tag { margin-top: 5px; font-weight: 300; font-size: 0.9em; opacity: 0.9; }
+        #quiz-body { padding: 30px; }
+        #question-text { font-size: 1.2em; font-weight: 500; margin-bottom: 20px; line-height: 1.5; white-space: pre-wrap; }
+        #options-list { list-style: none; padding: 0; margin: 0; }
+        .option { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin-bottom: 10px; cursor: pointer; transition: background-color 0.2s, border-color 0.2s; }
+        .option:hover { background-color: #e9ecef; }
+        .option.no-click { pointer-events: none; }
+        .option input { margin-right: 10px; }
+        .option.correct { background-color: #d4edda; border-color: #c3e6cb; color: #155724; font-weight: bold; }
+        .option.incorrect { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; font-weight: bold; }
+        #quiz-footer { padding: 20px 30px; border-top: 1px solid #e9ecef; display: flex; justify-content: space-between; align-items: center; }
+        #score-text { font-size: 1.1em; font-weight: bold; }
+        button { background-color: #4a90e2; color: white; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1em; cursor: pointer; transition: background-color 0.2s; }
+        button:hover { background-color: #357abd; }
+        button#next-btn, button#toggle-explanation-btn { background-color: #28a745; margin-left: 10px; }
+        button#next-btn:hover, button#toggle-explanation-btn:hover { background-color: #218838; }
+        #setup-screen { padding: 40px; text-align: center; }
+        #setup-screen h2 { margin-top: 0; margin-bottom: 30px; }
+        .setup-option { margin-bottom: 25px; }
+        .setup-option label { font-weight: 500; margin-right: 10px; }
+        select { padding: 5px; border-radius: 4px; border: 1px solid #ccc; }
+        .results-summary { text-align: center; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+        .results-list { padding: 0 30px 30px; max-height: 60vh; overflow-y: auto; }
+        .result-item { border-bottom: 1px solid #eee; padding: 20px 0; }
+        .result-question { font-weight: bold; font-size: 1.1em; margin-bottom: 15px; }
+        .result-options { list-style: none; padding: 0; }
+        .result-option { padding: 8px; border-radius: 6px; margin-bottom: 5px; }
+        .result-option.correct-answer { background-color: #d4edda; }
+        .result-option.incorrect-answer { background-color: #f8d7da; text-decoration: line-through; }
+        .result-explanation { margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-radius: 6px; font-size: 0.9em; }
+        #explanation-container { margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px; }
+        .explanation-title { font-size: 1.1em; font-weight: bold; margin-bottom: 10px; }
+        .explanation-text p { margin: 0 0 10px; line-height: 1.6; }
+        .explanation-text strong { color: #0056b3; }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        </div>
+
+    <script>
+        // --- FULL QUIZ DATA FOR TEST C ---
+        const allQuizData = [
+            {"id": "C6", "question": "A technician has been called to resolve an issue with a desktop computer...", "options": {"A": "View running processes in Task Manager", "B": "Disable System Restore", "C": "Remove the computer from the network", "D": "Educate the end user"}, "answer": "C", "explanation": {"correct": "C. Remove the computer from the network", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C7", "question": "A system administrator would like to remove the TFTP Client in Windows...", "options": {"A": "Programs and Features", "B": "Services", "C": "Network and Sharing Center", "D": "File Explorer options"}, "answer": "A", "explanation": {"correct": "A. Programs and Features", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C8", "question": "A user has noticed a Bluetooth device currently connected to their tablet...", "options": {"A": "Perform an anti-malware scan", "B": "Research installed apps with an app scanner", "C": "Disable the Wi-Fi network", "D": "Remove the Bluetooth device"}, "answer": "D", "explanation": {"correct": "D. Remove the Bluetooth device", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C9", "question": "A user has recently been assigned a new tablet, but each time she tries to read her email the tablet reboots...", "options": {"A": "Replace the battery", "B": "Perform a factory reset", "C": "Run a hardware diagnostic", "D": "Disable Wi-Fi"}, "answer": "C", "explanation": {"correct": "C. Run a hardware diagnostic", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C10", "question": "A computer technician has been asked to verify a set of new Active Directory settings on computers at a remote site...", "options": {"A": "net use", "B": "sfc", "C": "gpresult", "D": "netstat"}, "answer": "C", "explanation": {"correct": "C. gpresult", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C11", "question": "A system administrator needs to modify the Linux group associated with a file...", "options": {"A": "ps", "B": "df", "C": "chown", "D": "grep"}, "answer": "C", "explanation": {"correct": "C. chown", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C12", "question": "A user has brought their laptop to the help desk because of an issue during startup... Which of the following would be the best option?", "options": {"A": "Provide the user with the option to repair, replace, or rent a new system", "B": "Assign the user to the standard seven-day repair agreement", "C": "Replace the external power cable and close the repair ticket", "D": "Recommend the user cancel their travel plans"}, "answer": "A", "explanation": {"correct": "A. Provide the user with options...", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C13", "question": "A home user provides numerous online presentations during the day... Which of the following would help with this issue?", "options": {"A": "Cloud backups", "B": "External storage device", "C": "Battery backup", "D": "Surge suppressor"}, "answer": "C", "explanation": {"correct": "C. Battery backup", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C14", "question": "A system administrator is planning to upgrade two physical servers in the corporate data center to external cloud-based platforms... Which of the following would provide information on connectivity and the plans for remote site access?", "options": {"A": "Change scope", "B": "End-user acceptance", "C": "Backout plan", "D": "Risk analysis"}, "answer": "A", "explanation": {"correct": "A. Change scope", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C15", "question": "A system administrator is concerned about the security of devices in the field and would like to encrypt all data on company laptops. Which of these Windows features would provide this functionality?", "options": {"A": "EFS", "B": "Domain Services", "C": "WPA3", "D": "BitLocker"}, "answer": "D", "explanation": {"correct": "D. BitLocker", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C16", "question": "A user has just installed a driver update from a laptop manufacturer... their system shows a Windows Stop Error before the login prompt is displayed. Which of the following should the system administrator follow to best resolve this issue?", "options": {"A": "Modify the BIOS boot order", "B": "Boot to Safe Mode and perform a Windows Reset", "C": "Perform a System Restore", "D": "Reinstall the patch files"}, "answer": "C", "explanation": {"correct": "C. Perform a System Restore", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C17", "question": "A user in the shipping department is authenticating to a third-party package tracking service... the site sends an email to the user with a six-digit code to complete the login process. Which of the following would best describe this process?", "options": {"A": "SPF", "B": "ACL", "C": "SMS", "D": "OTP"}, "answer": "D", "explanation": {"correct": "D. OTP", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C18", "question": "A user has opened a help desk ticket with a problem related to email spell checks... the automated checks are no longer working... Which of the following should the technician check first?", "options": {"A": "Proxy settings", "B": "Browser extensions", "C": "Memory utilization", "D": "Web server certificate"}, "answer": "B", "explanation": {"correct": "B. Browser extensions", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C19", "question": "An attacker has gained access to a password hash file. Which of the following will the attacker use to obtain the passwords?", "options": {"A": "DoS", "B": "Decryption", "C": "Brute force", "D": "Phishing"}, "answer": "C", "explanation": {"correct": "C. Brute force", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C20", "question": "A server administrator needs to create a folder on a Windows server to store weekly status report documents. Which of the following command-line tools would provide this functionality?", "options": {"A": "md", "B": "net use", "C": "cd", "D": "dir"}, "answer": "A", "explanation": {"correct": "A. md", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C21", "question": "A desktop administrator has received a notification of a deployed RSR update. Which of the following would be most affected by this update?", "options": {"A": "macOS laptops", "B": "Linux database servers", "C": "Android tablets", "D": "Windows desktops"}, "answer": "A", "explanation": {"correct": "A. macOS laptops", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C22", "question": "A desktop administrator is removing a virus from a laptop computer in a shared lab... When the administrator attempts to update to the latest anti-virus signatures, the anti-virus utility disables itself. Which of the following would be the best next step?", "options": {"A": "Boot to Safe Mode and use signatures downloaded from a separate computer", "B": "Roll back to a previous configuration", "C": "Schedule periodic updates and reconnect to the network", "D": "Discuss anti-virus strategies with the end user"}, "answer": "A", "explanation": {"correct": "A. Boot to Safe Mode...", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C23", "question": "A Windows computer has one application which crashes randomly throughout the day... Which of the following would be the best way to address these application crashes?", "options": {"A": "Perform a full backup", "B": "Reload the Active Directory profile", "C": "Defragment the hard drive", "D": "Uninstall and reinstall the application"}, "answer": "D", "explanation": {"correct": "D. Uninstall and reinstall...", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C24", "question": "An app on a user’s corporate smartphone has stopped updating. Which of the following would be the best way to resolve this issue?", "options": {"A": "Connect the smartphone to a power source", "B": "Restart the smartphone", "C": "Disable rotation lock", "D": "Disable Bluetooth"}, "answer": "B", "explanation": {"correct": "B. Restart the smartphone", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C25", "question": "A technician has been asked to replace a faulty adapter card in a server... Which of the following would be the best way to safely complete this repair?", "options": {"A": "Store the faulty card in an anti-static bag", "B": "Periodically touch the server's metal chassis", "C": "Wear safety goggles", "D": "Have a carbon dioxide extinguisher nearby"}, "answer": "B", "explanation": {"correct": "B. Periodically touch...", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C26", "question": "Which of the following would be the best choice for a system administrator to manage an Active Directory database?", "options": {"A": "Batch file", "B": "PowerShell", "C": "JavaScript", "D": "Visual Basic Scripting"}, "answer": "B", "explanation": {"correct": "B. PowerShell", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C27", "question": "A user has started their computer and received this message on the screen: “Your important files are encrypted... Which of the following would best describe this scenario?", "options": {"A": "Spyware", "B": "Boot sector virus", "C": "Rootkit", "D": "Ransomware"}, "answer": "D", "explanation": {"correct": "D. Ransomware", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C28", "question": "A desktop technician has received a complaint that a remotely-hosted application has stopped working... Which of the following tools would be the best way to confirm the location of the outage?", "options": {"A": "ping", "B": "nslookup", "C": "netstat", "D": "tracert"}, "answer": "D", "explanation": {"correct": "D. tracert", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C29", "question": "Users on the corporate network authenticate once at the beginning of the day, and are not prompted again for authentication until the following day. Which of the following would BEST describe this functionality?", "options": {"A": "NTFS", "B": "SSO", "C": "Inherited permissions", "D": "EFS"}, "answer": "B", "explanation": {"correct": "B. SSO", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C30", "question": "A server technician is removing the memory from a web server and adding new memory modules... Which of the following would be the best way to protect the old memory modules?", "options": {"A": "Padded envelope", "B": "Cotton fabric", "C": "Molded foam packing material", "D": "Anti-static bag"}, "answer": "D", "explanation": {"correct": "D. Anti-static bag", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C31", "question": "A Linux administrator is using the grep command while monitoring a database application. Which of the following would best describe this activity?", "options": {"A": "Search through a file for specific text", "B": "View a list of running processes", "C": "Change the permissions of a file", "D": "View the name of the working directory"}, "answer": "A", "explanation": {"correct": "A. Search through a file...", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C32", "question": "The upgrade process for Windows requires the installation of TPM hardware. Which of the following would best describe the reason for this system requirement?", "options": {"A": "Wired networking", "B": "64-bit compatibility", "C": "USB support", "D": "Cryptographic features"}, "answer": "D", "explanation": {"correct": "D. Cryptographic features", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C33", "question": "A medical center's hospital staff uses shared computer systems... Which of the following would help prevent this type of issue?", "options": {"A": "Multi-factor authentication", "B": "Password expiration policy", "C": "Login time restrictions", "D": "Screensaver passwords"}, "answer": "D", "explanation": {"correct": "D. Screensaver passwords", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C34", "question": "A user has a smartphone to assist with maps and directions... the user finds his phone attempting to contact a third-party website to share location information. Which of the following would be the best way to address this issue?", "options": {"A": "Disable the GPS", "B": "Perform a soft reset", "C": "Run an anti-malware scan", "D": "Use the cellular network instead of Wi-Fi"}, "answer": "C", "explanation": {"correct": "C. Run an anti-malware scan", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C35", "question": "A company requires all users to authenticate to a proxy before communicating to external websites... Which of the following should be used to integrate the proxy authentication with the existing Active Directory credentials?", "options": {"A": "AES", "B": "TKIP", "C": "RADIUS", "D": "WPA3"}, "answer": "C", "explanation": {"correct": "C. RADIUS", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C36", "question": "A desktop administrator has been tasked with removing malware from an executive’s laptop... the Windows startup process now shows a Stop Error and reboots into a repeating cycle. Which of the following would be the best next step?", "options": {"A": "Perform a Windows Repair installation", "B": "Boot with a pre-installation environment", "C": "Schedule periodic scans", "D": "Create a restore point"}, "answer": "B", "explanation": {"correct": "B. Boot with a pre-installation environment", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C37", "question": "A security administrator is deploying a new application to users in the field... Which of the following would be the best way to address this issue?", "options": {"A": "Enable Windows Firewall", "B": "Block all login attempts at the Internet firewall", "C": "Create a Group Policy", "D": "Require multi-factor authentication"}, "answer": "D", "explanation": {"correct": "D. Require multi-factor authentication", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C38", "question": "A system administrator would like to upgrade a user's Windows video editing application... the upgrade utility fails with the error 'Not enough free space.' Which of the following utilities would allow the system administrator to resolve this issue?", "options": {"A": "cleanmgr", "B": "perfmon", "C": "eventvwr", "D": "diskmgmt"}, "answer": "A", "explanation": {"correct": "A. cleanmgr", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C39", "question": "A user in the shipping department is using a tracking app on a tablet. The app normally takes 10 seconds to load, but now takes over a minute... Which of the following would be the best next troubleshooting step?", "options": {"A": "Reinstall the tracking app", "B": "Check the app battery usage", "C": "Roll back to the previous tablet OS version", "D": "Perform a reboot"}, "answer": "D", "explanation": {"correct": "D. Perform a reboot", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C40", "question": "Which of the following fire extinguishers would be most appropriate to use in a data center?", "options": {"A": "Foam", "B": "Carbon Dioxide", "C": "Saline", "D": "Water"}, "answer": "B", "explanation": {"correct": "B. Carbon Dioxide", "A": "Placeholder...", "B": "Placeholder...", "C": "Placeholder...", "D": "Placeholder..."}},
+            {"id": "C41", "question": "The Human Resources department is installing a shared computer in the company lobby... Which of the following account types would be the best choice for this system?", "options": {"A": "SSO user", "B": "Administrator", "C": "Guest", "D": "Power User"}, "answer": "C", "explanation": {"correct": "C. Guest", "A": "The Answer: C. Guest\nThe Guest account is the only account which should be available on a public computer running applications for multiple users.", "B": "The Administrator account provides complete access to the system and would be a poor choice for a public computer used by many different people.", "C": "The Power User group in Windows is now effectively the same as the standard user, but even a standard user would have more rights and permissions than necessary. The Guest account would be preferable to the Power User or standard user permissions.", "D":"Windows does not include a user group for SSO (Single Sign-On) User, but if they did it would not be preferable over using the Guest account."}},
+            {"id": "C42", "question": "A Windows administrator needs to define a minimum password length for all network users. Which of the following should be used to complete this task?", "options": {"A": "Device Manager", "B": "Certificate Manager", "C": "Group Policy Editor", "D": "Performance Monitor"}, "answer": "C", "explanation": {"correct": "C. Group Policy Editor", "A": "The Windows Device Manager is used to enable, disable, and configure hardware device drivers in the operating system.", "B": "The Certificate Manager is a centralized certificate store for root certificates, trusted publishers, trusted people, and more.", "C": "The Group Policy Editor works with Active Directory services to manage almost any aspect of a client system.", "D": "Performance Monitor gathers long-term statistics and performance metrics from the operating system. Performance monitor will not manage security policies on a system."}},
+            {"id": "C43", "question": "A user in the shipping department is able to view order information, but they cannot modify or delete any order details. Which of the following would best describe this security principle?", "options": {"A": "Multi-factor authentication", "B": "Least privilege", "C": "Group Policy", "D": "Organizational Units"}, "answer": "B", "explanation": {"correct": "B. Least privilege", "A": "Multi-factor authentication provides additional login factors and does not affect the use of applications.", "B": "The principle of least privilege ensures rights and permissions are set to the bare minimum to perform assigned duties.", "C": "Group Policy is a configuration option associated with Active Directory networks and allows the administrator to manage the connected Windows devices.", "D": "Organizational Units (OUs) are used with Active Directory Domain Services to categorize users, devices, and other components into logical groups."}},
+            {"id": "C44", "question": "A user is receiving this message on their Windows desktop: 'The controller does not have enough resources for this device.' Which of the following would be the most likely reason for this issue?", "options": {"A": "Remote printer has been disabled", "B": "Wireless network bandwidth exceeded", "C": "USB endpoints are exceeded", "D": "The system clock is incorrect"}, "answer": "C", "explanation": {"correct": "C. USB endpoints are exceeded", "A": "Disabling a remote printer will not commonly show any messages on the Windows desktop.", "B": "When a wireless network bandwidth is exceeded, the performance of the applications will slow down. Error messages are not commonly displayed on the desktop when a wireless network is busy.", "C": "USB devices contain buffers called 'endpoints,' and if those endpoints exceed the capacity of the USB controllers, a 'resources exceeded' message will appear. To resolve this issue, move a USB device to a different interface.", "D": "An incorrect system clock will not display a resource error on the Windows desktop."}},
+            {"id": "C45", "question": "A small company is located in a large office building shared by fifty different companies... Which of these configuration settings would prevent their wireless network from appearing in a list of available networks?", "options": {"A": "MAC filtering", "B": "Static IP addressing", "C": "WPA3 encryption", "D": "SSID suppression"}, "answer": "D", "explanation": {"correct": "D. SSID suppression", "A": "MAC (Media Access Control) filtering can be configured to restrict or allow specific wireless devices when accessing the network.", "B": "Static IP addressing will change the addressing on the devices connected to the wireless network, but it won't remove the name of the network from the list of available wireless connections.", "C": "WPA3 (Wi-Fi Protected Access version 3) is a security protocol. Enabling WPA3 does not remove the name of the wireless network from the list of available connections.", "D": "Disabling the SSID (Service Set Identifier) broadcast will prevent the wireless network name from appearing in lists of available networks."}},
+            {"id": "C46", "question": "A manager in the accounting department would like to upgrade to Windows 11, but she doesn’t want to lose access to any of the currently installed applications or data. Which of the following methods would be the best choice?", "options": {"A": "Clean install", "B": "Image deployment", "C": "Remote network installation", "D": "In-place upgrade"}, "answer": "D", "explanation": {"correct": "D. In-place upgrade", "A": "A clean install removes all data from a system.", "B": "An image deployment is a pre-built version of Windows and would not contain user data.", "C": "A network installation doesn't necessarily mean an in-place upgrade is occurring.", "D": "An in-place upgrade keeps all of the existing data, applications, and configurations in place during the upgrade process."}},
+            {"id": "C47", "question": "A network administrator has modified all wireless access points to use WPA3 instead of WPA2. Which of the following would be a reason for this change?", "options": {"A": "Additional frequency choices", "B": "Lower power consumption", "C": "Larger usable range", "D": "Stronger encryption"}, "answer": "D", "explanation": {"correct": "D. Stronger encryption", "A": "The available frequencies are a function of the access point standard, not the encryption protocol.", "B": "There's no significant difference in power consumption between WPA2 and WPA3.", "C": "The usable range is a function of the wireless standard, not the encryption.", "D": "The encryption used in WPA3 is stronger than WPA2."}},
+            {"id": "C48", "question": "A help desk is receiving reports associated with a group of devices not able to communicate outside of their local IP subnet... Which of the following would be the most likely cause of this issue?", "options": {"A": "Default gateway", "B": "DNS server", "C": "Proxy server", "D": "Metered connection"}, "answer": "A", "explanation": {"correct": "A. Default gateway", "A": "The default gateway is the router providing connectivity between the local IP subnet and the rest of the world. If it isn't working, users will not be able to access services outside of the local subnet.", "B": "The technician was attempting to ping by IP address, so the DNS server would not be part of this issue.", "C": "A technician pinging an external IP address would not commonly be communicating through a proxy server.", "D": "A metered connection limits data but doesn't typically block all outside communication."}},
+            {"id": "C49", "question": "A user created some documents on their laptop SSD yesterday, but today has reported a problem accessing the files... Which of the following would be the best next troubleshooting step?", "options": {"A": "Scan for malware", "B": "Change the boot drive in the BIOS", "C": "Restart the operating system", "D": "Defragment the drive"}, "answer": "A", "explanation": {"correct": "A. Scan for malware", "A": "It would be unusual for permissions to change overnight. It's important to check for any external factors such as malware or viruses.", "B": "Changing the startup drive would only be useful if multiple operating systems were being used.", "C": "A problem with permissions does not usually fix itself with a reboot.", "D": "This laptop is storing files to an SSD, so a defragmentation would not run on this device."}},
+            {"id": "C50", "question": "While working at a customer's desk, a technician’s mobile phone begins to ring. Which of the following would be the most appropriate response?", "options": {"A": "Take the call and address the caller's requests before continuing", "B": "Take the call and ask the caller if you can return their call later", "C": "Send the call to voicemail and apologize for the interruption", "D": "Politely excuse yourself and step out to take the call"}, "answer": "C", "explanation": {"correct": "C. Send the call to voicemail...", "A": "It would be unprofessional to allow a phone call to interrupt the current troubleshooting tasks.", "B": "It's not necessary to take a phone call to simply tell the caller they will receive a return call.", "C": "When actively working on a problem with a customer, it's important to avoid interruptions and distractions.", "D": "The primary focus of a customer visit is to solve the customer's problems."}},
+            {"id": "C51", "question": "A user’s workstation has been identified as participating in a DDoS to a large Internet service provider... Which of these procedures would be the most important to follow in the meantime?", "options": {"A": "Create documentation of the storage area", "B": "Retrieve logs from the workstation Event Viewer", "C": "Obtain the purchase records of the workstation", "D": "Maintain integrity of the workstation data"}, "answer": "D", "explanation": {"correct": "D. Maintain integrity...", "A": "Documenting the storage area would not be the most important part of the incident response process.", "B": "The workstation has been powered off to avoid changing any data. Starting the system to retrieve logs would modify information.", "C": "The purchase records are not the most important piece of information for this security event.", "D": "When a security event occurs, it's important to maintain the integrity of the evidence and create a chain of custody."}},
+            {"id": "C52", "question": "A system administrator has configured EFS on a user’s workstation. Which of the following would describe this functionality?", "options": {"A": "Encryption of individual files and folders", "B": "Secure wireless communication", "C": "Encrypted network tunnel", "D": "Full disk encryption"}, "answer": "A", "explanation": {"correct": "A. Encryption of individual files...", "A": "EFS (Encrypting File System) is a feature of NTFS and can encrypt individual files and folders on a drive.", "B": "Secure wireless communication is handled by protocols like WPA2 or WPA3.", "C": "An encrypted network tunnel is typically created using a VPN.", "D": "Full disk encryption in Windows is provided by BitLocker."}},
+            {"id": "C53", "question": "A technician has been tasked with updating the BIOS of any Windows device using an older BIOS version... Which of the following would be the best way to proceed?", "options": {"A": "Install the BIOS upgrade regardless of the version", "B": "View BIOS information in Group Policy Editor", "C": "Run a report using Performance Monitor", "D": "Use System Information to view the BIOS version"}, "answer": "D", "explanation": {"correct": "D. Use System Information...", "A": "A BIOS upgrade is not a trivial installation. A best practice would only install BIOS upgrades where needed.", "B": "The Group Policy Editor is used to define Active Directory policies and does not contain BIOS information.", "C": "The Performance Monitor reports on operating system usage, but it does not provide details about BIOS versions.", "D": "The Windows System Information utility can provide extensive information including the BIOS version."}},
+            {"id": "C54", "question": "A technician has been asked to work on an urgent computer repair while the user is at lunch... they notice paperwork on the desk which may contain private customer information. Which of the following would be the best next step?", "options": {"A": "Complete the repair as quickly as possible", "B": "Ask an associate in the department for assistance", "C": "Move the papers somewhere out of sight", "D": "Leave without repairing the computer"}, "answer": "B", "explanation": {"correct": "B. Ask an associate...", "A": "The issue is about the type of data the technician can see. To avoid any issues, it would be best to have a trusted third-party remove the sensitive information.", "B": "It's best to work with others to remove any of these concerns from the work area.", "C": "If the technician touches the papers, they effectively have access to all of the information on the documents.", "D": "Asking someone else in the department to clean the work area would only take a moment and would allow the repair process to continue."}},
+            {"id": "C55", "question": "A company has recently been the victim of a storm with large-scale flooding... Which of the following would be the best way to avoid this loss of data in the future?", "options": {"A": "Battery backup", "B": "Cloud storage", "C": "RADIUS administration servers", "D": "Image-level backups"}, "answer": "B", "explanation": {"correct": "B. Cloud storage", "A": "A battery backup would not provide any method of data backup or data recovery.", "B": "Cloud storage would provide a separate and off-site storage of backups, files, and other important documents.", "C": "RADIUS does not provide any data backup or data recovery features.", "D": "Having an off-site backup data source would have prevented the data loss."}},
+            {"id": "C56", "question": "A user commonly stores large graphic image files in a shared folder on a network server... the shared folders are no longer in the list of available storage drives. Which of the following would be the most likely reason for this issue?", "options": {"A": "User’s permissions have been modified", "B": "User is running untrusted software", "C": "Network is using MAC filtering", "D": "Port security is enabled"}, "answer": "A", "explanation": {"correct": "A. User’s permissions...", "A": "Since the normal list of shares has changed, then it's most likely something has been modified with the user or group permissions.", "B": "A share not appearing is not commonly associated with untrusted software.", "C": "IP filtering is not generally used to limit or restrict access to a particular Windows share.", "D": "Port security is not used to limit access to a Windows share."}},
+            {"id": "C57", "question": "A company deploys a suite of commercial software onto every workstation in the organization. Which of the following would best describe this licensing?", "options": {"A": "Personal licenses", "B": "Corporate license", "C": "Open-source license", "D": "End user licensing agreement"}, "answer": "B", "explanation": {"correct": "B. Corporate license", "A": "A personal license is usually associated with an individual or home-based use of software.", "B": "An enterprise software license is commonly used for large-scale licensing of software.", "C": "An open-source license does not commonly require any payment.", "D": "An end user licensing agreement (EULA) is a list of the licensing terms."}},
+            {"id": "C58", "question": "A client’s desktop computer is randomly rebooting throughout the workday without any warnings or error messages. Which of the following would be the best next troubleshooting step?", "options": {"A": "Update the system BIOS", "B": "Reinstall the Windows operating system", "C": "Boot to Safe Mode and disable all startup applications", "D": "Perform a full system diagnostic"}, "answer": "D", "explanation": {"correct": "D. Perform a full system diagnostic", "A": "There's nothing about this issue which immediately points to a BIOS problem.", "B": "Reinstalling Windows would not be the best way to address this reboot issue without more information.", "C": "Making changes to the startup process are not yet warranted.", "D": "A reboot issue occurring randomly is difficult to troubleshoot, so it would be useful to know if the hardware in the system is working as expected."}},
+            {"id": "C59", "question": "A user is working with a .dmg file on their macOS desktop. Which of the following would describe the contents of this file?", "options": {"A": "Debug information", "B": "Disk image", "C": "Application library", "D": "Disk maintenance utility"}, "answer": "B", "explanation": {"correct": "B. Disk image", "A": "A .dmg file is not a container of debug information.", "B": "The macOS equivalent to an ISO file is a DMG (Disk Image) file.", "C": "Application library files are often stored in the Library folder in macOS.", "D": "The macOS Disk Utility can be used to create and manage .dmg files, but the utility would not necessarily be contained within a .dmg file."}},
+            {"id": "C60", "question": "A laptop in the accounting department has been infected with malware, and the technician has just completed the removal process. Which of the following would be the best way to verify the integrity of the core operating system files?", "options": {"A": "Perform a clean Windows install", "B": "Run the system file check utility", "C": "Rebuild the Windows profile", "D": "Roll back the last Windows update"}, "answer": "B", "explanation": {"correct": "B. Run the system file check utility", "A": "Replacing everything on the system would also replace all of the personal files and configurations.", "B": "Running SFC (System File Check) will scan all of the core operating system files and will verify no changes have been made since the installation.", "C": "The rebuilding process would not provide any information about the integrity of the operating system.", "D": "Reverting to a previous Windows version or configuration would not provide any information about the operating system."}},
+            {"id": "C61", "question": "A user has noticed his computer begins to slow down during daily use and eventually locks up completely. Which of the following tasks should a technician follow to best troubleshoot this issue? (Choose TWO)", "options": {"A": "Start the computer in Safe Mode", "B": "Perform a hardware diagnostic", "C": "Connect the computer to a different VLAN", "D": "Update the OS to the latest patches", "E": "Roll back to a previous configuration", "F": "Scan for viruses and malware"}, "answer": ["B", "F"], "explanation": {"correct": "B & F", "A": "Incorrect...", "B": "Correct...", "C": "Incorrect...", "D": "Incorrect...", "E": "Incorrect...", "F": "Correct..."}},
+            {"id": "C62", "question": "A user receives this message each time they visit a secure website: “The site’s security certificate is not trusted.” Which of the following would be the best next troubleshooting task?", "options": {"A": "Disable Windows Firewall for all HTTPS traffic", "B": "Create a new certificate for the user's computer", "C": "Check the date and time on the user's computer", "D": "Release and refresh the IP address configuration"}, "answer": "C", "explanation": {"correct": "C. Check the date and time...", "A": "Incorrect...", "B": "Incorrect...", "C": "Correct...", "D": "Incorrect..."}},
+            {"id": "C63", "question": "A user’s smartphone contains company confidential information which should not be shared outside of the organization. Which of the following would be the best way to limit access to this data if the smartphone was lost or stolen?", "options": {"A": "Locator application", "B": "Remote wipe", "C": "Authenticator app", "D": "Cloud backup"}, "answer": "B", "explanation": {"correct": "B. Remote wipe", "A": "Incorrect...", "B": "Correct...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C64", "question": "A user would like to configure their local printer to be accessible to anyone on the corporate network. Which of the following would be the best way to configure this connection?", "options": {"A": "Configure a VPN connection", "B": "Create a share name in printer properties", "C": "Configure a metered connection", "D": "Use a static IP address"}, "answer": "B", "explanation": {"correct": "B. Create a share name...", "A": "Incorrect...", "B": "Correct...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C65", "question": "A computer on a manufacturing floor has a virus, and the system administrator has removed the system from the company network. Which of the following virus removal tasks should occur next?", "options": {"A": "Discuss virus prevention with the end user", "B": "Install the latest anti-virus signatures", "C": "Schedule a virus scan to run each morning", "D": "Disable System Restore"}, "answer": "D", "explanation": {"correct": "D. Disable System Restore", "A": "Incorrect...", "B": "Incorrect...", "C": "Incorrect...", "D": "Correct..."}},
+            {"id": "C66", "question": "A user in the marketing department needs to move data between macOS and Windows computers using a USB flash drive. Which of the following file systems would be the best way to easily transfer files between these operating systems?", "options": {"A": "exFAT", "B": "APFS", "C": "NTFS", "D": "ext4"}, "answer": "A", "explanation": {"correct": "A. exFAT", "A": "Correct...", "B": "Incorrect...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C67", "question": "When a user starts their desktop computer, the Windows splash screen is shown with a rotating circle, but the login screen is never displayed. A technician researches the issue and finds the computer was just updated... Which of the following would be the next step?", "options": {"A": "Restart the computer", "B": "Perform a Startup Repair", "C": "Start in VGA mode", "D": "Rebuild the user's profile"}, "answer": "B", "explanation": {"correct": "B. Perform a Startup Repair", "A": "Incorrect...", "B": "Correct...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C68", "question": "A desktop technician is moving hard drives from one set of training room computers to another. Which of the following would allow the drives to be used in the new computers but prevent any of the existing data from being recovered?", "options": {"A": "Shredder", "B": "Quick format", "C": "Drill", "D": "Standard format"}, "answer": "D", "explanation": {"correct": "D. Standard format", "A": "Incorrect...", "B": "Incorrect...", "C": "Incorrect...", "D": "Correct..."}},
+            {"id": "C69", "question": "A workstation technician manages a training center with thirty student computers in each room... Which of these installation methods would be the best choice for quickly resetting the training rooms at the end of each week?", "options": {"A": "In-place upgrade", "B": "Image installation", "C": "Repair installation", "D": "Clean install"}, "answer": "B", "explanation": {"correct": "B. Image installation", "A": "Incorrect...", "B": "Correct...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C70", "question": "A user would like to use their smartphone for a payment during checkout at the grocery store, but the smartphone is not seen by the payment system. Which of the following would be the BEST next troubleshooting step?", "options": {"A": "Restart the smartphone", "B": "Replace the battery", "C": "Perform a factory reset", "D": "Enable Wi-Fi"}, "answer": "A", "explanation": {"correct": "A. Restart the smartphone", "A": "Correct...", "B": "Incorrect...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C71", "question": "A technician is troubleshooting a problem with user’s laptop and very high utilization... Task Manager shows the CPU is operating at 100% utilization... Which of the following would be the most likely reason for these issues?", "options": {"A": "System RAM is faulty", "B": "User has not properly authenticated", "C": "Laptop is part of a DDoS attack", "D": "Network adapter is faulty"}, "answer": "C", "explanation": {"correct": "C. Laptop is part of a DDoS attack", "A": "Incorrect...", "B": "Incorrect...", "C": "Correct...", "D": "Incorrect..."}},
+            {"id": "C72", "question": "A user's smartphone app shows a splash screen but disappears after a few seconds. Which of the following would be the best way for a technician to view logs and memory statistics for the app?", "options": {"A": "Developer mode", "B": "Cloud storage", "C": "Jailbreaking", "D": "Application spoofing"}, "answer": "A", "explanation": {"correct": "A. Developer mode", "A": "Correct...", "B": "Incorrect...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C73", "question": "A company has created an internal process to ensure all PII is encrypted. Which of the following would be the most likely reason for adding this additional security?", "options": {"A": "Helps prevent identity theft", "B": "Improves application performance", "C": "Allows customer data to be easily deleted", "D": "Uses less storage space"}, "answer": "A", "explanation": {"correct": "A. Helps prevent identity theft", "A": "Correct...", "B": "Incorrect...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C74", "question": "A system administrator is installing a file server into the corporate data center. Which of the following would be the best way to improve security of the file sharing service? (Select TWO)", "options": {"A": "Enable a BIOS user password", "B": "Connect the server to a wireless network", "C": "Limit the number of concurrent connections", "D": "Disable guest account", "E": "Enable file storage quotas", "F": "Enable password complexity"}, "answer": ["D", "F"], "explanation": {"correct": "D & F.", "A": "Incorrect...", "B": "Incorrect...", "C": "Incorrect...", "D": "Correct...", "E": "Incorrect...", "F": "Correct..."}},
+            {"id": "C75", "question": "A user has purchased a computer which uses a 32-bit version of an operating system. Which of the following would be the maximum amount of RAM supported in this OS?", "options": {"A": "32 GB", "B": "2 TB", "C": "512 GB", "D": "128 GB", "E": "4 GB", "F": "16 GB"}, "answer": "E", "explanation": {"correct": "E. 4 GB", "A": "Incorrect...", "B": "Incorrect...", "C": "Incorrect...", "D": "Incorrect...", "E": "Correct...", "F": "Incorrect..."}},
+            {"id": "C76", "question": "A financial services company is upgrading the storage drives in their SAN... The security administrator would like to permanently disable the drive and guarantee the data on the drives could not be recovered. Which of the following methods would be the best way to accomplish this goal?", "options": {"A": "Standard format", "B": "Full disk encryption", "C": "Shredder", "D": "Delete the master boot record"}, "answer": "C", "explanation": {"correct": "C. Shredder", "A": "Incorrect...", "B": "Incorrect...", "C": "Correct...", "D": "Incorrect..."}},
+            {"id": "C77", "question": "A company is updating all of their UPS systems with new batteries. Which of the following would be the best way to dispose of the old batteries?", "options": {"A": "Take to a local hazardous waste facility", "B": "Throw out with the paper trash", "C": "Ship them to a battery wholesaler", "D": "Bury them in a landfill"}, "answer": "A", "explanation": {"correct": "A. Take to a local hazardous waste facility", "A": "Correct...", "B": "Incorrect...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C78", "question": "Which of the following should a company use to reduce their legal liability if an employee is dismissed?", "options": {"A": "End user licensing agreement", "B": "Acceptable use policy", "C": "Standard operating procedures", "D": "Regulatory compliance documentation"}, "answer": "B", "explanation": {"correct": "B. Acceptable use policy", "A": "Incorrect...", "B": "Correct...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C79", "question": "A healthcare administrator stores sensitive data on his laptop computer... Which of the following would add additional security to the administrator's work area?", "options": {"A": "Door lock", "B": "Fingerprint scanner", "C": "Magnetometer", "D": "Bollards"}, "answer": "B", "explanation": {"correct": "B. Fingerprint scanner", "A": "Incorrect...", "B": "Correct...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C80", "question": "A technician has received a help desk ticket asking for help with a broken laptop keyboard... the laptop is scheduled to be used for a press event the following day. Which of the following would be the best next step with the ticket?", "options": {"A": "Refer the ticket to the laptop group", "B": "Escalate the issue with management", "C": "Add the event information to the problem description", "D": "Assign the ticket to the 'laptop' category"}, "answer": "B", "explanation": {"correct": "B. Escalate the issue with management", "A": "Incorrect...", "B": "Correct...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C81", "question": "A network administrator has been asked to manage the router configurations at all company locations. Which of the following would be the best choice for this task?", "options": {"A": "SSH", "B": "VNC", "C": "NFC", "D": "RDP"}, "answer": "A", "explanation": {"correct": "A. SSH", "A": "Correct...", "B": "Incorrect...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C82", "question": "A user is browsing to their corporate home page, but a different website appears instead... Which of the following would be the best next troubleshooting step?", "options": {"A": "Try connecting to the site in Safe Mode", "B": "Perform an anti-malware scan", "C": "View all browsing results in the Event Viewer", "D": "Roll back to a previous configuration"}, "answer": "B", "explanation": {"correct": "B. Perform an anti-malware scan", "A": "Incorrect...", "B": "Correct...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C83", "question": "A technician has just received fifty boxes of used laser printer toner cartridges... Which of the following would be the best NEXT step for managing these used cartridges?", "options": {"A": "Refer to the MSDS", "B": "Ship the cartridges to the original manufacturer", "C": "Incinerate the cartridges", "D": "Drill a hole in each cartridge"}, "answer": "A", "explanation": {"correct": "A. Refer to the MSDS", "A": "Correct...", "B": "Incorrect...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C84", "question": "A system administrator has been notified a serious security vulnerability has been identified in software... Which part of the documentation would explain the disadvantages of not quickly patching this software?", "options": {"A": "Backout plan", "B": "End-user acceptance", "C": "Detailed change plan", "D": "Risk analysis"}, "answer": "D", "explanation": {"correct": "D. Risk analysis", "A": "Incorrect...", "B": "Incorrect...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C85", "question": "A company is donating ten laptop computers to a local community center. Which of the following processes should be followed before making this donation?", "options": {"A": "Inventory management", "B": "Acceptable use policy", "C": "Password policy", "D": "Knowledge base article"}, "answer": "A", "explanation": {"correct": "A. Inventory management", "A": "Correct...", "B": "Incorrect...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C86", "question": "A technician is troubleshooting a problem on a Linux server and needs to view the real-time CPU and memory utilization for each operating system process. Which of the following would provide this functionality?", "options": {"A": "dig", "B": "df", "C": "cat", "D": "top"}, "answer": "D", "explanation": {"correct": "D. top", "A": "Incorrect...", "B": "Incorrect...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C87", "question": "A technician has just installed a new device driver and restarted a Windows laptop, but now the system shows a Windows Stop Error before the login screen is displayed. Which of the following would be the best way to resolve this issue?", "options": {"A": "Start in Safe Mode", "B": "Replace the system memory", "C": "Reinstall Windows from the original media", "D": "Perform a full backup"}, "answer": "A", "explanation": {"correct": "A. Start in Safe Mode", "A": "Correct...", "B": "Incorrect...", "C": "Incorrect...", "D": "Incorrect..."}},
+            {"id": "C88", "question": "A company is moving three computer racks of equipment from an old data center to a new facility. Which of these safety features should be the most important requirement at the new location?", "options": {"A": "Air filter masks", "B": "Anti-static mat", "C": "Equipment grounding", "D": "Surge protectors"}, "answer": "C", "explanation": {"correct": "C. Equipment grounding", "A": "Incorrect...", "B": "Incorrect...", "C": "Correct...", "D": "Incorrect..."}},
+            {"id": "C89", "question": "A company has configured a server for daily backups, and a full backup is created each Sunday based on the previous incremental backups. Which of the following would best describe this backup strategy?", "options": {"A": "Differential", "B": "GFS", "C": "Synthetic", "D": "3-2-1"}, "answer": "C", "explanation": {"correct": "C. Synthetic", "A": "Incorrect...", "B": "Incorrect...", "C": "Correct...", "D": "Incorrect..."}},
+            {"id": "C90", "question": "Which of the following would allow someone else in the room to maliciously obtain a username and password?", "options": {"A": "Spoofing", "B": "Tailgating", "C": "DoS", "D": "Shoulder surfing"}, "answer": "D", "explanation": {"correct": "D. Shoulder surfing", "A": "Incorrect...", "B": "Incorrect...", "C": "Incorrect...", "D": "Correct..."}}
+        ];
+
+        // Global variables and the rest of the JavaScript functions...
+        const quizContainerEl = document.getElementById('quiz-container');
+        let quizData = []; 
+        let userAnswers = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answerSubmitted = false;
+        let timerInterval;
+
+        function showSetupScreen() {
+            quizContainerEl.innerHTML = `
+                <div id="setup-screen">
+                    <h2>Practice Exam Settings</h2>
+                    <div class="setup-option">
+                        <label for="num-questions">Number of Questions:</label>
+                        <select id="num-questions">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                            <option value="all">All (${allQuizData.length})</option>
+                        </select>
+                    </div>
+                    <div class="setup-option">
+                        <label for="time-limit">Time Limit:</label>
+                        <select id="time-limit">
+                            <option value="untimed">Untimed</option>
+                            <option value="15">15 Minutes</option>
+                            <option value="30">30 Minutes</option>
+                            <option value="60">60 Minutes</option>
+                            <option value="90" selected>90 Minutes</option>
+                        </select>
+                    </div>
+                    <button id="start-quiz-btn">Start Quiz</button>
+                </div>
+            `;
+            document.getElementById('start-quiz-btn').addEventListener('click', initializeQuiz);
+        }
+
+        function initializeQuiz() {
+            const numQuestions = document.getElementById('num-questions').value;
+            const timeSelection = document.getElementById('time-limit').value;
+            
+            userAnswers = [];
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            const shuffled = [...allQuizData].sort(() => 0.5 - Math.random());
+            quizData = numQuestions === 'all' ? shuffled : shuffled.slice(0, Number(numQuestions));
+
+            renderQuizUI();
+            
+            if (timeSelection !== 'untimed') {
+                startTimer(Number(timeSelection));
+            }
+        }
+        
+        function renderQuizUI() {
+            quizContainerEl.innerHTML = `
+                <a href="index.html" class="home-link">&larr; Back to Home</a>
+                <div id="timer">--:--</div>
+                <div id="quiz-header">
+                    <h1>Professor Messer's CompTIA A+ Core 2 (220-1202) Practice Test A</h1>
+                    <p id="creator-tag">Created by: BLaborte</p>
+                </div>
+                <div id="quiz-body">
+                    <p id="question-text"></p>
+                    <ul id="options-list"></ul>
+                    <div id="explanation-container" style="display: none;"></div>
+                </div>
+                <div id="quiz-footer">
+                    <div id="score-text">Score: 0</div>
+                    <div id="footer-buttons">
+                        <button id="submit-btn">Submit Answer</button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('submit-btn').addEventListener('click', checkAnswer);
+            loadQuiz();
+        }
+
+        function startTimer(minutes) {
+            let timeInSeconds = minutes * 60;
+            const timerEl = document.getElementById('timer');
+            
+            timerInterval = setInterval(() => {
+                const mins = Math.floor(timeInSeconds / 60);
+                let secs = timeInSeconds % 60;
+                secs = secs < 10 ? '0' + secs : secs;
+                timerEl.textContent = `${mins}:${secs}`;
+                if (timeInSeconds < 0) {
+                    clearInterval(timerInterval);
+                    showResults();
+                }
+                timeInSeconds--;
+            }, 1000);
+        }
+
+        function loadQuiz() {
+            answerSubmitted = false;
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            document.getElementById('question-text').innerText = `${currentQuestionIndex + 1}. ${currentQuestion.question}`;
+            const optionsListEl = document.getElementById('options-list');
+            optionsListEl.innerHTML = ''; 
+
+            for (const key in currentQuestion.options) {
+                const option = document.createElement('li');
+                option.classList.add('option');
+                option.innerHTML = `<input type="radio" name="option" id="${key}" value="${key}"><label for="${key}">${key}. ${currentQuestion.options[key]}</label>`;
+                optionsListEl.appendChild(option);
+            }
+            
+            const explanationContainer = document.getElementById('explanation-container');
+            if (explanationContainer) explanationContainer.style.display = 'none';
+
+            document.getElementById('footer-buttons').innerHTML = '<button id="submit-btn">Submit Answer</button>';
+            document.getElementById('submit-btn').addEventListener('click', checkAnswer);
+        }
+
+        function checkAnswer() {
+            if (answerSubmitted) return;
+            const selectedOptionInput = document.querySelector('input[name="option"]:checked');
+            if (!selectedOptionInput) {
+                alert('Please select an answer!');
+                return;
+            }
+            answerSubmitted = true;
+            const selectedAnswer = selectedOptionInput.value;
+            const correctAnswer = quizData[currentQuestionIndex].answer;
+            const isCorrect = selectedAnswer === correctAnswer;
+
+            userAnswers.push({ question: quizData[currentQuestionIndex], userAnswer: selectedAnswer, isCorrect: isCorrect });
+
+            if (isCorrect) {
+                score++;
+            }
+            document.getElementById('score-text').innerText = `Score: ${score}`;
+            
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.classList.add('no-click');
+                const input = option.querySelector('input');
+                if (input.value === correctAnswer) {
+                    option.classList.add('correct');
+                } else if (input.value === selectedAnswer) {
+                    option.classList.add('incorrect');
+                }
+            });
+
+            showExplanation();
+            
+            const footerButtons = document.getElementById('footer-buttons');
+            let nextButtonHTML = '';
+            if (currentQuestionIndex < quizData.length - 1) {
+                nextButtonHTML = `<button id="next-btn">Next Question</button>`;
+            } else {
+                nextButtonHTML = `<button id="next-btn">Finish Quiz</button>`;
+            }
+            
+            footerButtons.innerHTML = `<button id="toggle-explanation-btn">Show Explanation</button>${nextButtonHTML}`;
+            
+            document.getElementById('toggle-explanation-btn').addEventListener('click', toggleExplanation);
+            document.getElementById('next-btn').addEventListener('click', () => {
+                if (currentQuestionIndex < quizData.length - 1) {
+                    currentQuestionIndex++;
+                    loadQuiz();
+                } else {
+                    showResults();
+                }
+            });
+        }
+
+        function showExplanation() {
+            const explanationData = quizData[currentQuestionIndex].explanation;
+            let explanationContainer = document.getElementById('explanation-container');
+            if (!explanationContainer) return;
+            
+            let explanationHTML = `<div class="explanation-title">Correct Answer: ${explanationData.correct}</div>`;
+            explanationHTML += '<div class="explanation-text">';
+            for(const key in explanationData) {
+                if(key !== 'correct'){
+                    explanationHTML += `<p><strong>${key.toUpperCase()}:</strong> ${explanationData[key]}</p>`;
+                }
+            }
+            explanationHTML += '</div>';
+
+            explanationContainer.innerHTML = explanationHTML;
+        }
+
+        function toggleExplanation() {
+            const explanationContainer = document.getElementById('explanation-container');
+            const toggleBtn = document.getElementById('toggle-explanation-btn');
+            const isHidden = explanationContainer.style.display === 'none';
+            
+            explanationContainer.style.display = isHidden ? 'block' : 'none';
+            toggleBtn.textContent = isHidden ? 'Hide Explanation' : 'Show Explanation';
+        }
+        
+        function showResults() {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            let resultsHTML = `
+                <a href="index.html" class="home-link">&larr; Back to Home</a>
+                <div id="quiz-header"><h1>Quiz Results</h1></div>
+                <div id="quiz-body">
+                    <div class="results-summary">
+                        <h2>Your final score is ${score} out of ${quizData.length} (${Math.round((score/quizData.length)*100)}%)</h2>
+                    </div>
+                    <div class="results-list">
+            `;
+
+            userAnswers.forEach((answer, index) => {
+                const question = answer.question;
+                resultsHTML += `
+                    <div class="result-item">
+                        <p class="result-question">${index + 1}. ${question.question}</p>
+                        <ul class="result-options">
+                `;
+                for(const key in question.options) {
+                    let className = 'result-option';
+                    if (key === question.answer) {
+                        className += ' correct-answer';
+                    } else if (key === answer.userAnswer && !answer.isCorrect) {
+                        className += ' incorrect-answer';
+                    }
+                    resultsHTML += `<li class="${className}">${key}. ${question.options[key]}</li>`;
+                }
+                resultsHTML += `
+                        </ul>
+                        <div class="result-explanation">
+                            <p><strong>Explanation:</strong> ${question.explanation[question.answer]}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultsHTML += `</div></div>`;
+            quizContainerEl.innerHTML = resultsHTML;
+        }
+        
+        showSetupScreen();
+    </script>
+</body>
+</html>
