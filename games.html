@@ -41,44 +41,95 @@
             width: 100%;
             max-width: 900px;
         }
+        
+        #game-selection {
+             transition: opacity 0.3s ease-out;
+        }
+        
+        .main-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-        .home-link {
-            display: block;
+        .main-header h1 {
+            font-size: 2.5em;
+            color: var(--primary-accent);
+        }
+
+        .home-link, .back-to-arcade {
+            display: inline-block;
             margin-bottom: 20px;
             color: var(--primary-accent);
             text-decoration: none;
             font-weight: 500;
-            text-align: center;
         }
-
-        .tabs {
+        
+        .back-to-arcade {
+            margin-top: 20px;
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .game-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 2px solid var(--border-color);
             display: flex;
-            flex-wrap: wrap;
-            border-bottom: 2px solid var(--border-color);
+            flex-direction: column;
+            text-align: left;
+        }
+        
+        .game-card h3 {
+            font-size: 1.3em;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .game-card p {
+            color: var(--text-muted);
+            flex-grow: 1;
             margin-bottom: 20px;
         }
-
-        .tab-link {
-            padding: 10px 15px;
-            cursor: pointer;
+        
+        .start-btn {
+            background-color: var(--primary-accent);
+            color: white;
             border: none;
-            background-color: transparent;
+            padding: 10px 15px;
             font-family: "Poppins", sans-serif;
             font-size: 1em;
             font-weight: 500;
-            color: var(--text-muted);
-            border-bottom: 3px solid transparent;
-            transition: color 0.2s, border-color 0.2s;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-align: center;
         }
 
-        .tab-link:hover {
-            color: var(--primary-accent);
+        .start-btn:hover {
+            background-color: #005ea2;
         }
         
-        .tab-link.active {
-            color: var(--primary-accent);
-            border-bottom-color: var(--primary-accent);
-        }
+        /* Card-specific colors */
+        .game-card[data-game="troubleshooting"] h3 { color: var(--secondary-accent); }
+        .game-card[data-game="troubleshooting"] .start-btn { background-color: var(--secondary-accent); }
+        .game-card[data-game="troubleshooting"] .start-btn:hover { background-color: #b81c26; }
+        
+        .game-card[data-game="win-cli"] h3 { color: var(--primary-accent); }
+        
+        .game-card[data-game^="linux-"] h3 { color: var(--linux-accent); }
+        .game-card[data-game^="linux-"] .start-btn { background-color: var(--linux-accent); }
+        .game-card[data-game^="linux-"] .start-btn:hover { background-color: #d98c00; }
+        
+        .game-card[data-game^="macos-"] h3 { color: var(--macos-accent); }
+        .game-card[data-game^="macos-"] .start-btn { background-color: var(--macos-accent); }
+        .game-card[data-game^="macos-"] .start-btn:hover { background-color: #333; }
+        
 
         .game-content { display: none; }
         .game-content.active { display: block; }
@@ -94,12 +145,11 @@
         /* Game-Specific Styles */
         h1 { margin-top: 0; margin-bottom: 20px; font-weight: 700; }
         .info-box, #task-prompt, #ticket-problem { background-color: var(--bg-main); padding: 15px 20px; border-radius: 8px; margin-bottom: 15px; text-align: left; }
-        #feedback, .feedback { font-size: 1.2em; font-weight: 700; margin-top: 20px; height: 30px; }
+        .feedback { font-size: 1.2em; font-weight: 700; margin-top: 20px; height: 30px; }
         .correct { color: var(--success-color); }
         .incorrect { color: var(--error-color); }
         .score-display, .timer-display { font-size: 1.2em; margin-top: 15px; color: var(--text-muted); font-weight: 500; }
         
-        /* Terminal Styles */
         .terminal { background-color: var(--terminal-bg); color: var(--terminal-text); padding: 20px; border-radius: 8px; font-family: 'Consolas', 'Monaco', monospace; text-align: left; margin-top: 25px; }
         .prompt-user { color: var(--success-color); }
         .prompt-symbol { color: var(--terminal-text); }
@@ -107,12 +157,10 @@
         .terminal input { background: transparent; border: none; color: var(--terminal-text); font-family: inherit; font-size: 1em; width: 70%; }
         .terminal input:focus { outline: none; }
 
-        /* Button/Option Styles */
         .option-btn { display: block; width: 100%; padding: 15px; margin-bottom: 10px; font-size: 1em; font-family: "Poppins", sans-serif; font-weight: 500; background-color: var(--card-bg); color: var(--primary-accent); border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; text-align: left; transition: background-color 0.2s, border-color 0.2s; }
         .option-btn:not(:disabled):hover { background-color: #e9f5ff; border-color: var(--primary-accent); }
         .option-btn:disabled { cursor: not-allowed; opacity: 0.7; }
         
-        /* Drag and Drop Styles */
         .macos-match .game-area { display: flex; justify-content: space-between; gap: 20px; }
         .macos-match .description-box { border: 2px dashed var(--border-color); padding: 20px; margin-bottom: 15px; min-height: 100px; }
         .macos-match .feature-option { border: 2px solid var(--macos-accent); cursor: grab; background-color: #f8f9fa;}
@@ -120,120 +168,147 @@
         .macos-match .dragging { opacity: 0.5; }
         .macos-match .drag-over { border-style: solid; background-color: #e9ecef; }
 
-        /* Icon Game */
         #icon-display { font-size: 5rem; margin-bottom: 20px; height: 80px; display: flex; justify-content: center; align-items: center;}
 
         @media (max-width: 768px) {
-            .tabs { justify-content: center; }
-            .tab-link { font-size: 0.8em; padding: 8px 10px;}
-            .macos-match .game-area { flex-direction: column; }
-            .descriptions-container, .options-container { width: 100%; }
+            .card-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
 <div class="main-container">
-    <a href="index.html" class="home-link">&larr; Back to Main Menu</a>
-    
-    <div class="tabs">
-        <button class="tab-link active" data-tab="troubleshooting">Troubleshooting Tickets</button>
-        <button class="tab-link" data-tab="win-cli">Windows CLI</button>
-        <button class="tab-link" data-tab="linux-cli">Linux CLI</button>
-        <button class="tab-link" data-tab="linux-perms">Linux Permissions</button>
-        <button class="tab-link" data-tab="macos-match">macOS Features</button>
-        <button class="tab-link" data-tab="macos-icons">macOS Icons</button>
-    </div>
 
-    <!-- Troubleshooting Game Content -->
-    <div id="troubleshooting-game" class="game-content active">
-        <div class="game-container">
-            <h1 style="color: var(--secondary-accent);">Troubleshooting Tickets</h1>
-            <div id="ticket-problem">Loading ticket...</div>
-            <div class="options-container"></div>
-            <div class="feedback"></div>
-            <div class="score-display">Score: 0</div>
-            <div class="timer-display">Time Left: 15</div>
+    <div id="game-selection">
+        <div class="main-header">
+            <a href="index.html" class="home-link">&larr; Back to Main Menu</a>
+            <h1>Game Arcade</h1>
+            <p>Select a simulation to begin your training.</p>
         </div>
-    </div>
-
-    <!-- Windows CLI Game Content -->
-    <div id="win-cli-game" class="game-content">
-        <div class="game-container">
-            <h1 style="color: var(--primary-accent);">Windows Command-Line Challenge</h1>
-            <div id="task-prompt"></div>
-            <div class="terminal windows">
-                <label for="win-command-input"><span class="prompt-user">C:\Users\Admin&gt;</span></label>
-                <input type="text" id="win-command-input" autocomplete="off" spellcheck="false">
+        <div class="card-grid">
+            <div class="game-card" data-game="troubleshooting">
+                <h3>Troubleshooting Tickets</h3>
+                <p>Solve common user support tickets by choosing the correct first step before time runs out.</p>
+                <button class="start-btn">Start Game</button>
             </div>
-            <div class="feedback"></div>
-            <div class="score-display">Score: 0</div>
-            <div class="timer-display">Time Left: 20</div>
-        </div>
-    </div>
-
-    <!-- Linux CLI Game Content -->
-    <div id="linux-cli-game" class="game-content">
-        <div class="game-container">
-            <h1 style="color: var(--linux-accent);">Linux Command Challenge</h1>
-            <div id="task-prompt"></div>
-            <div class="terminal linux">
-                <label for="linux-command-input"><span class="prompt-user">user@a-plus-exam</span><span class="prompt-symbol">:~$ </span></label>
-                <input type="text" id="linux-command-input" autocomplete="off" spellcheck="false">
+            <div class="game-card" data-game="win-cli">
+                <h3>Windows CLI Challenge</h3>
+                <p>Read the objective and type the correct Windows command into the terminal.</p>
+                <button class="start-btn">Start Game</button>
             </div>
-            <div class="feedback"></div>
-            <div class="score-display">Score: 0</div>
-            <div class="timer-display">Time Left: 20</div>
+             <div class="game-card" data-game="linux-cli">
+                <h3>Linux Command Challenge</h3>
+                <p>Practice essential Linux terminal commands by typing the correct syntax for each task.</p>
+                <button class="start-btn">Start Game</button>
+            </div>
+            <div class="game-card" data-game="linux-perms">
+                <h3>Linux Permissions Puzzle</h3>
+                <p>Read the file permissions and use the `chmod` command to match the required security goal.</p>
+                <button class="start-btn">Start Game</button>
+            </div>
+            <div class="game-card" data-game="macos-match">
+                <h3>macOS Feature Match</h3>
+                <p>Drag and drop the correct macOS utility to its corresponding description.</p>
+                <button class="start-btn">Start Game</button>
+            </div>
+            <div class="game-card" data-game="macos-icons">
+                <h3>macOS Icon Challenge</h3>
+                <p>How fast can you identify core macOS functions by their menu bar icon?</p>
+                <button class="start-btn">Start Game</button>
+            </div>
         </div>
     </div>
     
-    <!-- Linux Permissions Game Content -->
-    <div id="linux-perms-game" class="game-content">
-        <div class="game-container">
-             <h1 style="color: var(--linux-accent);">Linux Permissions Puzzle</h1>
-            <div class="info-box"><h3>CURRENT PERMISSIONS</h3><div id="current-permissions"></div></div>
-            <div class="info-box"><h3>YOUR TASK</h3><div id="task-prompt"></div></div>
-            <div class="terminal linux">
-                <label for="perms-command-input"><span class="prompt-user">user@a-plus-exam</span><span class="prompt-symbol">:~$ </span></label>
-                <input type="text" id="perms-command-input" autocomplete="off" spellcheck="false">
-            </div>
-            <div class="feedback"></div>
-            <div class="score-display">Score: 0</div>
-            <div class="timer-display">Time Left: 25</div>
-        </div>
-    </div>
-    
-    <!-- macOS Feature Match Game -->
-    <div id="macos-match-game" class="game-content">
-        <div class="game-container macos-match">
-             <h1 style="color: var(--macos-accent);">macOS Feature Match</h1>
-            <div class="game-area">
-                <div class="descriptions-container"><h3>DESCRIPTIONS</h3></div>
-                <div class="options-container"><h3>FEATURES</h3></div>
-            </div>
-            <div class="feedback"></div>
-            <div class="score-display">Score: 0</div>
-        </div>
-    </div>
+    <!-- Game Content Area -->
+    <div id="troubleshooting-game" class="game-content"></div>
+    <div id="win-cli-game" class="game-content"></div>
+    <div id="linux-cli-game" class="game-content"></div>
+    <div id="linux-perms-game" class="game-content"></div>
+    <div id="macos-match-game" class="game-content"></div>
+    <div id="macos-icons-game" class="game-content"></div>
 
-    <!-- macOS Icon Game -->
-    <div id="macos-icons-game" class="game-content">
-         <div class="game-container">
-            <h1 style="color: var(--macos-accent);">Menu Bar Icon Challenge</h1>
-            <div id="icon-display">?</div>
-            <div class="options-container"></div>
-            <div class="feedback"></div>
-            <div class="score-display">Score: 0</div>
-            <div class="timer-display">Time Left: 10</div>
-        </div>
-    </div>
 </div>
 
 <script>
     // --- Master Game Controller ---
-    const tabs = document.querySelectorAll('.tab-link');
+    const gameSelection = document.getElementById('game-selection');
+    const startButtons = document.querySelectorAll('.start-btn');
     const gameContents = document.querySelectorAll('.game-content');
     let activeGameCleanup = () => {};
+
+    const gameTemplates = {
+        'troubleshooting': `
+            <div class="game-container">
+                <h1 style="color: var(--secondary-accent);">Troubleshooting Tickets</h1>
+                <div id="ticket-problem">Loading ticket...</div>
+                <div class="options-container"></div>
+                <div class="feedback"></div>
+                <div class="score-display">Score: 0</div>
+                <div class="timer-display">Time Left: 15</div>
+                <button class="back-to-arcade"> &larr; Back to Arcade</button>
+            </div>`,
+        'win-cli': `
+            <div class="game-container">
+                <h1 style="color: var(--primary-accent);">Windows Command-Line Challenge</h1>
+                <div id="task-prompt"></div>
+                <div class="terminal windows">
+                    <label for="win-command-input"><span class="prompt-user">C:\\Users\\Admin&gt;</span></label>
+                    <input type="text" id="win-command-input" autocomplete="off" spellcheck="false">
+                </div>
+                <div class="feedback"></div>
+                <div class="score-display">Score: 0</div>
+                <div class="timer-display">Time Left: 20</div>
+                <button class="back-to-arcade"> &larr; Back to Arcade</button>
+            </div>`,
+        'linux-cli': `
+            <div class="game-container">
+                <h1 style="color: var(--linux-accent);">Linux Command Challenge</h1>
+                <div id="task-prompt"></div>
+                <div class="terminal linux">
+                    <label for="linux-command-input"><span class="prompt-user">user@a-plus-exam</span><span class="prompt-symbol">:~$ </span></label>
+                    <input type="text" id="linux-command-input" autocomplete="off" spellcheck="false">
+                </div>
+                <div class="feedback"></div>
+                <div class="score-display">Score: 0</div>
+                <div class="timer-display">Time Left: 20</div>
+                <button class="back-to-arcade"> &larr; Back to Arcade</button>
+            </div>`,
+        'linux-perms': `
+            <div class="game-container">
+                <h1 style="color: var(--linux-accent);">Linux Permissions Puzzle</h1>
+                <div class="info-box"><h3>CURRENT PERMISSIONS</h3><div id="current-permissions"></div></div>
+                <div class="info-box"><h3>YOUR TASK</h3><div id="task-prompt"></div></div>
+                <div class="terminal linux">
+                    <label for="perms-command-input"><span class="prompt-user">user@a-plus-exam</span><span class="prompt-symbol">:~$ </span></label>
+                    <input type="text" id="perms-command-input" autocomplete="off" spellcheck="false">
+                </div>
+                <div class="feedback"></div>
+                <div class="score-display">Score: 0</div>
+                <div class="timer-display">Time Left: 25</div>
+                <button class="back-to-arcade"> &larr; Back to Arcade</button>
+            </div>`,
+        'macos-match': `
+            <div class="game-container macos-match">
+                <h1 style="color: var(--macos-accent);">macOS Feature Match</h1>
+                <div class="game-area">
+                    <div class="descriptions-container"><h3>DESCRIPTIONS</h3></div>
+                    <div class="options-container"><h3>FEATURES</h3></div>
+                </div>
+                <div class="feedback"></div>
+                <div class="score-display">Score: 0</div>
+                <button class="back-to-arcade"> &larr; Back to Arcade</button>
+            </div>`,
+        'macos-icons': `
+            <div class="game-container">
+                <h1 style="color: var(--macos-accent);">Menu Bar Icon Challenge</h1>
+                <div id="icon-display">?</div>
+                <div class="options-container"></div>
+                <div class="feedback"></div>
+                <div class="score-display">Score: 0</div>
+                <div class="timer-display">Time Left: 10</div>
+                <button class="back-to-arcade"> &larr; Back to Arcade</button>
+            </div>`
+    };
 
     const gameInitializers = {
         'troubleshooting': initTroubleshootingGame,
@@ -243,36 +318,44 @@
         'macos-match': initMacosMatchGame,
         'macos-icons': initMacosIconGame,
     };
+    
+    function showGame(gameName) {
+        gameSelection.style.opacity = '0';
+        setTimeout(() => {
+            gameSelection.style.display = 'none';
+            const gameContent = document.getElementById(`${gameName}-game`);
+            gameContent.innerHTML = gameTemplates[gameName];
+            gameContent.style.display = 'block';
+            activeGameCleanup = gameInitializers[gameName]();
+            
+            gameContent.querySelector('.back-to-arcade').addEventListener('click', showArcade);
 
-    function switchTab(tab) {
-        activeGameCleanup(); // Cleanup the old game's timers/listeners
-
-        tabs.forEach(t => t.classList.remove('active'));
-        gameContents.forEach(c => c.classList.remove('active'));
-        
-        tab.classList.add('active');
-        const tabName = tab.dataset.tab;
-        document.getElementById(`${tabName}-game`).classList.add('active');
-        
-        activeGameCleanup = gameInitializers[tabName](); // Start new game and get its cleanup function
+        }, 300);
+    }
+    
+    function showArcade() {
+        activeGameCleanup();
+        gameContents.forEach(c => {
+            c.style.display = 'none';
+            c.innerHTML = '';
+        });
+        gameSelection.style.display = 'block';
+        setTimeout(() => gameSelection.style.opacity = '1', 50);
     }
 
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => switchTab(tab));
+    startButtons.forEach(button => {
+        const gameName = button.closest('.game-card').dataset.game;
+        button.addEventListener('click', () => showGame(gameName));
     });
 
-    // --- All Game Logic Below ---
+    // --- All Game Logic Below (Encapsulated) ---
 
     function initTroubleshootingGame() {
         const gameId = 'troubleshooting-game';
         const tickets = [ { problem: "A user's Windows desktop takes 15 minutes to appear after login.", options: { a: "Slow profile load", b: "Incorrect boot order", c: "Faulty RAM" }, answer: "a" }, { problem: "A user's computer displays 'Missing operating system' on boot. You notice a USB drive is plugged in.", options: { a: "Run 'sfc /scannow'", b: "Modify the BIOS boot order", c: "Reinstall Windows" }, answer: "b" }, { problem: "A computer on the manufacturing floor was identified as part of a botnet. What is your FIRST step?", options: { a: "Run an anti-virus scan", b: "Disconnect the network cable", c: "Educate the end-user" }, answer: "b" }, { problem: "A user cannot access any HTTPS websites, getting a certificate error on all of them. HTTP sites work fine. What is a likely client-side cause?", options: { a: "Incorrect IP address", b: "Browser cache is full", c: "System date and time is wrong" }, answer: "c" } ];
         let currentIndex = 0, score = 0, timeLeft = 15, timerInterval;
-        const problemEl = document.querySelector(`#${gameId} #ticket-problem`);
-        const optionsContainerEl = document.querySelector(`#${gameId} .options-container`);
-        const feedbackEl = document.querySelector(`#${gameId} .feedback`);
-        const scoreDisplayEl = document.querySelector(`#${gameId} .score-display`);
-        const timerDisplayEl = document.querySelector(`#${gameId} .timer-display`);
-
+        const problemEl = document.querySelector(`#${gameId} #ticket-problem`), optionsContainerEl = document.querySelector(`#${gameId} .options-container`), feedbackEl = document.querySelector(`#${gameId} .feedback`), scoreDisplayEl = document.querySelector(`#${gameId} .score-display`), timerDisplayEl = document.querySelector(`#${gameId} .timer-display`);
+        
         function loadTicket() {
             if (currentIndex >= tickets.length) return endGame();
             Object.assign(feedbackEl, { textContent: '', className: 'feedback' });
@@ -292,9 +375,7 @@
             timerInterval = setInterval(() => {
                 timeLeft--;
                 timerDisplayEl.textContent = `Time Left: ${timeLeft}`;
-                if (timeLeft < 0) {
-                    selectAnswer({ target: { dataset: { answer: 'timeout' } } });
-                }
+                if (timeLeft < 0) selectAnswer({ target: { dataset: { answer: 'timeout' } } });
             }, 1000);
         }
         function selectAnswer(e) {
@@ -304,20 +385,14 @@
             if (selected === correct) {
                 score++; feedbackEl.textContent = 'Correct!'; feedbackEl.classList.add('correct');
             } else {
-                feedbackEl.textContent = 'Incorrect!'; feedbackEl.classList.add('incorrect');
+                feedbackEl.textContent = selected === 'timeout' ? "Time's Up!" : 'Incorrect!';
+                feedbackEl.classList.add('incorrect');
             }
             scoreDisplayEl.textContent = `Score: ${score}`;
-            document.querySelectorAll(`#${gameId} .option-btn`).forEach(btn => {
-                btn.disabled = true;
-                if (btn.dataset.answer === correct) btn.style.borderColor = 'var(--success-color)';
-            });
+            document.querySelectorAll(`#${gameId} .option-btn`).forEach(btn => { btn.disabled = true; if (btn.dataset.answer === correct) btn.style.borderColor = 'var(--success-color)'; });
             setTimeout(() => { currentIndex++; loadTicket(); }, 2000);
         }
-        function endGame() {
-            clearInterval(timerInterval);
-            problemEl.innerHTML = `<strong>Simulation Complete!</strong>`;
-            optionsContainerEl.innerHTML = `<p>You correctly solved ${score} out of ${tickets.length} tickets.</p>`;
-        }
+        function endGame() { clearInterval(timerInterval); problemEl.innerHTML = `<strong>Simulation Complete!</strong>`; optionsContainerEl.innerHTML = `<p>You correctly solved ${score} out of ${tickets.length} tickets.</p>`; }
 
         tickets.sort(() => 0.5 - Math.random());
         loadTicket();
@@ -329,6 +404,7 @@
         const challenges = [ { task: "Display IP configuration for all network adapters.", answer: "ipconfig /all" }, { task: "Force an immediate update of all Group Policy settings.", answer: "gpupdate /force" }, { task: "Scan all protected system files to check their integrity.", answer: "sfc /scannow" }, { task: "Check the 'C:' drive for file system errors and attempt to fix them.", answer: "chkdsk /f" }, { task: "Display the route network packets take to 'google.com'.", answer: "tracert google.com" } ];
         let currentIndex = 0, score = 0, timeLeft = 20, timerInterval;
         const taskEl = document.querySelector(`#${gameId} #task-prompt`), inputEl = document.querySelector(`#${gameId} #win-command-input`), feedbackEl = document.querySelector(`#${gameId} .feedback`), scoreDisplayEl = document.querySelector(`#${gameId} .score-display`), timerDisplayEl = document.querySelector(`#${gameId} .timer-display`);
+        const keyupHandler = (event) => { if (event.key === 'Enter' && !inputEl.disabled) handleAnswer(); };
 
         function loadChallenge() {
             if (currentIndex >= challenges.length) return endGame();
@@ -359,10 +435,10 @@
             setTimeout(() => { currentIndex++; loadChallenge(); }, 3000);
         }
         function endGame() { taskEl.textContent = 'Challenge Complete!'; document.querySelector(`#${gameId} .terminal`).style.display = 'none'; feedbackEl.textContent = `Your final score is ${score} out of ${challenges.length}.`; }
-        inputEl.addEventListener('keyup', (event) => { if (event.key === 'Enter' && !inputEl.disabled) handleAnswer(); });
+        inputEl.addEventListener('keyup', keyupHandler);
         challenges.sort(() => 0.5 - Math.random());
         loadChallenge();
-        return () => { clearInterval(timerInterval); inputEl.removeEventListener('keyup', handleAnswer); };
+        return () => { clearInterval(timerInterval); inputEl.removeEventListener('keyup', keyupHandler); };
     }
     
     function initLinuxCliGame() {
@@ -370,8 +446,8 @@
         const challenges = [ { task: "List contents of the current directory in long format.", answer: "ls -l" }, { task: "Change your current directory to '/etc'.", answer: "cd /etc" }, { task: "Display your current location in the directory tree.", answer: "pwd" }, { task: "Execute 'apt update' with superuser privileges.", answer: "sudo apt update" }, { task: "Find lines with 'error' in 'app.log'.", answer: "grep error app.log" } ];
         let currentIndex = 0, score = 0, timeLeft = 20, timerInterval;
         const taskEl = document.querySelector(`#${gameId} #task-prompt`), inputEl = document.querySelector(`#${gameId} #linux-command-input`), feedbackEl = document.querySelector(`#${gameId} .feedback`), scoreDisplayEl = document.querySelector(`#${gameId} .score-display`), timerDisplayEl = document.querySelector(`#${gameId} .timer-display`);
-        
-        // This is a simplified version of the logic from initWindowsCliGame, adapted for Linux
+        const keyupHandler = (event) => { if (event.key === 'Enter' && !inputEl.disabled) handleAnswer(); };
+
         function loadChallenge() {
             if (currentIndex >= challenges.length) return endGame();
             Object.assign(feedbackEl, { textContent: '', className: 'feedback' });
@@ -401,10 +477,10 @@
             setTimeout(() => { currentIndex++; loadChallenge(); }, 3000);
         }
         function endGame() { taskEl.textContent = 'Challenge Complete!'; document.querySelector(`#${gameId} .terminal`).style.display = 'none'; feedbackEl.textContent = `Your final score is ${score} out of ${challenges.length}.`; }
-        inputEl.addEventListener('keyup', (event) => { if (event.key === 'Enter' && !inputEl.disabled) handleAnswer(); });
+        inputEl.addEventListener('keyup', keyupHandler);
         challenges.sort(() => 0.5 - Math.random());
         loadChallenge();
-        return () => { clearInterval(timerInterval); inputEl.removeEventListener('keyup', handleAnswer); };
+        return () => { clearInterval(timerInterval); inputEl.removeEventListener('keyup', keyupHandler); };
     }
 
     function initLinuxPermsGame() {
@@ -412,9 +488,10 @@
         const challenges = [ { start: "-rw-r--r--", task: "Add execute permission for the Owner.", answers: ["chmod u+x file.txt", "chmod 744 file.txt"] }, { start: "-rwxr-xr-x", task: "Remove write permission for the Owner.", answers: ["chmod u-w file.txt", "chmod 555 file.txt"] }, { start: "-rw-rw-r--", task: "Add execute permission for the Group.", answers: ["chmod g+x file.txt", "chmod 674 file.txt"] }, { start: "-r--r--r--", task: "Set permissions to read, write, and execute for Owner ONLY.", answers: ["chmod 700 file.txt", "chmod u=rwx,go= file.txt"] } ];
         let currentIndex = 0, score = 0, timeLeft = 25, timerInterval;
         const taskEl = document.querySelector(`#${gameId} #task-prompt`), permsEl = document.querySelector(`#${gameId} #current-permissions`), inputEl = document.querySelector(`#${gameId} #perms-command-input`), feedbackEl = document.querySelector(`#${gameId} .feedback`), scoreDisplayEl = document.querySelector(`#${gameId} .score-display`), timerDisplayEl = document.querySelector(`#${gameId} .timer-display`);
-
+        const keyupHandler = (event) => { if (event.key === 'Enter' && !inputEl.disabled) handleAnswer(); };
+        
         function loadChallenge() {
-             if (currentIndex >= challenges.length) return endGame();
+            if (currentIndex >= challenges.length) return endGame();
             Object.assign(feedbackEl, { textContent: '', className: 'feedback' });
             Object.assign(inputEl, { value: '', disabled: false });
             timeLeft = 25;
@@ -444,15 +521,15 @@
             setTimeout(() => { currentIndex++; loadChallenge(); }, 3500);
         }
         function endGame() {
-            taskEl.textContent = 'Challenge Complete!';
+            taskEl.parentElement.style.display = 'none';
             document.querySelector(`#${gameId} .terminal`).style.display = 'none';
             document.querySelector(`#${gameId} .info-box`).style.display = 'none';
             feedbackEl.textContent = `Your final score is ${score} out of ${challenges.length}.`;
         }
-        inputEl.addEventListener('keyup', (event) => { if (event.key === 'Enter' && !inputEl.disabled) handleAnswer(); });
+        inputEl.addEventListener('keyup', keyupHandler);
         challenges.sort(() => 0.5 - Math.random());
         loadChallenge();
-        return () => { clearInterval(timerInterval); inputEl.removeEventListener('keyup', handleAnswer); };
+        return () => { clearInterval(timerInterval); inputEl.removeEventListener('keyup', keyupHandler); };
     }
 
     function initMacosMatchGame() {
@@ -488,19 +565,21 @@
                 optionsContainer.appendChild(option);
             });
         }
-        function handleDrop(e) {
+        function handleDrop(e) { /* ... same logic from before ... */ 
             e.preventDefault();
             const droppedFeatureId = e.dataTransfer.getData('text/plain');
             const targetDescriptionId = e.target.dataset.id;
             e.target.classList.remove('drag-over');
             const featureElement = document.getElementById(droppedFeatureId);
+            if (!featureElement) return;
+
             if (droppedFeatureId === targetDescriptionId) {
                 score++; matchedCount++;
                 feedback.textContent = "Correct Match!"; feedback.className = 'feedback correct';
                 e.target.style.border = `2px solid var(--success-color)`;
                 e.target.style.backgroundColor = '#d4edda';
                 featureElement.style.display = 'none';
-                e.target.removeEventListener('drop', handleDrop); // Prevent dropping on already matched
+                e.target.removeEventListener('drop', handleDrop);
             } else {
                 feedback.textContent = "Incorrect, try again!"; feedback.className = 'feedback incorrect';
             }
@@ -508,8 +587,9 @@
             if (matchedCount === features.length) endGame();
         }
         function endGame() { feedback.textContent = `All matched! Final Score: ${score}/${features.length}`; feedback.className = 'feedback correct'; }
+        
         initializeGame();
-        return () => {}; // No cleanup needed for this game
+        return () => {}; // No timers to clean up
     }
 
     function initMacosIconGame() {
@@ -520,7 +600,7 @@
 
         function loadRound() {
             if (rounds >= maxRounds) return endGame();
-            rounds++;
+            rounds++; gameActive = true;
             feedbackEl.textContent = '';
             optionsContainerEl.innerHTML = '';
             timeLeft = 10;
@@ -553,12 +633,14 @@
         }
         function selectAnswer(e) {
             if (!gameActive) return;
+            gameActive = false;
             clearInterval(timerInterval);
             document.querySelectorAll(`#${gameId} .option-btn`).forEach(btn => btn.disabled = true);
             if (e.target.dataset.id === currentIcon.id) {
                 score++; feedbackEl.textContent = 'Correct!'; feedbackEl.className = 'feedback correct';
             } else {
-                feedbackEl.textContent = 'Incorrect!'; feedbackEl.className = 'feedback incorrect';
+                 feedbackEl.textContent = e.target.dataset.id === 'timeout' ? "Time's Up!" : 'Incorrect!';
+                 feedbackEl.className = 'feedback incorrect';
             }
             scoreDisplayEl.textContent = `Score: ${score}`;
             setTimeout(loadRound, 1500);
@@ -567,15 +649,12 @@
             gameActive = false;
             iconDisplayEl.style.display = 'none';
             optionsContainerEl.innerHTML = `<h2>Game Over!</h2><p>Your final score is ${score} out of ${maxRounds}.</p>`;
-            feedbackEl.textContent = '';
         }
         
         loadRound();
         return () => clearInterval(timerInterval);
     }
 
-    // Initialize the first game on page load
-    switchTab(document.querySelector('.tab-link.active'));
 </script>
 </body>
 </html>
