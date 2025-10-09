@@ -29,7 +29,44 @@
         line-height: 1.6;
     }
 
-    .container { max-width: 960px; margin: 0 auto; padding: 40px 20px; }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 20px; } /* Removed top/bottom padding here */
+    
+    /* NEW HEADER STYLES */
+    .site-header {
+        background: var(--card-bg);
+        border-bottom: 1px solid var(--border-color);
+        padding: 15px 0; /* Padding handled by container */
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo {
+        font-size: 1.5em;
+        font-weight: 700;
+        color: var(--primary-color);
+        text-decoration: none;
+    }
+    .nav-link {
+        margin-left: 25px;
+        text-decoration: none;
+        color: var(--text-dark);
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+    .nav-link:hover {
+        color: var(--primary-color);
+    }
+    
+    /* END NEW HEADER STYLES */
+    
+    .main-content-area { padding-top: 40px; } /* Added padding back to main content */
+    
     .hero {
         position: relative;
         background: url('https://images.unsplash.com/photo-1550745165-9bc0b252726a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80') center/cover no-repeat;
@@ -96,26 +133,38 @@
     .card-footer span { transition: transform 0.3s ease; display: inline-block; }
     .exam-card:hover .card-footer span { transform: translateX(5px); }
     
-    footer { text-align: center; padding: 20px; font-size: 0.9em; color: var(--text-muted); margin-top: 80px; border-top: 1px solid var(--border-color); }
-    @media (max-width: 960px) {
-        .exam-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-    }
+    footer { text-align: center; padding: 20px 0; font-size: 0.9em; color: var(--text-muted); margin-top: 80px; border-top: 1px solid var(--border-color); }
+    
     @media (max-width: 768px) {
         .hero { padding: 80px 20px; }
         .hero h1 { font-size: 2.2em; }
+        .header-content { flex-direction: column; }
+        .logo { margin-bottom: 10px; }
+        .nav-link { margin-left: 10px; margin-right: 10px; }
     }
 
 </style>
 </head>
 <body>
 
-<div class="container">
+<header class="site-header">
+    <div class="container header-content">
+        <a href="#" class="logo">A+ Prep Hub</a>
+        <nav>
+            <a href="#" class="nav-link">Home</a>
+            <a href="#exams" class="nav-link">Practice Exams</a>
+            <a href="A+ Core 2 V15 (New Version).html" class="nav-link">Objectives</a>
+        </nav>
+    </div>
+</header>
+<div class="container main-content-area">
     <main>
         <section class="hero">
             <div class="hero-content">
                 <h1>Master CompTIA A+ Core 2</h1>
                 <p>Your journey to certification starts here. Use these interactive tools and resources to prepare for the 220-1202 by Professor Messer.</p>
-                <a href="A+ Core 2 V15 (New Version).html">View Exam Objectives</a>
+                <a href="#exams">Start Practice Now!</a>
+                <p style="font-size: 0.9em; margin-top: 15px; margin-bottom: 0;"><a href="A+ Core 2 V15 (New Version).html" style="background: none; color: #fff; box-shadow: none; font-weight: 400; padding: 5px 0;">View Exam Objectives &rarr;</a></p>
             </div>
         </section>
 
