@@ -5,253 +5,380 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CompTIA A+ Core 2 (220-1202) Practice Exams | Free Quizzes</title>
 
-<meta name="description" content="Free practice exams and quizzes for the CompTIA A+ Core 2 (220-1202) certification, based on Professor Messer's objectives. Start your prep now!">
+<meta name="description" content="Access the core training simulation environment. Deploy interactive PBQ Scenario modules and practice drills for the 220-1202 certification.">
 
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="/favicon.png">
 
 <style>
+    /* LIGHT PROFESSIONAL MODE PALETTE */
     :root {
-        --primary-color: #0072C6;
-        --secondary-color: #005A9E;
-        --bg-light: #f8f9fa;
-        --text-dark: #212529;
-        --text-muted: #6c757d;
-        --card-bg: #ffffff;
-        --border-color: #dee2e6;
+        --bg-main: #f4f7f9; /* Very light blue-gray background (Off-white) */
+        --primary-accent: #0072C6; /* Professional CompTIA Blue */
+        --secondary-accent: #D9232E; /* Professional CompTIA Red for highlights/PBQ */
+        --text-main: #212529; /* Dark text for high contrast */
+        --text-muted: #6c757d; /* Muted grey for secondary text */
+        --card-bg: #ffffff; /* Crisp white card background */
+        --border-color: #e9ecef; /* Very light border color */
+        --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08); /* Soft, professional shadow */
     }
-
+    
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
     html { scroll-behavior: smooth; }
 
     body {
-        font-family: "Roboto", sans-serif;
-        background-color: var(--bg-light);
-        color: var(--text-dark);
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--bg-main); /* Light background */
+        color: var(--text-main); /* Dark text */
         line-height: 1.6;
+        transition: background-color 0.3s, color 0.3s;
     }
 
-    .container { max-width: 960px; margin: 0 auto; padding: 0 20px; } 
-    
-    /* HEADER STYLES */
-    .site-header {
-        background: var(--card-bg);
-        border-bottom: 1px solid var(--border-color);
-        padding: 15px 0; 
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
     }
+
+    /* HEADER STYLES */
+    header {
+        background-color: var(--card-bg); 
+        padding: 20px 0;
+        border-bottom: 2px solid var(--primary-accent);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
     .header-content {
         display: flex;
         justify-content: space-between;
         align-items: center;
-    }
-    .logo {
-        font-size: 1.5em;
-        font-weight: 700;
-        color: var(--primary-color);
-        text-decoration: none;
-    }
-    .nav-link {
-        margin-left: 25px;
-        text-decoration: none;
-        color: var(--text-dark);
-        font-weight: 500;
-        transition: color 0.2s ease;
-    }
-    .nav-link:hover {
-        color: var(--primary-color);
-    }
-    
-    
-    .main-content-area { padding-top: 40px; } 
-    
-    .hero {
-        position: relative;
-        background: url('https://images.unsplash.com/photo-1550745165-9bc0b252726a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80') center/cover no-repeat;
-        border-radius: 16px;
-        padding: 100px 40px;
-        color: #fff;
-        margin-bottom: 60px;
-        overflow: hidden;
-        text-align: center;
-    }
-    .hero::before {
-        content: "";
-        position: absolute;
-        top:0; left:0;
-        width:100%; height:100%;
-        background: linear-gradient(to right, rgba(0, 114, 198, 0.8), rgba(0, 90, 158, 0.6));
-    }
-    .hero-content { position: relative; z-index: 1; }
-    .hero h1 { font-size: 3em; margin-bottom: 15px; text-shadow: 1px 1px 5px rgba(0,0,0,0.2); font-weight: 700; }
-    .hero p { font-size: 1.2em; opacity: 0.95; margin-bottom: 30px; font-weight: 300; max-width: 600px; margin-left: auto; margin-right: auto; }
-    .hero a {
-        display: inline-block;
-        padding: 15px 35px;
-        background: #fff;
-        color: var(--primary-color);
-        font-weight: 700;
-        border-radius: 50px;
-        text-decoration: none;
-        transition: all 0.25s ease-in-out;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-    .hero a:hover {
-        background: #f1f5f9;
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-    .exam-section { padding-top: 20px; }
-    .exam-section h2 { text-align: center; font-size: 2.2em; margin-bottom: 40px; color: var(--text-dark); }
-    .exam-grid {
-        /* Adjusted to handle the fifth card gracefully */
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 30px;
-    }
-    .exam-card {
-        background: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        padding: 30px;
-        text-decoration: none;
-        color: var(--text-dark);
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        display: flex; 
-        flex-direction: column; 
-    }
-    .exam-card:hover {
-        transform: translateY(-8px);
-        border-color: var(--primary-color);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-    }
-    .exam-card h3 { 
-        font-size: 1.5em; 
-        margin-bottom: 15px; 
-        color: var(--primary-color); 
-        /* IMPROVEMENT: Adding a subtle visual cue */
-        border-bottom: 2px solid var(--bg-light); 
-        padding-bottom: 10px;
-    }
-    .exam-card p { font-size: 1em; color: var(--text-muted); line-height: 1.6; flex-grow: 1;}
-    .card-footer { margin-top: 20px; font-weight: 500; color: var(--primary-color); }
-    .card-footer span { transition: transform 0.3s ease; display: inline-block; }
-    .exam-card:hover .card-footer span { transform: translateX(5px); }
-    
-    /* TRUST SECTION STYLES */
-    .trust-section {
-        margin-top: 60px;
-        padding: 40px;
-        background: #e3f2fd; /* Light blue background */
-        border-radius: 12px;
-        text-align: center;
-    }
-    .trust-section h3 {
-        color: var(--secondary-color);
-        font-size: 1.8em;
-        margin-bottom: 20px;
-    }
-    .trust-points {
-        display: flex;
-        justify-content: space-around;
-        gap: 20px;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        color: var(--text-dark);
-    }
-    .trust-points li {
-        flex: 1;
-        padding: 15px;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        font-weight: 500;
-    }
-    
-    footer { text-align: center; padding: 20px 0; font-size: 0.9em; color: var(--text-muted); margin-top: 80px; border-top: 1px solid var(--border-color); }
-    
-    @media (max-width: 768px) {
-        .hero { padding: 80px 20px; }
-        .hero h1 { font-size: 2.2em; }
-        .header-content { flex-direction: column; }
-        .logo { margin-bottom: 10px; }
-        .nav-link { margin-left: 10px; margin-right: 10px; }
-        .trust-points { flex-direction: column; }
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 20px;
     }
 
+    .header-content h1 {
+        font-size: 1.75em;
+        color: var(--primary-accent);
+        font-weight: 700;
+        margin: 0;
+    }
+    
+    .header-content p {
+        font-size: 0.9em;
+        color: var(--text-muted);
+        margin: 0;
+    }
+
+    .header-content a {
+        color: var(--text-main);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 8px 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        transition: background-color 0.2s, color 0.2s;
+    }
+    
+    .header-content a:hover {
+        background-color: var(--primary-accent);
+        color: var(--card-bg);
+        border-color: var(--primary-accent);
+    }
+    
+    /* MAIN CONTENT & HERO */
+    main {
+        flex: 1;
+        padding: 40px 0;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .hero {
+        background-color: var(--card-bg);
+        padding: 40px;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 40px;
+        box-shadow: var(--shadow-subtle);
+        border-top: 5px solid var(--primary-accent);
+        transition: box-shadow 0.3s;
+    }
+    
+    .hero:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Stronger hover for light mode */
+    }
+
+    .hero h2 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        color: var(--primary-accent);
+        font-weight: 700;
+    }
+
+    .hero p {
+        font-size: 1.1em;
+        color: var(--text-muted);
+        margin-bottom: 30px;
+    }
+    
+    .cta-button {
+        display: inline-block;
+        background-color: var(--primary-accent);
+        color: white;
+        padding: 12px 30px;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1.1em;
+        letter-spacing: 0.5px;
+        transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .cta-button:hover {
+        background-color: #005a9e; /* Darker shade of blue */
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* EXAM CARDS SECTION */
+    #practice-exams {
+        padding-bottom: 20px;
+    }
+    
+    #practice-exams h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2em;
+        color: var(--text-main);
+    }
+
+    .exam-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+    }
+
+    .exam-card {
+        display: block; 
+        background-color: var(--card-bg);
+        padding: 25px;
+        border-radius: 10px;
+        text-decoration: none;
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+        border-left: 5px solid var(--primary-accent);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s, box-shadow 0.2s, border-left-color 0.2s;
+    }
+    
+    .exam-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); 
+        border-left-color: var(--secondary-accent);
+    }
+
+    .exam-card h3 {
+        font-size: 1.35em;
+        margin-bottom: 10px;
+        color: var(--primary-accent);
+    }
+
+    .exam-card p {
+        color: var(--text-muted);
+        font-size: 0.95em;
+        line-height: 1.4;
+        margin-bottom: 15px;
+    }
+    
+    .card-footer {
+        border-top: 1px solid var(--border-color);
+        padding-top: 10px;
+        margin-top: 10px;
+        color: var(--primary-accent);
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-footer span {
+        font-size: 1.2em;
+    }
+    
+    /* PBQ Card Styling */
+    .pbq-card {
+        border-left-color: var(--secondary-accent);
+    }
+    
+    .pbq-card h3, .pbq-card .card-footer {
+        color: var(--secondary-accent);
+    }
+
+    /* TRUST SECTION */
+    .trust-section {
+        background-color: var(--card-bg);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        margin-top: 40px;
+        margin-bottom: 40px;
+        border: 1px solid var(--border-color);
+    }
+
+    .trust-section h3 {
+        text-align: center;
+        color: var(--primary-accent);
+        margin-bottom: 20px;
+        font-size: 1.5em;
+    }
+
+    .trust-points {
+        list-style: none;
+        display: flex;
+        justify-content: space-around;
+        padding: 0;
+        margin: 0;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .trust-points li {
+        font-size: 1.0em;
+        color: var(--text-main);
+        font-weight: 500;
+    }
+    
+    .trust-points li ** {
+        font-weight: 700;
+        color: var(--primary-accent);
+    }
+
+    /* CREDITS SECTION */
+    .credits-section {
+        padding: 20px;
+        text-align: center;
+        font-size: 0.9em;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border-color);
+        margin-top: 20px;
+        background-color: var(--card-bg);
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    /* FOOTER */
+    footer {
+        background-color: #343a40; /* Dark grey for strong, professional contrast on the bottom */
+        color: #ffffff;
+        text-align: center;
+        padding: 20px 0;
+        font-size: 0.85em;
+        width: 100%;
+        margin-top: auto; /* Push footer to the bottom */
+    }
+    
+    footer strong {
+        color: var(--primary-accent);
+    }
+
+    /* MEDIA QUERIES */
+    @media (max-width: 768px) {
+        .hero {
+            padding: 30px 20px;
+        }
+        .hero h2 {
+            font-size: 2em;
+        }
+        .exam-grid {
+            grid-template-columns: 1fr;
+        }
+        .header-content {
+            flex-direction: column;
+            text-align: center;
+        }
+        .header-content h1 {
+            margin-bottom: 5px;
+        }
+        .header-content a {
+            margin-top: 15px;
+        }
+    }
 </style>
 </head>
 <body>
+<div class="content-wrapper">
+    <header>
+        <div class="header-content">
+            <div>
+                <h1>CompTIA A+ Core 2 Practice Exams</h1>
+                <p>220-1202 Objectives</p>
+            </div>
+            <a href="A+ Core 2 V15 (New Version).html">View Exam Objectives <span>&rarr;</span></a>
+        </div>
+    </header>
 
-<header class="site-header">
-    <div class="container header-content">
-        <a href="#" class="logo">A+ Prep Hub</a>
-        <nav>
-            <a href="#" class="nav-link">Home</a>
-            <a href="#exams" class="nav-link">Core 2 Exams</a>
-            <a href="A+ Core 2 V15 (New Version).html" class="nav-link">Core 2 Objectives</a>
-        </nav>
-    </div>
-</header>
-<div class="container main-content-area">
     <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Master CompTIA A+ Core 2</h1>
-                <p>Your journey to certification starts here. Use these interactive tools and resources to prepare for the 220-1202, including **Performance-Based Questions (PBQs)**. Quizzes are based on the latest **Professor Messer** objectives.</p>
-                <a href="#exams">Start Practice Now!</a>
-                <p style="font-size: 0.9em; margin-top: 15px; margin-bottom: 0;"><a href="A+ Core 2 V15 (New Version).html" style="background: none; color: #fff; box-shadow: none; font-weight: 400; padding: 5px 0;">View Exam Objectives &rarr;</a></p>
-            </div>
-        </section>
+        <div class="container">
+            <section class="hero">
+                <h2>Welcome to Your Study Dashboard</h2>
+                <p>Begin your **CompTIA A+ Core 2 (220-1202)** certification preparation with free, comprehensive practice exams.</p>
+                <a href="#practice-exams" class="cta-button">Start Practicing Now <span>&darr;</span></a>
+            </section>
 
-        <section class="exam-section" id="exams">
-            <h2>Practice Exams</h2>
-            <div class="exam-grid">
-                <a href="quiz-a.html" class="exam-card">
-                    <h3>Practice Test A</h3>
-                    <p>The first set of questions to test your foundational knowledge across all exam domains. **(35 Questions)**</p>
-                    <div class="card-footer">Begin Test <span>&rarr;</span></div>
-                </a>
-                <a href="quiz-b.html" class="exam-card">
-                    <h3>Practice Test B</h3>
-                    <p>A second set of practice questions to challenge your understanding and identify weak spots. **(35 Questions)**</p>
-                    <div class="card-footer">Begin Test <span>&rarr;</span></div>
-                </a>
-                <a href="quiz-c.html" class="exam-card">
-                    <h3>Practice Test C</h3>
-                    <p>The final set of questions, designed to simulate the real exam experience and build confidence. **(35 Questions)**</p>
-                    <div class="card-footer">Begin Test <span>&rarr;</span></div>
-                </a>
-                <a href="quiz-random.html" class="exam-card">
-                    <h3>Mixed Review Quiz</h3>
-                    <p>A random set of questions pulled from all practice exams for a comprehensive review session. **(Custom Length)**</p>
-                    <div class="card-footer">Start Random Quiz <span>&rarr;</span></div>
-                </a>
-                
-                <a href="quiz-pbq.html" class="exam-card" style="border-color: #D9232E;">
-                    <h3 style="color: #D9232E;">PBQ Scenario Challenge</h3>
-                    <p>A dedicated section for Performance-Based Questions (PBQs) focusing on drag-and-drop and troubleshooting simulations.</p>
-                    <div class="card-footer" style="color: #D9232E; font-weight: 700;">Start PBQ Practice <span>&rarr;</span></div>
-                </a>
-                
-            </div>
-        </section>
-        
-        <section class="trust-section">
-            <h3>Why Choose Our Free Quizzes?</h3>
-            <ul class="trust-points">
-                <li>✅ **Updated for 220-1202**</li>
-                <li>📝 **Based on Official Objectives**</li>
-                <li>💯 **Instant Feedback & Scoring**</li>
-            </ul>
-        </section>
-        </main>
+            <section id="practice-exams">
+                <h2>Practice Exam Modules</h2>
+                <div class="exam-grid">
+                    <a href="quiz-a.html" class="exam-card">
+                        <h3>Practice Test A: Foundational Knowledge</h3>
+                        <p>The first set of questions to test your foundational knowledge across all exam domains. **(35 Questions)**</p>
+                        <div class="card-footer">Begin Test <span>&rarr;</span></div>
+                    </a>
+                    <a href="quiz-b.html" class="exam-card">
+                        <h3>Practice Test B: Advanced Troubleshooting</h3>
+                        <p>A second set of practice questions to challenge your understanding and identify weak spots. **(35 Questions)**</p>
+                        <div class="card-footer">Begin Test <span>&rarr;</span></div>
+                    </a>
+                    <a href="quiz-c.html" class="exam-card">
+                        <h3>Practice Test C: Final Simulation</h3>
+                        <p>The final set of questions, designed to simulate the real exam experience and build confidence. **(35 Questions)**</p>
+                        <div class="card-footer">Begin Test <span>&rarr;</span></div>
+                    </a>
+                    <a href="quiz-random.html" class="exam-card">
+                        <h3>Mixed Review Quiz</h3>
+                        <p>A random set of questions pulled from all practice exams for a comprehensive review session. **(Custom Length)**</p>
+                        <div class="card-footer">Start Random Quiz <span>&rarr;</span></div>
+                    </a>
+                    
+                    <a href="quiz-pbq.html" class="exam-card pbq-card">
+                        <h3>Performance-Based Challenge</h3>
+                        <p>Dedicated simulation interface for **troubleshooting** and **config deployment** via drag-and-drop mechanics (PBQs).</p>
+                        <div class="card-footer">Start PBQ Practice <span>&rarr;</span></div>
+                    </a>
+                    
+                </div>
+            </section>
+            
+            <section class="trust-section">
+                <h3>Why Choose Our Free Quizzes?</h3>
+                <ul class="trust-points">
+                    <li>✅ **Updated for 220-1202**</li>
+                    <li>📝 **Mapped to Official Objectives**</li>
+                    <li>💯 **Instant Feedback & Scoring**</li>
+                </ul>
+            </section>
+
+            <section class="credits-section">
+                <p><strong>Practice Tests A, B, and C</strong> were prepared using materials based on the publicly available **Professor Messer** CompTIA A+ Core 2 (220-1202) study objectives.</p>
+                <p>The **PBQ Simulation Challenge** scenarios and questions are randomly created using **Gemini AI** for dynamic practice.</p>
+            </section>
+        </div>
+    </main>
 
     <footer>
         © 2025 • Designed by <strong>BLaborte</strong>

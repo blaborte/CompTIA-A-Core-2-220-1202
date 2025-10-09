@@ -4,241 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CompTIA A+ Core 2 (220-1202) Exam Details & Objectives</title>
-
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #007AC3; /* CompTIA Blue */
-            --accent-color: #D9232E; /* CompTIA Red */
-            --light-grey: #f8f9fa;
-            --dark-grey: #343a40;
-            --border-color: #dee2e6;
-            --secondary-bg: #e6f7ff; /* Very light blue for accents */
-        }
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
 
-        body {
-            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #e9f2f9 0%, #f4f7f9 100%);
-            color: var(--dark-grey);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            background-color: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-            width: 100%;
-            max-width: 800px;
-            overflow: hidden;
-            text-align: center;
-            margin-top: 30px;
-            margin-bottom: 30px;
-        }
-        
-        header {
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            background-color: var(--secondary-bg); 
-        }
-
-        .logo {
-            width: 80px;
-            height: 80px;
-            background-color: var(--primary-color); 
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 2.5em;
-            font-weight: 700;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0, 122, 195, 0.4);
-        }
-        
-        .logo span {
-            transform: translateY(-2px);
-        }
-        
-        header h1 {
-            margin: 0;
-            font-size: 2em; 
-            font-weight: 700;
-            color: var(--dark-grey);
-        }
-        
-        header p {
-            margin: 8px 0 20px; 
-            color: #5a6470;
-            font-weight: 400;
-            max-width: 600px;
-        }
-
-        main {
-            padding: 20px 40px;
-            text-align: left;
-        }
-        
-        h2 {
-            font-size: 1.6em; 
-            color: var(--primary-color);
-            border-bottom: 3px solid var(--primary-color); 
-            padding-bottom: 10px;
-            margin-top: 40px;
-            margin-bottom: 25px; 
-        }
-        
-        .details-list {
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-        
-        .details-list dt {
-            font-weight: 600; 
-            color: var(--dark-grey);
-            float: left;
-            width: 200px;
-            clear: left;
-            padding-top: 5px; 
-        }
-        
-        .details-list dd {
-            margin-left: 220px;
-            color: #555;
-            padding-bottom: 5px;
-            border-bottom: 1px dashed var(--border-color); 
-        }
-        .details-list dd:last-child {
-            border-bottom: none;
-        }
-
-        .objective-card {
-            background-color: var(--light-grey);
-            border: 1px solid var(--border-color);
-            border-left: 5px solid var(--primary-color); 
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px; 
-            transition: box-shadow 0.3s ease; 
-        }
-        
-        .objective-card:hover {
-            box-shadow: 0 4px 15px rgba(0, 122, 195, 0.1);
-        }
-        
-        .objective-card h3 {
-            margin: 0 0 10px;
-            font-size: 1.3em; 
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .objective-card h3 span {
-            color: var(--accent-color); 
-            font-weight: 500;
-            background-color: #ffe0e0;
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-        
-        .objective-card ul {
-            list-style-position: outside;
-            padding-left: 20px; 
-            margin: 0;
-            color: #555;
-            line-height: 1.7;
-        }
-
-        .skills-list {
-            list-style: none;
-            padding: 0;
-            background-color: var(--light-grey);
-            border-radius: 8px;
-            padding: 10px 20px;
-        }
-
-        .skills-list li {
-            padding: 8px 0 8px 30px;
-            position: relative;
-            line-height: 1.6;
-            border-bottom: 1px dotted var(--border-color);
-        }
-
-        .skills-list li:last-child {
-            border-bottom: none;
-        }
-        
-        .skills-list li::before {
-            content: '✅'; 
-            color: #28a745;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-            top: 8px;
-        }
-        
-        footer {
-            padding: 20px;
-            font-size: 0.9em;
-            color: #999;
-            background-color: #f0f2f4; 
-            margin-top: 40px;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        /* NEW: STYLES FOR THE HOME BUTTON */
-        .home-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: var(--accent-color);
-            color: white;
-            text-decoration: none;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-weight: 500;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            transition: background-color 0.2s, transform 0.2s;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-        }
-
-        .home-button:hover {
-            background-color: #c41e28; /* Darker red on hover */
-            transform: translateY(-2px);
-        }
-
-        .home-button span {
-            margin-right: 5px;
-            font-size: 1.2em;
-        }
-        /* END NEW HOME BUTTON STYLES */
-
-        @media (max-width: 600px) {
-            main { padding: 15px 25px; }
-            .details-list dt { width: 100%; float: none; font-weight: bold; }
-            .details-list dd { margin-left: 0; padding-left: 10px; border-left: 3px solid var(--border-color); border-bottom: 1px dashed var(--border-color); }
-            /* Adjust button position for mobile */
-            .home-button {
-                top: 10px;
-                right: 10px;
-                padding: 8px 15px;
-            }
-        }
-
-    </style>
-</head>
+    </head>
 <body>
     
     <a href="index.html" class="home-button">
@@ -283,48 +56,76 @@
             </section>
 
             <section id="objectives">
-                <h2>A+ Core 2 Domain Weights</h2>
-                <div class="objective-card">
-                    <h3>Operating systems <span>28%</span></h3>
-                    <ul>
-                        <li>OS installation: working with Windows, macOS, Linux, and mobile operating systems.</li>
-                        <li>Windows tools: managing systems with Task Manager, Command Prompt, and Disk Management.</li>
-                        <li>File systems: handling file systems, updates, and OS upgrades.</li>
-                    </ul>
-                </div>
-                <div class="objective-card">
-                    <h3>Security <span>28%</span></h3>
-                    <ul>
-                        <li>Security measures: using encryption, access controls, and wireless security protocols.</li>
-                        <li>Malware prevention: detecting, removing, and preventing malware threats.</li>
-                    </ul>
-                </div>
-                <div class="objective-card">
-                    <h3>Software troubleshooting <span>23%</span></h3>
-                    <ul>
-                        <li>OS issues: diagnosing and resolving problems with operating systems and applications.</li>
-                        <li>Mobile troubleshooting: addressing connectivity, app, and performance issues.</li>
-                        <li>Security concerns: fixing unauthorized access and malware issues.</li>
-                    </ul>
-                </div>
-                <div class="objective-card">
-                    <h3>Operational procedures <span>21%</span></h3>
-                    <ul>
-                        <li>Documentation: using best practices for system changes and documentation.</li>
-                        <li>Safety and communication: following safety protocols and communicating effectively.</li>
-                        <li>Backup and recovery: setting up workstation backups and recovery processes.</li>
-                    </ul>
-                </div>
-            </section>
+                <h2>A+ Core 2 Domain Weights & Detailed Objectives</h2>
+                
+                <div class="objectives-content">
+                    
+                    <div class="toc-container">
+                        <h3>Domain Jump Links</h3>
+                        <ul>
+                            <li><a href="#domain-1">1.0 Operating Systems (28%)</a></li>
+                            <li><a href="#domain-2">2.0 Security (28%)</a></li>
+                            <li><a href="#domain-3">3.0 Software Troubleshooting (23%)</a></li>
+                            <li><a href="#domain-4">4.0 Operational Procedures (21%)</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="objectives-list">
+                        <div class="objective-card" id="domain-1">
+                            <h3>1.0 Operating Systems <span>28%</span></h3>
+                            <ul>
+                                <li>**1.1** Compare and contrast **Microsoft Windows** editions and features.</li>
+                                <li>**1.2** Use appropriate Microsoft Windows **command line tools** (**CMD, PowerShell, DISM, SFC**).</li>
+                                <li>**1.3** Use appropriate Microsoft Windows **desktop administrative tools** (**Control Panel, Settings, Device Manager, MMC**).</li>
+                                <li>**1.4** Summarize the functions and basic configuration of **macOS** and **Linux** operating systems.</li>
+                                <li>**1.5** Given a scenario, set up and configure Windows client **network settings** (**IP, DNS, Gateway, VPN, Proxy**).</li>
+                                <li>**1.6** Given a scenario, install, uninstall, and configure operating systems (including boot methods and **UEFI/BIOS**).</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="objective-card" id="domain-2">
+                            <h3>2.0 Security <span>28%</span></h3>
+                            <ul>
+                                <li>**2.1** Summarize the importance of **physical security** measures.</li>
+                                <li>**2.2** Explain how to secure the **SOHO wireless network** (including protocols like **WPA3**).</li>
+                                <li>**2.3** Compare and contrast common **security threats** (**Malware, Social Engineering, Ransomware, Phishing**).</li>
+                                <li>**2.4** Implement basic **security features and policies** (**Firewalls, Antivirus/Antimalware, User Account Control**).</li>
+                                <li>**2.5** Given a scenario, follow the proper procedure for **malware removal** and securing the system.</li>
+                                <li>**2.6** Summarize **privacy** and **security best practices** (including data destruction).</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="objective-card" id="domain-3">
+                            <h3>3.0 Software Troubleshooting <span>23%</span></h3>
+                            <ul>
+                                <li>**3.1** Given a scenario, troubleshoot Microsoft Windows **operating system problems** (**Boot issues, Application errors, System crashes**).</li>
+                                <li>**3.2** Given a scenario, troubleshoot **mobile OS** and **application issues** (**Connectivity, Synchronization, Performance**).</li>
+                                <li>**3.3** Given a scenario, troubleshoot **application security issues** (e.g., unauthorized access, application whitelisting).</li>
+                                <li>**3.4** Explain and apply **cloud computing** and **virtualization** best practices and basic concepts (e.g., **IaaS, SaaS, Hypervisors**).</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="objective-card" id="domain-4">
+                            <h3>4.0 Operational Procedures <span>21%</span></h3>
+                            <ul>
+                                <li>**4.1** Compare and contrast best practices for **documentation** and **change management**.</li>
+                                <li>**4.2** Explain basic principles of **disaster prevention** and **recovery** (e.g., redundant systems, **UPS**).</li>
+                                <li>**4.3** Explain best practices for **data backups** and **retention** (e.g., **full, incremental, differential**).</li>
+                                <li>**4.4** Given a scenario, use appropriate **communication techniques** and **professionalism** (e.g., etiquette, tone).</li>
+                                <li>**4.5** Summarize various **licenses, policies, and regulations** (e.g., **EULA, GDPR, DRP**).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div> </section>
 
             <section id="skills">
                 <h2>Key Skills Developed</h2>
                 <ul class="skills-list">
-                    <li>Install, configure, and manage operating systems, including Windows, macOS, and Linux.</li>
-                    <li>Apply security measures to protect systems and mitigate threats.</li>
-                    <li>Troubleshoot software and operating system issues.</li>
-                    <li>Follow operational procedures for safety, documentation, and change management.</li>
-                    <li>Implement backup and recovery methods to ensure data integrity.</li>
+                    <li>**Master core OS functions** on Windows, macOS, and Linux using both GUI and command-line tools.</li>
+                    <li>**Secure endpoints** by implementing physical security, encryption, and strong network protocols (**WPA3**).</li>
+                    <li>**Troubleshoot and remediate** common OS, application, and mobile device issues, including the **malware removal process**.</li>
+                    <li>Apply virtualization concepts and understand **cloud models** like IaaS and SaaS.</li>
+                    <li>Maintain **professionalism** and adhere to operational procedures like **change management** and **data retention** policies.</li>
                 </ul>
             </section>
         </main>
