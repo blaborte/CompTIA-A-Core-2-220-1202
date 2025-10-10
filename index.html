@@ -11,7 +11,6 @@
 <link rel="icon" type="image/png" href="/favicon.png">
 
 <style>
-    /* LIGHT PROFESSIONAL MODE PALETTE */
     :root {
         --bg-main: #f4f7f9;
         --primary-accent: #0072C6;
@@ -47,7 +46,6 @@
         width: 100%;
     }
 
-    /* HEADER STYLES */
     header {
         text-align: center;
         padding-bottom: 30px;
@@ -96,7 +94,6 @@
         box-shadow: 0 4px 10px rgba(217, 35, 46, 0.3);
     }
 
-    /* HERO SECTION */
     .hero-section {
         text-align: center;
         margin-bottom: 40px;
@@ -115,7 +112,6 @@
         color: var(--primary-accent);
     }
 
-    /* TIP OF THE DAY SECTION */
     .tip-section {
         background-color: var(--card-bg);
         border-radius: 12px;
@@ -139,7 +135,7 @@
     .tip-details p {
         color: var(--text-muted);
         margin-bottom: 10px;
-        max-width: 600px; /* Constrain width for readability */
+        max-width: 600px;
         margin-left: auto;
         margin-right: auto;
     }
@@ -150,10 +146,12 @@
     .tip-footer {
         text-align: center;
         margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
     }
-    #next-tip-btn {
-        background-color: var(--flashcard-accent);
-        color: var(--text-main);
+
+    #next-tip-btn, #prev-tip-btn {
         border: none;
         padding: 10px 20px;
         font-family: "Poppins", sans-serif;
@@ -163,12 +161,25 @@
         cursor: pointer;
         transition: background-color 0.2s;
     }
+
+    #next-tip-btn {
+        background-color: var(--flashcard-accent);
+        color: var(--text-main);
+    }
     #next-tip-btn:hover {
         background-color: #eab528;
     }
 
+    #prev-tip-btn {
+        background-color: var(--card-bg);
+        color: var(--text-muted);
+        border: 1px solid var(--border-color);
+    }
+    #prev-tip-btn:hover {
+        background-color: var(--bg-main);
+    }
 
-    /* SELECTION SECTION STYLES */
+
     .selection-section h2 {
         text-align: center;
         color: var(--primary-accent);
@@ -240,7 +251,6 @@
         transform: translateX(5px);
     }
 
-    /* TRUST/CREDITS SECTIONS */
     .trust-section, .credits-section {
         margin-top: 50px;
         padding: 20px 0;
@@ -266,7 +276,6 @@
 
     footer { text-align: center; padding: 20px 0; margin-top: 40px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.85em; }
 
-    /* RESPONSIVE DESIGN */
     @media (max-width: 768px) {
         header h1 { font-size: 2em; }
         .card-grid { grid-template-columns: 1fr; }
@@ -295,7 +304,6 @@
             <p class="hero-text">Select a module below to begin your practice drills.</p>
         </section>
 
-        <!-- TIP OF THE DAY SECTION (NO IMAGE) -->
         <section class="tip-section">
             <h2>Core 2 Spotlight</h2>
             <div class="tip-details">
@@ -304,12 +312,12 @@
                 <p><strong>Usage:</strong> <span id="tip-usage"></span></p>
             </div>
             <div class="tip-footer">
+                <button id="prev-tip-btn">&larr; Previous Tip</button>
                 <button id="next-tip-btn">Next Tip &rarr;</button>
             </div>
         </section>
 
 
-        <!-- UNIFIED GAME SECTION -->
         <section class="selection-section">
             <h2>Interactive Games & Simulations</h2>
             <div class="card-grid">
@@ -321,7 +329,6 @@
             </div>
         </section>
         
-        <!-- GENERAL PRACTICE MODULES -->
         <section class="selection-section">
             <h2>General Practice Modules</h2>
             <div class="card-grid">
@@ -385,11 +392,20 @@
 <script src="tips.js"></script>
 <script>
     let currentTipIndex = -1;
+    let shuffledTips = [];
 
     const tipTitleEl = document.getElementById('tip-title');
     const tipDescriptionEl = document.getElementById('tip-description');
     const tipUsageEl = document.getElementById('tip-usage');
     const nextTipBtn = document.getElementById('next-tip-btn');
+    const prevTipBtn = document.getElementById('prev-tip-btn');
+
+    function showTip() {
+        const tip = shuffledTips[currentTipIndex];
+        tipTitleEl.textContent = tip.title;
+        tipDescriptionEl.textContent = tip.description;
+        tipUsageEl.textContent = tip.usage;
+    }
 
     function showNextTip() {
         if (typeof tips === 'undefined' || tips.length === 0) {
@@ -398,22 +414,26 @@
             tipUsageEl.textContent = '';
             return;
         }
+        currentTipIndex = (currentTipIndex + 1) % shuffledTips.length;
+        showTip();
+    }
 
-        currentTipIndex = (currentTipIndex + 1) % tips.length;
-        const tip = tips[currentTipIndex];
-        tipTitleEl.textContent = tip.title;
-        tipDescriptionEl.textContent = tip.description;
-        tipUsageEl.textContent = tip.usage;
+    function showPrevTip() {
+        if (typeof tips === 'undefined' || tips.length === 0) return;
+        currentTipIndex = (currentTipIndex - 1 + shuffledTips.length) % shuffledTips.length;
+        showTip();
     }
 
     nextTipBtn.addEventListener('click', showNextTip);
+    prevTipBtn.addEventListener('click', showPrevTip);
 
     function startTips() {
          if (typeof tips !== 'undefined' && tips.length > 0) {
-            tips.sort(() => 0.5 - Math.random());
+            shuffledTips = [...tips].sort(() => 0.5 - Math.random());
+            currentTipIndex = -1;
             showNextTip();
         } else {
-            showNextTip();
+            showNextTip(); // This will show the error message
         }
     }
 
