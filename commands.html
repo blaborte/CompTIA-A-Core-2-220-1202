@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Command Reference - CompTIA A+ Core 2 (220-1202)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="/favicon.png">
+<style>
+    :root {
+        --bg-main: #f4f7f9;
+        --primary-accent: #0072C6;
+        --text-main: #212529;
+        --text-muted: #6c757d;
+        --card-bg: #ffffff;
+        --border-color: #e9ecef;
+        --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --code-bg: #e9ecef;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Poppins", sans-serif; background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; }
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+    header { text-align: center; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
+    header h1 { font-size: 2.2em; color: var(--primary-accent); font-weight: 700; }
+    .content-card { background-color: var(--card-bg); border-radius: 10px; padding: 30px; box-shadow: var(--shadow-subtle); border: 1px solid var(--border-color); }
+    .command-section { margin-bottom: 40px; }
+    .command-section h2 { font-size: 1.6em; color: var(--primary-accent); border-bottom: 2px solid var(--primary-accent); padding-bottom: 10px; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--border-color); }
+    th { color: var(--primary-accent); }
+    td code { background-color: var(--code-bg); padding: 3px 6px; border-radius: 4px; font-family: monospace; }
+    .home-link { display: inline-block; margin-top: 30px; padding: 12px 25px; background-color: var(--primary-accent); color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 500; transition: background-color 0.2s; }
+    .home-link:hover { background-color: #005a9e; }
+</style>
+</head>
+<body>
+<div class="container">
+    <header><h1>Command-Line Quick Reference</h1></header>
+    <main>
+        <div class="content-card">
+
+            <div class="command-section">
+                <h2>Windows Commands (Command Prompt & PowerShell)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Command</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>tasklist</code></td><td>Displays a list of currently running processes.</td></tr>
+                        <tr><td><code>taskkill</code></td><td>Terminates a running process by name or process ID (PID).</td></tr>
+                        <tr><td><code>sfc</code></td><td>System File Checker. Scans and repairs corrupted Windows system files. (e.g., <code>sfc /scannow</code>)</td></tr>
+                        <tr><td><code>chkdsk</code></td><td>Checks a disk for file system errors and bad sectors. (e.g., <code>chkdsk /f</code> to fix errors)</td></tr>
+                        <tr><td><code>gpupdate</code></td><td>Forces an update of Group Policy settings. (e.g., <code>gpupdate /force</code>)</td></tr>
+                        <tr><td><code>gpresult</code></td><td>Displays the Resultant Set of Policy (RSoP) for a user and computer.</td></tr>
+                        <tr><td><code>format</code></td><td>Formats a disk to accept Windows files. **Warning: Erases all data.**</td></tr>
+                        <tr><td><code>diskpart</code></td><td>A command-line disk-partitioning utility.</td></tr>
+                        <tr><td><code>ipconfig</code></td><td>Displays all current TCP/IP network configuration values.</td></tr>
+                        <tr><td><code>ping</code></td><td>Tests network connectivity to another device on the network.</td></tr>
+                        <tr><td><code>tracert</code></td><td>Traces the route that packets take to a network host.</td></tr>
+                        <tr><td><code>netstat</code></td><td>Displays active network connections and ports.</td></tr>
+                        <tr><td><code>nslookup</code></td><td>Queries the Domain Name System (DNS) to obtain domain name or IP address mapping.</td></tr>
+                        <tr><td><code>net</code></td><td>A versatile command for managing network resources (e.g., <code>net use</code>, <code>net user</code>).</td></tr>
+                        <tr><td><code>shutdown</code></td><td>Shuts down, restarts, or logs off a computer. (e.g., <code>shutdown /s /t 0</code>)</td></tr>
+                        <tr><td><code>dir</code></td><td>Lists the files and subdirectories in a directory.</td></tr>
+                        <tr><td><code>cd</code></td><td>Changes the current directory.</td></tr>
+                        <tr><td><code>md</code></td><td>Creates a new directory.</td></tr>
+                        <tr><td><code>rd</code></td><td>Removes a directory.</td></tr>
+                        <tr><td><code>del</code></td><td>Deletes one or more files.</td></tr>
+                        <tr><td><code>copy</code></td><td>Copies files from one location to another.</td></tr>
+                        <tr><td><code>xcopy</code></td><td>Copies files and directory trees. More advanced than <code>copy</code>.</td></tr>
+                        <tr><td><code>robocopy</code></td><td>Robust File Copy. A powerful tool for copying and synchronizing directories.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="command-section">
+                <h2>Linux & macOS Commands (Bash/Zsh Shell)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Command</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>ls</code></td><td>Lists directory contents. (e.g., <code>ls -l</code> for detailed view)</td></tr>
+                        <tr><td><code>pwd</code></td><td>Print Working Directory. Shows the current directory path.</td></tr>
+                        <tr><td><code>cd</code></td><td>Changes the current directory.</td></tr>
+                        <tr><td><code>grep</code></td><td>Searches for a specific pattern of text in files.</td></tr>
+                        <tr><td><code>ps</code></td><td>Displays information about currently running processes.</td></tr>
+                        <tr><td><code>kill</code></td><td>Terminates a running process by its process ID (PID).</td></tr>
+                        <tr><td><code>vi</code> / <code>nano</code></td><td>Text editors for the command line.</td></tr>
+                        <tr><td><code>su</code> / <code>sudo</code></td><td>Switch User or Superuser Do. Used to execute commands with elevated privileges.</td></tr>
+                        <tr><td><code>chmod</code></td><td>Changes the permissions (read, write, execute) of a file or directory.</td></tr>
+                        <tr><td><code>chown</code></td><td>Changes the owner of a file or directory.</td></tr>
+                        <tr><td><code>ifconfig</code> / <code>ip</code></td><td>Displays or configures network interface parameters. (<code>ip</code> is newer)</td></tr>
+                        <tr><td><code>ping</code></td><td>Tests network connectivity to another device.</td></tr>
+                        <tr><td><code>traceroute</code></td><td>Traces the route that packets take to a network host.</td></tr>
+                        <tr><td><code>netstat</code></td><td>Displays network connections, routing tables, and interface statistics.</td></tr>
+                        <tr><td><code>nslookup</code> / <code>dig</code></td><td>Queries DNS servers for information about hosts. (<code>dig</code> is more advanced)</td></tr>
+                        <tr><td><code>apt-get</code> / <code>yum</code></td><td>Package managers for Debian/Ubuntu (apt-get) and CentOS/RHEL (yum) based systems.</td></tr>
+                        <tr><td><code>cp</code></td><td>Copies files and directories.</td></tr>
+                        <tr><td><code>mv</code></td><td>Moves or renames files and directories.</td></tr>
+                        <tr><td><code>rm</code></td><td>Removes (deletes) files and directories.</td></tr>
+                        <tr><td><code>mkdir</code></td><td>Creates a new directory.</td></tr>
+                        <tr><td><code>dd</code></td><td>Copies and converts data. Often used for creating disk images or bootable USB drives.</td></tr>
+                        <tr><td><code>shutdown</code></td><td>Shuts down or restarts the system. (e.g., <code>shutdown -h now</code>)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <a href="index.html" class="home-link">&larr; Back to Main Menu</a>
+        </div>
+    </main>
+</div>
+</body>
+</html>
