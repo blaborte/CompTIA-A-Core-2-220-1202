@@ -14,11 +14,9 @@
     /* LIGHT PROFESSIONAL MODE PALETTE */
     :root {
         --bg-main: #f4f7f9;
-        --primary-accent: #0072C6; /* Windows Blue */
-        --secondary-accent: #D9232E; /* Red for highlights/PBQ */
-        --flashcard-accent: #f7b731; /* Amber/Gold for Flashcards */
-        --macos-accent: #555555; /* macOS Grey */
-        --linux-accent: #FFA500; /* Linux Orange */
+        --primary-accent: #0072C6;
+        --secondary-accent: #D9232E;
+        --flashcard-accent: #f7b731;
         --text-main: #212529;
         --text-muted: #6c757d;
         --text-light: #ffffff;
@@ -117,6 +115,70 @@
         color: var(--primary-accent);
     }
 
+    /* NEW: TIP OF THE DAY SECTION */
+    .tip-section {
+        background-color: var(--card-bg);
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        padding: 25px;
+        margin-bottom: 50px;
+        box-shadow: var(--shadow-subtle);
+    }
+    .tip-section h2 {
+        text-align: center;
+        color: var(--flashcard-accent);
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+    .tip-content {
+        display: flex;
+        gap: 25px;
+        align-items: center;
+    }
+    .tip-image {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px;
+        background-color: var(--bg-main);
+        flex-shrink: 0;
+        border: 1px solid var(--border-color);
+    }
+    .tip-details h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: var(--text-main);
+        font-size: 1.4em;
+    }
+    .tip-details p {
+        color: var(--text-muted);
+        margin-bottom: 10px;
+    }
+     .tip-details strong {
+        color: var(--text-main);
+        font-weight: 600;
+    }
+    .tip-footer {
+        text-align: right;
+        margin-top: 15px;
+    }
+    #next-tip-btn {
+        background-color: var(--flashcard-accent);
+        color: var(--text-main);
+        border: none;
+        padding: 10px 20px;
+        font-family: "Poppins", sans-serif;
+        font-size: 1em;
+        font-weight: 500;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    #next-tip-btn:hover {
+        background-color: #eab528;
+    }
+
+
     /* SELECTION SECTION STYLES */
     .selection-section h2 {
         text-align: center;
@@ -148,7 +210,6 @@
         transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
     }
 
-    /* Hover States */
     .exam-card:hover { 
         transform: translateY(-5px); 
         box-shadow: var(--shadow-subtle); 
@@ -157,7 +218,6 @@
     .exam-card.pbq-card:hover { border-color: var(--secondary-accent); }
     .exam-card.flashcard-card:hover { border-color: var(--flashcard-accent); }
 
-    /* Card Title Colors */
     .exam-card h3 { font-size: 1.4em; margin-bottom: 10px; font-weight: 700; color: var(--primary-accent);}
     .exam-card.pbq-card h3 { color: var(--secondary-accent); }
     .exam-card.flashcard-card h3 { color: var(--flashcard-accent); }
@@ -168,7 +228,6 @@
         margin-bottom: 15px;
     }
 
-    /* Card Footer Colors */
     .card-footer {
         margin-top: auto;
         padding-top: 15px;
@@ -216,7 +275,6 @@
     .credits-section p { font-size: 0.9em; color: var(--text-muted); margin-bottom: 5px; }
     .credits-section strong { color: var(--text-main); }
 
-    /* FOOTER */
     footer { text-align: center; padding: 20px 0; margin-top: 40px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.85em; }
 
     /* RESPONSIVE DESIGN */
@@ -224,6 +282,10 @@
         header h1 { font-size: 2em; }
         .card-grid { grid-template-columns: 1fr; }
         .trust-points { flex-direction: column; gap: 15px; align-items: center; }
+        .tip-content { flex-direction: column; }
+        .tip-image { width: 100%; max-width: 200px; height: auto; }
+        .tip-details { text-align: center; }
+        .tip-footer { text-align: center; }
     }
 </style>
 </head>
@@ -248,6 +310,23 @@
             <p class="hero-text">Select a module below to begin your practice drills.</p>
         </section>
 
+        <!-- NEW TIP OF THE DAY SECTION -->
+        <section class="tip-section">
+            <h2>Core 2 Spotlight</h2>
+            <div class="tip-content">
+                <img id="tip-image" class="tip-image" src="" alt="Tip of the day visual">
+                <div class="tip-details">
+                    <h3 id="tip-title">Loading Tip...</h3>
+                    <p id="tip-description"></p>
+                    <p><strong>Usage:</strong> <span id="tip-usage"></span></p>
+                </div>
+            </div>
+            <div class="tip-footer">
+                <button id="next-tip-btn">Next Tip &rarr;</button>
+            </div>
+        </section>
+
+
         <!-- UNIFIED GAME SECTION -->
         <section class="selection-section">
             <h2>Interactive Games & Simulations</h2>
@@ -266,19 +345,19 @@
             <div class="card-grid">
                 <a href="quiz-a.html" class="exam-card">
                     <h3>PRACTICE TEST A</h3>
-                    <p>The first set of questions to test your foundational knowledge across all exam domains. **(85 Questions)**</p>
+                    <p>The first set of questions to test your foundational knowledge across all exam domains. **(10 Questions)**</p>
                     <div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div>
                 </a>
                 
                 <a href="quiz-b.html" class="exam-card">
                     <h3>PRACTICE TEST B</h3>
-                    <p>A second set of practice questions to challenge your understanding and identify weak spots. **(85 Questions)**</p>
+                    <p>A second set of practice questions to challenge your understanding and identify weak spots. **(35 Questions)**</p>
                     <div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div>
                 </a>
                 
                 <a href="quiz-c.html" class="exam-card">
                     <h3>PRACTICE TEST C</h3>
-                    <p>The final set of questions, designed to simulate the real exam experience and build confidence. **(85 Questions)**</p>
+                    <p>The final set of questions, designed to simulate the real exam experience and build confidence. **(35 Questions)**</p>
                     <div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div>
                 </a>
                 
@@ -321,8 +400,83 @@
         CONSOLE LOG: © 2025 • INTERFACE DESIGN BY <strong>BLABORTE</strong>
     </footer>
 </div>
+<script>
+    const tips = [
+        {
+            title: "ESD Strap",
+            description: "A safety device worn on your wrist that connects you to an unpainted metal surface of a computer case.",
+            usage: "Equalizes the electrical charge between you and the computer, preventing electrostatic discharge (ESD) from damaging sensitive components like RAM or CPUs.",
+            image: "https://i.imgur.com/DBp32Q1.jpeg"
+        },
+        {
+            title: "Surge Suppressor",
+            description: "A device designed to protect electronics from short-duration voltage spikes or 'surges.'",
+            usage: "Plug your computer and peripherals into it to protect them from damage caused by lightning or power grid fluctuations. Offers more protection than a basic power strip.",
+            image: "https://i.imgur.com/t2s1hA5.jpeg"
+        },
+        {
+            title: "UPS (Uninterruptible Power Supply)",
+            description: "A device containing a battery that provides emergency power during a power outage.",
+            usage: "Gives you time to gracefully shut down your computer, preventing data loss or file corruption. Essential for servers and critical workstations.",
+            image: "https://i.imgur.com/2s301j0.jpeg"
+        },
+        {
+            title: "Loopback Plug",
+            description: "A diagnostic tool that plugs into a port (like Ethernet) and redirects outbound signals back into the port.",
+            usage: "Used to test the physical functionality of a port. If data is sent and received, it confirms the port hardware is working, helping to isolate network issues.",
+            image: "https://i.imgur.com/Y36t4Cg.jpeg"
+        },
+        {
+            title: "gpresult /r",
+            description: "A Windows command-line tool to display the Resultant Set of Policy (RSoP) for a user and computer.",
+            usage: "Run this in Command Prompt to verify which Group Policy Objects (GPOs) are actually being applied, which is critical for troubleshooting policy conflicts.",
+            image: "https://i.imgur.com/jGj4a4z.png"
+        },
+        {
+            title: "sfc /scannow",
+            description: "The System File Checker command in Windows, used to verify and repair protected system files.",
+            usage: "Run as an administrator to fix issues caused by corrupted or missing OS files, often a good step after malware removal or unexpected system crashes.",
+            image: "https://i.imgur.com/2sCVb2T.png"
+        },
+        {
+            title: "Time Machine",
+            description: "The built-in backup and restoration utility for macOS, known for its ease of use and versioning.",
+            usage: "It automatically creates hourly, daily, and weekly backups, allowing you to restore your entire Mac, or just a single file, to a specific point in time.",
+            image: "https://i.imgur.com/3Yp4pZ5.jpeg"
+        },
+        {
+            title: "chmod",
+            description: "A fundamental Linux command used to change the permissions (read, write, execute) of files and directories.",
+            usage: "Use either symbolic (e.g., `chmod u+x script.sh`) or octal (e.g., `chmod 755 script.sh`) notation to secure files and control user access.",
+            image: "https://i.imgur.com/sEt3O4W.png"
+        }
+    ];
 
+    let currentTipIndex = -1;
+
+    const tipTitleEl = document.getElementById('tip-title');
+    const tipDescriptionEl = document.getElementById('tip-description');
+    const tipUsageEl = document.getElementById('tip-usage');
+    const tipImageEl = document.getElementById('tip-image');
+    const nextTipBtn = document.getElementById('next-tip-btn');
+
+    function showNextTip() {
+        currentTipIndex = (currentTipIndex + 1) % tips.length;
+        const tip = tips[currentTipIndex];
+        tipTitleEl.textContent = tip.title;
+        tipDescriptionEl.textContent = tip.description;
+        tipUsageEl.textContent = tip.usage;
+        tipImageEl.src = tip.image;
+        tipImageEl.alt = tip.title;
+    }
+
+    nextTipBtn.addEventListener('click', showNextTip);
+
+    // Show initial tip on page load after shuffling
+    tips.sort(() => 0.5 - Math.random());
+    showNextTip();
+
+</script>
 </body>
 </html>
-
 
