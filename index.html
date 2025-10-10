@@ -115,7 +115,7 @@
         color: var(--primary-accent);
     }
 
-    /* NEW: TIP OF THE DAY SECTION */
+    /* TIP OF THE DAY SECTION */
     .tip-section {
         background-color: var(--card-bg);
         border-radius: 12px;
@@ -123,26 +123,12 @@
         padding: 25px;
         margin-bottom: 50px;
         box-shadow: var(--shadow-subtle);
+        text-align: center;
     }
     .tip-section h2 {
-        text-align: center;
         color: var(--flashcard-accent);
         margin-top: 0;
         margin-bottom: 20px;
-    }
-    .tip-content {
-        display: flex;
-        gap: 25px;
-        align-items: center;
-    }
-    .tip-image {
-        width: 150px;
-        height: 150px;
-        object-fit: cover;
-        border-radius: 8px;
-        background-color: var(--bg-main);
-        flex-shrink: 0;
-        border: 1px solid var(--border-color);
     }
     .tip-details h3 {
         margin-top: 0;
@@ -153,14 +139,17 @@
     .tip-details p {
         color: var(--text-muted);
         margin-bottom: 10px;
+        max-width: 600px; /* Constrain width for readability */
+        margin-left: auto;
+        margin-right: auto;
     }
      .tip-details strong {
         color: var(--text-main);
         font-weight: 600;
     }
     .tip-footer {
-        text-align: right;
-        margin-top: 15px;
+        text-align: center;
+        margin-top: 20px;
     }
     #next-tip-btn {
         background-color: var(--flashcard-accent);
@@ -282,10 +271,6 @@
         header h1 { font-size: 2em; }
         .card-grid { grid-template-columns: 1fr; }
         .trust-points { flex-direction: column; gap: 15px; align-items: center; }
-        .tip-content { flex-direction: column; }
-        .tip-image { width: 100%; max-width: 200px; height: auto; }
-        .tip-details { text-align: center; }
-        .tip-footer { text-align: center; }
     }
 </style>
 </head>
@@ -310,16 +295,13 @@
             <p class="hero-text">Select a module below to begin your practice drills.</p>
         </section>
 
-        <!-- NEW TIP OF THE DAY SECTION -->
+        <!-- TIP OF THE DAY SECTION (NO IMAGE) -->
         <section class="tip-section">
             <h2>Core 2 Spotlight</h2>
-            <div class="tip-content">
-                <img id="tip-image" class="tip-image" src="" alt="Tip of the day visual">
-                <div class="tip-details">
-                    <h3 id="tip-title">Loading Tip...</h3>
-                    <p id="tip-description"></p>
-                    <p><strong>Usage:</strong> <span id="tip-usage"></span></p>
-                </div>
+            <div class="tip-details">
+                <h3 id="tip-title">Loading Tip...</h3>
+                <p id="tip-description"></p>
+                <p><strong>Usage:</strong> <span id="tip-usage"></span></p>
             </div>
             <div class="tip-footer">
                 <button id="next-tip-btn">Next Tip &rarr;</button>
@@ -400,82 +382,42 @@
         CONSOLE LOG: © 2025 • INTERFACE DESIGN BY <strong>BLABORTE</strong>
     </footer>
 </div>
+<script src="tips.js"></script>
 <script>
-    const tips = [
-        {
-            title: "ESD Strap",
-            description: "A safety device worn on your wrist that connects you to an unpainted metal surface of a computer case.",
-            usage: "Equalizes the electrical charge between you and the computer, preventing electrostatic discharge (ESD) from damaging sensitive components like RAM or CPUs.",
-            image: "https://i.imgur.com/DBp32Q1.jpeg"
-        },
-        {
-            title: "Surge Suppressor",
-            description: "A device designed to protect electronics from short-duration voltage spikes or 'surges.'",
-            usage: "Plug your computer and peripherals into it to protect them from damage caused by lightning or power grid fluctuations. Offers more protection than a basic power strip.",
-            image: "https://i.imgur.com/t2s1hA5.jpeg"
-        },
-        {
-            title: "UPS (Uninterruptible Power Supply)",
-            description: "A device containing a battery that provides emergency power during a power outage.",
-            usage: "Gives you time to gracefully shut down your computer, preventing data loss or file corruption. Essential for servers and critical workstations.",
-            image: "https://i.imgur.com/2s301j0.jpeg"
-        },
-        {
-            title: "Loopback Plug",
-            description: "A diagnostic tool that plugs into a port (like Ethernet) and redirects outbound signals back into the port.",
-            usage: "Used to test the physical functionality of a port. If data is sent and received, it confirms the port hardware is working, helping to isolate network issues.",
-            image: "https://i.imgur.com/Y36t4Cg.jpeg"
-        },
-        {
-            title: "gpresult /r",
-            description: "A Windows command-line tool to display the Resultant Set of Policy (RSoP) for a user and computer.",
-            usage: "Run this in Command Prompt to verify which Group Policy Objects (GPOs) are actually being applied, which is critical for troubleshooting policy conflicts.",
-            image: "https://i.imgur.com/jGj4a4z.png"
-        },
-        {
-            title: "sfc /scannow",
-            description: "The System File Checker command in Windows, used to verify and repair protected system files.",
-            usage: "Run as an administrator to fix issues caused by corrupted or missing OS files, often a good step after malware removal or unexpected system crashes.",
-            image: "https://i.imgur.com/2sCVb2T.png"
-        },
-        {
-            title: "Time Machine",
-            description: "The built-in backup and restoration utility for macOS, known for its ease of use and versioning.",
-            usage: "It automatically creates hourly, daily, and weekly backups, allowing you to restore your entire Mac, or just a single file, to a specific point in time.",
-            image: "https://i.imgur.com/3Yp4pZ5.jpeg"
-        },
-        {
-            title: "chmod",
-            description: "A fundamental Linux command used to change the permissions (read, write, execute) of files and directories.",
-            usage: "Use either symbolic (e.g., `chmod u+x script.sh`) or octal (e.g., `chmod 755 script.sh`) notation to secure files and control user access.",
-            image: "https://i.imgur.com/sEt3O4W.png"
-        }
-    ];
-
     let currentTipIndex = -1;
 
     const tipTitleEl = document.getElementById('tip-title');
     const tipDescriptionEl = document.getElementById('tip-description');
     const tipUsageEl = document.getElementById('tip-usage');
-    const tipImageEl = document.getElementById('tip-image');
     const nextTipBtn = document.getElementById('next-tip-btn');
 
     function showNextTip() {
+        if (typeof tips === 'undefined' || tips.length === 0) {
+            tipTitleEl.textContent = 'Error';
+            tipDescriptionEl.textContent = 'Could not load tips. Please ensure tips.js is in the same folder.';
+            tipUsageEl.textContent = '';
+            return;
+        }
+
         currentTipIndex = (currentTipIndex + 1) % tips.length;
         const tip = tips[currentTipIndex];
         tipTitleEl.textContent = tip.title;
         tipDescriptionEl.textContent = tip.description;
         tipUsageEl.textContent = tip.usage;
-        tipImageEl.src = tip.image;
-        tipImageEl.alt = tip.title;
     }
 
     nextTipBtn.addEventListener('click', showNextTip);
 
-    // Show initial tip on page load after shuffling
-    tips.sort(() => 0.5 - Math.random());
-    showNextTip();
+    function startTips() {
+         if (typeof tips !== 'undefined' && tips.length > 0) {
+            tips.sort(() => 0.5 - Math.random());
+            showNextTip();
+        } else {
+            showNextTip();
+        }
+    }
 
+    document.addEventListener('DOMContentLoaded', startTips);
 </script>
 </body>
 </html>
