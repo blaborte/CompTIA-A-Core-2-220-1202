@@ -9,9 +9,13 @@
         body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; background-color: #f4f4f9; border: 1px solid #ccc; border-radius: 8px; }
         h1 { color: #007bff; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
         h2 { color: #333; margin-top: 25px; }
+        h4 { color: #555; margin-bottom: 5px; margin-top: 20px; }
         .scenario-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .scenario-header h2 { margin: 0; }
         .scenario, .question { background-color: #e9ecef; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 5px solid #007bff; }
+        .scenario ul { padding-left: 20px; }
+        .scenario ul li { margin-bottom: 5px; }
+        .scenario code { background-color: #d1d9e1; padding: 2px 5px; border-radius: 3px; font-family: "Courier New", Courier, monospace; }
         .answer-area { margin-top: 15px; }
         input[type="text"] { padding: 10px; width: 60%; margin-right: 10px; border: 1px solid #ccc; border-radius: 4px; }
         button { padding: 10px 15px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.2s; }
@@ -103,10 +107,25 @@
             <p>A user can no longer access their network drive. They can browse the internet. You suspect a recent Windows update reset the firewall profile.</p>
             <p>You connect to their Windows 10 workstation via a remote command prompt.</p>
         </div>
-        <div id="q1" class="question hidden"><h3>Question 1: Initial Network Profile Check</h3><p>You suspect the profile reset from "Private" to **"Public"**. What command utility can you use to quickly view the current network connection profiles?</p><div class="answer-area"><input type="text" id="a1-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 1)"><button onclick="checkAnswer(1)">Submit Answer</button><button class="hint-button" onclick="showHint(1)">Need a Hint?</button></div><div id="q1-feedback" class="feedback hidden"></div><div id="q1-hint" class="hint-text"><strong>Hint:</strong> You need a command to view connection properties, not IP details.<ul><li>Possible commands: <code>Get-NetConnectionProfile</code></li><li>Possible commands: <code>netsh interface show interface</code></li></ul></div></div>
-        <div id="q2" class="question hidden"><h3>Question 2: Identify the Firewall Utility</h3><div class="scenario"><p><strong>Result:</strong> The network profile is set to **Public**. You need to change it back to **Private**. Which utility is designed for managing Windows Firewall settings, including network profiles?</p></div><div class="answer-area"><input type="text" id="a2-input" placeholder="Type the utility name (e.g., ipconfig, netsh, diskpart)..." onkeydown="handleInputKeypress(event, 2)"><button onclick="checkAnswer(2)">Submit Answer</button><button class="hint-button" onclick="showHint(2)">Need a Hint?</button></div><div id="q2-feedback" class="feedback hidden"></div><div id="q2-hint" class="hint-text"><strong>Hint:</strong> This utility manages configuration of network interfaces, protocols, and the firewall.<ul><li>Possible commands: <code>netsh</code></li><li>Possible commands: <code>netsh advfirewall</code></li></ul></div></div>
-        <div id="q3" class="question hidden"><h3>Question 3: Verify the Fix (Port Connectivity)</h3><div class="scenario"><p><strong>Fix:</strong> You used the correct utility to switch the profile back to **Private**. **Verification:** How can you verify from the command line that the server is now reachable on the **SMB port (445)**?</p></div><p><strong>What command utility should you use to test connectivity to the target server on a *specific* port (445)?</strong></p><div class="answer-area"><input type="text" id="a3-input" placeholder="Type the utility name (e.g., ping, tracert, telnet)..." onkeydown="handleInputKeypress(event, 3)"><button onclick="checkAnswer(3)">Submit Answer</button><button class="hint-button" onclick="showHint(3)">Need a Hint?</button></div><div id="q3-feedback" class="feedback hidden"></div><div id="q3-hint" class="hint-text"><strong>Hint:</strong> You need a tool that can attempt a connection to a port, not just send an ICMP echo request.<ul><li>Possible commands: <code>telnet</code></li><li>Possible commands: <code>Test-NetConnection</code></li></ul></div></div>
-    </div> 
+        <div id="q1" class="question hidden"><h3>Question 1: Initial Network Profile Check</h3><p>You suspect the profile reset from "Private" to **"Public"**. What command utility can you use to quickly view the current network connection profiles?</p><div class="answer-area"><input type="text" id="a1-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 1)"><button onclick="checkAnswer(1)">Submit Answer</button><button class="hint-button" onclick="showHint(1)">Need a Hint?</button></div><div id="q1-feedback" class="feedback hidden"></div><div id="q1-hint" class="hint-text"><strong>Hint:</strong> You need a command to view connection properties, not IP details.<ul><li>Possible commands: <code>Get-NetConnectionProfile</code> (PowerShell)</li><li>Possible commands: <code>netsh interface show interface</code></li><li>Possible commands: <code>netsh wlan show profiles</code></li><li>Possible commands: <code>netsh show interfaces</code></li></ul></div></div>
+        <div id="q2" class="question hidden"><h3>Question 2: Identify the Firewall Utility</h3><div class="scenario"><p><strong>Result:</strong> The network profile is set to **Public**. You need to change it back to **Private**. Which utility is designed for managing Windows Firewall settings, including network profiles?</p></div><div class="answer-area"><input type="text" id="a2-input" placeholder="Type the utility name (e.g., ipconfig, netsh, diskpart)..." onkeydown="handleInputKeypress(event, 2)"><button onclick="checkAnswer(2)">Submit Answer</button><button class="hint-button" onclick="showHint(2)">Need a Hint?</button></div><div id="q2-feedback" class="feedback hidden"></div><div id="q2-hint" class="hint-text"><strong>Hint:</strong> This utility manages configuration of network interfaces, protocols, and the firewall.<ul><li>Possible commands: <code>netsh</code> (Network Shell)</li><li>Possible commands: <code>netsh advfirewall</code></li><li>Possible commands: <code>netsh firewall</code> (Older Windows)</li><li>Possible commands: <code>Set-NetConnectionProfile</code> (PowerShell equivalent)</li></ul></div></div>
+        <div id="q3" class="question hidden"><h3>Question 3: Verify the Fix (Port Connectivity)</h3><div class="scenario"><p><strong>Fix:</strong> You used the correct utility to switch the profile back to **Private**. **Verification:** How can you verify from the command line that the server is now reachable on the **SMB port (445)**?</p></div><p><strong>What command utility should you use to test connectivity to the target server on a *specific* port (445)?</strong></p><div class="answer-area"><input type="text" id="a3-input" placeholder="Type the utility name (e.g., ping, tracert, telnet)..." onkeydown="handleInputKeypress(event, 3)"><button onclick="checkAnswer(3)">Submit Answer</button><button class="hint-button" onclick="showHint(3)">Need a Hint?</button></div><div id="q3-feedback" class="feedback hidden"></div><div id="q3-hint" class="hint-text"><strong>Hint:</strong> You need a tool that can attempt a connection to a port, not just send an ICMP echo request.<ul><li>Possible commands: <code>telnet server_ip 445</code></li><li>Possible commands: <code>Test-NetConnection -Port 445</code> (PowerShell)</li><li>Possible commands: <code>nc -vz server_ip 445</code> (Netcat/Linux)</li><li>Possible commands: <code>tnc -port 445</code> (PowerShell alias)</li></ul></div></div>
+        
+        <div id="scenario-a-complete" class="hidden scenario">
+            <h3>Scenario A Complete! ✅</h3>
+            <h4>Summary of Actions:</h4>
+            <p>You diagnosed a network drive issue caused by a Windows Firewall profile change. Your steps were:</p>
+            <ul>
+                <li><b>1. Check Profile:</b> Used <code>netsh interface show interface</code> to confirm the profile was incorrectly set to 'Public'.</li>
+                <li><b>2. Fix Profile:</b> Used the <code>netsh</code> utility to change the profile back to 'Private'.</li>
+                <li><b>3. Verify Port:</b> Used <code>telnet</code> to test connectivity to the server on the required SMB port (445).</li>
+            </ul>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button class="home-button" onclick="resetView()">Home / Choose Scenario</button>
+                <button id="next-scenario-a" class="home-button" onclick="startScenario(4)">Next Scenario &rarr;</button>
+            </div>
+        </div>
+        </div> 
 
     <div id="scenario-b" class="hidden">
         <div class="scenario-header">
@@ -114,10 +133,25 @@
             <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A user reports they can access internal servers by IP address, but cannot browse the internet or access anything by name. You run <code>ipconfig</code> and see an IP address of **169.254.X.X**.</p></div>
-        <div id="q4" class="question hidden"><h3>Question 4: Release the APIPA Address</h3><p><strong>What command and parameter should you use to force the workstation to DROP its current IP configuration (the 169.254.X.X address)?</strong></p><div class="answer-area"><input type="text" id="a4-input" placeholder="Type your command here (e.g., ipconfig /xxx)..." onkeydown="handleInputKeypress(event, 4)"><button onclick="checkAnswer(4)">Submit Answer</button><button class="hint-button" onclick="showHint(4)">Need a Hint?</button></div><div id="q4-feedback" class="feedback hidden"></div><div id="q4-hint" class="hint-text"><strong>Hint:</strong> The two-step process to reset DHCP is to 'release' then 'renew'.<ul><li>Possible commands: <code>ipconfig /release</code></li></ul></div></div>
-        <div id="q5" class="question hidden"><h3>Question 5: Request a New Address</h3><div class="scenario"><p><strong>Fix Step 1:</strong> You successfully dropped the APIPA address. **Fix Step 2:** Now, you must instruct the workstation to request a completely new, valid IP address from the DHCP server.</p></div><p><strong>What command and parameter should you use to force the workstation to REQUEST a new IP configuration?</strong></p><div class="answer-area"><input type="text" id="a5-input" placeholder="Type your command here (e.g., ipconfig /yyy)..." onkeydown="handleInputKeypress(event, 5)"><button onclick="checkAnswer(5)">Submit Answer</button><button class="hint-button" onclick="showHint(5)">Need a Hint?</button></div><div id="q5-feedback" class="feedback hidden"></div><div id="q5-hint" class="hint-text"><strong>Hint:</strong> This is the second half of the DHCP reset.<ul><li>Possible commands: <code>ipconfig /renew</code></li></ul></div></div>
-        <div id="q6" class="question hidden"><h3>Question 6: Verify External Connectivity</h3><div class="scenario"><p><strong>Result:</strong> The IP address now shows a valid 192.168.1.X address. **Verification:** The user still reports they cannot open any website. What command should you use to quickly verify both **DNS resolution** and basic **external internet connectivity**?</p></div><p><strong>What command should you run to test connectivity to the DNS name <code>google.com</code>?</strong></p><div class="answer-area"><input type="text" id="a6-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 6)"><button onclick="checkAnswer(6)">Submit Answer</button><button class="hint-button" onclick="showHint(6)">Need a Hint?</button></div><div id="q6-feedback" class="feedback hidden"></div><div id="q6-hint" class="hint-text"><strong>Hint:</strong> This common command uses ICMP and is the first test for both network path and name resolution.<ul><li>Possible commands: <code>ping google.com</code></li></ul></div></div>
-    </div> 
+        <div id="q4" class="question hidden"><h3>Question 4: Release the APIPA Address</h3><p><strong>What command and parameter should you use to force the workstation to DROP its current IP configuration (the 169.254.X.X address)?</strong></p><div class="answer-area"><input type="text" id="a4-input" placeholder="Type your command here (e.g., ipconfig /x)..." onkeydown="handleInputKeypress(event, 4)"><button onclick="checkAnswer(4)">Submit Answer</button><button class="hint-button" onclick="showHint(4)">Need a Hint?</button></div><div id="q4-feedback" class="feedback hidden"></div><div id="q4-hint" class="hint-text"><strong>Hint:</strong> The two-step process to reset DHCP is to 'release' then 'renew'.<ul><li>Possible commands: <code>ipconfig /release</code> (Drops current DHCP lease)</li><li>Possible commands: <code>ipconfig /all</code> (Used for viewing IP information)</li><li>Possible commands: <code>netsh interface ip reset</code> (Used for full network stack reset)</li><li>Possible commands: <code>Disable-NetAdapter</code> (PowerShell method to force disconnect)</li></ul></div></div>
+        <div id="q5" class="question hidden"><h3>Question 5: Request a New Address</h3><div class="scenario"><p><strong>Fix Step 1:</strong> You successfully dropped the APIPA address. **Fix Step 2:** Now, you must instruct the workstation to request a completely new, valid IP address from the DHCP server.</p></div><p><strong>What command and parameter should you use to force the workstation to REQUEST a new IP configuration?</strong></p><div class="answer-area"><input type="text" id="a5-input" placeholder="Type your command here (e.g., ipconfig /y)..." onkeydown="handleInputKeypress(event, 5)"><button onclick="checkAnswer(5)">Submit Answer</button><button class="hint-button" onclick="showHint(5)">Need a Hint?</button></div><div id="q5-feedback" class="feedback hidden"></div><div id="q5-hint" class="hint-text"><strong>Hint:</strong> This is the second half of the DHCP reset.<ul><li>Possible commands: <code>ipconfig /renew</code> (Requests a new DHCP lease)</li><li>Possible commands: <code>ipconfig /registerdns</code> (Updates DNS registration)</li><li>Possible commands: <code>netsh interface ip set address</code> (Manual/Static IP configuration)</li><li>Possible commands: <code>Restart-NetAdapter</code> (PowerShell method to force restart)</li></ul></div></div>
+        <div id="q6" class="question hidden"><h3>Question 6: Verify External Connectivity</h3><div class="scenario"><p><strong>Result:</strong> The IP address now shows a valid 192.168.1.X address. **Verification:** The user still reports they cannot open any website. What command should you use to quickly verify both **DNS resolution** and basic **external internet connectivity**?</p></div><p><strong>What command should you run to test connectivity to the DNS name <code>google.com</code>?</strong></p><div class="answer-area"><input type="text" id="a6-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 6)"><button onclick="checkAnswer(6)">Submit Answer</button><button class="hint-button" onclick="showHint(6)">Need a Hint?</button></div><div id="q6-feedback" class="feedback hidden"></div><div id="q6-hint" class="hint-text"><strong>Hint:</strong> This common command uses ICMP and is the first test for both network path and name resolution.<ul><li>Possible commands: <code>ping google.com</code> (Tests both connectivity and DNS)</li><li>Possible commands: <code>nslookup google.com</code> (Tests DNS resolution specifically)</li><li>Possible commands: <code>tracert google.com</code> (Tests the path to the destination)</li><li>Possible commands: <code>Test-NetConnection google.com</code> (PowerShell test)</li></ul></div></div>
+        
+        <div id="scenario-b-complete" class="hidden scenario">
+            <h3>Scenario B Complete! ✅</h3>
+            <h4>Summary of Actions:</h4>
+            <p>You resolved an APIPA (169.254.x.x) address issue by resetting the DHCP client. Your steps were:</p>
+            <ul>
+                <li><b>1. Release IP:</b> Used <code>ipconfig /release</code> to drop the invalid address.</li>
+                <li><b>2. Renew IP:</b> Used <code>ipconfig /renew</code> to request a new one from the DHCP server.</li>
+                <li><b>3. Verify Connectivity:</b> Used <code>ping google.com</code> to test both DNS resolution and internet access.</li>
+            </ul>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button class="home-button" onclick="startScenario(1)">&larr; Previous Scenario</button>
+                <button id="next-scenario-b" class="home-button" onclick="startScenario(7)">Next Scenario &rarr;</button>
+            </div>
+        </div>
+        </div> 
 
     <div id="scenario-c" class="hidden">
         <div class="scenario-header">
@@ -125,10 +159,25 @@
             <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A user reports their Windows PC is running slow and frequently freezes. You suspect a logical disk issue (file system errors or corrupt indexing).</p></div>
-        <div id="q7" class="question hidden"><h3>Question 7: Initial Read-Only Disk Check</h3><p><strong>What is the correct Windows command-line utility and parameter to perform a **read-only** scan of the local C: drive to identify file system errors?</p><div class="answer-area"><input type="text" id="a7-input" placeholder="Type your command here (e.g., chkdsk C: /x)..." onkeydown="handleInputKeypress(event, 7)"><button onclick="checkAnswer(7)">Submit Answer</button><button class="hint-button" onclick="showHint(7)">Need a Hint?</button></div><div id="q7-feedback" class="feedback hidden"></div><div id="q7-hint" class="hint-text"><strong>Hint:</strong> The utility is short for "check disk." By default, running it without the /F parameter performs a read-only check.<ul><li>Possible commands: <code>chkdsk C:</code></li></ul></div></div>
-        <div id="q8" class="question hidden"><h3>Question 8: Schedule the Repair</h3><div class="scenario"><p><strong>Result:</strong> The read-only scan confirms: "Windows has found problems on this disk that need to be repaired." **Action:** You need to automatically **FIX** the file system errors, which requires scheduling for the next boot.</p></div><p><strong>What parameter should you add to the `chkdsk C:` command to scan for and automatically **FIX** the file system errors?</strong></p><div class="answer-area"><input type="text" id="a8-input" placeholder="Type your parameter here (e.g., /r, /x, /f)..." onkeydown="handleInputKeypress(event, 8)"><button onclick="checkAnswer(8)">Submit Answer</button><button class="hint-button" onclick="showHint(8)">Need a Hint?</button></div><div id="q8-feedback" class="feedback hidden"></div><div id="q8-hint" class="hint-text"><strong>Hint:</strong> The parameter stands for **Fix** errors on the disk.<ul><li>Possible parameters: <code>/f</code> (Fixes file system errors)</li></ul></div></div>
-        <div id="q9" class="question hidden"><h3>Question 9: Verify System Files</h3><div class="scenario"><p><strong>Fix:</strong> You ran <code>chkdsk C: /f</code>. **Verification:** You still want to check the integrity of the **core Windows operating system files** (DLLs, EXEs) to ensure they weren't corrupted.</p></div><p><strong>What command utility is used to scan and restore corrupted core Windows system files from the system cache?</strong></p><div class="answer-area"><input type="text" id="a9-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 9)"><button onclick="checkAnswer(9)">Submit Answer</button><button class="hint-button" onclick="showHint(9)">Need a Hint?</button></div><div id="q9-feedback" class="feedback hidden"></div><div id="q9-hint" class="hint-text"><strong>Hint:</strong> The utility is short for **System File Checker** and the common parameter is `/scannow`.<ul><li>Possible commands: <code>sfc</code></li></ul></div></div>
-    </div> 
+        <div id="q7" class="question hidden"><h3>Question 7: Initial Read-Only Disk Check</h3><p><strong>What is the correct Windows command-line utility and parameter to perform a **read-only** scan of the local C: drive to identify file system errors?</p><div class="answer-area"><input type="text" id="a7-input" placeholder="Type your command here (e.g., chkdsk C: /x)..." onkeydown="handleInputKeypress(event, 7)"><button onclick="checkAnswer(7)">Submit Answer</button><button class="hint-button" onclick="showHint(7)">Need a Hint?</button></div><div id="q7-feedback" class="feedback hidden"></div><div id="q7-hint" class="hint-text"><strong>Hint:</strong> The utility is short for "check disk." By default, running it without the /F parameter performs a read-only check.<ul><li>Possible commands: <code>chkdsk C:</code> (Read-only check)</li><li>Possible commands: <code>sfc /verifyonly</code> (System file integrity check)</li><li>Possible commands: <code>PowerShell Repair-Volume -Scan</code></li><li>Possible commands: <code>diskpart</code> (Used for volume status and attributes)</li></ul></div></div>
+        <div id="q8" class="question hidden"><h3>Question 8: Schedule the Repair</h3><div class="scenario"><p><strong>Result:</strong> The read-only scan confirms: "Windows has found problems on this disk that need to be repaired." **Action:** You need to automatically **FIX** the file system errors, which requires scheduling for the next boot.</p></div><p><strong>What parameter should you add to the `chkdsk C:` command to scan for and automatically **FIX** the file system errors?</strong></p><div class="answer-area"><input type="text" id="a8-input" placeholder="Type your parameter here (e.g., /r, /x, /f)..." onkeydown="handleInputKeypress(event, 8)"><button onclick="checkAnswer(8)">Submit Answer</button><button class="hint-button" onclick="showHint(8)">Need a Hint?</button></div><div id="q8-feedback" class="feedback hidden"></div><div id="q8-hint" class="hint-text"><strong>Hint:</strong> The parameter stands for **Fix** errors on the disk.<ul><li>Possible parameters: <code>/f</code> (Fixes file system errors)</li><li>Possible parameters: <code>/r</code> (Locates bad sectors and recovers readable information)</li><li>Possible parameters: <code>/x</code> (Forces the volume to dismount first)</li><li>Possible parameters: <code>/b</code> (Re-evaluates bad clusters on the volume)</li></ul></div></div>
+        <div id="q9" class="question hidden"><h3>Question 9: Verify System Files</h3><div class="scenario"><p><strong>Fix:</strong> You ran <code>chkdsk C: /f</code>. **Verification:** You still want to check the integrity of the **core Windows operating system files** (DLLs, EXEs) to ensure they weren't corrupted.</p></div><p><strong>What command utility is used to scan and restore corrupted core Windows system files from the system cache?</strong></p><div class="answer-area"><input type="text" id="a9-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 9)"><button onclick="checkAnswer(9)">Submit Answer</button><button class="hint-button" onclick="showHint(9)">Need a Hint?</button></div><div id="q9-feedback" class="feedback hidden"></div><div id="q9-hint" class="hint-text"><strong>Hint:</strong> The utility is short for **System File Checker** and the common parameter is `/scannow`.<ul><li>Possible commands: <code>sfc /scannow</code></li><li>Possible commands: <code>dism /online /cleanup-image /checkhealth</code></li><li>Possible commands: <code>dism /online /cleanup-image /restorehealth</code> (A more thorough fix)</li><li>Possible commands: <code>chkdsk /r</code> (Combines file system fix and sector check)</li></ul></div></div>
+
+        <div id="scenario-c-complete" class="hidden scenario">
+            <h3>Scenario C Complete! ✅</h3>
+            <h4>Summary of Actions:</h4>
+            <p>You fixed a disk corruption issue by following the correct diagnostic and repair sequence. Your steps were:</p>
+            <ul>
+                <li><b>1. Read-Only Scan:</b> Used <code>chkdsk C:</code> to safely check the disk for errors without making changes.</li>
+                <li><b>2. Schedule Repair:</b> Used <code>chkdsk C: /f</code> to schedule a full file system repair on the next reboot.</li>
+                <li><b>3. Verify OS Files:</b> Used <code>sfc /scannow</code> to check for and repair any corrupted core Windows system files.</li>
+            </ul>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button class="home-button" onclick="startScenario(4)">&larr; Previous Scenario</button>
+                <button id="next-scenario-c" class="home-button" onclick="startScenario(10)">Next Scenario &rarr;</button>
+            </div>
+        </div>
+        </div> 
 
     <div id="scenario-d" class="hidden">
         <div class="scenario-header">
@@ -136,10 +185,25 @@
             <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A user on a Linux server uploaded a new Python script. When they try to execute it, they receive a **"Permission denied"** error.</p></div>
-        <div id="q10" class="question hidden"><h3>Question 10: Verify Permissions</h3><p><strong>What command and parameter should you run to verify the current permissions assigned to the file, including the owner, group, and execution status?</strong></p><div class="answer-area"><input type="text" id="a10-input" placeholder="Type your command here (e.g., ls -x)..." onkeydown="handleInputKeypress(event, 10)"><button onclick="checkAnswer(10)">Submit Answer</button><button class="hint-button" onclick="showHint(10)">Need a Hint?</button></div><div id="q10-feedback" class="feedback hidden"></div><div id="q10-hint" class="hint-text"><strong>Hint:</strong> This command lists files, and the parameter stands for 'long format' to show details like permissions.<ul><li>Possible commands: <code>ls -l</code></li></ul></div></div>
-        <div id="q11" class="question hidden"><h3>Question 11: Add Execute Permission</h3><div class="scenario"><p><strong>Result:</strong> Permissions are <code>-rw-r--r--</code> (execute 'x' is missing). **Fix:** You need to add the execute permission for the file owner and the group.</p></div><p><strong>What is the command and parameter (using the symbolic method) to grant execute permission to the file owner and the group?</strong></p><div class="answer-area"><input type="text" id="a11-input" placeholder="Type the command and parameter (e.g., chmod u+x,g+x)..." onkeydown="handleInputKeypress(event, 11)"><button onclick="checkAnswer(11)">Submit Answer</button><button class="hint-button" onclick="showHint(11)">Need a Hint?</button></div><div id="q11-feedback" class="feedback hidden"></div><div id="q11-hint" class="hint-text"><strong>Hint:</strong> The utility is short for "change mode." Use the symbolic method ('u', 'g', 'o') and the '+' operator to add the 'x' permission.<ul><li>Possible commands: <code>chmod u+x,g+x filename</code></li></ul></div></div>
-        <div id="q12" class="question hidden"><h3>Question 12: Final Verification (Linux)</h3><div class="scenario"><p><strong>Fix:</strong> You ran the correct command to add execute permissions.</p></div><p><strong>How can you confirm that the file permissions now include the 'x' flag?</strong></p><div class="answer-area"><input type="text" id="a12-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 12)"><button onclick="checkAnswer(12)">Submit Answer</button><button class="hint-button" onclick="showHint(12)">Need a Hint?</button></div><div id="q12-feedback" class="feedback hidden"></div><div id="q12-hint" class="hint-text"><strong>Hint:</strong> The verification command is the exact same one you used in Question 10.<ul><li>Possible commands: <code>ls -la</code></li></ul></div></div>
-    </div>
+        <div id="q10" class="question hidden"><h3>Question 10: Verify Permissions</h3><p><strong>What command and parameter should you run to verify the current permissions assigned to the file, including the owner, group, and execution status?</strong></p><div class="answer-area"><input type="text" id="a10-input" placeholder="Type your command here (e.g., ls -x)..." onkeydown="handleInputKeypress(event, 10)"><button onclick="checkAnswer(10)">Submit Answer</button><button class="hint-button" onclick="showHint(10)">Need a Hint?</button></div><div id="q10-feedback" class="feedback hidden"></div><div id="q10-hint" class="hint-text"><strong>Hint:</strong> This command lists files, and the parameter stands for 'long format' to show details like permissions.<ul><li>Possible commands: <code>ls -l</code> (Long format)</li><li>Possible commands: <code>ls -la</code> (Long format including hidden files)</li><li>Possible commands: <code>stat filename</code> (Shows all file metadata including permissions)</li><li>Possible commands: <code>getfacl filename</code> (Shows access control lists, if configured)</li></ul></div></div>
+        <div id="q11" class="question hidden"><h3>Question 11: Add Execute Permission</h3><div class="scenario"><p><strong>Result:</strong> Permissions are <code>-rw-r--r--</code> (execute 'x' is missing). **Fix:** You need to add the execute permission for the file owner and the group.</p></div><p><strong>What is the command and parameter (using the symbolic method) to grant execute permission to the file owner and the group?</strong></p><div class="answer-area"><input type="text" id="a11-input" placeholder="Type the command and parameter (e.g., chmod u+x,g+x)..." onkeydown="handleInputKeypress(event, 11)"><button onclick="checkAnswer(11)">Submit Answer</button><button class="hint-button" onclick="showHint(11)">Need a Hint?</button></div><div id="q11-feedback" class="feedback hidden"></div><div id="q11-hint" class="hint-text"><strong>Hint:</strong> The utility is short for "change mode." Use the symbolic method ('u', 'g', 'o') and the '+' operator to add the 'x' permission.<ul><li>Possible commands: <code>chmod u+x,g+x filename</code> (Symbolic method)</li><li>Possible commands: <code>chmod 755 filename</code> (Octal method for rwx r-x r-x)</li><li>Possible commands: <code>chmod +x filename</code> (Adds execute for all users)</li><li>Possible commands: <code>chown user:group filename</code> (Changes ownership, not mode)</li></ul></div></div>
+        <div id="q12" class="question hidden"><h3>Question 12: Final Verification (Linux)</h3><div class="scenario"><p><strong>Fix:</strong> You ran the correct command to add execute permissions.</p></div><p><strong>How can you confirm that the file permissions now include the 'x' flag?</strong></p<div class="answer-area"><input type="text" id="a12-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 12)"><button onclick="checkAnswer(12)">Submit Answer</button><button class="hint-button" onclick="showHint(12)">Need a Hint?</button></div><div id="q12-feedback" class="feedback hidden"></div><div id="q12-hint" class="hint-text"><strong>Hint:</strong> The verification command is the exact same one you used in Question 10.<ul><li>Possible commands: <code>ls -la</code> (To view long format details)</li><li>Possible commands: <code>ls -l</code></li><li>Possible commands: <code>stat filename</code></li><li>Possible commands: <code>ls -F</code> (Shows an asterisk * after executable files)</li></ul></div></div>
+        
+        <div id="scenario-d-complete" class="hidden scenario">
+            <h3>Scenario D Complete! ✅</h3>
+            <h4>Summary of Actions:</h4>
+            <p>You solved a "Permission denied" error on a Linux script. Your steps were:</p>
+            <ul>
+                <li><b>1. Verify Permissions:</b> Used <code>ls -l</code> to see that the execute ('x') permission was missing.</li>
+                <li><b>2. Add Permission:</b> Used <code>chmod u+x,g+x</code> to grant execute rights to the user and group.</li>
+                <li><b>3. Confirm Fix:</b> Ran <code>ls -l</code> again to confirm the 'x' permission was now present.</li>
+            </ul>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button class="home-button" onclick="startScenario(7)">&larr; Previous Scenario</button>
+                <button id="next-scenario-d" class="home-button" onclick="startScenario(13)">Next Scenario &rarr;</button>
+            </div>
+        </div>
+        </div>
 
     <div id="scenario-e" class="hidden">
         <div class="scenario-header">
@@ -147,10 +211,25 @@
             <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A macOS user reports their external backup drive is suddenly not mounting properly, and they suspect a disk error, but cannot open the graphical **Disk Utility** app.</p></div>
-        <div id="q13" class="question hidden"><h3>Question 13: Terminal Disk Utility</h3><p><strong>What is the primary command-line utility used in macOS to interact with and manage disk partitions, volumes, and file systems?</strong></p><div class="answer-area"><input type="text" id="a13-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 13)"><button onclick="checkAnswer(13)">Submit Answer</button><button class="hint-button" onclick="showHint(13)">Need a Hint?</button></div><div id="q13-feedback" class="feedback hidden"></div><div id="q13-hint" class="hint-text"><strong>Hint:</strong> The utility's name combines the function it performs with its target.<ul><li>Possible commands: <code>diskutil</code></li></ul></div></div>
-        <div id="q14" class="question hidden"><h3>Question 14: Repairing the Volume</h3><div class="scenario"><p><strong>Action:</strong> You need to run the First Aid utility from the command line to repair the mounted volume named 'BackupVolume'.</p></div><p><strong>What is the specific subcommand of the disk utility that performs a file system check and repair on a specified volume?</strong></p><div class="answer-area"><input type="text" id="a14-input" placeholder="Type your command and subcommand (e.g., diskutil xxx /Volume/Name)..." onkeydown="handleInputKeypress(event, 14)"><button onclick="checkAnswer(14)">Submit Answer</button><button class="hint-button" onclick="showHint(14)">Need a Hint?</button></div><div id="q14-feedback" class="feedback hidden"></div><div id="q14-hint" class="hint-text"><strong>Hint:</strong> The term is used in the graphical Disk Utility app to check and fix errors. It involves the word 'volume'.<ul><li>Possible commands: <code>diskutil repairVolume</code></li></ul></div></div>
-        <div id="q15" class="question hidden"><h3>Question 15: Verifying the Drive List</h3><div class="scenario"><p><strong>Fix:</strong> The repair finished successfully.</p></div><p><strong>What is the subcommand of the disk utility you should run now to see all currently detected disks and volumes, confirming the drive is now recognized and mounted?</strong></p><div class="answer-area"><input type="text" id="a15-input" placeholder="Type your command and subcommand (e.g., diskutil xxx)..." onkeydown="handleInputKeypress(event, 15)"><button onclick="checkAnswer(15)">Submit Answer</button><button class="hint-button" onclick="showHint(15)">Need a Hint?</button></div><div id="q15-feedback" class="feedback hidden"></div><div id="q15-hint" class="hint-text"><strong>Hint:</strong> You are asking the utility to output a complete inventory.<ul><li>Possible commands: <code>diskutil list</code></li></ul></div></div>
-    </div> 
+        <div id="q13" class="question hidden"><h3>Question 13: Terminal Disk Utility</h3><p><strong>What is the primary command-line utility used in macOS to interact with and manage disk partitions, volumes, and file systems?</strong></p><div class="answer-area"><input type="text" id="a13-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 13)"><button onclick="checkAnswer(13)">Submit Answer</button><button class="hint-button" onclick="showHint(13)">Need a Hint?</button></div><div id="q13-feedback" class="feedback hidden"></div><div id="q13-hint" class="hint-text"><strong>Hint:</strong> The utility's name combines the function it performs with its target.<ul><li>Possible commands: <code>diskutil</code></li><li>Possible commands: <code>hdiutil</code> (For disk image manipulation)</li><li>Possible commands: <code>mount</code> (To manually mount a volume)</li><li>Possible commands: <code>df</code> (To check disk free space)</li></ul></div></div>
+        <div id="q14" class="question hidden"><h3>Question 14: Repairing the Volume</h3><div class="scenario"><p><strong>Action:</strong> You need to run the First Aid utility from the command line to repair the mounted volume named 'BackupVolume'.</p></div><p><strong>What is the specific subcommand of the disk utility that performs a file system check and repair on a specified volume?</strong></p><div class="answer-area"><input type="text" id="a14-input" placeholder="Type your command and subcommand (e.g., diskutil xxx /Volume/Name)..." onkeydown="handleInputKeypress(event, 14)"><button onclick="checkAnswer(14)">Submit Answer</button><button class="hint-button" onclick="showHint(14)">Need a Hint?</button></div><div id="q14-feedback" class="feedback hidden"></div><div id="q14-hint" class="hint-text"><strong>Hint:</strong> The term is used in the graphical Disk Utility app to check and fix errors. It involves the word 'volume'.<ul><li>Possible commands: <code>diskutil repairVolume</code></li><li>Possible commands: <code>diskutil verifyVolume</code> (To check without repairing)</li><li>Possible commands: <code>diskutil mount</code> (To remount if unmounted)</li><li>Possible commands: <code>diskutil unmount</code> (Required before certain operations)</li></ul></div></div>
+        <div id="q15" class="question hidden"><h3>Question 15: Verifying the Drive List</h3><div class="scenario"><p><strong>Fix:</strong> The repair finished successfully.</p></div><p><strong>What is the subcommand of the disk utility you should run now to see all currently detected disks and volumes, confirming the drive is now recognized and mounted?</strong></p><div class="answer-area"><input type="text" id="a15-input" placeholder="Type your command and subcommand (e.g., diskutil xxx)..." onkeydown="handleInputKeypress(event, 15)"><button onclick="checkAnswer(15)">Submit Answer</button><button class="hint-button" onclick="showHint(15)">Need a Hint?</button></div><div id="q15-feedback" class="feedback hidden"></div><div id="q15-hint" class="hint-text"><strong>Hint:</strong> You are asking the utility to output a complete inventory.<ul><li>Possible commands: <code>diskutil list</code></li><li>Possible commands: <code>df -h</code> (Displays free disk space in human-readable format)</li><li>Possible commands: <code>mount</code> (Lists currently mounted volumes)</li><li>Possible commands: <code>diskutil info</code> (Shows detailed information for a specific volume)</li></ul></div></div>
+        
+        <div id="scenario-e-complete" class="hidden scenario">
+            <h3>Scenario E Complete! ✅</h3>
+            <h4>Summary of Actions:</h4>
+            <p>You repaired a malfunctioning external drive on macOS via the command line. Your steps were:</p>
+            <ul>
+                <li><b>1. Identify Tool:</b> Used the Mac-specific <code>diskutil</code> command-line utility.</li>
+                <li><b>2. Repair Volume:</b> Used the <code>diskutil repairVolume</code> subcommand to fix file system errors.</li>
+                <li><b>3. Verify Mount:</b> Used <code>diskutil list</code> to confirm the drive was now recognized and mounted.</li>
+            </ul>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button class="home-button" onclick="startScenario(10)">&larr; Previous Scenario</button>
+                <button id="next-scenario-e" class="home-button" onclick="startScenario(16)">Next Scenario &rarr;</button>
+            </div>
+        </div>
+        </div> 
 
     <div id="scenario-f" class="hidden">
         <div class="scenario-header">
@@ -158,10 +237,25 @@
             <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A user on an Android phone can connect to Wi-Fi but cannot open any website, and mobile data is also failing. They can't ping any external host.</p></div>
-        <div id="q16" class="question hidden"><h3>Question 16: Initial Triage</h3><p><strong>What is the single best action a technician should instruct a mobile user to perform first to quickly reset all network antennas (Cellular, Wi-Fi, Bluetooth) and clear temporary network glitches?</strong></p><div class="answer-area"><input type="text" id="a16-input" placeholder="Type the feature name (e.g., Power Cycle, Reset, Mode)..." onkeydown="handleInputKeypress(event, 16)"><button onclick="checkAnswer(16)">Submit Answer</button><button class="hint-button" onclick="showHint(16)">Need a Hint?</button></div><div id="q16-feedback" class="feedback hidden"></div><div id="q16-hint" class="hint-text"><strong>Hint:</strong> This is a dedicated troubleshooting setting often found in the quick settings panel.<ul><li>Possible answer: Toggle Airplane Mode</li></ul></div></div>
-        <div id="q17" class="question hidden"><h3>Question 17: Network Configuration Reset</h3><div class="scenario"><p><strong>Result:</strong> Toggling the feature did not fix the problem. The phone is connecting to Wi-Fi but still has no internet access.</p></div><p><strong>What is the next best step, specifically designed to purge all saved Wi-Fi passwords, Bluetooth pairings, and VPN/cellular settings, effectively giving the network stack a clean slate?</strong></p><div class="answer-area"><input type="text" id="a17-input" placeholder="Type the setting name (e.g., Factory Reset, Network Reset)..." onkeydown="handleInputKeypress(event, 17)"><button onclick="checkAnswer(17)">Submit Answer</button><button class="hint-button" onclick="showHint(17)">Need a Hint?</button></div><div id="q17-feedback" class="feedback hidden"></div><div id="q17-hint" class="hint-text"><strong>Hint:</strong> This option is usually found under the 'Reset' or 'System' settings and only affects connectivity, not user data.<ul><li>Possible answer: Reset Network Settings</li></ul></div></div>
-        <div id="q18" class="question hidden"><h3>Question 18: SIM Card Triage</h3><div class="scenario"><p><strong>Result:</strong> Resetting the network did not restore mobile data connectivity.</p></div><p><strong>What physical component-related action should you perform next to rule out a temporary fault with the cellular connection's authentication, and why?</strong></p><div class="answer-area"><input type="text" id="a18-input" placeholder="Type the action (e.g., check IMEI, reseat SIM)..." onkeydown="handleInputKeypress(event, 18)"><button onclick="checkAnswer(18)">Submit Answer</button><button class="hint-button" onclick="showHint(18)">Need a Hint?</button></div><div id="q18-feedback" class="feedback hidden"></div><div id="q18-hint" class="hint-text"><strong>Hint:</strong> The physical card carries the subscriber's identification and needs to be verified.<ul><li>Possible answer: Reseat the SIM Card</li></ul></div></div>
-    </div> 
+        <div id="q16" class="question hidden"><h3>Question 16: Initial Triage</h3><p><strong>What is the single best action a technician should instruct a mobile user to perform first to quickly reset all network antennas (Cellular, Wi-Fi, Bluetooth) and clear temporary network glitches?</strong></p><div class="answer-area"><input type="text" id="a16-input" placeholder="Type the feature name (e.g., Power Cycle, Reset, Mode)..." onkeydown="handleInputKeypress(event, 16)"><button onclick="checkAnswer(16)">Submit Answer</button><button class="hint-button" onclick="showHint(16)">Need a Hint?</button></div><div id="q16-feedback" class="feedback hidden"></div><div id="q16-hint" class="hint-text"><strong>Hint:</strong> This is a dedicated troubleshooting setting often found in the quick settings panel.<ul><li>Possible answer: Toggle Airplane Mode (Toggles all radios on/off)</li><li>Possible answer: Power Cycle the phone (Hard reboot of all systems)</li><li>Possible answer: Check Data Roaming settings (If issue occurs away from home area)</li><li>Possible answer: Check for OS updates (If a known network bug exists)</li></ul></div></div>
+        <div id="q17" class="question hidden"><h3>Question 17: Network Configuration Reset</h3><div class="scenario"><p><strong>Result:</strong> Toggling the feature did not fix the problem. The phone is connecting to Wi-Fi but still has no internet access.</p></div><p><strong>What is the next best step, specifically designed to purge all saved Wi-Fi passwords, Bluetooth pairings, and VPN/cellular settings, effectively giving the network stack a clean slate?</strong></p><div class="answer-area"><input type="text" id="a17-input" placeholder="Type the setting name (e.g., Factory Reset, Network Reset)..." onkeydown="handleInputKeypress(event, 17)"><button onclick="checkAnswer(17)">Submit Answer</button><button class="hint-button" onclick="showHint(17)">Need a Hint?</button></div><div id="q17-feedback" class="feedback hidden"></div><div id="q17-hint" class="hint-text"><strong>Hint:</strong> This option is usually found under the 'Reset' or 'System' settings and only affects connectivity, not user data.<ul><li>Possible answer: Reset Network Settings</li><li>Possible answer: Clear System Cache Partition (Android maintenance mode)</li><li>Possible answer: Reset Wi-Fi, Mobile, & Bluetooth (Often a sub-option)</li><li>Possible answer: Perform a Soft Reboot (Powering off and on)</li></ul></div></div>
+        <div id="q18" class="question hidden"><h3>Question 18: SIM Card Triage</h3><div class="scenario"><p><strong>Result:</strong> Resetting the network did not restore mobile data connectivity.</p></div><p><strong>What physical component-related action should you perform next to rule out a temporary fault with the cellular connection's authentication, and why?</strong></p><div class="answer-area"><input type="text" id="a18-input" placeholder="Type the action (e.g., check IMEI, reseat SIM)..." onkeydown="handleInputKeypress(event, 18)"><button onclick="checkAnswer(18)">Submit Answer</button><button class="hint-button" onclick="showHint(18)">Need a Hint?</button></div><div id="q18-feedback" class="feedback hidden"></div><div id="q18-hint" class="hint-text"><strong>Hint:</strong> The physical card carries the subscriber's identification and needs to be verified.<ul><li>Possible answer: Reseat the SIM Card (Ensures proper contact and re-authentication)</li><li>Possible answer: Check APN settings (Configuration for carrier access)</li><li>Possible answer: Check IMEI/ESN Status (Verifies device isn't blacklisted)</li><li>Possible answer: Verify SIM Card Expiration (Authentication issue)</li></ul></div></div>
+
+        <div id="scenario-f-complete" class="hidden scenario">
+            <h3>Scenario F Complete! ✅</h3>
+            <h4>Summary of Actions:</h4>
+            <p>You followed the correct triage steps for mobile network issues. Your steps were:</p>
+            <ul>
+                <li><b>1. Soft Reset:</b> Instructed the user to toggle <code>Airplane Mode</code> to reset all network radios.</li>
+                <li><b>2. Configuration Reset:</b> Performed a <code>Reset Network Settings</code> to clear corrupt configurations.</li>
+                <li><b>3. Physical Check:</b> Physically <code>reseat the SIM card</code> to force re-authentication with the carrier network.</li>
+            </ul>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button class="home-button" onclick="startScenario(13)">&larr; Previous Scenario</button>
+                <button id="next-scenario-f" class="home-button" onclick="startScenario(19)">Next Scenario &rarr;</button>
+            </div>
+        </div>
+        </div> 
     
     <div id="scenario-g" class="hidden">
         <div class="scenario-header">
@@ -169,10 +263,25 @@
             <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A Linux server is responding slowly, and the SSH session is intermittently hanging. You suspect a rogue process is consuming all the CPU/RAM.</p></div>
-        <div id="q19" class="question hidden"><h3>Question 19: Identify the Rogue Process</h3><p><strong>What is the standard Linux command, and common parameter combination, used to display a snapshot of all running processes in detail (user, PID, %CPU, %MEM)?</strong></p><div class="answer-area"><input type="text" id="a19-input" placeholder="Type your command here (e.g., ps -xxx)..." onkeydown="handleInputKeypress(event, 19)"><button onclick="checkAnswer(19)">Submit Answer</button><button class="hint-button" onclick="showHint(19)">Need a Hint?</button></div><div id="q19-feedback" class="feedback hidden"></div><div id="q19-hint" class="hint-text"><strong>Hint:</strong> The utility is short for 'process status', and the parameters stand for 'all users' and 'full format'.<ul><li>Possible commands: <code>ps aux</code></li></ul></div></div>
-        <div id="q20" class="question hidden"><h3>Question 20: Terminate the Process</h3><div class="scenario"><p><strong>Result:</strong> You identify a process (PID 12345) consuming 98% of the CPU.</p></div><p><strong>What is the Linux command used to send a signal to immediately terminate and stop a running process identified by its PID?</strong></p><div class="answer-area"><input type="text" id="a20-input" placeholder="Type your command here (e.g., stop 12345)..." onkeydown="handleInputKeypress(event, 20)"><button onclick="checkAnswer(20)">Submit Answer</button><button class="hint-button" onclick="showHint(20)">Need a Hint?</button></div><div id="q20-feedback" class="feedback hidden"></div><div id="q20-hint" class="hint-text"><strong>Hint:</strong> The command's name is the action you are taking. Use the default signal (SIGTERM) or the `-9` parameter for forceful termination.<ul><li>Possible commands: <code>kill</code></li></ul></div></div>
-        <div id="q21" class="question hidden"><h3>Question 21: Check Logs for Cause</h3><div class="scenario"><p><strong>Fix:</strong> The process was terminated, and the system is stable.</p></div><p><strong>What standard directory in Linux should you check next to find log files that might explain *why* the rogue process started or crashed?</strong></p><div class="answer-area"><input type="text" id="a21-input" placeholder="Type the directory path (e.g., /bin, /usr/local, /var/log)..." onkeydown="handleInputKeypress(event, 21)"><button onclick="checkAnswer(21)">Submit Answer</button><button class="hint-button" onclick="showHint(21)">Need a Hint?</button></div><div id="q21-feedback" class="feedback hidden"></div><div id="q21-hint" class="hint-text"><strong>Hint:</strong> This directory stores variable data, including all system and application message logs.<ul><li>Possible directories: <code>/var/log</code></li></ul></div></div>
-    </div> 
+        <div id="q19" class="question hidden"><h3>Question 19: Identify the Rogue Process</h3><p><strong>What is the standard Linux command, and common parameter combination, used to display a snapshot of all running processes in detail (user, PID, %CPU, %MEM)?</strong></p><div class="answer-area"><input type="text" id="a19-input" placeholder="Type your command here (e.g., ps -xxx)..." onkeydown="handleInputKeypress(event, 19)"><button onclick="checkAnswer(19)">Submit Answer</button><button class="hint-button" onclick="showHint(19)">Need a Hint?</button></div><div id="q19-feedback" class="feedback hidden"></div><div id="q19-hint" class="hint-text"><strong>Hint:</strong> The utility is short for 'process status', and the parameters stand for 'all users' and 'full format'.<ul><li>Possible commands: <code>ps aux</code></li><li>Possible commands: <code>top</code> (Interactive real-time view)</li><li>Possible commands: <code>htop</code> (Enhanced interactive real-time view)</li><li>Possible commands: <code>pstree</code> (Shows processes in a hierarchical tree)</li></ul></div></div>
+        <div id="q20" class="question hidden"><h3>Question 20: Terminate the Process</h3><div class="scenario"><p><strong>Result:</strong> You identify a process (PID 12345) consuming 98% of the CPU.</p></div><p><strong>What is the Linux command used to send a signal to immediately terminate and stop a running process identified by its PID?</strong></p><div class="answer-area"><input type="text" id="a20-input" placeholder="Type your command here (e.g., stop 12345)..." onkeydown="handleInputKeypress(event, 20)"><button onclick="checkAnswer(20)">Submit Answer</button><button class="hint-button" onclick="showHint(20)">Need a Hint?</button></div><div id="q20-feedback" class="feedback hidden"></div><div id="q20-hint" class="hint-text"><strong>Hint:</strong> The command's name is the action you are taking. Use the default signal (SIGTERM) or the `-9` parameter for forceful termination.<ul><li>Possible commands: <code>kill PID</code> (Sends SIGTERM by default)</li><li>Possible commands: <code>pkill PROCESS_NAME</code> (Kills by name)</li><li>Possible commands: <code>killall PROCESS_NAME</code> (Kills all instances by name)</li><li>Possible commands: <code>systemctl stop service_name</code> (If the process is a system service)</li></ul></div></div>
+        <div id="q21" class="question hidden"><h3>Question 21: Check Logs for Cause</h3><div class="scenario"><p><strong>Fix:</strong> The process was terminated, and the system is stable.</p></div><p><strong>What standard directory in Linux should you check next to find log files that might explain *why* the rogue process started or crashed?</strong></p><div class="answer-area"><input type="text" id="a21-input" placeholder="Type the directory path (e.g., /bin, /usr/local, /var/log)..." onkeydown="handleInputKeypress(event, 21)"><button onclick="checkAnswer(21)">Submit Answer</button><button class="hint-button" onclick="showHint(21)">Need a Hint?</button></div><div id="q21-feedback" class="feedback hidden"></div><div id="q21-hint" class="hint-text"><strong>Hint:</strong> This directory stores variable data, including all system and application message logs.<ul><li>Possible directories: <code>/var/log</code> (Primary location for system logs)</li><li>Possible directories: <code>/var/crash</code> (Often stores crash dump files)</li><li>Possible commands: <code>journalctl</code> (To view systemd journal logs)</li><li>Possible commands: <code>tail -f /var/log/syslog</code> (To view logs in real-time)</li></ul></div></div>
+
+        <div id="scenario-g-complete" class="hidden scenario">
+            <h3>Scenario G Complete! ✅</h3>
+            <h4>Summary of Actions:</h4>
+            <p>You stabilized a slow Linux server by managing a rogue process. Your steps were:</p>
+            <ul>
+                <li><b>1. Identify Process:</b> Used <code>ps aux</code> to get a detailed list of all running processes and identify the one with high CPU usage.</li>
+                <li><b>2. Terminate Process:</b> Used the <code>kill</code> command with the process's PID to terminate it.</li>
+                <li><b>3. Investigate Cause:</b> Identified the <code>/var/log</code> directory as the correct location to check logs for root cause analysis.</li>
+            </ul>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button class="home-button" onclick="startScenario(16)">&larr; Previous Scenario</button>
+                <button id="next-scenario-g" class="home-button" onclick="startScenario(22)">Next Scenario &rarr;</button>
+            </div>
+        </div>
+        </div> 
 
     <div id="scenario-h" class="hidden">
         <div class="scenario-header">
@@ -180,10 +289,25 @@
             <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A Windows user logs in, and their desktop is black, their files are gone, and a temporary profile warning appears. The issue is a **corrupt user profile**.</p></div>
-        <div id="q22" class="question hidden"><h3>Question 22: Registry Location</h3><p><strong>In the Windows Registry Editor (`regedit`), under which main key would you find the list of user profiles, often containing a problematic entry with a `.bak` extension?</strong></p><div class="answer-area"><input type="text" id="a22-input" placeholder="Type the main Registry key..." onkeydown="handleInputKeypress(event, 22)"><button onclick="checkAnswer(22)">Submit Answer</button><button class="hint-button" onclick="showHint(22)">Need a Hint?</button></div><div id="q22-feedback" class="feedback hidden"></div><div id="q22-hint" class="hint-text"><strong>Hint:</strong> The profile list is a system-wide configuration, not just for the current user, and lives under a key related to the operating system version.<ul><li>Possible keys: <code>HKEY_LOCAL_MACHINE</code></li></ul></div></div>
-        <div id="q23" class="question hidden"><h3>Question 23: The Repair Key</h3><div class="scenario"><p><strong>Action:</strong> You must delete the temporary profile key and rename the damaged profile key (the one with the `.bak` extension) by removing the `.bak` extension.</p></div><p><strong>What is the full name of the registry key that you must modify (which contains the full list of profiles)?</strong></p><div class="answer-area"><input type="text" id="a23-input" placeholder="Type the key name (e.g., Run, ProfileList, Explorer)..." onkeydown="handleInputKeypress(event, 23)"><button onclick="checkAnswer(23)">Submit Answer</button><button class="hint-button" onclick="showHint(23)">Need a Hint?</button></div><div id="q23-feedback" class="feedback hidden"></div><div id="q23-hint" class="hint-text"><strong>Hint:</strong> The name of the subkey is exactly what it contains. It tracks the list of loaded user environments.<ul><li>Possible keys: <code>ProfileList</code></li></ul></div></div>
-        <div id="q24" class="question hidden"><h3>Question 24: Preemptive File Cleanup</h3><div class="scenario"><p><strong>Verification:</strong> The profile is restored after reboot. The original cause of corruption might have been a lack of space from old system backups.</p></div><p><strong>What utility should you run next to safely and automatically delete temporary Windows files, user files, and old Windows Update backups?</strong></p><div class="answer-area"><input type="text" id="a24-input" placeholder="Type the utility name (e.g., cleanmgr, defrag, diskpart)..." onkeydown="handleInputKeypress(event, 24)"><button onclick="checkAnswer(24)">Submit Answer</button><button class="hint-button" onclick="showHint(24)">Need a Hint?</button></div><div id="q24-feedback" class="feedback hidden"></div><div id="q24-hint" class="hint-text"><strong>Hint:</strong> The utility is short for 'clean manager'.<ul><li>Possible commands: <code>cleanmgr</code></li></ul></div></div>
-    </div> 
+        <div id="q22" class="question hidden"><h3>Question 22: Registry Location</h3><p><strong>In the Windows Registry Editor (`regedit`), under which main key would you find the list of user profiles, often containing a problematic entry with a `.bak` extension?</strong></p><div class="answer-area"><input type="text" id="a22-input" placeholder="Type the main Registry key..." onkeydown="handleInputKeypress(event, 22)"><button onclick="checkAnswer(22)">Submit Answer</button><button class="hint-button" onclick="showHint(22)">Need a Hint?</button></div><div id="q22-feedback" class="feedback hidden"></div><div id="q22-hint" class="hint-text"><strong>Hint:</strong> The profile list is a system-wide configuration, not just for the current user, and lives under a key related to the operating system version.<ul><li>Possible keys: <code>HKEY_LOCAL_MACHINE</code> (System-wide configuration)</li><li>Possible keys: <code>HKEY_USERS</code> (Contains all loaded user profiles)</li><li>Possible keys: <code>HKEY_CURRENT_USER</code> (Configuration for the logged-in user)</li><li>Possible commands: <code>regedit</code> (The registry editing utility)</li></ul></div></div>
+        <div id="q23" class="question hidden"><h3>Question 23: The Repair Key</h3><div class="scenario"><p><strong>Action:</strong> You must delete the temporary profile key and rename the damaged profile key (the one with the `.bak` extension) by removing the `.bak` extension.</p></div><p><strong>What is the full name of the registry key that you must modify (which contains the full list of profiles)?</strong></p><div class="answer-area"><input type="text" id="a23-input" placeholder="Type the key name (e.g., Run, ProfileList, Explorer)..." onkeydown="handleInputKeypress(event, 23)"><button onclick="checkAnswer(23)">Submit Answer</button><button class="hint-button" onclick="showHint(23)">Need a Hint?</button></div><div id="q23-feedback" class="feedback hidden"></div><div id="q23-hint" class="hint-text"><strong>Hint:</strong> The name of the subkey is exactly what it contains. It tracks the list of loaded user environments.<ul><li>Possible keys: <code>ProfileList</code> (The specific subkey under HKLM\Software\Microsoft\Windows NT\CurrentVersion\...)</li><li>Possible keys: <code>System</code> (General system settings)</li><li>Possible keys: <code>CurrentVersion</code> (Parent key for many OS settings)</li><li>Possible keys: <code>VolatileEnvironment</code> (Temporary environment variables)</li></ul></div></div>
+        <div id="q24" class="question hidden"><h3>Question 24: Preemptive File Cleanup</h3><div class="scenario"><p><strong>Verification:</strong> The profile is restored after reboot. The original cause of corruption might have been a lack of space from old system backups.</p></div><p><strong>What utility should you run next to safely and automatically delete temporary Windows files, user files, and old Windows Update backups?</strong></p><div class="answer-area"><input type="text" id="a24-input" placeholder="Type the utility name (e.g., cleanmgr, defrag, diskpart)..." onkeydown="handleInputKeypress(event, 24)"><button onclick="checkAnswer(24)">Submit Answer</button><button class="hint-button" onclick="showHint(24)">Need a Hint?</button></div><div id="q24-feedback" class="feedback hidden"></div><div id="q24-hint" class="hint-text"><strong>Hint:</strong> The utility is short for 'clean manager'.<ul><li>Possible commands: <code>cleanmgr</code> (Disk Cleanup Utility)</li><li>Possible commands: <code>dism /online /cleanup-image</code> (Advanced system file cleanup)</li><li>Possible commands: <code>Storage Sense</code> (GUI setting for automatic cleanup)</li><li>Possible commands: <code>Optimize-Volume</code> (PowerShell for disk defragmentation/trim)</li></ul></div></div>
+
+        <div id="scenario-h-complete" class="hidden scenario">
+            <h3>Scenario H Complete! ✅</h3>
+            <h4>Summary of Actions:</h4>
+            <p>You repaired a corrupt Windows user profile by editing the registry. Your steps were:</p>
+            <ul>
+                <li><b>1. Locate Profile List:</b> Navigated to the <code>HKEY_LOCAL_MACHINE</code> hive, the location for system-wide settings.</li>
+                <li><b>2. Modify Key:</b> Found and modified the <code>ProfileList</code> key, removing the temporary profile and renaming the `.bak` key.</li>
+                <li><b>3. System Maintenance:</b> Ran <code>cleanmgr</code> (Disk Cleanup) to free up space and prevent future corruption.</li>
+            </ul>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button class="home-button" onclick="startScenario(19)">&larr; Previous Scenario</button>
+                <button id="next-scenario-h" class="home-button" onclick="startScenario(25)">Next Scenario &rarr;</button>
+            </div>
+        </div>
+        </div> 
 
     <div id="scenario-i" class="hidden">
         <div class="scenario-header">
@@ -191,10 +315,25 @@
             <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A user's MacBook is experiencing strange display colors and erratic sound volume upon boot, even before the operating system loads.</p></div>
-        <div id="q25" class="question hidden"><h3>Question 25: BIOS/UEFI Equivalent Reset</h3><p><strong>What is the Mac-specific maintenance action (involving holding down keys during startup) used to reset system settings stored in non-volatile memory, often fixing display, sound, and boot sequence issues?</strong></p><div class="answer-area"><input type="text" id="a25-input" placeholder="Type the common acronym (e.g., SMC, PRAM, T2)..." onkeydown="handleInputKeypress(event, 25)"><button onclick="checkAnswer(25)">Submit Answer</button><button class="hint-button" onclick="showHint(25)">Need a Hint?</button></div><div id="q25-feedback" class="feedback hidden"></div><div id="q25-hint" class="hint-text"><strong>Hint:</strong> The acronym is often referred to as PRAM (Parameter RAM) on older Macs.<ul><li>Possible answer: NVRAM Reset</li></ul></div></div>
-        <div id="q26" class="question hidden"><h3>Question 26: Hardware Management Reset</h3><div class="scenario"><p><strong>Result:</strong> Resetting the NVRAM fixed the display/sound issues.</p></div><p><strong>If the issue had instead been related to power management, battery charging, or cooling fan speed, what other Mac-specific reset procedure would be the correct solution?</strong></p><div class="answer-area"><input type="text" id="a26-input" placeholder="Type the Mac-specific acronym (e.g., SMC, PRAM, T2)..." onkeydown="handleInputKeypress(event, 26)"><button onclick="checkAnswer(26)">Submit Answer</button><button class="hint-button" onclick="showHint(26)">Need a Hint?</button></div><div id="q26-feedback" class="feedback hidden"></div><div id="q26-hint" class="hint-text"><strong>Hint:</strong> The acronym stands for System Management Controller.<ul><li>Possible answer: SMC Reset</li></ul></div></div>
-        <div id="q27" class="question hidden"><h3>Question 27: Safe Mode Equivalent</h3><div class="scenario"><p><strong>Verification:</strong> All hardware functions are back to normal. However, you want to ensure the system is stable.</p></div><p><strong>What is the specific Mac boot procedure (similar to Windows Safe Mode) that loads only essential macOS components and performs basic file system integrity checks?</strong></p><div class="answer-area"><input type="text" id="a27-input" placeholder="Type the name (e.g., Safe Boot, Recovery Mode)..." onkeydown="handleInputKeypress(event, 27)"><button onclick="checkAnswer(27)">Submit Answer</button><button class="hint-button" onclick="showHint(27)">Need a Hint?</button></div><div id="q27-feedback" class="feedback hidden"></div><div id="q27-hint" class="hint-text"><strong>Hint:</strong> The procedure involves holding the Shift key at startup.<ul><li>Possible answer: Safe Boot</li></ul></div></div>
-    </div> 
+        <div id="q25" class="question hidden"><h3>Question 25: BIOS/UEFI Equivalent Reset</h3><p><strong>What is the Mac-specific maintenance action (involving holding down keys during startup) used to reset system settings stored in non-volatile memory, often fixing display, sound, and boot sequence issues?</strong></p><div class="answer-area"><input type="text" id="a25-input" placeholder="Type the common acronym (e.g., SMC, PRAM, T2)..." onkeydown="handleInputKeypress(event, 25)"><button onclick="checkAnswer(25)">Submit Answer</button><button class="hint-button" onclick="showHint(25)">Need a Hint?</button></div><div id="q25-feedback" class="feedback hidden"></div><div id="q25-hint" class="hint-text"><strong>Hint:</strong> The acronym is often referred to as PRAM (Parameter RAM) on older Macs.<ul><li>Possible answer: NVRAM Reset (Non-Volatile RAM)</li><li>Possible answer: PRAM Reset (The older term for the same action)</li><li>Possible answer: SMC Reset (For power/thermal management issues)</li><li>Possible answer: <code>Command + Option + P + R</code> (The required key combination for the action)</li></ul></div></div>
+        <div id="q26" class="question hidden"><h3>Question 26: Hardware Management Reset</h3><div class="scenario"><p><strong>Result:</strong> Resetting the NVRAM fixed the display/sound issues.</p></div><p><strong>If the issue had instead been related to power management, battery charging, or cooling fan speed, what other Mac-specific reset procedure would be the correct solution?</strong></p><div class="answer-area"><input type="text" id="a26-input" placeholder="Type the Mac-specific acronym (e.g., SMC, PRAM, T2)..." onkeydown="handleInputKeypress(event, 26)"><button onclick="checkAnswer(26)">Submit Answer</button><button class="hint-button" onclick="showHint(26)">Need a Hint?</button></div><div id="q26-feedback" class="feedback hidden"></div><div id="q26-hint" class="hint-text"><strong>Hint:</strong> The acronym stands for System Management Controller.<ul><li>Possible answer: SMC Reset (System Management Controller)</li><li>Possible answer: NVRAM Reset (For boot configuration issues)</li><li>Possible answer: Power Cycle (Simple shutdown and restart)</li><li>Possible answer: Check Battery Status (To rule out charging hardware)</li></ul></div></div>
+        <div id="q27" class="question hidden"><h3>Question 27: Safe Mode Equivalent</h3><div class="scenario"><p><strong>Verification:</strong> All hardware functions are back to normal. However, you want to ensure the system is stable.</p></div><p><strong>What is the specific Mac boot procedure (similar to Windows Safe Mode) that loads only essential macOS components and performs basic file system integrity checks?</strong></p><div class="answer-area"><input type="text" id="a27-input" placeholder="Type the name (e.g., Safe Boot, Recovery Mode)..." onkeydown="handleInputKeypress(event, 27)"><button onclick="checkAnswer(27)">Submit Answer</button><button class="hint-button" onclick="showHint(27)">Need a Hint?</button></div><div id="q27-feedback" class="feedback hidden"></div><div id="q27-hint" class="hint-text"><strong>Hint:</strong> The procedure involves holding the Shift key at startup.<ul><li>Possible answer: Safe Boot (Shift key during startup)</li><li>Possible answer: Recovery Mode (Command + R during startup)</li><li>Possible answer: Single-User Mode (Command + S during startup, for advanced terminal troubleshooting)</li><li>Possible answer: Verbose Mode (Command + V during startup, shows detailed boot sequence)</li></ul></div></div>
+
+        <div id="scenario-i-complete" class="hidden scenario">
+            <h3>Scenario I Complete! ✅</h3>
+            <h4>Summary of Actions:</h4>
+            <p>You resolved Mac boot and hardware issues using built-in reset procedures. Your steps were:</p>
+            <ul>
+                <li><b>1. Fix Display/Sound:</b> Performed an <code>NVRAM Reset</code> (or PRAM) to clear corrupted startup configuration data.</li>
+                <li><b>2. Identify Power Fix:</b> Correctly identified that an <code>SMC Reset</code> is the procedure for power and thermal management issues.</li>
+                <li><b>3. Diagnostic Boot:</b> Used <code>Safe Boot</code> to load a minimal OS and verify system stability.</li>
+            </ul>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button class="home-button" onclick="startScenario(22)">&larr; Previous Scenario</button>
+                <button id="next-scenario-i" class="home-button" onclick="startScenario(28)">Next Scenario &rarr;</button>
+            </div>
+        </div>
+        </div> 
 
     <div id="scenario-j" class="hidden">
         <div class="scenario-header">
@@ -202,10 +341,25 @@
             <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>An Android app loads successfully but displays stale or incorrect data, even after closing and reopening it. The phone's network works fine.</p></div>
-        <div id="q28" class="question hidden"><h3>Question 28: Initial App Data Reset</h3><p><strong>What is the first data action you should perform on the app (via Settings -> Apps) that removes temporary downloaded files and images without deleting the user's login or profile data?</strong></p><div class="answer-area"><input type="text" id="a28-input" placeholder="Type the action name (e.g., Clear Data, Clear Cache)..." onkeydown="handleInputKeypress(event, 28)"><button onclick="checkAnswer(28)">Submit Answer</button><button class="hint-button" onclick="showHint(28)">Need a Hint?</button></div><div id="q28-feedback" class="feedback hidden"></div><div id="q28-hint" class="hint-text"><strong>Hint:</strong> The temporary storage area for an app's frequently accessed files.<ul><li>Possible answer: Clear Cache</li></ul></div></div>
-        <div id="q29" class="question hidden"><h3>Question 29: Full App Data Reset</h3><div class="scenario"><p><strong>Result:</strong> Clearing the cache did not fix the problem. The data is still incorrect.</p></div><p><strong>What is the second, more drastic data action you must perform to delete *all* local user settings and stored account information, forcing the user to log in again?</strong></p><div class="answer-area"><input type="text" id="a29-input" placeholder="Type the action name (e.g., Clear Data, Clear Cache)..." onkeydown="handleInputKeypress(event, 29)"><button onclick="checkAnswer(29)">Submit Answer</button><button class="hint-button" onclick="showHint(29)">Need a Hint?</button></div><div id="q29-feedback" class="feedback hidden"></div><div id="q29-hint" class="hint-text"><strong>Hint:</strong> This action essentially factory resets the app, wiping login tokens and local databases.<ul><li>Possible answer: Clear Data</li></ul></div></div>
-        <div id="q30" class="question hidden"><h3>Question 30: System Level Reset</h3><div class="scenario"><p><strong>Result:</strong> The app is still not working correctly after clearing all data.</p></div><p><strong>If all app-specific troubleshooting fails, what is the best next step before resorting to a factory reset of the entire phone?</strong></p><div class="answer-area"><input type="text" id="a30-input" placeholder="Type the action (e.g., Factory Reset, Check OS Update)..." onkeydown="handleInputKeypress(event, 30)"><button onclick="checkAnswer(30)">Submit Answer</button><button class="hint-button" onclick="showHint(30)">Need a Hint?</button></div><div id="q30-feedback" class="feedback hidden"></div><div id="q30-hint" class="hint-text"><strong>Hint:</strong> Issues are often resolved by fixing underlying software conflicts. This process is usually mandatory.<ul><li>Possible answer: Uninstall and Reinstall the App</li></ul></div></div>
-    </div> 
+        <div id="q28" class="question hidden"><h3>Question 28: Initial App Data Reset</h3><p><strong>What is the first data action you should perform on the app (via Settings -> Apps) that removes temporary downloaded files and images without deleting the user's login or profile data?</strong></p><div class="answer-area"><input type="text" id="a28-input" placeholder="Type the action name (e.g., Clear Data, Clear Cache)..." onkeydown="handleInputKeypress(event, 28)"><button onclick="checkAnswer(28)">Submit Answer</button><button class="hint-button" onclick="showHint(28)">Need a Hint?</button></div><div id="q28-feedback" class="feedback hidden"></div><div id="q28-hint" class="hint-text"><strong>Hint:</strong> The temporary storage area for an app's frequently accessed files.<ul><li>Possible answer: Clear Cache (Removes temporary, non-essential data)</li><li>Possible answer: Force Stop the app (Terminates all running processes of the app)</li><li>Possible answer: Clear App Data (Removes all user settings and profile data)</li><li>Possible answer: Restart the phone (Resets the operating system)</li></ul></div></div>
+        <div id="q29" class="question hidden"><h3>Question 29: Full App Data Reset</h3><div class="scenario"><p><strong>Result:</strong> Clearing the cache did not fix the problem. The data is still incorrect.</p></div><p><strong>What is the second, more drastic data action you must perform to delete *all* local user settings and stored account information, forcing the user to log in again?</strong></p><div class="answer-area"><input type="text" id="a29-input" placeholder="Type the action name (e.g., Clear Data, Clear Cache)..." onkeydown="handleInputKeypress(event, 29)"><button onclick="checkAnswer(29)">Submit Answer</button><button class="hint-button" onclick="showHint(29)">Need a Hint?</button></div><div id="q29-feedback" class="feedback hidden"></div><div id="q29-hint" class="hint-text"><strong>Hint:</strong> This action essentially factory resets the app, wiping login tokens and local databases.<ul><li>Possible answer: Clear Data (The most complete app-level reset)</li><li>Possible answer: Clear Cache (The soft reset)</li><li>Possible answer: Force Stop (To prevent background conflicts)</li><li>Possible answer: Uninstall and Reinstall App (The next step after data clear fails)</li></ul></div></div>
+        <div id="q30" class="question hidden"><h3>Question 30: System Level Reset</h3><div class="scenario"><p><strong>Result:</strong> The app is still not working correctly after clearing all data.</p></div><p><strong>If all app-specific troubleshooting fails, what is the best next step before resorting to a factory reset of the entire phone?</strong></p><div class="answer-area"><input type="text" id="a30-input" placeholder="Type the action (e.g., Factory Reset, Check OS Update)..." onkeydown="handleInputKeypress(event, 30)"><button onclick="checkAnswer(30)">Submit Answer</button><button class="hint-button" onclick="showHint(30)">Need a Hint?</button></div><div id="q30-feedback" class="feedback hidden"></div><div id="q30-hint" class="hint-text"><strong>Hint:</strong> Issues are often resolved by fixing underlying software conflicts. This process is usually mandatory.<ul><li>Possible answer: Uninstall and Reinstall the App (Ensures a clean set of program files)</li><li>Possible answer: Check for OS Update (The system itself may have bugs)</li><li>Possible answer: Perform a Factory Reset (The final, destructive step)</li><li>Possible answer: Clear Google Play Services Data (If the issue is related to core services)</li></ul></div></div>
+
+        <div id="scenario-j-complete" class="hidden scenario">
+            <h3>Scenario J Complete! ✅</h3>
+            <h4>Summary of Actions:</h4>
+            <p>You followed the app troubleshooting hierarchy to fix a misbehaving mobile app. Your steps were:</p>
+            <ul>
+                <li><b>1. Soft Reset:</b> Used <code>Clear Cache</code> to remove temporary, non-essential data that could be causing issues.</li>
+                <li><b>2. Hard Reset:</b> Used <code>Clear Data</code> to completely reset the app's local storage and settings.</li>
+                <li><b>3. Reinstallation:</b> The final step before a phone reset was to <code>Uninstall and Reinstall the App</code> to ensure no corrupted program files remained.</li>
+            </ul>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button class="home-button" onclick="startScenario(25)">&larr; Previous Scenario</button>
+                <button id="next-scenario-j" class="home-button" onclick="startScenario(31)">Next Scenario &rarr;</button>
+            </div>
+        </div>
+        </div> 
     
     <div id="scenario-k" class="hidden">
         <div class="scenario-header">
@@ -223,7 +377,7 @@
                 <button class="hint-button" onclick="showHint(31)">Need a Hint?</button>
             </div>
             <div id="q31-feedback" class="feedback hidden"></div>
-            <div id="q31-hint" class="hint-text"><strong>Hint:</strong> Look for the utility that manages the Master Boot Record and BCD. The parameter used is often `/scanos` or the command itself is `bcdedit`.<ul><li>Possible commands: <code>fixboot</code></li><li>Possible commands: <code>bootrec</code></li><li>Possible commands: <code>bcdedit</code></li></ul></div>
+            <div id="q31-hint" class="hint-text"><strong>Hint:</strong> Look for the utility that manages the Master Boot Record and BCD. The parameter used is often `/scanos` or the command itself is `bcdedit`.<ul><li>Possible commands: <code>bootrec /scanos</code> (Scans for Windows installations)</li><li>Possible commands: <code>bcdedit /enum</code> (Views the BCD store entries)</li><li>Possible commands: <code>bootrec /fixmbr</code> (Fixes the Master Boot Record)</li><li>Possible commands: <code>diskpart</code> (Used to check partition status)</li></ul></div>
         </div>
 
         <div id="q32" class="question hidden">
@@ -235,7 +389,7 @@
                 <button onclick="checkAnswer(32)">Submit Answer</button><button class="hint-button" onclick="showHint(32)">Need a Hint?</button>
             </div>
             <div id="q32-feedback" class="feedback hidden"></div>
-            <div id="q32-hint" class="hint-text"><strong>Hint:</strong> The parameter's name is the action you are performing on the boot sector.<ul><li>Possible commands: <code>bootrec /fixmbr</code></li><li>Possible commands: <code>bootrec /fixboot</code></li><li>Possible commands: <code>bootrec /rebuildbcd</code></li></ul></div>
+            <div id="q32-hint" class="hint-text"><strong>Hint:</strong> The parameter's name is the action you are performing on the boot sector.<ul><li>Possible commands: <code>bootrec /fixboot</code> (Writes a new boot sector)</li><li>Possible commands: <code>bootrec /fixmbr</code> (Writes a new MBR)</li><li>Possible commands: <code>bootrec /rebuildbcd</code> (Recreates the BCD store)</li><li>Possible commands: <code>bcdedit /set</code> (Used to modify individual BCD entries)</li></ul></div>
         </div>
 
         <div id="q33" class="question hidden">
@@ -248,9 +402,26 @@
                 <button class="hint-button" onclick="showHint(33)">Need a Hint?</button>
             </div>
             <div id="q33-feedback" class="feedback hidden"></div>
-            <div id="q33-hint" class="hint-text"><strong>Hint:</strong> The parameter reflects the destructive and complete nature of the action.<ul><li>Possible commands: <code>bootrec /fixmbr</code></li><li>Possible commands: <code>bootrec /fixboot</code></li><li>Possible commands: <code>bootrec /rebuildbcd</code></li></ul></div>
+            <div id="q33-hint" class="hint-text"><strong>Hint:</strong> The parameter reflects the destructive and complete nature of the action.<ul><li>Possible commands: <code>bootrec /rebuildbcd</code> (The most complete BCD fix)</li><li>Possible commands: <code>bootrec /fixboot</code> (Fixes the boot sector only)</li><li>Possible commands: <code>bootrec /fixmbr</code> (Fixes the MBR only)</li><li>Possible commands: <code>bcdedit /enum</code> (Used to view BCD store status)</li></ul></div>
         </div>
-    </div> <div id="scenario-l" class="hidden">
+
+        <div id="scenario-k-complete" class="hidden scenario">
+            <h3>Scenario K Complete! ✅</h3>
+            <h4>Summary of Actions:</h4>
+            <p>You repaired a Windows boot failure from the Recovery Environment. Your steps were:</p>
+            <ul>
+                <li><b>1. Scan for OS:</b> Used <code>bootrec /scanos</code> to check for Windows installations and the BCD status.</li>
+                <li><b>2. Fix Boot Sector:</b> Used <code>bootrec /fixboot</code> to write a new, clean boot sector to the system partition.</li>
+                <li><b>3. Rebuild BCD:</b> Used <code>bootrec /rebuildbcd</code> to scan for the OS and completely recreate the Boot Configuration Data store.</li>
+            </ul>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button class="home-button" onclick="startScenario(28)">&larr; Previous Scenario</button>
+                <button id="next-scenario-k" class="home-button" onclick="startScenario(34)">Next Scenario &rarr;</button>
+            </div>
+        </div>
+        </div> 
+    
+    <div id="scenario-l" class="hidden">
         <div class="scenario-header">
             <h2>Scenario L: Network Latency & Path Tracing 🌐</h2>
             <button class="home-button" onclick="resetView()">Home</button>
@@ -266,7 +437,7 @@
                 <button class="hint-button" onclick="showHint(34)">Need a Hint?</button>
             </div>
             <div id="q34-feedback" class="feedback hidden"></div>
-            <div id="q34-hint" class="hint-text"><strong>Hint:</strong> The utility's name is short for 'trace route'. In Windows, it's abbreviated.<ul><li>Possible commands: <code>ipconfig</code></li><li>Possible commands: <code>tracert</code></li><li>Possible commands: <code>ping</code></li></ul></div>
+            <div id="q34-hint" class="hint-text"><strong>Hint:</strong> The utility's name is short for 'trace route'. In Windows, it's abbreviated.<ul><li>Possible commands: <code>tracert</code> (Windows) / <code>traceroute</code> (Linux/Mac)</li><li>Possible commands: <code>ping</code> (Measures latency to a single hop)</li><li>Possible commands: <code>pathping</code> (A combination of ping and tracert)</li><li>Possible commands: <code>netstat -s</code> (Shows detailed network statistics)</li></ul></div>
         </div>
 
         <div id="q35" class="question hidden">
@@ -279,22 +450,38 @@
                 <button class="hint-button" onclick="showHint(35)">Need a Hint?</button>
             </div>
             <div id="q35-feedback" class="feedback hidden"></div>
-            <div id="q35-hint" class="hint-text"><strong>Hint:</strong> The utility is short for 'network statistics'. The parameters stand for 'all connections' and 'numeric addresses'.<ul><li>Possible commands: <code>netstat -r</code></li><li>Possible commands: <code>netstat -an</code></li><li>Possible commands: <code>netstat -s</code></li></ul></div>
+            <div id="q35-hint" class="hint-text"><strong>Hint:</strong> The utility is short for 'network statistics'. The parameters stand for 'all connections' and 'numeric addresses'.<ul><li>Possible commands: <code>netstat -an</code> (All connections, Numeric addresses)</li><li>Possible commands: <code>netstat -r</code> (Displays the routing table)</li><li>Possible commands: <code>netstat -s</code> (Displays per-protocol statistics)</li><li>Possible commands: <code>Get-NetTCPConnection</code> (PowerShell equivalent)</li></ul></div>
         </div>
 
         <div id="q36" class="question hidden">
             <h3>Question 36: Clear Local Cache</h3>
             <div class="scenario"><p><strong>Fix:</strong> You found a rogue program hogging resources and terminated it. Connectivity is still slightly inconsistent, possibly due to bad local lookups.</p></div>
-            <p><strong>What `ipconfig` command and parameter should you run to clear the local DNS resolver cache to ensure all future connection requests use the correct, fresh DNS data?</strong></p>
-            <div class="answer-area">
+            <p><strong>What `ipconfig` command and parameter should you run to clear the local DNS resolver cache to ensure all future connection requests use the correct, fresh DNS data?</strong></p><div class="answer-area">
                 <input type="text" id="a36-input" placeholder="Type your command here (e.g., ipconfig /xxx)..." onkeydown="handleInputKeypress(event, 36)">
                 <button onclick="checkAnswer(36)">Submit Answer</button>
                 <button class="hint-button" onclick="showHint(36)">Need a Hint?</button>
             </div>
             <div id="q36-feedback" class="feedback hidden"></div>
-            <div id="q36-hint" class="hint-text"><strong>Hint:</strong> The parameter is the action you perform on the DNS cache.<ul><li>Possible commands: <code>ipconfig /release</code></li><li>Possible commands: <code>ipconfig /flushdns</code></li><li>Possible commands: <code>ipconfig /registerdns</code></li></ul></div>
+            <div id="q36-hint" class="hint-text"><strong>Hint:</strong> The parameter is the action you perform on the DNS cache.<ul><li>Possible commands: <code>ipconfig /flushdns</code> (Clears the DNS cache)</li><li>Possible commands: <code>ipconfig /registerdns</code> (Forces DHCP client to register DNS names)</li><li>Possible commands: <code>ipconfig /release</code> (Drops the current IP lease)</li><li>Possible commands: <code>ipconfig /renew</code> (Requests a new IP lease)</li></ul></div>
         </div>
-    </div> <div id="final-result" class="hidden scenario">
+
+        <div id="scenario-l-complete" class="hidden scenario">
+            <h3>Scenario L Complete! ✅</h3>
+            <h4>Summary of Actions:</h4>
+            <p>You diagnosed a network latency issue using key diagnostic tools. Your steps were:</p>
+            <ul>
+                <li><b>1. Trace Path:</b> Used <code>tracert</code> to map the network path and identify the router hop causing the delay.</li>
+                <li><b>2. Check Connections:</b> Used <code>netstat -an</code> to check for local port exhaustion or rogue connections.</li>
+                <li><b>3. Clear DNS Cache:</b> Used <code>ipconfig /flushdns</code> to clear the local name resolution cache for consistency.</li>
+            </ul>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button class="home-button" onclick="startScenario(31)">&larr; Previous Scenario</button>
+                <button id="next-scenario-l" class="home-button" onclick="startScenario(37)">Final Results &rarr;</button>
+            </div>
+        </div>
+        </div>
+    
+    <div id="final-result" class="hidden scenario">
         <div class="scenario-header">
             <h3>All Troubleshooting Challenges Complete! 🎉</h3>
             <button class="home-button" onclick="resetView()">Home</button>
@@ -321,16 +508,22 @@
             31: 'scenario-k', 32: 'scenario-k', 33: 'scenario-k',
             34: 'scenario-l', 35: 'scenario-l', 36: 'scenario-l'
         };
-        const totalQuestions = 36; // Updated total
+
+        const totalQuestions = 36; 
 
         // Function to hide all questions/scenarios and show the selector
         function resetView() {
             document.getElementById('scenario-selector').classList.remove('hidden');
             document.getElementById('final-result').classList.add('hidden');
             
-            // Hide all scenario containers
-            ['scenario-a', 'scenario-b', 'scenario-c', 'scenario-d', 'scenario-e', 'scenario-f', 'scenario-g', 'scenario-h', 'scenario-i', 'scenario-j', 'scenario-k', 'scenario-l'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
+            const scenarioContainers = ['scenario-a', 'scenario-b', 'scenario-c', 'scenario-d', 'scenario-e', 'scenario-f', 'scenario-g', 'scenario-h', 'scenario-i', 'scenario-j', 'scenario-k', 'scenario-l'];
+            
+            // Hide all scenario containers and their completion boxes
+            scenarioContainers.forEach(id => {
+                const containerEl = document.getElementById(id);
+                if (containerEl) containerEl.classList.add('hidden');
+                const completionBox = document.getElementById(id + '-complete');
+                if (completionBox) completionBox.classList.add('hidden');
             });
 
             // Hide all individual questions and feedback
@@ -339,12 +532,23 @@
                 if (qEl) qEl.classList.add('hidden');
                 const feedbackEl = document.getElementById('q' + i + '-feedback');
                 if (feedbackEl) feedbackEl.classList.add('hidden');
+                // Clear input field on reset
+                const inputEl = document.getElementById('a' + i + '-input');
+                if (inputEl) inputEl.value = '';
+                const hintEl = document.getElementById('q' + i + '-hint');
+                if (hintEl) hintEl.style.display = 'none';
             }
         }
 
         // Function to start a specific scenario
         function startScenario(startQ) {
             resetView(); // Clear everything first
+
+            if (startQ > totalQuestions) {
+                document.getElementById('scenario-selector').classList.add('hidden');
+                document.getElementById('final-result').classList.remove('hidden');
+                return;
+            }
 
             const scenarioContainerId = scenarioMap[startQ];
             if (scenarioContainerId) {
@@ -369,6 +573,7 @@
         function showHint(questionNum) {
             const hintElement = document.getElementById('q' + questionNum + '-hint');
             if (hintElement) {
+                // If it's currently showing (block), hide it. Otherwise, show it.
                 hintElement.style.display = hintElement.style.display === 'block' ? 'none' : 'block';
             }
         }
@@ -388,6 +593,7 @@
             let correct = false;
             let nextQ = questionNum + 1;
 
+            // CORRECT ANSWER LIST (UNCHANGED, STILL ROBUST)
             const correctAnswers = {
                 // Scenario A (Windows Network)
                 1: ["get-netconnectionprofile", "netsh interface show interface"], 2: ["netsh"], 3: ["telnet", "test-netconnection", "tnc"], 
@@ -396,7 +602,7 @@
                 // Scenario C (Windows Disk)
                 7: ["chkdsk c:", "chkdsk c", "chkdsk"], 8: ["/f", "chkdsk c: /f"], 9: ["sfc", "sfc /scannow"],
                 // Scenario D (Linux Permissions)
-                10: ["ls -l", "ls -la"], 11: ["chmod u+x,g+x", "chmod +x"], 12: ["ls -l", "ls -la"],
+                10: ["ls -l", "ls -la"], 11: ["chmod u+x,g+x", "chmod +x", "chmod 755"], 12: ["ls -l", "ls -la"],
                 // Scenario E (Mac Disk)
                 13: ["diskutil"], 14: ["repairvolume", "diskutil repairvolume", "repair disk"], 15: ["list", "diskutil list"],
                 // Scenario F (Mobile Network)
@@ -428,21 +634,16 @@
                 document.getElementById('q' + questionNum).classList.add('hidden');
                 
                 const nextQEl = document.getElementById('q' + nextQ);
-                if (nextQEl) {
-                    // Normal sequential step
+                if (nextQEl && (questionNum % 3 !== 0)) {
+                    // Normal sequential step within a scenario
                     nextQEl.classList.remove('hidden');
                 } else {
-                    // End of a single scenario (Q3, Q6, Q9, Q12, Q15, Q18, Q21, Q24, Q27, Q30, Q33, Q36)
+                    // End of a scenario (Q3, Q6, Q9, etc.)
                     const currentScenarioId = scenarioMap[questionNum];
-                    document.getElementById(currentScenarioId).classList.add('hidden');
+                    const completionBoxId = currentScenarioId + '-complete';
                     
-                    if (questionNum === totalQuestions) {
-                        // End of ALL scenarios
-                        document.getElementById('final-result').classList.remove('hidden');
-                    } else {
-                        // End of a single scenario, go back to the selector
-                        document.getElementById('scenario-selector').classList.remove('hidden');
-                    }
+                    // Show the summary and navigation box
+                    document.getElementById(completionBoxId).classList.remove('hidden');
                 }
             } else {
                 feedbackElement.classList.add('incorrect');
