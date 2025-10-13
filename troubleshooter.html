@@ -54,7 +54,6 @@
             margin-top: 5px;
             opacity: 0.9;
         }
-        /* UPDATED .home-button styling for <a> tag */
         .home-button {
             padding: 8px 12px;
             background-color: #d9232e; /* Red for emphasis */
@@ -64,8 +63,6 @@
             cursor: pointer;
             font-weight: bold;
             transition: background-color 0.2s;
-            text-decoration: none; /* Ensure link looks like a button */
-            display: inline-block; /* Allow padding/sizing on <a> tag */
         }
         .home-button:hover {
             background-color: #a81c25;
@@ -77,7 +74,10 @@
     <h1>A+ 220-1202 Interactive Troubleshooting Challenge</h1>
     
     <div id="scenario-selector">
-        <h2>Choose a Troubleshooting Scenario:</h2>
+        <div class="scenario-header">
+            <h2>Choose a Troubleshooting Scenario:</h2>
+            <a href="index.html" class="home-button" style="text-decoration: none;">Main Home</a>
+        </div>
         <div class="card-grid">
             <button onclick="startScenario(1)">A. Win Network Access 🛡️ <p>Firewall, Ports, netsh (Q1-Q3)</p></button>
             <button onclick="startScenario(4)">B. Win IP/DNS Failure 🚫 <p>APIPA, DHCP Reset, ipconfig (Q4-Q6)</p></button>
@@ -97,7 +97,7 @@
     <div id="scenario-a" class="hidden">
         <div class="scenario-header">
             <h2>Scenario A: The Disappearing Network Drive 🛡️</h2>
-            <a href="index.html" class="home-button">Home</a>
+            <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario">
             <p>A user can no longer access their network drive. They can browse the internet. You suspect a recent Windows update reset the firewall profile.</p>
@@ -111,7 +111,7 @@
     <div id="scenario-b" class="hidden">
         <div class="scenario-header">
             <h2>Scenario B: No Internet & APIPA Address 🚫</h2>
-            <a href="index.html" class="home-button">Home</a>
+            <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A user reports they can access internal servers by IP address, but cannot browse the internet or access anything by name. You run <code>ipconfig</code> and see an IP address of **169.254.X.X**.</p></div>
         <div id="q4" class="question hidden"><h3>Question 4: Release the APIPA Address</h3><p><strong>What command and parameter should you use to force the workstation to DROP its current IP configuration (the 169.254.X.X address)?</strong></p><div class="answer-area"><input type="text" id="a4-input" placeholder="Type your command here (e.g., ipconfig /xxx)..." onkeydown="handleInputKeypress(event, 4)"><button onclick="checkAnswer(4)">Submit Answer</button><button class="hint-button" onclick="showHint(4)">Need a Hint?</button></div><div id="q4-feedback" class="feedback hidden"></div><div id="q4-hint" class="hint-text"><strong>Hint:</strong> The two-step process to reset DHCP is to 'release' then 'renew'.<ul><li>Possible commands: <code>ipconfig /release</code></li></ul></div></div>
@@ -122,7 +122,7 @@
     <div id="scenario-c" class="hidden">
         <div class="scenario-header">
             <h2>Scenario C: System Freezing and Disk Errors 💾</h2>
-            <a href="index.html" class="home-button">Home</a>
+            <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A user reports their Windows PC is running slow and frequently freezes. You suspect a logical disk issue (file system errors or corrupt indexing).</p></div>
         <div id="q7" class="question hidden"><h3>Question 7: Initial Read-Only Disk Check</h3><p><strong>What is the correct Windows command-line utility and parameter to perform a **read-only** scan of the local C: drive to identify file system errors?</p><div class="answer-area"><input type="text" id="a7-input" placeholder="Type your command here (e.g., chkdsk C: /x)..." onkeydown="handleInputKeypress(event, 7)"><button onclick="checkAnswer(7)">Submit Answer</button><button class="hint-button" onclick="showHint(7)">Need a Hint?</button></div><div id="q7-feedback" class="feedback hidden"></div><div id="q7-hint" class="hint-text"><strong>Hint:</strong> The utility is short for "check disk." By default, running it without the /F parameter performs a read-only check.<ul><li>Possible commands: <code>chkdsk C:</code></li></ul></div></div>
@@ -133,7 +133,7 @@
     <div id="scenario-d" class="hidden">
         <div class="scenario-header">
             <h2>Scenario D: Linux Permission Denied 🐧</h2>
-            <a href="index.html" class="home-button">Home</a>
+            <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A user on a Linux server uploaded a new Python script. When they try to execute it, they receive a **"Permission denied"** error.</p></div>
         <div id="q10" class="question hidden"><h3>Question 10: Verify Permissions</h3><p><strong>What command and parameter should you run to verify the current permissions assigned to the file, including the owner, group, and execution status?</strong></p><div class="answer-area"><input type="text" id="a10-input" placeholder="Type your command here (e.g., ls -x)..." onkeydown="handleInputKeypress(event, 10)"><button onclick="checkAnswer(10)">Submit Answer</button><button class="hint-button" onclick="showHint(10)">Need a Hint?</button></div><div id="q10-feedback" class="feedback hidden"></div><div id="q10-hint" class="hint-text"><strong>Hint:</strong> This command lists files, and the parameter stands for 'long format' to show details like permissions.<ul><li>Possible commands: <code>ls -l</code></li></ul></div></div>
@@ -144,7 +144,7 @@
     <div id="scenario-e" class="hidden">
         <div class="scenario-header">
             <h2>Scenario E: Mac Disk Repair 🍏</h2>
-            <a href="index.html" class="home-button">Home</a>
+            <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A macOS user reports their external backup drive is suddenly not mounting properly, and they suspect a disk error, but cannot open the graphical **Disk Utility** app.</p></div>
         <div id="q13" class="question hidden"><h3>Question 13: Terminal Disk Utility</h3><p><strong>What is the primary command-line utility used in macOS to interact with and manage disk partitions, volumes, and file systems?</strong></p><div class="answer-area"><input type="text" id="a13-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 13)"><button onclick="checkAnswer(13)">Submit Answer</button><button class="hint-button" onclick="showHint(13)">Need a Hint?</button></div><div id="q13-feedback" class="feedback hidden"></div><div id="q13-hint" class="hint-text"><strong>Hint:</strong> The utility's name combines the function it performs with its target.<ul><li>Possible commands: <code>diskutil</code></li></ul></div></div>
@@ -155,7 +155,7 @@
     <div id="scenario-f" class="hidden">
         <div class="scenario-header">
             <h2>Scenario F: Android/Mobile Network 📶</h2>
-            <a href="index.html" class="home-button">Home</a>
+            <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A user on an Android phone can connect to Wi-Fi but cannot open any website, and mobile data is also failing. They can't ping any external host.</p></div>
         <div id="q16" class="question hidden"><h3>Question 16: Initial Triage</h3><p><strong>What is the single best action a technician should instruct a mobile user to perform first to quickly reset all network antennas (Cellular, Wi-Fi, Bluetooth) and clear temporary network glitches?</strong></p><div class="answer-area"><input type="text" id="a16-input" placeholder="Type the feature name (e.g., Power Cycle, Reset, Mode)..." onkeydown="handleInputKeypress(event, 16)"><button onclick="checkAnswer(16)">Submit Answer</button><button class="hint-button" onclick="showHint(16)">Need a Hint?</button></div><div id="q16-feedback" class="feedback hidden"></div><div id="q16-hint" class="hint-text"><strong>Hint:</strong> This is a dedicated troubleshooting setting often found in the quick settings panel.<ul><li>Possible answer: Toggle Airplane Mode</li></ul></div></div>
@@ -166,7 +166,7 @@
     <div id="scenario-g" class="hidden">
         <div class="scenario-header">
             <h2>Scenario G: Linux Slowdown/Crash ⏳</h2>
-            <a href="index.html" class="home-button">Home</a>
+            <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A Linux server is responding slowly, and the SSH session is intermittently hanging. You suspect a rogue process is consuming all the CPU/RAM.</p></div>
         <div id="q19" class="question hidden"><h3>Question 19: Identify the Rogue Process</h3><p><strong>What is the standard Linux command, and common parameter combination, used to display a snapshot of all running processes in detail (user, PID, %CPU, %MEM)?</strong></p><div class="answer-area"><input type="text" id="a19-input" placeholder="Type your command here (e.g., ps -xxx)..." onkeydown="handleInputKeypress(event, 19)"><button onclick="checkAnswer(19)">Submit Answer</button><button class="hint-button" onclick="showHint(19)">Need a Hint?</button></div><div id="q19-feedback" class="feedback hidden"></div><div id="q19-hint" class="hint-text"><strong>Hint:</strong> The utility is short for 'process status', and the parameters stand for 'all users' and 'full format'.<ul><li>Possible commands: <code>ps aux</code></li></ul></div></div>
@@ -177,7 +177,7 @@
     <div id="scenario-h" class="hidden">
         <div class="scenario-header">
             <h2>Scenario H: Windows Corrupt User Profile 👤</h2>
-            <a href="index.html" class="home-button">Home</a>
+            <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A Windows user logs in, and their desktop is black, their files are gone, and a temporary profile warning appears. The issue is a **corrupt user profile**.</p></div>
         <div id="q22" class="question hidden"><h3>Question 22: Registry Location</h3><p><strong>In the Windows Registry Editor (`regedit`), under which main key would you find the list of user profiles, often containing a problematic entry with a `.bak` extension?</strong></p><div class="answer-area"><input type="text" id="a22-input" placeholder="Type the main Registry key..." onkeydown="handleInputKeypress(event, 22)"><button onclick="checkAnswer(22)">Submit Answer</button><button class="hint-button" onclick="showHint(22)">Need a Hint?</button></div><div id="q22-feedback" class="feedback hidden"></div><div id="q22-hint" class="hint-text"><strong>Hint:</strong> The profile list is a system-wide configuration, not just for the current user, and lives under a key related to the operating system version.<ul><li>Possible keys: <code>HKEY_LOCAL_MACHINE</code></li></ul></div></div>
@@ -188,7 +188,7 @@
     <div id="scenario-i" class="hidden">
         <div class="scenario-header">
             <h2>Scenario I: Mac Boot Issues 💻</h2>
-            <a href="index.html" class="home-button">Home</a>
+            <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A user's MacBook is experiencing strange display colors and erratic sound volume upon boot, even before the operating system loads.</p></div>
         <div id="q25" class="question hidden"><h3>Question 25: BIOS/UEFI Equivalent Reset</h3><p><strong>What is the Mac-specific maintenance action (involving holding down keys during startup) used to reset system settings stored in non-volatile memory, often fixing display, sound, and boot sequence issues?</strong></p><div class="answer-area"><input type="text" id="a25-input" placeholder="Type the common acronym (e.g., SMC, PRAM, T2)..." onkeydown="handleInputKeypress(event, 25)"><button onclick="checkAnswer(25)">Submit Answer</button><button class="hint-button" onclick="showHint(25)">Need a Hint?</button></div><div id="q25-feedback" class="feedback hidden"></div><div id="q25-hint" class="hint-text"><strong>Hint:</strong> The acronym is often referred to as PRAM (Parameter RAM) on older Macs.<ul><li>Possible answer: NVRAM Reset</li></ul></div></div>
@@ -199,7 +199,7 @@
     <div id="scenario-j" class="hidden">
         <div class="scenario-header">
             <h2>Scenario J: Mobile App Issues 📱</h2>
-            <a href="index.html" class="home-button">Home</a>
+            <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>An Android app loads successfully but displays stale or incorrect data, even after closing and reopening it. The phone's network works fine.</p></div>
         <div id="q28" class="question hidden"><h3>Question 28: Initial App Data Reset</h3><p><strong>What is the first data action you should perform on the app (via Settings -> Apps) that removes temporary downloaded files and images without deleting the user's login or profile data?</strong></p><div class="answer-area"><input type="text" id="a28-input" placeholder="Type the action name (e.g., Clear Data, Clear Cache)..." onkeydown="handleInputKeypress(event, 28)"><button onclick="checkAnswer(28)">Submit Answer</button><button class="hint-button" onclick="showHint(28)">Need a Hint?</button></div><div id="q28-feedback" class="feedback hidden"></div><div id="q28-hint" class="hint-text"><strong>Hint:</strong> The temporary storage area for an app's frequently accessed files.<ul><li>Possible answer: Clear Cache</li></ul></div></div>
@@ -210,7 +210,7 @@
     <div id="scenario-k" class="hidden">
         <div class="scenario-header">
             <h2>Scenario K: Windows Boot Repair 🛠️</h2>
-            <a href="index.html" class="home-button">Home</a>
+            <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A Windows 10 PC displays a "No Boot Device Found" or "Operating System Missing" error, but hardware diagnostics pass. You have booted into the **Windows Recovery Environment (WinRE)** Command Prompt.</p></div>
         
@@ -253,7 +253,7 @@
     </div> <div id="scenario-l" class="hidden">
         <div class="scenario-header">
             <h2>Scenario L: Network Latency & Path Tracing 🌐</h2>
-            <a href="index.html" class="home-button">Home</a>
+            <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <div class="scenario"><p>A user on the LAN reports accessing a specific external web server (IP 203.0.113.50) is extremely slow, but general internet browsing is fine. You need to identify where the delay is occurring.</p></div>
         
@@ -297,7 +297,7 @@
     </div> <div id="final-result" class="hidden scenario">
         <div class="scenario-header">
             <h3>All Troubleshooting Challenges Complete! 🎉</h3>
-            <a href="index.html" class="home-button">Home</a>
+            <button class="home-button" onclick="resetView()">Home</button>
         </div>
         <p>You successfully diagnosed and fixed issues across 12 different environments including Windows, Linux, Mac, and Mobile, covering 36 critical command-line concepts. You are ready for the Core 2 PBQs!</p>
     </div>
