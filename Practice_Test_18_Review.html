@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompTIA A+ 220-1202 Practice Test 18 with Explanations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #D9232E; /* Matching the secondary accent from examcomp.html */
+            text-align: center;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #D9232E;
+        }
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+        .question-text {
+            font-size: 1.15em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+        .option-item {
+            display: block;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            transition: background-color 0.2s;
+        }
+        
+        /* Feedback Styling */
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 6px;
+            display: none;
+            font-size: 1em;
+            border-left: 5px solid;
+            white-space: pre-wrap;
+        }
+        .correct-feedback {
+            background-color: #e6ffec;
+            color: #155724;
+            border-color: #155724;
+        }
+        .incorrect-feedback {
+            background-color: #ffeded;
+            color: #721c24;
+            border-color: #721c24;
+        }
+        .explanation-text {
+            font-weight: normal;
+            margin-top: 5px;
+            display: block;
+        }
+        .correct-answer-highlight {
+            background-color: #28a745 !important;
+            color: white;
+            border-color: #1e7e34 !important;
+            font-weight: bold;
+        }
+        .user-selected-wrong {
+            background-color: #dc3545;
+            color: white;
+            border-color: #b02a37;
+            font-weight: bold;
+        }
+
+        /* Buttons and Score */
+        .quiz-controls {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .quiz-controls button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            margin: 0 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        #submit-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        #submit-btn:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        #submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        #reset-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        #reset-btn:hover {
+            background-color: #5a6268;
+        }
+        #score-display {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #e9ecef;
+            display: none;
+        }
+        #final-summary {
+            margin-top: 40px;
+            padding: 20px;
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            background-color: #f0f8ff;
+            display: none;
+        }
+        #final-summary h2 {
+            margin-top: 0;
+            color: #0056b3;
+            border-bottom: 1px solid #0056b3;
+            padding-bottom: 10px;
+        }
+        .summary-question-detail {
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        
+        /* Back Button Style */
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            text-decoration: none;
+            color: white;
+            background-color: #6c757d; 
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px; 
+            border: none;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="examcomp.html" class="back-button">&larr; Back to Practice Tests Menu</a>
+    
+    <h1>CompTIA A+ Certification Exam 220-1202 Practice Test 18</h1>
+    <p>Select an answer for each question to see the detailed explanation immediately.</p>
+    <form id="practice-exam-form">
+        </form>
+
+    <div class="quiz-controls">
+        <button id="submit-btn" type="button">Finish Exam & Show Final Summary</button>
+        <button id="reset-btn" type="button" style="display: none;">Reset Quiz</button>
+        <div id="score-display"></div>
+    </div>
+
+    <div id="final-summary">
+        </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "Which of the answers listed below refers to a security measure that grants temporary, on-demand, and limited-time access to privileged accounts?",
+            options: ["Zero Trust architecture", "Context-based authentication", "Principle of least privilege", "Just-in-time access"],
+            correct: "Just-in-time access",
+            explanation: {
+                correct: "The correct answer is **Just-in-time (JIT) access**. This security measure grants temporary, time-bound, and strictly limited access to privileged accounts only when needed, minimizing the attack surface.",
+                incorrect: "**Principle of least privilege** is a permanent baseline rule. **Zero Trust** is a complete security model. **Context-based authentication** checks environmental factors, but doesn't specifically define temporary access."
+            }
+        },
+        {
+            question: "Which of the following refers to a cybersecurity tool dedicated to managing, monitoring, and securing access to critical systems and accounts with elevated privileges?",
+            options: ["OAuth", "IAM", "RBAC", "PAM"],
+            correct: "PAM",
+            explanation: {
+                correct: "**PAM** stands for **Privileged Access Management**. It is a dedicated set of tools and strategies for defining, controlling, and monitoring elevated user access, which is the primary goal described.",
+                incorrect: "**IAM** (Identity and Access Management) is a broader framework for all users. **RBAC** (Role-Based Access Control) is an access control model. **OAuth** is an authorization protocol."
+            }
+        },
+        {
+            question: "Which type of software provides a solution specifically designed to centrally manage, monitor, and secure mobile devices such as smartphones and tablets?",
+            options: ["UEM", "EDR", "IAM", "MDM"],
+            correct: "MDM",
+            explanation: {
+                correct: "**MDM** stands for **Mobile Device Management**. It is the dedicated software solution for centrally controlling, securing, and enforcing policies on mobile devices like phones and tablets. **UEM (Unified Endpoint Management)** is a broader, modern version that includes MDM features.",
+                incorrect: "**EDR** is Endpoint Detection and Response. **IAM** is Identity and Access Management."
+            }
+        },
+        {
+            question: "Which of the acronyms listed below refers to a dedicated software or hardware-based security solution designed to detect and prevent unauthorized use and transmission of confidential information?",
+            options: ["DEP", "IPS", "DLP", "UTM"],
+            correct: "DLP",
+            explanation: {
+                correct: "**DLP** stands for **Data Loss Prevention** (or Data Leakage Prevention). These systems are specifically designed to monitor, identify, and block the unauthorized transmission or use of sensitive data, preventing data breaches.",
+                incorrect: "**UTM** (Unified Threat Management) is a device that combines several security functions (firewall, IPS, antimalware) but isn't primarily focused on data leakage prevention. **IPS** is an Intrusion Prevention System. **DEP** is Data Execution Prevention."
+            }
+        },
+        {
+            question: "Which of the following refers to a comprehensive security framework that manages the entire lifecycle of a digital identity (such as a user account or device) and controls how it can access organizational resources?",
+            options: ["AAA", "SSO", "RADIUS", "IAM"],
+            correct: "IAM",
+            explanation: {
+                correct: "**IAM** stands for **Identity and Access Management**. It is the comprehensive framework that governs the entire lifecycle of digital identities, including provisioning, authentication, and authorization.",
+                incorrect: "**SSO** and **RADIUS** are authentication/access mechanisms. **AAA** (Authentication, Authorization, Accounting) is a framework that makes up part of IAM."
+            }
+        },
+        {
+            question: "What is the primary purpose of a directory service in a network environment?",
+            options: ["Network file system storage and retrieval", "Hosting and synchronization of data between devices", "Centralized management of users and network objects", "Storage and delivery of web-based content"],
+            correct: "Centralized management of users and network objects",
+            explanation: {
+                correct: "A **directory service** (like Active Directory) is a centralized, hierarchical database used to store, organize, and manage information about all network resources, including users, computers, and services.",
+                incorrect: "Directory services primarily manage resources, not store large file system data or web content."
+            }
+        },
+        {
+            question: "LDAP is an example of:",
+            options: ["Data encryption protocol", "Address resolution protocol", "Directory access protocol", "File exchange protocol"],
+            correct: "Directory access protocol",
+            explanation: {
+                correct: "**LDAP** stands for **Lightweight Directory Access Protocol**. It is the application layer protocol used for accessing and maintaining distributed directory information services, such as Microsoft Active Directory.",
+                incorrect: "LDAP is used for querying and modifying directory data, not for file exchange or address resolution."
+            }
+        },
+        {
+            question: "In Windows 10 and 11, which section of the Windows Security app is used to turn Microsoft Defender Antivirus on or off?",
+            options: ["Firewall & network protection", "App & browser control", "Device security", "Virus & threat protection"],
+            correct: "Virus & threat protection",
+            explanation: {
+                correct: "The main control panel for the Windows anti-malware solution, including the option to turn it on or off, is found under the **Virus & threat protection** section of the Windows Security app.",
+                incorrect: "The other sections handle firewall, browser settings, or hardware-level security features."
+            }
+        },
+        {
+            question: "Which feature in Windows 10 and Windows 11 enables automatic installation of Microsoft Defender Antivirus definitions?",
+            options: ["Task Scheduler", "Virus & threat protection settings", "Windows Update", "System Configuration"],
+            correct: "Windows Update",
+            explanation: {
+                correct: "Microsoft Defender Antivirus definitions are considered a security component and are automatically downloaded and installed through the same mechanism used for OS patches: **Windows Update**.",
+                incorrect: "While you can *manually* check for updates in the settings, the *automatic* process relies on Windows Update."
+            }
+        },
+        {
+            question: "In Windows 10 and Windows 11, which section of the Windows Security app provides the option to manually update Microsoft Defender Antivirus definitions?",
+            options: ["Virus & threat protection", "Firewall & network protection", "App & browser control", "Device performance & health"],
+            correct: "Virus & threat protection",
+            explanation: {
+                correct: "The **Virus & threat protection** section contains the check for definition updates under the 'Virus & threat protection updates' option, allowing for manual updates.",
+                incorrect: "The other sections do not handle antivirus definition updates."
+            }
+        },
+        {
+            question: "Which Control Panel paths in Windows provide access to turn Windows Defender Firewall on or off? (Select 2 answers)",
+            options: ["Control Panel (category view) > Network and Internet > Windows Defender Firewall", "Control Panel (icon view) > System and Security > Windows Defender Firewall", "Control Panel (category view) > Security and Maintenance > Windows Defender Firewall", "Control Panel (icon view) > Windows Defender Firewall", "Control Panel (category view) > System and Security > Windows Defender Firewall"],
+            correct: ["Control Panel (icon view) > Windows Defender Firewall", "Control Panel (category view) > System and Security > Windows Defender Firewall"],
+            explanation: {
+                correct: "When viewing Control Panel by Category, the path is **System and Security > Windows Defender Firewall**. When viewing by Large/Small Icons, the direct link is **Windows Defender Firewall**.",
+                incorrect: "The Firewall section is under 'System and Security', not 'Network and Internet' or 'Security and Maintenance'."
+            }
+        },
+        {
+            question: "Which section of the Windows Security app in Windows 10 and 11 contains the option to turn the firewall on or off?",
+            options: ["Windows Defender Firewall", "Virus & threat protection settings", "Device security", "Firewall & network protection"],
+            correct: "Firewall & network protection",
+            explanation: {
+                correct: "All controls related to the software firewall, including turning it on or off for different network profiles, are grouped under the **Firewall & network protection** section of the Windows Security app.",
+                incorrect: "The other options are either incorrect names or control other security features."
+            }
+        },
+        {
+            question: "In Windows 10 and 11, a firewall interface providing options to create custom exceptions for applications or ports can be accessed via:",
+            options: ["Control Panel (icon view) > Windows Defender Firewall > Advanced settings > right-click on Inbound/Outbound Rules > New Rule...", "Control Panel (category view) > System and Security > Windows Defender Firewall > Advanced settings > right-click on Inbound/Outbound Rules > New Rule...", "Windows Security app > Firewall & network protection > Advanced settings > right-click on Inbound/Outbound Rules > New Rule...", "Any of the above paths"],
+            correct: "Any of the above paths",
+            explanation: {
+                correct: "All three paths ultimately lead to the **Windows Defender Firewall with Advanced Security** console, where custom, granular rules can be created. Since all are valid access points, 'Any of the above paths' is correct.",
+                incorrect: "All listed paths are valid access methods to the Advanced Firewall settings."
+            }
+        },
+        {
+            question: "Which navigation path in Windows 10 and Windows 11 can be used to access a simplified interface for allowing or blocking applications across private or public networks?",
+            options: ["Control Panel (icon view) > Windows Defender Firewall > Allow an app or feature through Windows Defender Firewall", "Control Panel (category view) > System and Security > Windows Defender Firewall > Allow an app or feature through Windows Defender Firewall", "Windows Security app > Firewall & network protection > Allow an app through the firewall", "Any of the above"],
+            correct: "Any of the above",
+            explanation: {
+                correct: "Windows provides a simplified user interface for managing application exceptions. This interface is intentionally made accessible through multiple, logical paths in both the legacy Control Panel and the modern Windows Security app.",
+                incorrect: "All listed paths lead to the same simplified 'Allow an app through the firewall' interface."
+            }
+        },
+        {
+            question: "Which type of Windows account is primarily used for an offline, single-device setup?",
+            options: ["Microsoft account", "Local account", "Domain account", "Administrator account"],
+            correct: "Local account",
+            explanation: {
+                correct: "A **Local account** is tied only to the specific machine it was created on and does not require an internet connection or synchronization with a network service, making it ideal for offline, single-device setups.",
+                incorrect: "Microsoft accounts require internet and cloud synchronization. Domain accounts require a network connection to a domain controller."
+            }
+        },
+        {
+            question: "Which of the answers listed below refers to an SSO account type in Windows?",
+            options: ["Local account", "Microsoft account", "Administrator account", "Standard account"],
+            correct: "Microsoft account",
+            explanation: {
+                correct: "The **Microsoft account** allows for **Single Sign-On (SSO)** to Microsoft online services (like OneDrive, Microsoft 365, and the Microsoft Store) and is synchronized across multiple Windows devices.",
+                incorrect: "Local accounts are confined to the local machine. Administrator and Standard are privilege levels, not SSO types."
+            }
+        },
+        {
+            question: "Which user group in Windows 10 and 11 can use most of the software and change system settings that do not affect other users or the computer's security?",
+            options: ["Standard Users", "Guests", "Power Users", "Administrators"],
+            correct: "Standard Users",
+            explanation: {
+                correct: "**Standard Users** are the default, least-privileged group. They can perform all common, necessary tasks (run software, change personal settings) but cannot make system-wide changes that require elevated permissions.",
+                incorrect: "**Administrators** have complete control. **Guests** have very limited rights."
+            }
+        },
+        {
+            question: "Which of the following answers refers to a built-in Windows account type that has complete and unrestricted access to a computer or domain?",
+            options: ["Account Operators", "Power Users", "Network Configuration Operators", "Administrators"],
+            correct: "Administrators",
+            explanation: {
+                correct: "The **Administrators** group has the highest level of privilege in Windows, granting complete and unrestricted access to modify the operating system, hardware, and all files/folders.",
+                incorrect: "The other groups have limited, specific administrative rights."
+            }
+        },
+        {
+            question: "In Microsoft Windows environments, the Guest account is intended for users who do not have a permanent account on a Windows computer or domain. Users with this type of account cannot install software or hardware, change system settings, create passwords, or access protected files and folders. However, because the Guest account allows logging on to a network, browsing the Internet, and shutting down the computer, it is recommended to keep it disabled unless temporarily required for a specific purpose.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "This description is accurate. The **Guest account** is a highly restricted, temporary account that should typically be disabled by default due to its inherent security risks (like browsing the internet with limited accountability).",
+                incorrect: "The statement is True."
+            }
+        },
+        {
+            question: "Which user group in Windows 10 and Windows 11 is largely a legacy local group with limited administrative rights retained for backward compatibility with older applications and Windows versions?",
+            options: ["Standard Users", "Replicators", "Account Operators", "Power Users"],
+            correct: "Power Users",
+            explanation: {
+                correct: "The **Power Users** group is a legacy group from older Windows versions (like Windows 2000/XP) that offered limited administrative rights. In Windows 10/11, it is retained almost entirely for backward compatibility.",
+                incorrect: "Standard Users is the current default limited account. Replicators and Account Operators have specific roles."
+            }
+        },
+        {
+            question: "Which Windows authentication method is device-independent, allowing users to log into different systems with the same set of credentials?",
+            options: ["PIN", "Username and password", "Windows Hello", "Fingerprint"],
+            correct: "Username and password",
+            explanation: {
+                correct: "The **Username and password** combination is the traditional, network-based method that is **device-independent**, allowing a user to log in from any machine connected to the network or domain.",
+                incorrect: "PIN and Fingerprint are **device-specific** authentication methods tied to the local machine's TPM chip via Windows Hello."
+            }
+        },
+        {
+            question: "Which Windows sign-in method uses a device-specific code that is stored locally and not transmitted over the network?",
+            options: ["Username and password", "PIN", "Security key", "Passwordless authentication"],
+            correct: "PIN",
+            explanation: {
+                correct: "The **PIN** used in Windows Hello is a **device-specific** code. It is stored locally and is used to decrypt a key stored on the machine's Trusted Platform Module (TPM). It is never sent over the network, making it more secure than a password.",
+                incorrect: "A password is typically transmitted (securely hashed) over the network or to a server."
+            }
+        },
+        {
+            question: "Which of the answers listed below refer(s) to built-in biometric authentication options available in Windows 10 and Windows 11? (Select all that apply)",
+            options: ["Fingerprint", "Smart card sign-in", "Voice recognition", "Retina scan", "Facial recognition"],
+            correct: ["Fingerprint", "Facial recognition"],
+            explanation: {
+                correct: "The **Windows Hello** feature supports the built-in use of **Fingerprint** scanners and **Facial recognition** cameras (specifically Windows Hello Camera/IR) for biometric sign-in.",
+                incorrect: "Smart card sign-in is possession-based, not biometric. Voice and retina scans are not standard built-in Windows Hello options."
+            }
+        },
+        {
+            question: "A technician sets up a new Windows 11 computer for a user. The user wants to log in once and have automatic access to Microsoft 365, OneDrive, and the Microsoft Store without re-entering credentials. Which feature enables this functionality?",
+            options: ["Domain-based authentication", "Biometric authentication", "Single sign-on authentication", "Passwordless authentication"],
+            correct: "Single sign-on authentication",
+            explanation: {
+                correct: "The ability to log in once (to the Windows Microsoft account) and gain seamless, automatic access to multiple connected applications and services (M365, OneDrive, etc.) is the definition of **Single Sign-On (SSO)**.",
+                incorrect: "Biometric and Passwordless are sign-in *methods*. Domain-based authentication is the *environment*."
+            }
+        },
+        {
+            question: "Windows Hello is a built-in authentication system in Windows 10 and Windows 11 that lets users sign in to devices, apps, and online services without relying solely on a traditional password. Instead, it provides passwordless sign-in options such as: (Select all that apply)",
+            options: ["PIN-based sign-in", "Fingerprint scan", "Voice recognition", "Facial recognition"],
+            correct: ["PIN-based sign-in", "Fingerprint scan", "Facial recognition"],
+            explanation: {
+                correct: "**Windows Hello** offers three primary passwordless authentication methods: **PIN-based sign-in** (something you know), **Fingerprint scan** (something you are), and **Facial recognition** (something you are).",
+                incorrect: "Voice recognition is not a supported sign-in option for Windows Hello."
+            }
+        }
+    ];
+
+    const practiceExamForm = document.getElementById('practice-exam-form');
+    const submitButton = document.getElementById('submit-btn');
+    const resetButton = document.getElementById('reset-btn');
+    const scoreDisplayContainer = document.getElementById('score-display');
+    const summaryContainerElement = document.getElementById('final-summary');
+
+    // Function to handle the immediate answer check and feedback display
+    function handleAnswer(qIndex, userAnswer, q, questionBlock) {
+        const feedbackDiv = questionBlock.querySelector('.feedback');
+        
+        let isCorrect;
+        if (Array.isArray(q.correct)) {
+            // For simplicity in this single-select UI, we will only check if the selected answer is one of the correct ones
+            isCorrect = q.correct.includes(userAnswer);
+        } else {
+            isCorrect = (userAnswer === q.correct);
+        }
+
+        // Disable all options for this question once an answer is selected
+        questionBlock.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
+        questionBlock.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.disabled = true);
+
+        // Find and highlight the user's selection
+        const selectedInput = questionBlock.querySelector(`input[value="${userAnswer}"]`);
+        if (!selectedInput) return;
+
+        const selectedItem = selectedInput.parentElement;
+
+        // Clear previous feedback classes and set the new one
+        questionBlock.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('correct-answer-highlight', 'user-selected-wrong');
+        });
+        feedbackDiv.className = 'feedback';
+        
+        const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
+        let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+        if (isCorrect) {
+            selectedItem.classList.add('correct-answer-highlight');
+            feedbackDiv.classList.add('correct-feedback');
+            feedbackDiv.innerHTML = `✅ **Correct!** (Your Answer: ${userAnswer})<span class="explanation-text"><br>${explanationHTML}</span>`;
+        } else {
+            selectedItem.classList.add('user-selected-wrong');
+            feedbackDiv.classList.add('incorrect-feedback');
+            
+            // Highlight the correct answer(s)
+            questionBlock.querySelectorAll('.option-item').forEach(item => {
+                const itemLabel = item.querySelector('label').textContent;
+                if (Array.isArray(q.correct) ? q.correct.includes(itemLabel) : itemLabel === q.correct) {
+                    item.classList.add('correct-answer-highlight');
+                }
+            });
+
+            feedbackDiv.innerHTML = `❌ **Incorrect.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+        }
+        feedbackDiv.style.display = 'block';
+    }
+
+    // Function to render the quiz questions
+    function renderQuiz() {
+        practiceExamForm.innerHTML = '';
+        quizData.forEach((q, index) => {
+            const qNum = index + 1;
+            const questionBlock = document.createElement('div');
+            questionBlock.className = 'question-block';
+            questionBlock.id = `question-${qNum}`;
+            
+            const inputType = Array.isArray(q.correct) ? 'checkbox' : 'radio';
+
+            // Question Text
+            const questionText = document.createElement('p');
+            questionText.className = 'question-text';
+            // Add a note for multi-select questions
+            let selectNote = '';
+            if (Array.isArray(q.correct)) {
+                if (q.correct.length === 2) {
+                    selectNote = ' (Select 2 Answers)';
+                } else if (q.correct.length === 3) {
+                    selectNote = ' (Select 3 Answers)';
+                } else {
+                    selectNote = ' (Select all that apply)';
+                }
+            }
+            questionText.textContent = `${qNum}. ${q.question}${selectNote}`;
+            questionBlock.appendChild(questionText);
+
+            // Options List
+            const optionsList = document.createElement('ul');
+            optionsList.className = 'options-list';
+
+            q.options.forEach((option, optionIndex) => {
+                const optionItem = document.createElement('li');
+                optionItem.className = 'option-item';
+
+                const radioInput = document.createElement('input');
+                radioInput.type = inputType;
+                radioInput.name = `q${qNum}`;
+                radioInput.value = option;
+                radioInput.id = `q${qNum}-opt${optionIndex}`;
+
+                // Attach the immediate feedback handler for single-select (radio)
+                if (inputType === 'radio') {
+                    radioInput.onchange = (e) => handleAnswer(qNum, e.target.value, q, questionBlock);
+                } 
+
+                const label = document.createElement('label');
+                label.htmlFor = `q${qNum}-opt${optionIndex}`;
+                label.textContent = option;
+
+                optionItem.appendChild(radioInput);
+                optionItem.appendChild(label);
+                optionsList.appendChild(optionItem);
+            });
+
+            questionBlock.appendChild(optionsList);
+
+            // Feedback container (hidden by default)
+            const feedback = document.createElement('div');
+            feedback.className = 'feedback';
+            questionBlock.appendChild(feedback);
+
+            practiceExamForm.appendChild(questionBlock);
+        });
+    }
+
+    // Function to display the final summary report
+    function displaySummary() {
+        summaryContainerElement.innerHTML = '<h2>Summary of All Questions and Detailed Answers</h2>';
+        quizData.forEach((q, index) => {
+            const div = document.createElement('div');
+            div.className = 'summary-question-detail';
+            
+            const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
+            let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+            div.innerHTML = `
+                <p><strong>${index + 1}. ${q.question}</strong></p>
+                <p><strong>Correct Answer:</strong> ${correctAnswersText}</p>
+                <p class="explanation-text">${explanationHTML}</p>
+            `;
+            summaryContainerElement.appendChild(div);
+        });
+        summaryContainerElement.style.display = 'block';
+    }
+
+    // Function to tally the final score and initiate the summary
+    function tallyFinalScore() {
+        let score = 0;
+        const totalQuestions = quizData.length;
+
+        quizData.forEach((q, index) => {
+            const qNum = index + 1;
+            const questionBlock = document.getElementById(`question-${qNum}`);
+            const inputType = Array.isArray(q.correct) ? 'checkbox' : 'radio';
+            
+            // Collect selected answer(s)
+            let selectedOptions = [];
+            questionBlock.querySelectorAll(`input[name="q${qNum}"]:checked`).forEach(input => {
+                selectedOptions.push(input.value);
+            });
+            
+            const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
+            const feedbackDiv = questionBlock.querySelector('.feedback');
+            
+            let isCorrect = false;
+
+            if (inputType === 'radio') {
+                const selectedOption = selectedOptions[0];
+                if (selectedOption && selectedOption === q.correct) {
+                    score++;
+                    isCorrect = true;
+                }
+                
+                // Manually trigger handleAnswer logic for score/display if unanswered or for final highlight
+                if (selectedOption) {
+                    handleAnswer(qNum, selectedOption, q, questionBlock);
+                } else {
+                    // Force display for unanswered questions
+                    feedbackDiv.className = 'feedback incorrect-feedback';
+                    questionBlock.querySelectorAll('.option-item').forEach(item => {
+                        if (item.querySelector('label').textContent === q.correct) {
+                            item.classList.add('correct-answer-highlight');
+                        }
+                    });
+
+                    let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+                    feedbackDiv.innerHTML = `❌ **Question Unanswered.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+                    feedbackDiv.style.display = 'block';
+                }
+
+            } else if (inputType === 'checkbox') {
+                // Multi-select scoring: must match all correct answers exactly
+                const correctSet = new Set(q.correct);
+                const selectedSet = new Set(selectedOptions);
+
+                // Check if the two sets are equal (same size and all elements match)
+                if (correctSet.size === selectedSet.size && [...correctSet].every(value => selectedSet.has(value))) {
+                    score++;
+                    isCorrect = true;
+                }
+                
+                // Display final feedback for multi-select
+                const isAnswered = selectedOptions.length > 0;
+                let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+                feedbackDiv.className = 'feedback';
+                
+                // Highlight correct/incorrect items
+                questionBlock.querySelectorAll('.option-item').forEach(item => {
+                    const itemLabel = item.querySelector('label').textContent;
+                    const isCorrectOption = q.correct.includes(itemLabel);
+                    const isSelected = selectedOptions.includes(itemLabel);
+                    
+                    if (isCorrectOption) {
+                         item.classList.add('correct-answer-highlight');
+                    }
+                    if (isSelected && !isCorrectOption) {
+                        item.classList.add('user-selected-wrong');
+                    }
+                });
+                
+                if (isCorrect) {
+                    feedbackDiv.classList.add('correct-feedback');
+                    feedbackDiv.innerHTML = `✅ **Correct!** (Your Answers: ${selectedOptions.join(' AND ')})<span class="explanation-text"><br>${explanationHTML}</span>`;
+                } else if (isAnswered) {
+                    feedbackDiv.classList.add('incorrect-feedback');
+                    feedbackDiv.innerHTML = `❌ **Incorrect.** The correct answer is: <strong>${correctAnswersText}</strong>. You selected: ${selectedOptions.join(' AND ')}<span class="explanation-text"><br>${explanationHTML}</span>`;
+                } else {
+                    feedbackDiv.classList.add('incorrect-feedback');
+                    feedbackDiv.innerHTML = `❌ **Question Unanswered.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+                }
+                feedbackDiv.style.display = 'block';
+            }
+
+            // Ensure all inputs are disabled upon submission
+            questionBlock.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
+            questionBlock.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.disabled = true);
+        });
+        
+        // Display Final Score
+        scoreDisplayContainer.textContent = `Final Score: ${score}/${totalQuestions} (${((score / totalQuestions) * 100).toFixed(2)}%)`;
+        scoreDisplayContainer.style.display = 'block';
+        submitButton.style.display = 'none';
+        resetButton.style.display = 'inline-block';
+        
+        // Display the final summary report
+        displaySummary();
+    }
+
+    // Function to reset the quiz
+    function resetQuiz() {
+        document.getElementById('practice-exam-form').reset();
+        submitButton.style.display = 'inline-block';
+        resetButton.style.display = 'none';
+        scoreDisplayContainer.style.display = 'none';
+        summaryContainerElement.style.display = 'none';
+
+        // Re-enable inputs and remove highlights/feedback
+        document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => input.disabled = false);
+        
+        document.querySelectorAll('.feedback').forEach(div => div.style.display = 'none');
+        document.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('correct-answer-highlight', 'user-selected-wrong');
+        });
+    }
+
+    // Initialize Quiz and attach event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+        renderQuiz();
+        submitButton.addEventListener('click', tallyFinalScore);
+        resetButton.addEventListener('click', resetQuiz);
+    });
+</script>
+
+</body>
+</html>

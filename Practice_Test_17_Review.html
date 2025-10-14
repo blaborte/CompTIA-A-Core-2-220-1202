@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompTIA A+ 220-1202 Practice Test 17 with Explanations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #D9232E; /* Matching the secondary accent from examcomp.html */
+            text-align: center;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #D9232E;
+        }
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+        .question-text {
+            font-size: 1.15em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+        .option-item {
+            display: block;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            transition: background-color 0.2s;
+        }
+        
+        /* Feedback Styling */
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 6px;
+            display: none;
+            font-size: 1em;
+            border-left: 5px solid;
+            white-space: pre-wrap;
+        }
+        .correct-feedback {
+            background-color: #e6ffec;
+            color: #155724;
+            border-color: #155724;
+        }
+        .incorrect-feedback {
+            background-color: #ffeded;
+            color: #721c24;
+            border-color: #721c24;
+        }
+        .explanation-text {
+            font-weight: normal;
+            margin-top: 5px;
+            display: block;
+        }
+        .correct-answer-highlight {
+            background-color: #28a745 !important;
+            color: white;
+            border-color: #1e7e34 !important;
+            font-weight: bold;
+        }
+        .user-selected-wrong {
+            background-color: #dc3545;
+            color: white;
+            border-color: #b02a37;
+            font-weight: bold;
+        }
+
+        /* Buttons and Score */
+        .quiz-controls {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .quiz-controls button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            margin: 0 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        #submit-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        #submit-btn:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        #submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        #reset-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        #reset-btn:hover {
+            background-color: #5a6268;
+        }
+        #score-display {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #e9ecef;
+            display: none;
+        }
+        #final-summary {
+            margin-top: 40px;
+            padding: 20px;
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            background-color: #f0f8ff;
+            display: none;
+        }
+        #final-summary h2 {
+            margin-top: 0;
+            color: #0056b3;
+            border-bottom: 1px solid #0056b3;
+            padding-bottom: 10px;
+        }
+        .summary-question-detail {
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        
+        /* NEW: Back Button Style */
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            text-decoration: none;
+            color: white;
+            background-color: #6c757d; /* A neutral gray, matching reset button */
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px; /* Space it from the h1 */
+            border: none;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="examcomp.html" class="back-button">&larr; Back to Practice Tests Menu</a>
+    
+    <h1>CompTIA A+ Certification Exam 220-1202 Practice Test 17</h1>
+    <p>Select an answer for each question to see the detailed explanation immediately.</p>
+    <form id="practice-exam-form">
+        </form>
+
+    <div class="quiz-controls">
+        <button id="submit-btn" type="button">Finish Exam & Show Final Summary</button>
+        <button id="reset-btn" type="button" style="display: none;">Reset Quiz</button>
+        <div id="score-display"></div>
+    </div>
+
+    <div id="final-summary">
+        </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "Which of the following answers describe the characteristics of a key fob? (Select 3 answers)",
+            options: ["Contains a simple embedded chip with a unique identifier or code", "Often used as a simple, single-purpose physical access security token", "Credit card-sized, flat plastic card", "Multi-purpose use for both physical and logical access, identity, and finance", "Contains an embedded chip that can perform complex functions like encryption and data processing", "Small, portable plastic device, often attached to a keyring"],
+            correct: ["Contains a simple embedded chip with a unique identifier or code", "Often used as a simple, single-purpose physical access security token", "Small, portable plastic device, often attached to a keyring"],
+            explanation: {
+                correct: "A **key fob** is a small, portable plastic device, often attached to a keyring. It is used as a simple, single-purpose physical access security token and contains a simple embedded chip with a unique identifier or code.",
+                incorrect: "The other options describe a **smart card**, which is credit card-sized, contains a complex chip for functions like encryption, and is multi-purpose (physical, logical, finance, etc.)."
+            }
+        },
+        {
+            question: "Which of the features listed below apply to smart cards? (Select 3 answers)",
+            options: ["Contains a simple embedded chip with a unique identifier or code", "Small, portable plastic device, often attached to a keyring", "Contains an embedded chip that can perform complex functions like encryption and data processing", "Multi-purpose use for both physical and logical access, identity, and finance", "Often used as a simple, single-purpose physical access security token", "Credit card-sized, flat plastic card"],
+            correct: ["Contains an embedded chip that can perform complex functions like encryption and data processing", "Multi-purpose use for both physical and logical access, identity, and finance", "Credit card-sized, flat plastic card"],
+            explanation: {
+                correct: "A **smart card** is a credit card-sized, flat plastic card that contains an embedded chip capable of complex functions like encryption and data processing. This makes it suitable for multi-purpose use for both physical and logical access, identity, and finance.",
+                incorrect: "The other options describe a **key fob**, which is a small, keyring-attached, single-purpose device with a simple unique identifier chip."
+            }
+        },
+        {
+            question: "A technician configures an access control system that allows employees to unlock doors by holding their smartphone near a reader. This technology is an example of what type of security measure?",
+            options: ["Biometric authentication", "Mobile digital key", "Two-factor authentication", "Hardware security token"],
+            correct: "Mobile digital key",
+            explanation: {
+                correct: "A **Mobile digital key** (or mobile credential) uses a smartphone's NFC or Bluetooth capability to communicate with a reader, replacing a traditional access card or fob.",
+                incorrect: "This is not inherently biometric or two-factor, and the smartphone is not considered a dedicated hardware security token in this context."
+            }
+        },
+        {
+            question: "A locked cabinet with a corresponding sign-out log is a standard procedure to maintain accountability and tracking for:",
+            options: ["Physical keys", "Key fobs", "Smart cards", "Access badges"],
+            correct: "Physical keys",
+            explanation: {
+                correct: "A locked cabinet and sign-out log are essential accountability controls for **Physical keys** because, unlike electronic tokens (fobs, cards, badges), keys do not automatically log their use in a system, making manual tracking necessary to maintain accountability.",
+                incorrect: "Electronic tokens are tracked automatically by the access control system."
+            }
+        },
+        {
+            question: "In the context of IT security, the term 'Biometrics' refers to both physiological (biological) characteristics of the human body and behavioral traits that can be used for identification and access control purposes. Physiological biometrics are based on static, physical characteristics of the human body, such as fingerprints, retina scans, and facial features, while behavioral biometrics are based on patterns and traits derived from human actions, such as keystroke dynamics, gait, and voice patterns.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "The definition is correct. **Biometrics** covers both **physiological** (physical, static) and **behavioral** (action-based, dynamic) human traits.",
+                incorrect: "The statement is True."
+            }
+        },
+        {
+            question: "A security system uses infrared light to scan the unique pattern of blood vessels at the back of a user's eye to grant access. This is an example of what type of biometric technology?",
+            options: ["Iris scanner", "Facial recognition technology", "Eye-tracking authentication", "Retina scanner"],
+            correct: "Retina scanner",
+            explanation: {
+                correct: "Scanning the unique pattern of blood vessels at the back of the eye using infrared light is the precise function of a **Retina scanner**.",
+                incorrect: "An **Iris scanner** scans the colored ring surrounding the pupil. **Facial recognition** analyzes external features."
+            }
+        },
+        {
+            question: "Which biometric technology is widely used for mobile device authentication due to low cost and ease of integration?",
+            options: ["Fingerprint scanner", "Retina scanner", "Voice recognition", "Palm print scanner"],
+            correct: "Fingerprint scanner",
+            explanation: {
+                correct: "**Fingerprint scanners** are widely integrated into mobile devices due to their compact size, low cost, and quick, convenient operation.",
+                incorrect: "The other options are generally more complex, expensive, or intrusive to integrate into a small mobile form factor."
+            }
+        },
+        {
+            question: "A large corporation needs a biometric solution for a restricted server farm. The solution must provide strong security and be difficult to spoof. Of the available options, which physical access control method would be the best choice?",
+            options: ["Fingerprint scanner", "Voiceprint authentication system", "Facial recognition terminal", "Palm print scanner"],
+            correct: "Palm print scanner",
+            explanation: {
+                correct: "**Palm print scanners** are often preferred for high-security areas because they scan a larger, more complex internal structure (veins/ridges), making them more difficult to spoof than a simple fingerprint or facial scan.",
+                incorrect: "Fingerprint and Facial Recognition are generally more vulnerable to spoofing. Voiceprint is vulnerable to replay attacks and environmental noise."
+            }
+        },
+        {
+            question: "Which technology uses biometric data to identify or verify a person based on their facial features?",
+            options: ["FAR", "AFIS", "FRT", "FRR"],
+            correct: "FRT",
+            explanation: {
+                correct: "**FRT** stands for **Facial Recognition Technology**, which is the term used for systems that identify or verify a person based on their unique facial features.",
+                incorrect: "**FAR** (False Acceptance Rate) and **FRR** (False Rejection Rate) are performance metrics. **AFIS** is the Automated Fingerprint Identification System."
+            }
+        },
+        {
+            question: "Voice recognition (or voiceprint recognition) is a biometric authentication method used in physical access security systems to identify or verify individuals based on unique vocal characteristics such as pitch, tone, and speech patterns. A key advantage of this technology is its convenience and ability to be used remotely, enabling secure access without the need for physical contact or additional devices. A key disadvantage is that its accuracy can be affected by background noise, poor audio quality, or changes in a person’s voice due to illness or aging. In addition, using a voiceprint as the only form of authentication makes a system vulnerable to replay attacks, where it can be bypassed with a high-quality recording of an authorized user's voice.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "The statement is correct. Voice biometrics is convenient but susceptible to environmental factors and security risks like **replay attacks** using recorded audio.",
+                incorrect: "The statement is True."
+            }
+        },
+        {
+            question: "What is the primary role of lighting as a physical access security measure?",
+            options: ["Detection", "Surveillance", "Prevention", "Deterrence"],
+            correct: "Deterrence",
+            explanation: {
+                correct: "The primary, passive role of **lighting** in security is **Deterrence**. Good lighting discourages potential intruders by increasing the chance they will be seen by guards or video surveillance.",
+                incorrect: "It aids **Detection** (by CCTV) but does not perform the detection itself. It is not a form of **Prevention** (like a lock)."
+            }
+        },
+        {
+            question: "In a multi-layered physical security system, where would a magnetometer typically be placed?",
+            options: ["At the final access point, just before the secure room", "On the perimeter fence to detect intruders", "At the building's main entrance as a primary screening point", "Inside the secure room to prevent theft"],
+            correct: "At the building's main entrance as a primary screening point",
+            explanation: {
+                correct: "A **magnetometer** (metal detector) is an entry control device designed to screen people for metallic items. It is therefore typically placed at a **primary screening point** like a building's main entrance or checkpoint.",
+                incorrect: "It's used for screening people upon entry, not for internal or perimeter detection."
+            }
+        },
+        {
+            question: "A security rule that prevents users from accessing information and resources that lie beyond the scope of their responsibilities is referred to as:",
+            options: ["Implicit deny policy", "Zero Trust model", "Principle of least privilege", "Separation of duties"],
+            correct: "Principle of least privilege",
+            explanation: {
+                correct: "The **Principle of least privilege (PoLP)** dictates that a user or process should only be granted the minimum access rights necessary to perform their work functions and no more.",
+                incorrect: "**Zero Trust** is a complete security model. **Separation of duties** requires multiple people to complete a critical task."
+            }
+        },
+        {
+            question: "Which of the following answers refers to a security approach that eliminates implicit trust from networks requiring all users and devices to be continuously verified before being granted access to resources?",
+            options: ["Least privilege access", "AAA framework", "Zero Trust model", "Policy-driven access control"],
+            correct: "Zero Trust model",
+            explanation: {
+                correct: "The **Zero Trust model** operates on the core philosophy of 'never trust, always verify,' treating all users and devices, even those inside the network perimeter, as untrusted until validated.",
+                incorrect: "**Least privilege** is a component of Zero Trust, not the model itself. **AAA** stands for Authentication, Authorization, and Accounting."
+            }
+        },
+        {
+            question: "Which of the acronyms listed below refers to a logical security rule set that controls access to objects and specifies the operations allowed on a given object?",
+            options: ["AUP", "SSO", "ACL", "OTP"],
+            correct: "ACL",
+            explanation: {
+                correct: "**ACL** stands for **Access Control List**, which is a set of rules (permissions) attached to an object (file, resource) that dictates which users or groups are allowed to access it and what actions they can perform.",
+                incorrect: "**AUP** is a policy document. **SSO** and **OTP** are authentication mechanisms."
+            }
+        },
+        {
+            question: "Authentication processes can be based on various categories of factors. These include knowledge-based factors, such as usernames, passwords, PINs, or security question answers ('something you know'); possession-based factors, such as smart cards, key fobs, or security keys ('something you have'); inherence-based factors, including unique physical traits such as fingerprints, iris scans, facial recognition, or voice patterns ('something you are'); and location-based factors, such as geolocation data or IP addresses ('somewhere you are'). A multifactor authentication system requires the implementation of authentication factors from two or more distinct categories.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "The statement is a complete and accurate definition of the four categories of authentication factors (**Know, Have, Are, Where**) and the definition of **Multifactor Authentication (MFA)**.",
+                incorrect: "The statement is True."
+            }
+        },
+        {
+            question: "After typing in a password, a login system prompts the user to enter a one-time verification code sent to the account's associated inbox. Which MFA method is being used?",
+            options: ["TOTP", "SMS", "Email", "PIN code"],
+            correct: "Email",
+            explanation: {
+                correct: "When the one-time code is delivered to the user's **inbox**, the delivery method is **Email**.",
+                incorrect: "**SMS** is a text message. **TOTP** is generated by a local app on a device, not sent via a network service like email or SMS."
+            }
+        },
+        {
+            question: "A technician begins the login process by entering a password. The system detects that the account is configured for multifactor authentication and prompts the technician for a USB-based cryptographic key. What type of MFA device is the technician using?",
+            options: ["Software token", "OTP display key fob", "Hardware token", "USB flash drive"],
+            correct: "Hardware token",
+            explanation: {
+                correct: "A **Hardware token** is a physical device (such as a USB key or dedicated card) used to generate or hold cryptographic keys for authentication, falling into the 'something you have' factor.",
+                incorrect: "A **Software token** is an app-based solution. The key's primary function is authentication, not simply data storage like a generic USB flash drive."
+            }
+        },
+        {
+            question: "A technician is troubleshooting a user's failed login attempt. The user states they are using an authenticator application, and the code they entered was incorrect. What is the most likely cause of this issue?",
+            options: ["The user is not connected to the internet", "The user's phone is set to the wrong time", "The user's password was entered incorrectly", "The MFA service is experiencing an outage"],
+            correct: "The user's phone is set to the wrong time",
+            explanation: {
+                correct: "**TOTP** (Time-based One-Time Password) codes generated by an authenticator app must be **time-synchronized** with the authentication server. If the user's phone clock is significantly off, the code generated will be invalid.",
+                incorrect: "TOTP can generate codes offline. A password error would fail the first step, not the second."
+            }
+        },
+        {
+            question: "After entering a password, a user receives a text message containing a one-time verification code. Which delivery method is being used for the second MFA prompt?",
+            options: ["PIN code", "Email", "SMS", "TOTP app"],
+            correct: "SMS",
+            explanation: {
+                correct: "A text message containing a one-time verification code is delivered using the **SMS (Short Message Service)** protocol.",
+                incorrect: "This is a delivery method, not a code generation method like TOTP."
+            }
+        },
+        {
+            question: "In voice call multifactor authentication, a user receives a one-time verification code or approval prompt through an automated or live telephone call.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "This statement accurately describes **voice call MFA**, where the user's phone receives a call (automated or live) to complete the second factor of authentication.",
+                incorrect: "The statement is True."
+            }
+        },
+        {
+            question: "Which of the following statements about TOTP is not true?",
+            options: ["Generated offline using a shared secret and the current time", "Requires time synchronization between client and server", "Its validity does not depend on short, recurring time intervals", "Commonly implemented in authenticator apps and hardware tokens"],
+            correct: "Its validity does not depend on short, recurring time intervals",
+            explanation: {
+                correct: "The statement is **NOT TRUE**. **TOTP** (Time-based One-Time Password) is defined by its dependence on a shared secret and the **current time** for its validity, which typically expires within short, recurring intervals (e.g., 30 seconds).",
+                incorrect: "The other statements are all true characteristics of TOTP."
+            }
+        },
+        {
+            question: "Which acronym is used to describe a general category of single-use authentication codes?",
+            options: ["MFA", "PIV", "OTP", "SSO"],
+            correct: "OTP",
+            explanation: {
+                correct: "**OTP** stands for **One-Time Password** and is the general term for any single-use authentication code designed to be valid for only a short period or a single login session.",
+                incorrect: "**MFA** is Multi-Factor Authentication. **SSO** is Single Sign-On. **PIV** is Personal Identity Verification card."
+            }
+        },
+        {
+            question: "Which of the following is a markup language used for exchanging authentication and authorization data?",
+            options: ["OAuth", "XML", "SAML", "XHTML"],
+            correct: "SAML",
+            explanation: {
+                correct: "**SAML** stands for **Security Assertion Markup Language**. It is an XML-based markup language used for exchanging authentication and authorization data between an identity provider and a service provider, typically for SSO.",
+                incorrect: "**OAuth** is an authorization protocol. **XML** is a general markup language."
+            }
+        },
+        {
+            question: "An authentication subsystem that enables a user to access multiple, connected system components (such as separate hosts on a network) after a single login on only one of the components is called:",
+            options: ["NAC", "SSO", "AAA", "MFA"],
+            correct: "SSO",
+            explanation: {
+                correct: "**SSO** stands for **Single Sign-On**. It is an authentication scheme that allows a user to log in once and gain access to all systems and resources they have permission for without needing to log in again.",
+                incorrect: "**MFA** is Multi-Factor Authentication. **AAA** is Authentication, Authorization, and Accounting. **NAC** is Network Access Control."
+            }
+        }
+    ];
+
+    const practiceExamForm = document.getElementById('practice-exam-form');
+    const submitButton = document.getElementById('submit-btn');
+    const resetButton = document.getElementById('reset-btn');
+    const scoreDisplayContainer = document.getElementById('score-display');
+    const summaryContainerElement = document.getElementById('final-summary');
+
+    // Function to handle the immediate answer check and feedback display
+    function handleAnswer(qIndex, userAnswer, q, questionBlock) {
+        const feedbackDiv = questionBlock.querySelector('.feedback');
+        
+        let isCorrect;
+        if (Array.isArray(q.correct)) {
+            // For simplicity in this single-select UI, we will only check if the selected answer is one of the correct ones
+            isCorrect = q.correct.includes(userAnswer);
+        } else {
+            isCorrect = (userAnswer === q.correct);
+        }
+
+        // Disable all options for this question once an answer is selected
+        questionBlock.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
+        questionBlock.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.disabled = true);
+
+        // Find and highlight the user's selection
+        const selectedInput = questionBlock.querySelector(`input[value="${userAnswer}"]`);
+        if (!selectedInput) return;
+
+        const selectedItem = selectedInput.parentElement;
+
+        // Clear previous feedback classes and set the new one
+        questionBlock.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('correct-answer-highlight', 'user-selected-wrong');
+        });
+        feedbackDiv.className = 'feedback';
+        
+        const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
+        let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+        if (isCorrect) {
+            selectedItem.classList.add('correct-answer-highlight');
+            feedbackDiv.classList.add('correct-feedback');
+            feedbackDiv.innerHTML = `✅ **Correct!** (Your Answer: ${userAnswer})<span class="explanation-text"><br>${explanationHTML}</span>`;
+        } else {
+            selectedItem.classList.add('user-selected-wrong');
+            feedbackDiv.classList.add('incorrect-feedback');
+            
+            // Highlight the correct answer(s)
+            questionBlock.querySelectorAll('.option-item').forEach(item => {
+                const itemLabel = item.querySelector('label').textContent;
+                if (Array.isArray(q.correct) ? q.correct.includes(itemLabel) : itemLabel === q.correct) {
+                    item.classList.add('correct-answer-highlight');
+                }
+            });
+
+            feedbackDiv.innerHTML = `❌ **Incorrect.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+        }
+        feedbackDiv.style.display = 'block';
+    }
+
+    // Function to render the quiz questions
+    function renderQuiz() {
+        practiceExamForm.innerHTML = '';
+        quizData.forEach((q, index) => {
+            const qNum = index + 1;
+            const questionBlock = document.createElement('div');
+            questionBlock.className = 'question-block';
+            questionBlock.id = `question-${qNum}`;
+            
+            const inputType = Array.isArray(q.correct) ? 'checkbox' : 'radio';
+
+            // Question Text
+            const questionText = document.createElement('p');
+            questionText.className = 'question-text';
+            // Add a note for multi-select questions
+            const selectNote = Array.isArray(q.correct) ? ' (Select 3 Answers)' : '';
+            questionText.textContent = `${qNum}. ${q.question}${selectNote}`;
+            questionBlock.appendChild(questionText);
+
+            // Options List
+            const optionsList = document.createElement('ul');
+            optionsList.className = 'options-list';
+
+            q.options.forEach((option, optionIndex) => {
+                const optionItem = document.createElement('li');
+                optionItem.className = 'option-item';
+
+                const radioInput = document.createElement('input');
+                radioInput.type = inputType;
+                radioInput.name = `q${qNum}`;
+                radioInput.value = option;
+                radioInput.id = `q${qNum}-opt${optionIndex}`;
+
+                // Attach the immediate feedback handler for single-select (radio)
+                if (inputType === 'radio') {
+                    radioInput.onchange = (e) => handleAnswer(qNum, e.target.value, q, questionBlock);
+                } 
+
+                const label = document.createElement('label');
+                label.htmlFor = `q${qNum}-opt${optionIndex}`;
+                label.textContent = option;
+
+                optionItem.appendChild(radioInput);
+                optionItem.appendChild(label);
+                optionsList.appendChild(optionItem);
+            });
+
+            questionBlock.appendChild(optionsList);
+
+            // Feedback container (hidden by default)
+            const feedback = document.createElement('div');
+            feedback.className = 'feedback';
+            questionBlock.appendChild(feedback);
+
+            practiceExamForm.appendChild(questionBlock);
+        });
+    }
+
+    // Function to display the final summary report
+    function displaySummary() {
+        summaryContainerElement.innerHTML = '<h2>Summary of All Questions and Detailed Answers</h2>';
+        quizData.forEach((q, index) => {
+            const div = document.createElement('div');
+            div.className = 'summary-question-detail';
+            
+            const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
+            let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+            div.innerHTML = `
+                <p><strong>${index + 1}. ${q.question}</strong></p>
+                <p><strong>Correct Answer:</strong> ${correctAnswersText}</p>
+                <p class="explanation-text">${explanationHTML}</p>
+            `;
+            summaryContainerElement.appendChild(div);
+        });
+        summaryContainerElement.style.display = 'block';
+    }
+
+    // Function to tally the final score and initiate the summary
+    function tallyFinalScore() {
+        let score = 0;
+        const totalQuestions = quizData.length;
+
+        quizData.forEach((q, index) => {
+            const qNum = index + 1;
+            const questionBlock = document.getElementById(`question-${qNum}`);
+            const inputType = Array.isArray(q.correct) ? 'checkbox' : 'radio';
+            
+            // Collect selected answer(s)
+            let selectedOptions = [];
+            questionBlock.querySelectorAll(`input[name="q${qNum}"]:checked`).forEach(input => {
+                selectedOptions.push(input.value);
+            });
+            
+            const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
+            const feedbackDiv = questionBlock.querySelector('.feedback');
+            
+            let isCorrect = false;
+
+            if (inputType === 'radio') {
+                const selectedOption = selectedOptions[0];
+                if (selectedOption && selectedOption === q.correct) {
+                    score++;
+                    isCorrect = true;
+                }
+                
+                // Manually trigger handleAnswer logic for score/display if unanswered or for final highlight
+                if (selectedOption) {
+                    // For single-select, re-run to ensure proper final highlighting/feedback on submit
+                    handleAnswer(qNum, selectedOption, q, questionBlock);
+                } else {
+                    // Force display for unanswered questions
+                    feedbackDiv.className = 'feedback incorrect-feedback';
+                    questionBlock.querySelectorAll('.option-item').forEach(item => {
+                        if (item.querySelector('label').textContent === q.correct) {
+                            item.classList.add('correct-answer-highlight');
+                        }
+                    });
+
+                    let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+                    feedbackDiv.innerHTML = `❌ **Question Unanswered.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+                    feedbackDiv.style.display = 'block';
+                }
+
+            } else if (inputType === 'checkbox') {
+                // Multi-select scoring: must match all correct answers exactly
+                const correctSet = new Set(q.correct);
+                const selectedSet = new Set(selectedOptions);
+
+                // Check if the two sets are equal (same size and all elements match)
+                if (correctSet.size === selectedSet.size && [...correctSet].every(value => selectedSet.has(value))) {
+                    score++;
+                    isCorrect = true;
+                }
+                
+                // Display final feedback for multi-select
+                const isAnswered = selectedOptions.length > 0;
+                let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+                feedbackDiv.className = 'feedback';
+                
+                // Highlight correct/incorrect items
+                questionBlock.querySelectorAll('.option-item').forEach(item => {
+                    const itemLabel = item.querySelector('label').textContent;
+                    const isCorrectOption = q.correct.includes(itemLabel);
+                    const isSelected = selectedOptions.includes(itemLabel);
+                    
+                    if (isCorrectOption) {
+                         item.classList.add('correct-answer-highlight');
+                    }
+                    if (isSelected && !isCorrectOption) {
+                        item.classList.add('user-selected-wrong');
+                    }
+                });
+                
+                if (isCorrect) {
+                    feedbackDiv.classList.add('correct-feedback');
+                    feedbackDiv.innerHTML = `✅ **Correct!** (Your Answers: ${selectedOptions.join(' AND ')})<span class="explanation-text"><br>${explanationHTML}</span>`;
+                } else if (isAnswered) {
+                    feedbackDiv.classList.add('incorrect-feedback');
+                    feedbackDiv.innerHTML = `❌ **Incorrect.** The correct answer is: <strong>${correctAnswersText}</strong>. You selected: ${selectedOptions.join(' AND ')}<span class="explanation-text"><br>${explanationHTML}</span>`;
+                } else {
+                    feedbackDiv.classList.add('incorrect-feedback');
+                    feedbackDiv.innerHTML = `❌ **Question Unanswered.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+                }
+                feedbackDiv.style.display = 'block';
+            }
+
+            // Ensure all inputs are disabled upon submission
+            questionBlock.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
+            questionBlock.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.disabled = true);
+        });
+        
+        // Display Final Score
+        scoreDisplayContainer.textContent = `Final Score: ${score}/${totalQuestions} (${((score / totalQuestions) * 100).toFixed(2)}%)`;
+        scoreDisplayContainer.style.display = 'block';
+        submitButton.style.display = 'none';
+        resetButton.style.display = 'inline-block';
+        
+        // Display the final summary report
+        displaySummary();
+    }
+
+    // Function to reset the quiz
+    function resetQuiz() {
+        document.getElementById('practice-exam-form').reset();
+        submitButton.style.display = 'inline-block';
+        resetButton.style.display = 'none';
+        scoreDisplayContainer.style.display = 'none';
+        summaryContainerElement.style.display = 'none';
+
+        // Re-enable inputs and remove highlights/feedback
+        document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => input.disabled = false);
+        
+        document.querySelectorAll('.feedback').forEach(div => div.style.display = 'none');
+        document.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('correct-answer-highlight', 'user-selected-wrong');
+        });
+    }
+
+    // Initialize Quiz and attach event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+        renderQuiz();
+        submitButton.addEventListener('click', tallyFinalScore);
+        resetButton.addEventListener('click', resetQuiz);
+    });
+</script>
+
+</body>
+</html>
