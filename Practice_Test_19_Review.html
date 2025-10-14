@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompTIA A+ 220-1202 Practice Test 19 with Explanations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #D9232E; /* Matching the secondary accent from examcomp.html */
+            text-align: center;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #D9232E;
+        }
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+        .question-text {
+            font-size: 1.15em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+        .option-item {
+            display: block;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            transition: background-color 0.2s;
+        }
+        
+        /* Feedback Styling */
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 6px;
+            display: none;
+            font-size: 1em;
+            border-left: 5px solid;
+            white-space: pre-wrap;
+        }
+        .correct-feedback {
+            background-color: #e6ffec;
+            color: #155724;
+            border-color: #155724;
+        }
+        .incorrect-feedback {
+            background-color: #ffeded;
+            color: #721c24;
+            border-color: #721c24;
+        }
+        .explanation-text {
+            font-weight: normal;
+            margin-top: 5px;
+            display: block;
+        }
+        .correct-answer-highlight {
+            background-color: #28a745 !important;
+            color: white;
+            border-color: #1e7e34 !important;
+            font-weight: bold;
+        }
+        .user-selected-wrong {
+            background-color: #dc3545;
+            color: white;
+            border-color: #b02a37;
+            font-weight: bold;
+        }
+
+        /* Buttons and Score */
+        .quiz-controls {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .quiz-controls button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            margin: 0 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        #submit-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        #submit-btn:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        #submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        #reset-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        #reset-btn:hover {
+            background-color: #5a6268;
+        }
+        #score-display {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #e9ecef;
+            display: none;
+        }
+        #final-summary {
+            margin-top: 40px;
+            padding: 20px;
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            background-color: #f0f8ff;
+            display: none;
+        }
+        #final-summary h2 {
+            margin-top: 0;
+            color: #0056b3;
+            border-bottom: 1px solid #0056b3;
+            padding-bottom: 10px;
+        }
+        .summary-question-detail {
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        
+        /* Back Button Style */
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            text-decoration: none;
+            color: white;
+            background-color: #6c757d; 
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px; 
+            border: none;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="examcomp.html" class="back-button">&larr; Back to Practice Tests Menu</a>
+    
+    <h1>CompTIA A+ Certification Exam 220-1202 Practice Test 19</h1>
+    <p>Select an answer for each question to see the detailed explanation immediately.</p>
+    <form id="practice-exam-form">
+        </form>
+
+    <div class="quiz-controls">
+        <button id="submit-btn" type="button">Finish Exam & Show Final Summary</button>
+        <button id="reset-btn" type="button" style="display: none;">Reset Quiz</button>
+        <div id="score-display"></div>
+    </div>
+
+    <div id="final-summary">
+        </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "Which of the following statements describing share permissions in Microsoft Windows are true? (Select 2 answers)",
+            options: ["Apply exclusively to network users", "Can be set only at the file level", "Apply to both network and local users", "Can be set only at the folder level"],
+            correct: ["Apply exclusively to network users", "Can be set only at the folder level"],
+            explanation: {
+                correct: "**Share permissions** apply only to users accessing a resource **over the network** (exclusively to network users) and can **only be set at the folder level** (not on individual files).",
+                incorrect: "**NTFS permissions** apply to both network and local users and can be set at the file level."
+            }
+        },
+        {
+            question: "Which of these statements about NTFS permissions are correct? (Select 2 answers)",
+            options: ["Apply to both network and local users", "Can be set only at the folder level", "Apply exclusively to local users", "Can be applied at the folder or file level"],
+            correct: ["Apply to both network and local users", "Can be applied at the folder or file level"],
+            explanation: {
+                correct: "**NTFS permissions** are the most granular and secure. They apply to **both network and local users** and can be set at the **folder or file level**.",
+                incorrect: "**Share permissions** apply exclusively to network users and only at the folder level."
+            }
+        },
+        {
+            question: "A Windows resource with conflicting NTFS and share permissions will assume:",
+            options: ["The least restrictive permission", "NTFS permissions", "The most restrictive permission", "Share permissions"],
+            correct: "The most restrictive permission",
+            explanation: {
+                correct: "When a user accesses a shared resource over the network, Windows applies **both** the Share and NTFS permissions. The effective permission is always the **most restrictive** (or least permissive) combination of the two sets of rights.",
+                incorrect: "This is a fundamental rule of combined share and NTFS permissions. The most restrictive always wins to maximize security."
+            }
+        },
+        {
+            question: "The share permissions on a Windows folder grant Read access, while the NTFS permissions grant Modify access. What are the user’s effective permission levels? (Select 2 answers)",
+            options: ["Read when accessing the share remotely", "Modify when accessing the folder locally", "Read when accessing the folder locally", "Modify when accessing the share remotely"],
+            correct: ["Read when accessing the share remotely", "Modify when accessing the folder locally"],
+            explanation: {
+                correct: "1. **Remote Access:** The user is subject to both Read (Share) and Modify (NTFS). The **most restrictive (Read) wins**. 2. **Local Access:** Share permissions do not apply. The user is subject only to **Modify (NTFS) permissions**.",
+                incorrect: "When accessing remotely, Read (the most restrictive) is the effective permission, not Modify. When accessing locally, Modify is the effective permission, not Read."
+            }
+        },
+        {
+            question: "The share permissions on a Windows folder grant the user Full Control access, while the NTFS permissions grant Read access. Which of the answers listed below represent the user’s effective permission levels? (Select 2 answers)",
+            options: ["Read when accessing the share remotely", "Full Control when accessing the folder locally", "Read when accessing the folder locally", "Full Control when accessing the share remotely"],
+            correct: ["Read when accessing the share remotely", "Full Control when accessing the folder locally"],
+            explanation: {
+                correct: "1. **Remote Access:** The user is subject to Full Control (Share) and Read (NTFS). The **most restrictive (Read) wins**. 2. **Local Access:** Share permissions do not apply. The user is subject only to **Full Control (NTFS) permissions**.",
+                incorrect: "When accessing remotely, Read (the most restrictive) is the effective permission, not Full Control. When accessing locally, Full Control is the effective permission, not Read."
+            }
+        },
+        {
+            question: "What is the correct hierarchy of precedence for permissions settings in NTFS?",
+            options: ["Explicit Allow > Inherited Allow > Explicit Deny > Inherited Deny", "Explicit Deny > Explicit Allow > Inherited Deny > Inherited Allow", "Explicit Allow > Explicit Deny > Inherited Allow > Inherited Deny", "Explicit Deny > Inherited Deny > Explicit Allow > Inherited Allow"],
+            correct: "Explicit Deny > Explicit Allow > Inherited Deny > Inherited Allow",
+            explanation: {
+                correct: "The correct hierarchy is: **Explicit Deny** (highest precedence, denies all) > **Explicit Allow** > **Inherited Deny** > **Inherited Allow** (lowest precedence). Explicit settings always override inherited settings, and Deny settings almost always override Allow settings, regardless of explicit or inherited status.",
+                incorrect: "The key rules are: Explicit overrides Inherited, and Deny overrides Allow."
+            }
+        },
+        {
+            question: "In MS Windows, the attrib command is used to display or modify file and folder attributes. Some of the available options for this command include read-only (R), archive (A), system (S), and hidden (H). With attrib, the '+' symbol sets an attribute on a file or folder, and the '-' symbol removes an attribute.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "This statement is entirely true. The **attrib** command is a core Command Prompt utility for managing the four main file attributes (R, A, S, H), using the **+** (set) and **-** (remove) operators.",
+                incorrect: "The statement is True."
+            }
+        },
+        {
+            question: "What is the correct syntax for applying the read-only attribute to a file in Windows?",
+            options: ["attrib +R [drive:][path][filename]", "attrib [drive:][path][filename] /R", "attrib /R [drive:][path][filename]", "attrib [drive:][path][filename] +R"],
+            correct: "attrib +R [drive:][path][filename]",
+            explanation: {
+                correct: "The correct syntax for applying the read-only attribute is `attrib +R` followed by the target path and filename. The `+R` is an operator-attribute pair that must immediately follow the command.",
+                incorrect: "Option D is often incorrectly assumed, but the `+R` must directly follow the command."
+            }
+        },
+        {
+            question: "In NTFS, permissions inherited from a parent object, such as a folder or user group, take precedence over explicit permissions applied directly to an object.",
+            options: ["True", "False"],
+            correct: "False",
+            explanation: {
+                correct: "This is **False**. **Explicit permissions** (those set directly on the file or folder) always take precedence over **Inherited permissions** (those passed down from a parent folder).",
+                incorrect: "The correct rule is that Explicit permissions override Inherited permissions."
+            }
+        },
+        {
+            question: "In NTFS, a folder or file moved from one location to another on the same volume inherits the permissions of its new parent folder.",
+            options: ["True", "False"],
+            correct: "False",
+            explanation: {
+                correct: "This is **False**. When a file or folder is **moved** within the **same volume** (e.g., C:\\ to C:\\AnotherFolder), it **retains its original permissions**.",
+                incorrect: "The file only inherits permissions when it is *copied* within the same volume or *moved/copied* to a different volume."
+            }
+        },
+        {
+            question: "In NTFS, a folder or file copied from one location to another on the same volume retains its original permissions.",
+            options: ["True", "False"],
+            correct: "False",
+            explanation: {
+                correct: "This is **False**. When a file or folder is **copied** from one location to another (even on the same volume), it is treated as a new object and **inherits the permissions** of the destination (new parent) folder.",
+                incorrect: "The file retains permissions only if it is *moved* within the same volume."
+            }
+        },
+        {
+            question: "In NTFS, a file or folder copied or moved from one location to another on a different volume inherits the permissions of its new parent folder.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "This is **True**. When an object is copied or moved to a **different volume** (e.g., from C:\\ to D:\\), it loses its original permissions and **inherits the permissions** of the target (new parent) folder.",
+                incorrect: "The file retains permissions only when it is *moved* on the *same* volume. Moving/copying to a different volume always results in inheritance."
+            }
+        },
+        {
+            question: "In NTFS, permission propagation occurs when a folder or file created inside another folder takes on (inherits) permissions applied to that folder, so that the permissions applied to the parent folder propagate down to its child objects, i.e., folders and files created inside the parent folder.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "This is an accurate description of **permission propagation** (also known as **inheritance**), where child objects automatically inherit permissions from their parent objects in the NTFS structure.",
+                incorrect: "The statement is True."
+            }
+        },
+        {
+            question: "The \"Run as administrator\" option is a Windows feature that launches a program with elevated system privileges, allowing it to perform tasks that a standard user account cannot, such as installing software, modifying system settings, or accessing protected files. The option can be used by right-clicking an executable or shortcut and selecting \"Run as administrator\" from the context menu, which may require administrator credentials to confirm the elevated action.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "The statement is true. **Run as administrator** is the mechanism used to elevate the process token of an application to the highest possible privileges, often triggering a **UAC (User Account Control)** prompt for confirmation.",
+                incorrect: "The statement is True."
+            }
+        },
+        {
+            question: "Windows Vista and newer releases of the Microsoft operating system offer a security feature that limits the privileges of software applications and access to administrative tasks. When a program makes a change that requires administrator-level permissions or a user attempts to modify system settings that require administrative access, it triggers an on-screen prompt requiring an administrator password to proceed. This functionality is known as:",
+            options: ["ACL", "UAC", "AppLocker", "SmartScreen Filter"],
+            correct: "UAC",
+            explanation: {
+                correct: "**UAC** stands for **User Account Control**. It is the key Windows security feature that limits privileges by default and uses on-screen prompts (the UAC dialog box) to request elevation approval from an administrator when a privileged action is attempted.",
+                incorrect: "**ACL** is Access Control List. **AppLocker** is for application whitelisting."
+            }
+        },
+        {
+            question: "Which Windows feature enables encryption of entire drives?",
+            options: ["FileVault", "DriveCrypt", "BitLocker", "TrueCrypt"],
+            correct: "BitLocker",
+            explanation: {
+                correct: "**BitLocker** is the Microsoft Windows feature for **Full Disk Encryption (FDE)**, securing all data on fixed and removable drives.",
+                incorrect: "**FileVault** is Apple's FDE solution. **TrueCrypt** was a third-party FDE tool."
+            }
+        },
+        {
+            question: "Which of the following answers refers to a Microsoft Windows feature specifically designed to encrypt removable drives?",
+            options: ["BitLocker", "TrueCrypt", "BitLocker To Go", "DriveCrypt"],
+            correct: "BitLocker To Go",
+            explanation: {
+                correct: "**BitLocker To Go** is the specific component of BitLocker that manages the encryption of **removable drives** (like USB flash drives and external hard drives).",
+                incorrect: "**BitLocker** encrypts internal fixed drives. BitLocker To Go is the correct, specialized term."
+            }
+        },
+        {
+            question: "Which built-in Windows component enables the encryption of individual files?",
+            options: ["AES", "HSM", "EFS", "TPM"],
+            correct: "EFS",
+            explanation: {
+                correct: "**EFS** stands for **Encrypting File System**. It is the built-in Windows component that enables the encryption of individual files and folders on an NTFS volume.",
+                incorrect: "**AES** is an encryption standard. **TPM** is a hardware security chip. **HSM** is a hardware security module."
+            }
+        },
+        {
+            question: "Which Windows tool allows administrators to verify that a computer is successfully joined to a domain?",
+            options: ["Group Policy Editor", "Windows Security app", "Computer Management", "System Properties"],
+            correct: "System Properties",
+            explanation: {
+                correct: "The **System Properties** window (accessible via Windows + Pause/Break or by searching 'View computer name' in Settings/Control Panel) clearly displays the computer name, full domain name, and the workgroup/domain status, which is the most common place to verify domain membership.",
+                incorrect: "The other tools don't provide this basic verification as directly."
+            }
+        },
+        {
+            question: "A company hires a new employee, and the IT administrator needs to ensure that the employee’s network drives are mapped and shared printers are available as part of their desktop setup. Which Active Directory feature should the administrator use to configure this initial desktop environment?",
+            options: ["Task Scheduler", "Local Security Policy", "User Profile", "Log-in script"],
+            correct: "Log-in script",
+            explanation: {
+                correct: "A **Log-in script** (often a batch file or PowerShell script deployed via Group Policy) is the traditional and most direct method used in Active Directory to run commands that automatically configure a user's initial environment, such as mapping network drives and connecting shared printers.",
+                incorrect: "This is a configuration task, not just a data storage feature like a User Profile."
+            }
+        },
+        {
+            question: "An administrator needs to move a user account from the Sales Organizational Unit (OU) to the Marketing OU. Which Active Directory tool is used to perform this action?",
+            options: ["Active Directory Domains and Trusts", "Active Directory Migration Tool", "Active Directory Users and Computers", "Active Directory Sites and Services"],
+            correct: "Active Directory Users and Computers",
+            explanation: {
+                correct: "**Active Directory Users and Computers (ADUC)** is the primary administrative console used to manage users, groups, and OUs, including the action of moving a user object from one OU to another.",
+                incorrect: "The other tools manage forest/domain relationships, migrations, or replication sites."
+            }
+        },
+        {
+            question: "Which Active Directory feature provides each domain user with a dedicated network location to store personal documents on a network share?",
+            options: ["Roaming profile", "My Documents folder", "Shared network drive", "Home folder"],
+            correct: "Home folder",
+            explanation: {
+                correct: "An Active Directory **Home folder** is a dedicated network share that an administrator maps to a user's account, giving them a private, persistent, and centralized location for their personal documents.",
+                incorrect: "**Roaming profiles** synchronize entire user environment settings, which is different from a specific document storage location."
+            }
+        },
+        {
+            question: "An Active Directory domain admin wants to prevent users in a specific Organizational Unit (OU) from running a particular application. Which tool should the administrator use to enforce this setting?",
+            options: ["System Configuration", "Group Policy Management Console", "Active Directory Users and Computers", "Local Security Policy"],
+            correct: "Group Policy Management Console",
+            explanation: {
+                correct: "The **Group Policy Management Console (GPMC)** is the central tool used to create, link, and enforce organizational policy settings (like disallowing an application via Software Restriction Policies or AppLocker) to specific Active Directory containers like an OU.",
+                incorrect: "**Local Security Policy** only affects the local machine. **ADUC** manages objects, not policy."
+            }
+        },
+        {
+            question: "Which tool is used to add a user to a security group in Active Directory?",
+            options: ["Active Directory Domains and Trusts", "Group Policy Object Editor", "Active Directory Users and Computers", "Group Policy Management Console"],
+            correct: "Active Directory Users and Computers",
+            explanation: {
+                correct: "**Active Directory Users and Computers (ADUC)** is the primary administrative tool used to manage user objects, including modifying their properties to add them to a security group.",
+                incorrect: "The Group Policy tools manage policy rules, not the membership of security groups."
+            }
+        },
+        {
+            question: "Which feature of the Windows Active Directory's Group Policy Management Console is used to ensure a user's profile folders are stored on a centralized network share rather than on their local computer?",
+            options: ["Home folders", "Roaming profiles", "Folder redirection", "Drive quotas"],
+            correct: "Folder redirection",
+            explanation: {
+                correct: "**Folder redirection** (implemented via Group Policy) changes the path of local special folders (like Documents, Desktop) to a network location, ensuring the user's data is centrally stored and backed up without synchronizing the entire profile.",
+                incorrect: "**Roaming profiles** synchronize the *entire* profile at log-off/log-on, which is different from simply storing specific folders on the network."
+            }
+        }
+    ];
+
+    const practiceExamForm = document.getElementById('practice-exam-form');
+    const submitButton = document.getElementById('submit-btn');
+    const resetButton = document.getElementById('reset-btn');
+    const scoreDisplayContainer = document.getElementById('score-display');
+    const summaryContainerElement = document.getElementById('final-summary');
+
+    // Function to handle the immediate answer check and feedback display
+    function handleAnswer(qIndex, userAnswer, q, questionBlock) {
+        const feedbackDiv = questionBlock.querySelector('.feedback');
+        
+        let isCorrect;
+        if (Array.isArray(q.correct)) {
+            // For simplicity in this single-select UI, we will only check if the selected answer is one of the correct ones
+            isCorrect = q.correct.includes(userAnswer);
+        } else {
+            isCorrect = (userAnswer === q.correct);
+        }
+
+        // Disable all options for this question once an answer is selected
+        questionBlock.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
+        questionBlock.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.disabled = true);
+
+        // Find and highlight the user's selection
+        const selectedInput = questionBlock.querySelector(`input[value="${userAnswer}"]`);
+        if (!selectedInput) return;
+
+        const selectedItem = selectedInput.parentElement;
+
+        // Clear previous feedback classes and set the new one
+        questionBlock.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('correct-answer-highlight', 'user-selected-wrong');
+        });
+        feedbackDiv.className = 'feedback';
+        
+        const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
+        let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+        if (isCorrect) {
+            selectedItem.classList.add('correct-answer-highlight');
+            feedbackDiv.classList.add('correct-feedback');
+            feedbackDiv.innerHTML = `✅ **Correct!** (Your Answer: ${userAnswer})<span class="explanation-text"><br>${explanationHTML}</span>`;
+        } else {
+            selectedItem.classList.add('user-selected-wrong');
+            feedbackDiv.classList.add('incorrect-feedback');
+            
+            // Highlight the correct answer(s)
+            questionBlock.querySelectorAll('.option-item').forEach(item => {
+                const itemLabel = item.querySelector('label').textContent;
+                if (Array.isArray(q.correct) ? q.correct.includes(itemLabel) : itemLabel === q.correct) {
+                    item.classList.add('correct-answer-highlight');
+                }
+            });
+
+            feedbackDiv.innerHTML = `❌ **Incorrect.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+        }
+        feedbackDiv.style.display = 'block';
+    }
+
+    // Function to render the quiz questions
+    function renderQuiz() {
+        practiceExamForm.innerHTML = '';
+        quizData.forEach((q, index) => {
+            const qNum = index + 1;
+            const questionBlock = document.createElement('div');
+            questionBlock.className = 'question-block';
+            questionBlock.id = `question-${qNum}`;
+            
+            const inputType = Array.isArray(q.correct) ? 'checkbox' : 'radio';
+
+            // Question Text
+            const questionText = document.createElement('p');
+            questionText.className = 'question-text';
+            // Add a note for multi-select questions
+            let selectNote = '';
+            if (Array.isArray(q.correct)) {
+                if (q.correct.length === 2) {
+                    selectNote = ' (Select 2 Answers)';
+                } else if (q.correct.length === 3) {
+                    selectNote = ' (Select 3 Answers)';
+                } else {
+                    selectNote = ' (Select all that apply)';
+                }
+            }
+            questionText.textContent = `${qNum}. ${q.question}${selectNote}`;
+            questionBlock.appendChild(questionText);
+
+            // Options List
+            const optionsList = document.createElement('ul');
+            optionsList.className = 'options-list';
+
+            q.options.forEach((option, optionIndex) => {
+                const optionItem = document.createElement('li');
+                optionItem.className = 'option-item';
+
+                const radioInput = document.createElement('input');
+                radioInput.type = inputType;
+                radioInput.name = `q${qNum}`;
+                radioInput.value = option;
+                radioInput.id = `q${qNum}-opt${optionIndex}`;
+
+                // Attach the immediate feedback handler for single-select (radio)
+                if (inputType === 'radio') {
+                    radioInput.onchange = (e) => handleAnswer(qNum, e.target.value, q, questionBlock);
+                } 
+
+                const label = document.createElement('label');
+                label.htmlFor = `q${qNum}-opt${optionIndex}`;
+                label.textContent = option;
+
+                optionItem.appendChild(radioInput);
+                optionItem.appendChild(label);
+                optionsList.appendChild(optionItem);
+            });
+
+            questionBlock.appendChild(optionsList);
+
+            // Feedback container (hidden by default)
+            const feedback = document.createElement('div');
+            feedback.className = 'feedback';
+            questionBlock.appendChild(feedback);
+
+            practiceExamForm.appendChild(questionBlock);
+        });
+    }
+
+    // Function to display the final summary report
+    function displaySummary() {
+        summaryContainerElement.innerHTML = '<h2>Summary of All Questions and Detailed Answers</h2>';
+        quizData.forEach((q, index) => {
+            const div = document.createElement('div');
+            div.className = 'summary-question-detail';
+            
+            const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
+            let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+            div.innerHTML = `
+                <p><strong>${index + 1}. ${q.question}</strong></p>
+                <p><strong>Correct Answer:</strong> ${correctAnswersText}</p>
+                <p class="explanation-text">${explanationHTML}</p>
+            `;
+            summaryContainerElement.appendChild(div);
+        });
+        summaryContainerElement.style.display = 'block';
+    }
+
+    // Function to tally the final score and initiate the summary
+    function tallyFinalScore() {
+        let score = 0;
+        const totalQuestions = quizData.length;
+
+        quizData.forEach((q, index) => {
+            const qNum = index + 1;
+            const questionBlock = document.getElementById(`question-${qNum}`);
+            const inputType = Array.isArray(q.correct) ? 'checkbox' : 'radio';
+            
+            // Collect selected answer(s)
+            let selectedOptions = [];
+            questionBlock.querySelectorAll(`input[name="q${qNum}"]:checked`).forEach(input => {
+                selectedOptions.push(input.value);
+            });
+            
+            const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
+            const feedbackDiv = questionBlock.querySelector('.feedback');
+            
+            let isCorrect = false;
+
+            if (inputType === 'radio') {
+                const selectedOption = selectedOptions[0];
+                if (selectedOption && selectedOption === q.correct) {
+                    score++;
+                    isCorrect = true;
+                }
+                
+                // Manually trigger handleAnswer logic for score/display if unanswered or for final highlight
+                if (selectedOption) {
+                    handleAnswer(qNum, selectedOption, q, questionBlock);
+                } else {
+                    // Force display for unanswered questions
+                    feedbackDiv.className = 'feedback incorrect-feedback';
+                    questionBlock.querySelectorAll('.option-item').forEach(item => {
+                        if (item.querySelector('label').textContent === q.correct) {
+                            item.classList.add('correct-answer-highlight');
+                        }
+                    });
+
+                    let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+                    feedbackDiv.innerHTML = `❌ **Question Unanswered.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+                    feedbackDiv.style.display = 'block';
+                }
+
+            } else if (inputType === 'checkbox') {
+                // Multi-select scoring: must match all correct answers exactly
+                const correctSet = new Set(q.correct);
+                const selectedSet = new Set(selectedOptions);
+
+                // Check if the two sets are equal (same size and all elements match)
+                if (correctSet.size === selectedSet.size && [...correctSet].every(value => selectedSet.has(value))) {
+                    score++;
+                    isCorrect = true;
+                }
+                
+                // Display final feedback for multi-select
+                const isAnswered = selectedOptions.length > 0;
+                let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+                feedbackDiv.className = 'feedback';
+                
+                // Highlight correct/incorrect items
+                questionBlock.querySelectorAll('.option-item').forEach(item => {
+                    const itemLabel = item.querySelector('label').textContent;
+                    const isCorrectOption = q.correct.includes(itemLabel);
+                    const isSelected = selectedOptions.includes(itemLabel);
+                    
+                    if (isCorrectOption) {
+                         item.classList.add('correct-answer-highlight');
+                    }
+                    if (isSelected && !isCorrectOption) {
+                        item.classList.add('user-selected-wrong');
+                    }
+                });
+                
+                if (isCorrect) {
+                    feedbackDiv.classList.add('correct-feedback');
+                    feedbackDiv.innerHTML = `✅ **Correct!** (Your Answers: ${selectedOptions.join(' AND ')})<span class="explanation-text"><br>${explanationHTML}</span>`;
+                } else if (isAnswered) {
+                    feedbackDiv.classList.add('incorrect-feedback');
+                    feedbackDiv.innerHTML = `❌ **Incorrect.** The correct answer is: <strong>${correctAnswersText}</strong>. You selected: ${selectedOptions.join(' AND ')}<span class="explanation-text"><br>${explanationHTML}</span>`;
+                } else {
+                    feedbackDiv.classList.add('incorrect-feedback');
+                    feedbackDiv.innerHTML = `❌ **Question Unanswered.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+                }
+                feedbackDiv.style.display = 'block';
+            }
+
+            // Ensure all inputs are disabled upon submission
+            questionBlock.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
+            questionBlock.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.disabled = true);
+        });
+        
+        // Display Final Score
+        scoreDisplayContainer.textContent = `Final Score: ${score}/${totalQuestions} (${((score / totalQuestions) * 100).toFixed(2)}%)`;
+        scoreDisplayContainer.style.display = 'block';
+        submitButton.style.display = 'none';
+        resetButton.style.display = 'inline-block';
+        
+        // Display the final summary report
+        displaySummary();
+    }
+
+    // Function to reset the quiz
+    function resetQuiz() {
+        document.getElementById('practice-exam-form').reset();
+        submitButton.style.display = 'inline-block';
+        resetButton.style.display = 'none';
+        scoreDisplayContainer.style.display = 'none';
+        summaryContainerElement.style.display = 'none';
+
+        // Re-enable inputs and remove highlights/feedback
+        document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => input.disabled = false);
+        
+        document.querySelectorAll('.feedback').forEach(div => div.style.display = 'none');
+        document.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('correct-answer-highlight', 'user-selected-wrong');
+        });
+    }
+
+    // Initialize Quiz and attach event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+        renderQuiz();
+        submitButton.addEventListener('click', tallyFinalScore);
+        resetButton.addEventListener('click', resetQuiz);
+    });
+</script>
+
+</body>
+</html>
