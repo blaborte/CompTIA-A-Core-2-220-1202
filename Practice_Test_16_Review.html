@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompTIA A+ 220-1202 Practice Test 16 with Explanations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #D9232E; /* Matching the secondary accent from examcomp.html */
+            text-align: center;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #D9232E;
+        }
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+        .question-text {
+            font-size: 1.15em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+        .option-item {
+            display: block;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            transition: background-color 0.2s;
+        }
+        
+        /* Feedback Styling */
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 6px;
+            display: none;
+            font-size: 1em;
+            border-left: 5px solid;
+            white-space: pre-wrap;
+        }
+        .correct-feedback {
+            background-color: #e6ffec;
+            color: #155724;
+            border-color: #155724;
+        }
+        .incorrect-feedback {
+            background-color: #ffeded;
+            color: #721c24;
+            border-color: #721c24;
+        }
+        .explanation-text {
+            font-weight: normal;
+            margin-top: 5px;
+            display: block;
+        }
+        .correct-answer-highlight {
+            background-color: #28a745 !important;
+            color: white;
+            border-color: #1e7e34 !important;
+            font-weight: bold;
+        }
+        .user-selected-wrong {
+            background-color: #dc3545;
+            color: white;
+            border-color: #b02a37;
+            font-weight: bold;
+        }
+
+        /* Buttons and Score */
+        .quiz-controls {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .quiz-controls button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            margin: 0 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        #submit-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        #submit-btn:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        #submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        #reset-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        #reset-btn:hover {
+            background-color: #5a6268;
+        }
+        #score-display {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #e9ecef;
+            display: none;
+        }
+        #final-summary {
+            margin-top: 40px;
+            padding: 20px;
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            background-color: #f0f8ff;
+            display: none;
+        }
+        #final-summary h2 {
+            margin-top: 0;
+            color: #0056b3;
+            border-bottom: 1px solid #0056b3;
+            padding-bottom: 10px;
+        }
+        .summary-question-detail {
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        
+        /* NEW: Back Button Style */
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            text-decoration: none;
+            color: white;
+            background-color: #6c757d; /* A neutral gray, matching reset button */
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px; /* Space it from the h1 */
+            border: none;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="examcomp.html" class="back-button">&larr; Back to Practice Tests Menu</a>
+    
+    <h1>CompTIA A+ Certification Exam 220-1202 Practice Test 16</h1>
+    <p>Select an answer for each question to see the detailed explanation immediately.</p>
+    <form id="practice-exam-form">
+        </form>
+
+    <div class="quiz-controls">
+        <button id="submit-btn" type="button">Finish Exam & Show Final Summary</button>
+        <button id="reset-btn" type="button" style="display: none;">Reset Quiz</button>
+        <div id="score-display"></div>
+    </div>
+
+    <div id="final-summary">
+        </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "Which of the following terms is commonly used to denote a 32-bit CPU architecture?",
+            options: ["x32", "x48", "x64", "x86"],
+            correct: "x86",
+            explanation: {
+                correct: "The **x86** architecture is the common, historical term used to refer to 32-bit processors and operating systems.",
+                incorrect: "**x64** is the term for 64-bit architecture. **x32** and **x48** are not standard terms for these architectures."
+            }
+        },
+        {
+            question: "Which of the answers listed below refers to 64-bit CPU architecture?",
+            options: ["x32", "x48", "x64", "x86"],
+            correct: "x64",
+            explanation: {
+                correct: "The **x64** architecture, also known as AMD64 or Intel 64, is the term used to refer to 64-bit processors and operating systems.",
+                incorrect: "**x86** refers to 32-bit architecture. **x32** and **x48** are not standard naming conventions."
+            }
+        },
+        {
+            question: "The presence of the Program Files (x86) folder on the C: drive in MS Windows indicates that the PC takes advantage of 32-bit architecture and OS version.",
+            options: ["True", "False"],
+            correct: "False",
+            explanation: {
+                correct: "The presence of the **Program Files (x86)** folder actually indicates a **64-bit** Windows OS. This folder is specifically used to store **32-bit applications** and allows them to run on the 64-bit system using the **WOW64** (Windows on Windows 64-bit) compatibility layer.",
+                incorrect: "If the OS were a true 32-bit version, there would only be a single 'Program Files' folder."
+            }
+        },
+        {
+            question: "In certain software licensing models, an application might require the presence of a connected external hardware token before it can run. These devices function as physical license keys, ensuring that the software only operates when the token is attached to the system. Common implementations of external hardware tokens include USB-based dongles or smart cards that must be inserted into a reader.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "This statement accurately describes a form of physical license management using a **hardware dongle** (or token), which is a common security practice for expensive or specialized software.",
+                incorrect: "The statement is accurate."
+            }
+        },
+        {
+            question: "Computer software installations often require additional disk space beyond the installer size. This extra space supports the expansion of compressed installer archives, creation of temporary files during setup, scratch space for processing, and post-installation growth from logs, caches, and updates.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "This is true. The 'installer size' is typically compressed. The system needs room for decompression, temporary files, and future data (logs, caches), which is why disk space requirements are often higher than the original file size.",
+                incorrect: "The statement is accurate."
+            }
+        },
+        {
+            question: "A user needs to run a legacy accounting application designed for Windows 7 on a Windows 11 PC. Which operating system feature should allow the software to execute on Windows 11?",
+            options: ["Windows AppLocker", "Windows Sandbox", "Windows Compatibility Mode", "Windows PowerShell"],
+            correct: "Windows Compatibility Mode",
+            explanation: {
+                correct: "**Windows Compatibility Mode** is the built-in Windows feature specifically designed to allow legacy applications to run on newer operating systems by simulating the environment of an older version (e.g., Windows 7).",
+                incorrect: "**Windows Sandbox** provides an isolated, disposable desktop environment, not a permanent solution for a legacy application. **AppLocker** is for application control/security. **PowerShell** is a command-line shell."
+            }
+        },
+        {
+            question: "Which of the following solutions allows an application designed for a specific operating system to run locally on a device within a different operating system architecture? (Select 2 answers)",
+            options: ["Emulator software", "Multiboot environment", "Virtualization", "Application sandboxing", "Compatibility mode"],
+            correct: ["Emulator software", "Virtualization"],
+            explanation: {
+                correct: "**Virtualization** (running a Guest OS in a VM) and **Emulator software** (running applications designed for a different CPU architecture) are the two primary ways to run foreign OS applications *locally on the host machine*.",
+                incorrect: "**Multiboot** requires a restart into the other OS, so it is not 'within' the current OS. **Compatibility Mode** is for different versions of the *same* OS (e.g., Windows-on-Windows). **Sandboxing** isolates applications but doesn't handle architectural differences."
+            }
+        },
+        {
+            question: "A 32-bit application is being installed on a 64-bit Windows 11 system. What is the expected behavior?",
+            options: ["The application will fail to install due to architecture mismatch", "The user will be prompted to switch OS versions to complete the installation", "The application will install and run using WOW64", "The system will create a sandbox environment for the application"],
+            correct: "The application will install and run using WOW64",
+            explanation: {
+                correct: "The **WOW64 (Windows on Windows 64-bit)** subsystem is a core component of 64-bit Windows that allows it to execute 32-bit applications by intercepting and modifying calls to the operating system, ensuring backward compatibility.",
+                incorrect: "The application will not fail. The system does not require switching OS versions. Sandboxing is a different feature."
+            }
+        },
+        {
+            question: "Which of the answers listed below refers to a digital representation of an optical disc that can be mounted on an operating system?",
+            options: ["VHD file", "CUE file", "ISO file", "WIM file"],
+            correct: "ISO file",
+            explanation: {
+                correct: "An **ISO file** (often called an ISO image) is a disc image that contains all the data from an optical disc (like a CD, DVD, or Blu-ray) and can be virtually 'mounted' by the operating system as if it were a physical disc.",
+                incorrect: "**VHD** is a virtual hard disk file. **WIM** is a Windows Imaging Format used for OS deployment. **CUE** is a metadata file for audio/data tracks."
+            }
+        },
+        {
+            question: "One of the ways of confirming that a software application comes from a trusted source is the verification of its digital signature. A digitally signed software proves the identity of the developer and guarantees that the application code has not been tampered with since it was signed. The authenticity and integrity of the application's code can also be verified by comparing results of a cryptographic hash function (original hash published by the application developer vs. hash obtained from a downloaded app).",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "Both **digital signatures** and **cryptographic hash functions** are essential security measures. Signatures prove the source, and hash checks verify the integrity of the file against tampering.",
+                incorrect: "The statement is accurate."
+            }
+        },
+        {
+            question: "A technician configures a reference computer with the operating system, drivers, and applications, then captures this configuration and replicates it to multiple PCs over the network. What is this process called?",
+            options: ["Network boot", "Remote installation", "Image deployment", "Disk cloning"],
+            correct: "Image deployment",
+            explanation: {
+                correct: "**Image deployment** (or imaging) is the process of creating a standardized OS/software configuration (an 'image') on one machine and deploying that image across many machines, often over a network.",
+                incorrect: "**Disk cloning** is similar but often implies a direct disk-to-disk copy. **Network boot** is just the method of starting a computer from the network. **Remote installation** is a broad term but often refers to automated setups, not specifically using a disk image."
+            }
+        },
+        {
+            question: "When installing a new application, it is essential to consider its potential impact across multiple areas. On the device level, applications may require significant CPU, RAM, GPU, or storage resources, and in some cases external hardware, which can affect overall system performance. From a network perspective, applications that rely on updates, cloud services, or continuous communication may increase bandwidth consumption and impact latency. In terms of operation, software can influence system stability, compatibility with other applications, security posture, and user workflows. Finally, at the business level, factors such as licensing, compliance requirements, productivity, downtime, and data protection must be evaluated to ensure the application aligns with organizational needs.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "This statement accurately outlines the comprehensive assessment required before implementing a new application, covering **Device, Network, Operational, and Business** impacts.",
+                incorrect: "The statement is accurate."
+            }
+        },
+        {
+            question: "A technician is configuring a cloud-based email account for a user. The user needs to access their email from multiple devices and ensure that all changes, such as marking an email as read or moving it to a folder, are synchronized across all devices. Which protocol is the best choice?",
+            options: ["POP3", "HTTPS", "SMTP", "IMAP4"],
+            correct: "IMAP4",
+            explanation: {
+                correct: "**IMAP4 (Internet Message Access Protocol)** is designed to keep all mail and folder structures on the central mail server, allowing multiple client devices to access and synchronize the mailbox state (read/unread, moves, deletions).",
+                incorrect: "**POP3 (Post Office Protocol)** downloads mail from the server to one client and typically deletes it from the server, which prevents synchronization. **SMTP** is for sending mail. **HTTPS** is a secure web access protocol."
+            }
+        },
+        {
+            question: "A user wants only a specific folder from their cloud storage to be available locally on a laptop. What feature controls individual folders that are downloaded for local access?",
+            options: ["Offline access", "Folder mirroring", "Local caching", "Selective sync"],
+            correct: "Selective sync",
+            explanation: {
+                correct: "**Selective sync** is a cloud storage feature (used by Dropbox, OneDrive, etc.) that allows a user to choose which folders are downloaded and synchronized to the local device's storage, saving space.",
+                incorrect: "**Offline access** is a general capability. **Folder mirroring** usually implies copying the entire folder structure. **Local caching** is automatic for recently used files."
+            }
+        },
+        {
+            question: "Cloud-based collaboration platforms often provide multiple integrated tools to support teamwork, including:",
+            options: ["Instant messaging", "Document editing", "Videoconferencing", "All of the above"],
+            correct: "All of the above",
+            explanation: {
+                correct: "Modern cloud-based collaboration suites (like Microsoft 365, Google Workspace) integrate all three: **Instant messaging (chat)**, **Document editing (co-authoring)**, and **Videoconferencing**.",
+                incorrect: "Since all options are standard features, 'All of the above' is the correct and complete answer."
+            }
+        },
+        {
+            question: "Enabling identity synchronization between on-premises systems and cloud services allows users to log in to both with a single set of credentials.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "This is the core function of **identity synchronization** and **Single Sign-On (SSO)** solutions, where a user's local credentials (from a Domain Controller/Directory) are used to access cloud resources.",
+                incorrect: "The statement is accurate."
+            }
+        },
+        {
+            question: "A technician is auditing license usage for a cloud-based application. What tool is typically used to view license assignments and availability?",
+            options: ["Local user account settings", "Domain controller", "Credential manager software", "Admin dashboard or portal"],
+            correct: "Admin dashboard or portal",
+            explanation: {
+                correct: "For cloud-based applications, license management is handled centrally by the provider. The **Admin dashboard or portal** (e.g., for Google Workspace or Microsoft 365) is the authoritative tool for assigning, viewing, and auditing license use.",
+                incorrect: "**Credential manager software** stores passwords. **Local user account settings** do not show cloud licenses. **Domain controllers** manage on-premises identity, not cloud licensing."
+            }
+        },
+        {
+            question: "What is the primary function of bollards as a physical security control?",
+            options: ["To prevent tailgating through secure areas", "To deter and physically stop vehicle intrusions", "To prevent unauthorized pedestrian entry", "To restrict both people and cars simultaneously"],
+            correct: "To deter and physically stop vehicle intrusions",
+            explanation: {
+                correct: "**Bollards** are strong, vertical posts installed in front of buildings or sensitive areas specifically to **prevent vehicles** from crashing or driving through them. They are a form of *preventive* physical control.",
+                incorrect: "Bollards are primarily designed for vehicles, not pedestrian control or preventing tailgating."
+            }
+        },
+        {
+            question: "An access control vestibule (also known as a mantrap) is a physical security access control system used to prevent unauthorized users from gaining access to restricted areas. An example mantrap could be a two-door entrance point connected to a guard station where an individual entering from the outside remains locked inside until they provide the required authentication token to unlock the inner door.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "This statement accurately describes a **mantrap/access control vestibule**—a two-door system designed to ensure only one person at a time enters a high-security area, which effectively prevents tailgating.",
+                incorrect: "The statement is accurate."
+            }
+        },
+        {
+            question: "A facility implements badge readers at entry doors, requiring staff to present RFID cards to unlock them. This setup is an example of which type of security measure?",
+            options: ["Logical security control", "Administrative security control", "Physical security control", "Technical security control"],
+            correct: "Physical security control",
+            explanation: {
+                correct: "Securing a physical location (a door) is the definition of a **Physical security control**. While the badge reader is a technical device, its purpose is to control **physical access**.",
+                incorrect: "Logical controls protect data/systems (passwords, firewalls). Administrative controls are policies (mandatory training)."
+            }
+        },
+        {
+            question: "What type of physical security control does video surveillance represent?",
+            options: ["Preventive control", "Compensating control", "Detective control", "Corrective control"],
+            correct: "Detective control",
+            explanation: {
+                correct: "**Video surveillance (CCTV)** is a **Detective control** because it doesn't stop an event from happening, but it **detects** the activity, provides a record, and allows for follow-up and analysis.",
+                incorrect: "**Preventive controls** (like locks, fences) stop the event. **Corrective controls** are actions taken after an event (like patching software)."
+            }
+        },
+        {
+            question: "Which physical security measure often works together with motion sensors to provide real-time alerts of unauthorized activity?",
+            options: ["Proximity readers", "Smart locks", "Perimeter lighting", "Alarm systems"],
+            correct: "Alarm systems",
+            explanation: {
+                correct: "A **motion sensor** is a component that **detects** movement and then triggers the **Alarm system**, which provides the audible or silent alert to security personnel.",
+                incorrect: "The others are controls that either prevent access (readers, locks) or deter activity (lighting), but the alarm system is the active alerting mechanism triggered by a sensor."
+            }
+        },
+        {
+            question: "Which of the following security controls are designed to physically prevent unauthorized access? (Select 2 answers)",
+            options: ["Motion sensors", "Door locks", "Video surveillance", "Alarm systems", "Equipment locks"],
+            correct: ["Door locks", "Equipment locks"],
+            explanation: {
+                correct: "**Door locks** and **Equipment locks** are tangible barriers that act as **Preventive controls**—they actively block or hinder access. ",
+                incorrect: "**Motion sensors**, **Video surveillance**, and **Alarm systems** are all **Detective controls**; they report unauthorized activity but do not physically stop it."
+            }
+        },
+        {
+            question: "A company wants a physical security control measure that can provide both deterrence and on-site, in-person response to suspicious activity. Which of the solutions listed below should the company implement?",
+            options: ["CCTV monitoring", "Alarm system with motion sensors", "Security guards", "Intrusion detection system"],
+            correct: "Security guards",
+            explanation: {
+                correct: "**Security guards** are the only option that is a physical control providing both a visual **deterrent** and the ability for **on-site, in-person response** to an event.",
+                incorrect: "The other options are all technological systems that detect and alert, but require a human element (the guard) to respond physically."
+            }
+        },
+        {
+            question: "A business wants to reduce the likelihood of both unauthorized pedestrian and vehicle access across its entire restricted perimeter. Which physical security control would best serve this purpose?",
+            options: ["Bollards", "Turnstiles", "Security guards", "Fencing"],
+            correct: "Fencing",
+            explanation: {
+                correct: "**Fencing** provides a continuous, comprehensive barrier along the **entire perimeter** of a restricted area, limiting both vehicle and pedestrian access. This makes it the most effective control for general perimeter protection.",
+                incorrect: "**Bollards** are mainly for vehicles at entry points. **Turnstiles** are for pedestrian control at entry points. **Security guards** are an active, not passive, control."
+            }
+        }
+    ];
+
+    const practiceExamForm = document.getElementById('practice-exam-form');
+    const submitButton = document.getElementById('submit-btn');
+    const resetButton = document.getElementById('reset-btn');
+    const scoreDisplayContainer = document.getElementById('score-display');
+    const summaryContainerElement = document.getElementById('final-summary');
+
+    // Function to handle the immediate answer check and feedback display
+    function handleAnswer(qIndex, userAnswer, q, questionBlock) {
+        const feedbackDiv = questionBlock.querySelector('.feedback');
+        
+        // Handle multi-select versus single-select questions
+        let isCorrect;
+        if (Array.isArray(q.correct)) {
+            // For simplicity in this single-select UI, we will only check if the selected answer is one of the correct ones
+            // But in a real multi-select quiz, you'd need to compare all selected vs all correct.
+            // Since the user's input implies a single-select style from the file structure, we'll maintain single-select logic.
+            isCorrect = q.correct.includes(userAnswer);
+        } else {
+            isCorrect = (userAnswer === q.correct);
+        }
+
+        // Disable all options for this question once an answer is selected
+        questionBlock.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
+        questionBlock.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.disabled = true);
+
+        // Find and highlight the user's selection
+        const selectedInput = questionBlock.querySelector(`input[value="${userAnswer}"]`);
+        if (!selectedInput) return;
+
+        const selectedItem = selectedInput.parentElement;
+
+        // Clear previous feedback classes and set the new one
+        questionBlock.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('correct-answer-highlight', 'user-selected-wrong');
+        });
+        feedbackDiv.className = 'feedback';
+        
+        const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
+        let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+        if (isCorrect) {
+            selectedItem.classList.add('correct-answer-highlight');
+            feedbackDiv.classList.add('correct-feedback');
+            feedbackDiv.innerHTML = `✅ **Correct!** (Your Answer: ${userAnswer})<span class="explanation-text"><br>${explanationHTML}</span>`;
+        } else {
+            selectedItem.classList.add('user-selected-wrong');
+            feedbackDiv.classList.add('incorrect-feedback');
+            
+            // Highlight the correct answer(s)
+            questionBlock.querySelectorAll('.option-item').forEach(item => {
+                const itemLabel = item.querySelector('label').textContent;
+                if (Array.isArray(q.correct) ? q.correct.includes(itemLabel) : itemLabel === q.correct) {
+                    item.classList.add('correct-answer-highlight');
+                }
+            });
+
+            feedbackDiv.innerHTML = `❌ **Incorrect.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+        }
+        feedbackDiv.style.display = 'block';
+    }
+
+    // Function to render the quiz questions
+    function renderQuiz() {
+        practiceExamForm.innerHTML = '';
+        quizData.forEach((q, index) => {
+            const qNum = index + 1;
+            const questionBlock = document.createElement('div');
+            questionBlock.className = 'question-block';
+            questionBlock.id = `question-${qNum}`;
+            
+            const inputType = Array.isArray(q.correct) ? 'checkbox' : 'radio';
+
+            // Question Text
+            const questionText = document.createElement('p');
+            questionText.className = 'question-text';
+            // Add a note for multi-select questions
+            const selectNote = Array.isArray(q.correct) ? ' (Select 2 Answers)' : '';
+            questionText.textContent = `${qNum}. ${q.question}${selectNote}`;
+            questionBlock.appendChild(questionText);
+
+            // Options List
+            const optionsList = document.createElement('ul');
+            optionsList.className = 'options-list';
+
+            q.options.forEach((option, optionIndex) => {
+                const optionItem = document.createElement('li');
+                optionItem.className = 'option-item';
+
+                const radioInput = document.createElement('input');
+                radioInput.type = inputType;
+                radioInput.name = `q${qNum}`;
+                radioInput.value = option;
+                radioInput.id = `q${qNum}-opt${optionIndex}`;
+
+                // Attach the immediate feedback handler for single-select (radio)
+                // For multi-select (checkbox), we rely on the final submit for score, but this can still show immediate feedback on change if needed
+                if (inputType === 'radio') {
+                    radioInput.onchange = (e) => handleAnswer(qNum, e.target.value, q, questionBlock);
+                } else if (inputType === 'checkbox') {
+                     // For multi-select, immediate feedback is complex in this setup, so we disable on final submit
+                }
+
+                const label = document.createElement('label');
+                label.htmlFor = `q${qNum}-opt${optionIndex}`;
+                label.textContent = option;
+
+                optionItem.appendChild(radioInput);
+                optionItem.appendChild(label);
+                optionsList.appendChild(optionItem);
+            });
+
+            questionBlock.appendChild(optionsList);
+
+            // Feedback container (hidden by default)
+            const feedback = document.createElement('div');
+            feedback.className = 'feedback';
+            questionBlock.appendChild(feedback);
+
+            practiceExamForm.appendChild(questionBlock);
+        });
+    }
+
+    // Function to display the final summary report
+    function displaySummary() {
+        summaryContainerElement.innerHTML = '<h2>Summary of All Questions and Detailed Answers</h2>';
+        quizData.forEach((q, index) => {
+            const div = document.createElement('div');
+            div.className = 'summary-question-detail';
+            
+            const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
+            let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+            div.innerHTML = `
+                <p><strong>${index + 1}. ${q.question}</strong></p>
+                <p><strong>Correct Answer:</strong> ${correctAnswersText}</p>
+                <p class="explanation-text">${explanationHTML}</p>
+            `;
+            summaryContainerElement.appendChild(div);
+        });
+        summaryContainerElement.style.display = 'block';
+    }
+
+    // Function to tally the final score and initiate the summary
+    function tallyFinalScore() {
+        let score = 0;
+        const totalQuestions = quizData.length;
+
+        quizData.forEach((q, index) => {
+            const qNum = index + 1;
+            const questionBlock = document.getElementById(`question-${qNum}`);
+            const inputType = Array.isArray(q.correct) ? 'checkbox' : 'radio';
+            
+            // Collect selected answer(s)
+            let selectedOptions = [];
+            questionBlock.querySelectorAll(`input[name="q${qNum}"]:checked`).forEach(input => {
+                selectedOptions.push(input.value);
+            });
+            
+            const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
+            const feedbackDiv = questionBlock.querySelector('.feedback');
+            
+            let isCorrect = false;
+
+            if (inputType === 'radio') {
+                const selectedOption = selectedOptions[0];
+                if (selectedOption && selectedOption === q.correct) {
+                    score++;
+                    isCorrect = true;
+                }
+                
+                // Manually trigger handleAnswer logic for score/display if unanswered or for final highlight
+                if (selectedOption) {
+                    handleAnswer(qNum, selectedOption, q, questionBlock);
+                } else {
+                    // Force display for unanswered questions
+                    feedbackDiv.className = 'feedback incorrect-feedback';
+                    questionBlock.querySelectorAll('.option-item').forEach(item => {
+                        if (item.querySelector('label').textContent === q.correct) {
+                            item.classList.add('correct-answer-highlight');
+                        }
+                    });
+
+                    let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+                    feedbackDiv.innerHTML = `❌ **Question Unanswered.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+                    feedbackDiv.style.display = 'block';
+                }
+
+            } else if (inputType === 'checkbox') {
+                // Multi-select scoring: must match all correct answers exactly
+                const correctSet = new Set(q.correct);
+                const selectedSet = new Set(selectedOptions);
+
+                // Check if the two sets are equal (same size and all elements match)
+                if (correctSet.size === selectedSet.size && [...correctSet].every(value => selectedSet.has(value))) {
+                    score++;
+                    isCorrect = true;
+                }
+                
+                // Display final feedback for multi-select
+                const isAnswered = selectedOptions.length > 0;
+                let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+                feedbackDiv.className = 'feedback';
+                
+                // Highlight correct/incorrect items
+                questionBlock.querySelectorAll('.option-item').forEach(item => {
+                    const itemLabel = item.querySelector('label').textContent;
+                    const isCorrectOption = q.correct.includes(itemLabel);
+                    const isSelected = selectedOptions.includes(itemLabel);
+                    
+                    if (isCorrectOption) {
+                         item.classList.add('correct-answer-highlight');
+                    }
+                    if (isSelected && !isCorrectOption) {
+                        item.classList.add('user-selected-wrong');
+                    }
+                });
+                
+                if (isCorrect) {
+                    feedbackDiv.classList.add('correct-feedback');
+                    feedbackDiv.innerHTML = `✅ **Correct!** (Your Answers: ${selectedOptions.join(' AND ')})<span class="explanation-text"><br>${explanationHTML}</span>`;
+                } else if (isAnswered) {
+                    feedbackDiv.classList.add('incorrect-feedback');
+                    feedbackDiv.innerHTML = `❌ **Incorrect.** The correct answer is: <strong>${correctAnswersText}</strong>. You selected: ${selectedOptions.join(' AND ')}<span class="explanation-text"><br>${explanationHTML}</span>`;
+                } else {
+                    feedbackDiv.classList.add('incorrect-feedback');
+                    feedbackDiv.innerHTML = `❌ **Question Unanswered.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+                }
+                feedbackDiv.style.display = 'block';
+            }
+
+            // Ensure all inputs are disabled upon submission
+            questionBlock.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
+            questionBlock.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.disabled = true);
+        });
+        
+        // Display Final Score
+        scoreDisplayContainer.textContent = `Final Score: ${score}/${totalQuestions} (${((score / totalQuestions) * 100).toFixed(2)}%)`;
+        scoreDisplayContainer.style.display = 'block';
+        submitButton.style.display = 'none';
+        resetButton.style.display = 'inline-block';
+        
+        // Display the final summary report
+        displaySummary();
+    }
+
+    // Function to reset the quiz
+    function resetQuiz() {
+        document.getElementById('practice-exam-form').reset();
+        submitButton.style.display = 'inline-block';
+        resetButton.style.display = 'none';
+        scoreDisplayContainer.style.display = 'none';
+        summaryContainerElement.style.display = 'none';
+
+        // Re-enable inputs and remove highlights/feedback
+        document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => input.disabled = false);
+        
+        document.querySelectorAll('.feedback').forEach(div => div.style.display = 'none');
+        document.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('correct-answer-highlight', 'user-selected-wrong');
+        });
+    }
+
+    // Initialize Quiz and attach event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+        renderQuiz();
+        submitButton.addEventListener('click', tallyFinalScore);
+        resetButton.addEventListener('click', resetQuiz);
+    });
+</script>
+
+</body>
+</html>

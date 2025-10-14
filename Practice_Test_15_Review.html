@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam CCompTIA A+ 220-1202 Interactive Practice Exam with Explanations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #0056b3;
+        }
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+        .question-text {
+            font-size: 1.15em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+        .option-item {
+            display: block;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            transition: background-color 0.2s;
+        }
+        
+        /* Feedback Styling */
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 6px;
+            display: none; /* Initially hidden */
+            font-size: 1em;
+            border-left: 5px solid;
+            white-space: pre-wrap; /* Preserve formatting for explanations */
+        }
+        .correct-feedback {
+            background-color: #e6ffec; /* Lighter green */
+            color: #155724;
+            border-color: #155724;
+        }
+        .incorrect-feedback {
+            background-color: #ffeded; /* Lighter red */
+            color: #721c24;
+            border-color: #721c24;
+        }
+        .explanation-text {
+            font-weight: normal;
+            margin-top: 5px;
+            display: block;
+        }
+        .correct-answer-highlight {
+            background-color: #28a745 !important;
+            color: white;
+            border-color: #1e7e34 !important;
+            font-weight: bold;
+        }
+        .user-selected-wrong {
+            background-color: #dc3545;
+            color: white;
+            border-color: #b02a37;
+            font-weight: bold;
+        }
+
+        /* Buttons and Score */
+        .quiz-controls {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .quiz-controls button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            margin: 0 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        #submit-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        #submit-btn:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        #submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        #reset-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        #reset-btn:hover {
+            background-color: #5a6268;
+        }
+        #score-display {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #e9ecef;
+            display: none;
+        }
+        #final-summary {
+            margin-top: 40px;
+            padding: 20px;
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            background-color: #f0f8ff;
+            display: none;
+        }
+        #final-summary h2 {
+            margin-top: 0;
+            color: #0056b3;
+            border-bottom: 1px solid #0056b3;
+            padding-bottom: 10px;
+        }
+        #final-summary p {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .summary-question-detail {
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        
+        /* NEW: Back Button Style */
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            text-decoration: none;
+            color: white;
+            background-color: #6c757d; /* A neutral gray, matching reset button */
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px; /* Space it from the h1 */
+            border: none;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="examcomp.html" class="back-button">&larr; Back to Practice Tests Menu</a>
+    
+    <h1>CompTIA A+ Certification Exam 220-1202 Practice Test 15</h1>
+    <p>Select an answer for each question to see the detailed explanation immediately.</p>
+    <form id="practice-exam-form">
+        </form>
+
+    <div class="quiz-controls">
+        <button id="submit-btn" type="button">Finish Exam & Show Final Summary</button>
+        <button id="reset-btn" type="button" style="display: none;">Reset Quiz</button>
+        <div id="score-display"></div>
+    </div>
+
+    <div id="final-summary">
+        </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "While viewing a man page in Linux, which key advances the display by one full screen at a time?",
+            options: ["Enter", "Spacebar", "Tab", "Shift"],
+            correct: "Spacebar",
+            explanation: {
+                correct: "The **Spacebar** is the standard key used in the Linux `man` (manual) and `less` programs to scroll forward one full screen of text at a time. This is essential for reading long documentation pages.",
+                incorrect: "**Enter** advances the display by one line. **Tab** and **Shift** are not standard scrolling keys for `man` pages."
+            }
+        },
+        {
+            question: "After opening a manual page, a Linux user wants to quit back to the shell prompt. Which key(s) should be pressed?",
+            options: ["Ctrl+C", "Q", "Esc", "Shift + X"],
+            correct: "Q",
+            explanation: {
+                correct: "Pressing the **Q** (for Quit) key is the command used to exit the `less` viewer, which is what the `man` command uses by default to display its content.",
+                incorrect: "**Ctrl+C** is often used to interrupt a running command, but for controlled exit from `man` or `less`, **Q** is the standard. **Esc** and **Shift + X** do not perform this function."
+            }
+        },
+        {
+            question: "A Linux system admin wants to view the contents of multiple log files in the terminal. Which command will output the contents of log1.txt followed by log2.txt in the same terminal view?",
+            options: ["cat log1.txt + log2.txt", "cat log1.txt | log2.txt", "cat log1.txt log2.txt", "cat log1.txt > log2.txt"],
+            correct: "cat log1.txt log2.txt",
+            explanation: {
+                correct: "The **cat** command (short for concatenate) can take multiple files as arguments. It reads the files in the order they are listed and outputs their contents sequentially to standard output.",
+                incorrect: "Using **+** is not a valid syntax. The **|** (pipe) redirects the output of the first command to the input of the second. The **>** (redirection) overwrites `log2.txt` with the contents of `log1.txt`."
+            }
+        },
+        {
+            question: "A technician wants to append the contents of notes.txt to the end of log.txt. Which Linux command will add the contents of notes.txt to the bottom of log.txt without overwriting it?",
+            options: ["cat notes.txt > log.txt", "cat notes.txt + log.txt", "cat notes.txt >> log.txt", "cat notes.txt | log.txt"],
+            correct: "cat notes.txt >> log.txt",
+            explanation: {
+                correct: "The **`>>`** symbol is the **append redirection operator** in Linux. It takes the output of the command on the left (`cat notes.txt`) and adds it to the end of the file on the right (`log.txt`).",
+                incorrect: "The **`>`** operator redirects output but **overwrites** the destination file, which violates the 'without overwriting it' requirement. **+** is not valid syntax. **|** pipes the content, it does not append it to a file."
+            }
+        },
+        {
+            question: "A Linux administrator wants to combine the contents of file1.txt and file2.txt into a new file called combined.txt. Which command accomplishes this?",
+            options: ["cat file1.txt file2.txt > combined.txt", "cat file1.txt + file2.txt = combined.txt", "cat file1.txt file2.txt | combined.txt", "cat file1.txt file2.txt >> combined.txt"],
+            correct: "cat file1.txt file2.txt > combined.txt",
+            explanation: {
+                correct: "The command **`cat file1.txt file2.txt`** combines the content of the two files. The **`>`** (output redirection) then creates a **new file** (`combined.txt`) and writes the combined output to it.",
+                incorrect: "Using **`>>`** would only work correctly if `combined.txt` already exists and the intent was to add the content to the end; using `>` is better practice for a new file. The other options use invalid syntax."
+            }
+        },
+        {
+            question: "A user is running the top command in Linux and notices a process consuming a large amount of CPU resources. Which key should the user press to sort the process list by CPU usage?",
+            options: ["P", "M", "C", "R"],
+            correct: "P",
+            explanation: {
+                correct: "Pressing **P** (for Processor/CPU) within the `top` utility sorts the process list by the percentage of CPU utilization, showing the most demanding processes at the top.",
+                incorrect: "**M** sorts by memory usage. **R** reverses the current sort order. **C** shows the full command line."
+            }
+        },
+        {
+            question: "A Linux technician is viewing processes in top and needs to sort them by RAM usage. In the top interface, which key reorders processes based on memory consumption?",
+            options: ["R", "C", "P", "M"],
+            correct: "M",
+            explanation: {
+                correct: "Pressing **M** (for Memory) within `top` sorts the process list by resident memory usage (RES), making it easy to identify memory hogs.",
+                incorrect: "**P** sorts by CPU usage. **C** shows the full command line. **R** reverses the current sort order."
+            }
+        },
+        {
+            question: "A system administrator is using the top command in Linux and wants to terminate a process with PID 4567. Which key should be pressed within top to initiate this action?",
+            options: ["X", "R", "T", "K"],
+            correct: "K",
+            explanation: {
+                correct: "The **K** (for kill) key within `top` prompts the user for the Process ID (PID) and the signal to send (e.g., 15 for graceful termination, 9 for forced termination).",
+                incorrect: "**R** is used to 'renice' a process (change its scheduling priority). **X** and **T** are not the correct keys for terminating a process in `top`."
+            }
+        },
+        {
+            question: "Which ps command in Linux is used to display a minimal snapshot of processes for the current shell?",
+            options: ["ps -a", "ps", "ps -e", "ps -f"],
+            correct: "ps",
+            explanation: {
+                correct: "Running **`ps`** without any arguments (often called the 'bare' `ps` command) displays only the processes running in the current terminal session (shell).",
+                incorrect: "**ps -a** displays processes for all users. **ps -e** displays *all* processes system-wide. **ps -f** displays a full-format listing."
+            }
+        },
+        {
+            question: "A Linux admin suspects a process running under a system account is causing issues. The administrator needs to see a list of all running processes system-wide, including those not associated with a specific terminal session. What is the most appropriate command to get a complete static list of all processes?",
+            options: ["ps -f", "ps", "ps -s", "ps -e"],
+            correct: "ps -e",
+            explanation: {
+                correct: "The **`-e`** flag (select all processes) with the `ps` command provides a complete listing of every process running on the system, regardless of its controlling terminal or user.",
+                incorrect: "The bare **`ps`** command only shows processes in the current shell. **-f** adds a full-format listing but doesn't guarantee *all* processes unless used with `-e`."
+            }
+        },
+        {
+            question: "An administrator needs to identify if a service called \"sshd\" is currently running on a Linux server. The administrator wants to quickly check whether any process contains \"sshd\" in its name. Which command line combination will show only the lines from the process list that contain the \"sshd\" string?",
+            options: ["ps -e > sshd", "grep sshd ps -e", "ps -e | grep sshd", "sshd | ps -e"],
+            correct: "ps -e | grep sshd",
+            explanation: {
+                correct: "The command **`ps -e`** generates the full process list. The **`|`** (pipe) sends that list to the **`grep sshd`** command, which filters the input and displays only the lines containing the string 'sshd'.",
+                incorrect: "**`>`** redirects output to a file. **`grep sshd ps -e`** is incorrect syntax as `grep` takes the file to search *after* the pattern. **`sshd | ps -e`** pipes the output of `sshd` (which usually runs as a daemon) to `ps -e`, which is nonsensical."
+            }
+        },
+        {
+            question: "A Linux user needs to identify which subdirectories under /usr/local are taking up the most space. For better readability, the user wants to view the output values in KBs, MBs, or GBs. Which command should be used?",
+            options: ["df -h /usr/local", "ls -lh /usr/local", "du -h /usr/local", "df -a /usr/local"],
+            correct: "du -h /usr/local",
+            explanation: {
+                correct: "The **`du`** command (disk usage) is used to estimate file space usage, which is perfect for checking directories. The **`-h`** flag outputs the size in **human-readable** format (KB, MB, GB).",
+                incorrect: "The **`df`** command (disk free) shows the usage of **entire filesystems**, not individual directories. **`ls -lh`** lists file sizes within a directory, but not the recursive total size of subdirectories."
+            }
+        },
+        {
+            question: "An administrator needs to quickly determine the amount of free and used disk space across all mounted filesystems on a Linux server. The administrator wants the output displayed in an easy-to-read format. What is the most appropriate command to use in this case?",
+            options: ["du -h", "df -a", "ls -lh", "df -h"],
+            correct: "df -h",
+            explanation: {
+                correct: "The **`df`** command (disk free) displays the amount of available and used disk space for mounted filesystems. The **`-h`** flag ensures the output is in a **human-readable** format (MB, GB).",
+                incorrect: "The **`du -h`** command displays directory size, not mounted filesystem usage. **`df -a`** includes all filesystems but not in a human-readable format by default. **`ls -lh`** lists files in a directory."
+            }
+        },
+        {
+            question: "A Linux administrator is auditing user accounts for security compliance. The administrator needs to determine password hashes, password aging policies, and expiration data for each account. Which file stores this information?",
+            options: ["/etc/passwd", "/etc/group", "/etc/shadow", "/etc/sudoers"],
+            correct: "/etc/shadow",
+            explanation: {
+                correct: "The **/etc/shadow** file is the highly restricted file that stores secure user account information, including **encrypted password hashes** and password aging rules.",
+                incorrect: "**/etc/passwd** stores basic user details (username, UID, home directory, etc.) but uses an 'x' placeholder for the password field. **/etc/group** manages group membership. **/etc/sudoers** controls which users can execute commands with elevated privileges."
+            }
+        },
+        {
+            question: "A Linux system admin is reviewing a user account entry in /etc/passwd. The second field for a user's entry contains the character 'x'. What does the 'x' in this field indicate?",
+            options: ["The account is disabled", "The user's password hash is stored in /etc/shadow", "The user has a blank password", "The user is not part of a group"],
+            correct: "The user's password hash is stored in /etc/shadow",
+            explanation: {
+                correct: "In modern Linux systems, the **`x`** in the password field of **/etc/passwd** is a security feature. It indicates that the actual password hash is stored separately in the highly restricted **/etc/shadow** file.",
+                incorrect: "A blank password field means the user has no password. An asterisk `*` or a `!` often indicates a disabled account."
+            }
+        },
+        {
+            question: "An administrator needs to view the list of all user accounts on the Linux system along with their associated information such as user/group ID numbers, home directory, and default shell. Which file should be checked?",
+            options: ["/etc/shadow", "/etc/group", "/etc/login.defs", "/etc/passwd"],
+            correct: "/etc/passwd",
+            explanation: {
+                correct: "The **/etc/passwd** file is the primary database for user account information. It stores a record for each user, including username, UID, GID, comment, home directory, and default shell.",
+                incorrect: "**/etc/shadow** stores password security info. **/etc/group** stores group definitions. **/etc/login.defs** controls global login behavior and password rules."
+            }
+        },
+        {
+            question: "A Linux technician is troubleshooting name resolution and wants to confirm whether a hostname is being resolved from a local static entry rather than DNS. Which file should the technician inspect?",
+            options: ["/etc/hostname", "/etc/nsswitch.conf", "/etc/hosts", "/etc/resolv.conf"],
+            correct: "/etc/hosts",
+            explanation: {
+                correct: "The **/etc/hosts** file is a local plain-text file that maps IP addresses to hostnames. Hostname resolution checks this file *before* querying DNS, making it the source for local static entries.",
+                incorrect: "**/etc/resolv.conf** lists the DNS servers to query. **/etc/hostname** contains the system's own hostname. **/etc/nsswitch.conf** defines the order in which naming services (like files, DNS, NIS) are consulted."
+            }
+        },
+        {
+            question: "What is the main functional difference between the mount command and the /etc/fstab file in Linux?",
+            options: ["mount is for local drives; /etc/fstab is for network drives", "mount is for read-only mounts; /etc/fstab is for read/write mounts", "mount creates temporary mounts; /etc/fstab defines mounts that persist across reboots", "mount requires a restart to take effect; /etc/fstab does not"],
+            correct: "mount creates temporary mounts; /etc/fstab defines mounts that persist across reboots",
+            explanation: {
+                correct: "The **`mount`** command is used interactively to create a temporary mount that is only active until the system reboots. The **/etc/fstab** (filesystem table) file is read at boot time to establish permanent, automatic mounts.",
+                incorrect: "Both can handle local and network drives, and both can specify read-only or read/write options. `mount` is instant and does not require a restart."
+            }
+        },
+        {
+            question: "During troubleshooting, a Linux admin notices that hostname lookups are failing even though /etc/hosts contains valid entries. Which file determines the DNS servers that should be queried for hostnames not listed in /etc/hosts?",
+            options: ["/etc/nsswitch.conf", "/etc/network/interfaces", "/etc/resolv.conf", "/etc/hostname"],
+            correct: "/etc/resolv.conf",
+            explanation: {
+                correct: "The **/etc/resolv.conf** file specifies the **DNS nameservers** that the system should query for hostname resolution. If hostnames aren't in `/etc/hosts`, this is the next place the system looks for the DNS server addresses.",
+                incorrect: "**/etc/nsswitch.conf** controls the *order* of resolution methods (files, then DNS, etc.). **hosts** contains static entries. **hostname** just contains the local machine's name."
+            }
+        },
+        {
+            question: "Which of the statements listed correctly describes application compatibility with different CPU architectures?",
+            options: ["A 32-bit hardware can run both 32-bit and 64-bit applications", "A computer with a 32-bit CPU can run 64-bit applications without compatibility issues", "A 64-bit hardware can run only 64-bit applications", "A computer with a 64-bit CPU can run most 32-bit applications"],
+            correct: "A computer with a 64-bit CPU can run most 32-bit applications",
+            explanation: {
+                correct: "The 64-bit architecture is designed to be **backward-compatible** with the 32-bit instruction set, allowing a 64-bit CPU (and 64-bit OS) to run most older 32-bit applications through compatibility layers.",
+                incorrect: "A **32-bit CPU cannot run 64-bit applications** because it lacks the necessary registers and instruction set. While a 64-bit CPU can run 32-bit applications, it is not limited to only running 64-bit applications."
+            }
+        },
+        {
+            question: "Which scenario would most likely allow integrated graphics to be sufficient?",
+            options: ["High-end gaming", "Web browsing and email", "Professional video editing", "3D rendering"],
+            correct: "Web browsing and email",
+            explanation: {
+                correct: "**Integrated graphics** (iGPU), which is built into the CPU or motherboard chipset, is sufficient for **low-intensity tasks** like web browsing, email, and basic office work, as these do not require heavy graphics processing.",
+                incorrect: "High-end gaming, professional video editing, and 3D rendering are all graphics-intensive tasks that require the dedicated processing power and VRAM of a **Dedicated Graphics Card (dGPU)**."
+            }
+        },
+        {
+            question: "Which factor differentiates a dedicated graphics card from an integrated graphics solution?",
+            options: ["A dedicated graphics card has its own VRAM", "Integrated graphics uses system RAM", "Dedicated graphics cards deliver higher performance", "All of the above"],
+            correct: "All of the above",
+            explanation: {
+                correct: "All three points are key differentiators: **Dedicated Graphics Cards (dGPUs)** have their own Video RAM (**VRAM**), use a separate processor, and thus provide **much higher performance**. **Integrated Graphics (iGPUs)** rely on the system's main **RAM** (shared memory), which impacts overall system performance.",
+                incorrect: "Since all three options are true, 'All of the above' is the complete answer."
+            }
+        },
+        {
+            question: "A software download page lists a GPU with at least 4 GB of VRAM as a requirement. Which type of graphics card is needed to fulfill this requirement?",
+            options: ["Integrated GPU", "CPU with on-chip graphics", "Motherboard chipset with graphics", "Dedicated Graphics Card (GPU)"],
+            correct: "Dedicated Graphics Card (GPU)",
+            explanation: {
+                correct: "**VRAM (Video RAM)** is memory physically located on the graphics card itself. Integrated graphics solutions typically **share** the system's main RAM and do not have dedicated VRAM; therefore, a requirement for a specific amount of VRAM necessitates a **Dedicated Graphics Card**.",
+                incorrect: "Integrated solutions (iGPU, on-chip graphics, chipset graphics) use system RAM and do not have true VRAM."
+            }
+        },
+        {
+            question: "Which statement correctly describes the use of VRAM?",
+            options: ["VRAM is another term for CPU cache", "VRAM is used by the CPU for general-purpose computing", "VRAM is a type of RAM optimized for graphics processing and is on the GPU", "VRAM stands for Volatile Read-Access Memory"],
+            correct: "VRAM is a type of RAM optimized for graphics processing and is on the GPU",
+            explanation: {
+                correct: "**VRAM** (Video Random Access Memory) is specialized, high-speed memory located **on the Graphics Processing Unit (GPU) itself**. It is optimized to hold graphics data (textures, frames, etc.) and allows the GPU to process graphics data much faster than using system RAM.",
+                incorrect: "VRAM is not CPU cache. The CPU uses **System RAM** (DRAM) for general computing. VRAM typically stands for Video Random Access Memory, not Volatile Read-Access Memory."
+            }
+        },
+        {
+            question: "A customer has a laptop that is running slowly. The technician determines that the laptop's performance issues stem from its reliance on an integrated graphics solution, which is consuming a significant portion of the system's shared RAM. Which hardware solution would mitigate this issue by providing the graphics processor with its own dedicated memory?",
+            options: ["Increase the size of the System RAM", "Upgrade the CPU to a multi-core model", "Update the Motherboard BIOS", "None of the above"],
+            correct: "None of the above",
+            explanation: {
+                correct: "Since it is a laptop, the graphics solution is usually fixed. The problem is the **lack of dedicated memory**. While increasing system RAM helps the *system*, it doesn't solve the core issue of shared memory bandwidth. Upgrading the CPU or BIOS does not add dedicated memory. The only true solution to *add* dedicated graphics memory is to replace the laptop with one that has a **Dedicated Graphics Card**, which is not one of the options, making **None of the above** the best answer among the choices.",
+                incorrect: "Increasing System RAM only means the iGPU has more shared pool to pull from, but it doesn't solve the core issue of the memory being shared with the CPU. CPU and BIOS upgrades won't add VRAM."
+            }
+        }
+    ];
+
+    const form = document.getElementById('practice-exam-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const scoreDisplay = document.getElementById('score-display');
+    const summaryContainer = document.getElementById('final-summary');
+
+    // Function to handle the immediate answer check and feedback display
+    function handleAnswer(qNum, userAnswer, q, questionBlock) {
+        const feedbackDiv = questionBlock.querySelector('.feedback');
+        const isCorrect = (userAnswer === q.correct);
+
+        // Disable all options for this question once an answer is selected
+        questionBlock.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
+
+        // Find and highlight the user's selection
+        const selectedItem = questionBlock.querySelector(`input[value="${userAnswer}"]`).parentElement;
+
+        // Clear previous feedback classes and set the new one
+        selectedItem.parentElement.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('correct-answer-highlight', 'user-selected-wrong');
+        });
+        feedbackDiv.className = 'feedback';
+        
+        let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+        if (isCorrect) {
+            selectedItem.classList.add('correct-answer-highlight');
+            feedbackDiv.classList.add('correct-feedback');
+            feedbackDiv.innerHTML = `✅ **Correct!** (Your Answer: ${userAnswer})<span class="explanation-text"><br>${explanationHTML}</span>`;
+        } else {
+            selectedItem.classList.add('user-selected-wrong');
+            feedbackDiv.classList.add('incorrect-feedback');
+            
+            // Highlight the correct answer
+            questionBlock.querySelectorAll('.option-item').forEach(item => {
+                if (item.querySelector('label').textContent === q.correct) {
+                    item.classList.add('correct-answer-highlight');
+                }
+            });
+
+            feedbackDiv.innerHTML = `❌ **Incorrect.** The correct answer is: <strong>${q.correct}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+        }
+        feedbackDiv.style.display = 'block';
+    }
+
+    // Function to render the quiz questions
+    function renderQuiz() {
+        form.innerHTML = ''; // Clear previous content
+        quizData.forEach((q, index) => {
+            const qNum = index + 1;
+            const questionBlock = document.createElement('div');
+            questionBlock.className = 'question-block';
+            questionBlock.id = `question-${qNum}`;
+
+            // Question Text
+            const questionText = document.createElement('p');
+            questionText.className = 'question-text';
+            questionText.textContent = `${qNum}. ${q.question}`;
+            questionBlock.appendChild(questionText);
+
+            // Options List
+            const optionsList = document.createElement('ul');
+            optionsList.className = 'options-list';
+
+            q.options.forEach((option, optionIndex) => {
+                const optionItem = document.createElement('li');
+                optionItem.className = 'option-item';
+
+                const radioInput = document.createElement('input');
+                radioInput.type = 'radio';
+                radioInput.name = `q${qNum}`;
+                radioInput.value = option;
+                radioInput.id = `q${qNum}-opt${optionIndex}`;
+
+                // Attach the immediate feedback handler
+                radioInput.onchange = (e) => handleAnswer(qNum, e.target.value, q, questionBlock);
+
+                const label = document.createElement('label');
+                label.htmlFor = `q${qNum}-opt${optionIndex}`;
+                label.textContent = option;
+
+                optionItem.appendChild(radioInput);
+                optionItem.appendChild(label);
+                optionsList.appendChild(optionItem);
+            });
+
+            questionBlock.appendChild(optionsList);
+
+            // Feedback container (hidden by default)
+            const feedback = document.createElement('div');
+            feedback.className = 'feedback';
+            questionBlock.appendChild(feedback);
+
+            form.appendChild(questionBlock);
+        });
+    }
+
+    // Function to display the final summary report
+    function displaySummary() {
+        summaryContainer.innerHTML = '<h2>Summary of All Questions and Detailed Answers</h2>';
+        quizData.forEach((q, index) => {
+            const div = document.createElement('div');
+            div.className = 'summary-question-detail';
+            
+            let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+            div.innerHTML = `
+                <p><strong>${index + 1}. ${q.question}</strong></p>
+                <p><strong>Correct Answer:</strong> ${q.correct}</p>
+                <p class="explanation-text">${explanationHTML}</p>
+            `;
+            summaryContainer.appendChild(div);
+        });
+        summaryContainer.style.display = 'block';
+    }
+
+    // Function to tally the final score and initiate the summary
+    function tallyFinalScore() {
+        let score = 0;
+        const totalQuestions = quizData.length;
+
+        quizData.forEach((q, index) => {
+            const qNum = index + 1;
+            const questionBlock = document.getElementById(`question-${qNum}`);
+            const selectedOption = document.querySelector(`input[name="q${qNum}"]:checked`);
+            
+            // If question was answered, tally score
+            if (selectedOption && selectedOption.value === q.correct) {
+                score++;
+            }
+            
+            // If unanswered, manually force the answer check to display the explanation
+            if (!selectedOption) {
+                // Temporarily create a fake value to trigger the answer display logic for unanswered questions
+                const feedbackDiv = questionBlock.querySelector('.feedback');
+                feedbackDiv.className = 'feedback incorrect-feedback';
+                
+                // Highlight the correct answer
+                questionBlock.querySelectorAll('.option-item').forEach(item => {
+                    if (item.querySelector('label').textContent === q.correct) {
+                        item.classList.add('correct-answer-highlight');
+                    }
+                });
+
+                let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+                feedbackDiv.innerHTML = `❌ **Question Unanswered.** The correct answer is: <strong>${q.correct}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+                feedbackDiv.style.display = 'block';
+            }
+
+            // Ensure all inputs are disabled upon submission
+            questionBlock.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
+        });
+        
+        // Display Final Score
+        scoreDisplay.textContent = `Final Score: ${score}/${totalQuestions} (${((score / totalQuestions) * 100).toFixed(2)}%)`;
+        scoreDisplay.style.display = 'block';
+        submitBtn.style.display = 'none';
+        resetBtn.style.display = 'inline-block';
+        
+        // Display the final summary report
+        displaySummary();
+    }
+
+    // Function to reset the quiz
+    function resetQuiz() {
+        document.getElementById('practice-exam-form').reset();
+        submitBtn.style.display = 'inline-block';
+        resetBtn.style.display = 'none';
+        scoreDisplay.style.display = 'none';
+        summaryContainer.style.display = 'none';
+
+        // Re-enable inputs and remove highlights/feedback
+        document.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = false);
+        
+        document.querySelectorAll('.feedback').forEach(div => div.style.display = 'none');
+        document.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('correct-answer-highlight', 'user-selected-wrong');
+        });
+    }
+
+    // Initialize Quiz and attach event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+        renderQuiz();
+        submitBtn.addEventListener('click', tallyFinalScore);
+        resetBtn.addEventListener('click', resetQuiz);
+    });
+</script>
+
+</body>
+</html>
