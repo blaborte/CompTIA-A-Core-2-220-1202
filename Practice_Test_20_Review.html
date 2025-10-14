@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompTIA A+ 220-1202 Practice Test 20 with Explanations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #D9232E; /* Matching the secondary accent from examcomp.html */
+            text-align: center;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #D9232E;
+        }
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+        .question-text {
+            font-size: 1.15em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+        .option-item {
+            display: block;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            transition: background-color 0.2s;
+        }
+        
+        /* Feedback Styling */
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 6px;
+            display: none;
+            font-size: 1em;
+            border-left: 5px solid;
+            white-space: pre-wrap;
+        }
+        .correct-feedback {
+            background-color: #e6ffec;
+            color: #155724;
+            border-color: #155724;
+        }
+        .incorrect-feedback {
+            background-color: #ffeded;
+            color: #721c24;
+            border-color: #721c24;
+        }
+        .explanation-text {
+            font-weight: normal;
+            margin-top: 5px;
+            display: block;
+        }
+        .correct-answer-highlight {
+            background-color: #28a745 !important;
+            color: white;
+            border-color: #1e7e34 !important;
+            font-weight: bold;
+        }
+        .user-selected-wrong {
+            background-color: #dc3545;
+            color: white;
+            border-color: #b02a37;
+            font-weight: bold;
+        }
+
+        /* Buttons and Score */
+        .quiz-controls {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .quiz-controls button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            margin: 0 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        #submit-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        #submit-btn:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        #submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        #reset-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        #reset-btn:hover {
+            background-color: #5a6268;
+        }
+        #score-display {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #e9ecef;
+            display: none;
+        }
+        #final-summary {
+            margin-top: 40px;
+            padding: 20px;
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            background-color: #f0f8ff;
+            display: none;
+        }
+        #final-summary h2 {
+            margin-top: 0;
+            color: #0056b3;
+            border-bottom: 1px solid #0056b3;
+            padding-bottom: 10px;
+        }
+        .summary-question-detail {
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        
+        /* Back Button Style */
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            text-decoration: none;
+            color: white;
+            background-color: #6c757d; 
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px; 
+            border: none;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="examcomp.html" class="back-button">&larr; Back to Practice Tests Menu</a>
+    
+    <h1>CompTIA A+ Certification Exam 220-1202 Practice Test 20</h1>
+    <p>Select an answer for each question to see the detailed explanation immediately.</p>
+    <form id="practice-exam-form">
+        </form>
+
+    <div class="quiz-controls">
+        <button id="submit-btn" type="button">Finish Exam & Show Final Summary</button>
+        <button id="reset-btn" type="button" style="display: none;">Reset Quiz</button>
+        <div id="score-display"></div>
+    </div>
+
+    <div id="final-summary">
+        </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "Which of the wireless encryption schemes listed below offers the highest level of protection?",
+            options: ["WEP", "WPA3", "TKIP", "WPS"],
+            correct: "WPA3",
+            explanation: {
+                correct: "**WPA3** (Wi-Fi Protected Access 3) is the newest and most secure wireless encryption standard, offering stronger encryption and enhanced protection against dictionary attacks compared to WPA2, WPA, and WEP.",
+                incorrect: "**WEP** is easily cracked. **TKIP** is an older, vulnerable encryption protocol. **WPS** is a simplified connection method, not an encryption scheme, and is insecure."
+            }
+        },
+        {
+            question: "Which of the following characteristics apply to the WPA2/WPA3 Personal mode? (Select 3)",
+            options: ["Provides unique login credentials for each user", "Typically deployed in business or enterprise networks", "Authentication through 802.1X with a RADIUS server", "Simple to set up without requiring extra infrastructure", "Commonly used in home or SOHO environments", "Authentication via a single, shared password"],
+            correct: ["Simple to set up without requiring extra infrastructure", "Commonly used in home or SOHO environments", "Authentication via a single, shared password"],
+            explanation: {
+                correct: "WPA Personal mode (also known as PSK or Pre-Shared Key) is designed for simplicity, using a **single, shared password**, and is thus common in **home and small office (SOHO) networks**. It **does not require** specialized infrastructure like a RADIUS server.",
+                incorrect: "The other options (unique credentials, business networks, 802.1X/RADIUS) describe the WPA **Enterprise** mode."
+            }
+        },
+        {
+            question: "Which of the answers listed below refer to the characteristic features of the WPA2/WPA3 Enterprise mode? (Select 3 answers)",
+            options: ["Authentication via a single, shared password", "Simple to set up without requiring extra infrastructure", "Typically deployed in business or enterprise networks", "Authentication through 802.1X with a RADIUS server", "Provides unique login credentials for each user", "Commonly used in home or SOHO environments"],
+            correct: ["Typically deployed in business or enterprise networks", "Authentication through 802.1X with a RADIUS server", "Provides unique login credentials for each user"],
+            explanation: {
+                correct: "WPA Enterprise mode is the professional standard, requiring a **RADIUS server** for **802.1X** authentication, which allows for **unique login credentials** for each employee and is used in **large business/enterprise networks**.",
+                incorrect: "Shared passwords and simplicity describe WPA Personal mode."
+            }
+        },
+        {
+            question: "Which of the following answers refers to a stopgap protocol introduced with WPA to replace WEP?",
+            options: ["AES", "TKIP", "CCMP", "RC4"],
+            correct: "TKIP",
+            explanation: {
+                correct: "**TKIP** (Temporal Key Integrity Protocol) was a temporary solution introduced with the original WPA standard to replace WEP. It addressed WEP's major flaws without requiring new hardware, but it is now considered insecure.",
+                incorrect: "**AES** is the strong encryption standard used in WPA2/WPA3. **CCMP** is the protocol using AES in WPA2."
+            }
+        },
+        {
+            question: "Which of the cryptographic algorithms listed below is the least vulnerable to attacks?",
+            options: ["AES", "DES", "RC4", "3DES"],
+            correct: "AES",
+            explanation: {
+                correct: "**AES** (Advanced Encryption Standard) is the current standard, highly resistant to attack, and is considered the strongest of the listed algorithms. It is used in WPA3, WPA2, and most modern encryption systems.",
+                incorrect: "**DES**, **3DES**, and **RC4** are all older protocols with known vulnerabilities, making them easier to compromise than AES."
+            }
+        },
+        {
+            question: "For a wireless client to be able to connect to a network, the security type (e.g., WEP, WPA, WPA2, or WPA3) and encryption type (e.g., TKIP or AES) settings on the connecting host must match the corresponding wireless security settings on a WAP.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "This statement is **True**. Successful connection to a Wi-Fi network requires the client device to match the **Security Type** (authentication method) and the **Encryption Type** (cryptographic algorithm) configured on the Wireless Access Point (WAP).",
+                incorrect: "Mismatching these settings will result in an inability to connect to the network."
+            }
+        },
+        {
+            question: "Which AAA solution uses UDP as its transport protocol, combines authentication and authorization, and is commonly deployed for network access control such as VPNs and Wi-Fi authentication?",
+            options: ["RADIUS", "LDAP", "TACACS+", "Kerberos"],
+            correct: "RADIUS",
+            explanation: {
+                correct: "**RADIUS** (Remote Authentication Dial-In User Service) is the centralized AAA protocol that uses **UDP**, typically **combines A&A**, and is the industry standard for network access control, especially for **Wi-Fi (802.1X)** and VPNs.",
+                incorrect: "**TACACS+** uses TCP and separates A&A. **Kerberos** is an authentication protocol, not a full AAA service."
+            }
+        },
+        {
+            question: "Which of the following AAA solutions relies on TCP, separates authentication, authorization, and accounting, and is commonly used for device administration in enterprise networks?",
+            options: ["OAuth", "TACACS+", "SAML", "RADIUS"],
+            correct: "TACACS+",
+            explanation: {
+                correct: "**TACACS+** (Terminal Access Controller Access Control System Plus) is a Cisco-developed AAA protocol that uses **TCP**, and critically, **separates A, A, and A** functionality, making it preferred for securing administrator access to network devices.",
+                incorrect: "**RADIUS** uses UDP and combines A&A. OAuth and SAML are federation protocols."
+            }
+        },
+        {
+            question: "Which of the answers listed below refers to the primary and default authentication protocol used in Windows Active Directory environments to enable SSO?",
+            options: ["RADIUS", "NTLM", "Kerberos", "MS-CHAP"],
+            correct: "Kerberos",
+            explanation: {
+                correct: "**Kerberos** is the default and preferred network authentication protocol used in **Windows Active Directory** to enable **Single Sign-On (SSO)** for users accessing domain resources.",
+                incorrect: "**NTLM** is a deprecated legacy protocol, and RADIUS is for network access control."
+            }
+        },
+        {
+            question: "Which of the following examples meets the requirement of multifactor authentication?",
+            options: ["Smart card and mobile digital key", "Password and biometric scan", "Username and pattern lock (on a device screen)", "Retina scan and voice recognition"],
+            correct: "Password and biometric scan",
+            explanation: {
+                correct: "**Multifactor Authentication (MFA)** requires using two or more distinct **authentication factors** (categories). **Password** is 'something you **know**', and a **biometric scan** is 'something you **are**'. This satisfies the requirement.",
+                incorrect: "Smart card (possession) and digital key (possession) are both 'something you **have**'. Retina scan and voice recognition are both 'something you **are**' (biometric). Username and pattern lock are both 'something you **know**'."
+            }
+        },
+        {
+            question: "A Trojan horse is a type of software that performs harmful actions under the guise of a legitimate and useful program. The most characteristic feature of a Trojan horse is that while it may function as a legitimate program and offer expected functionality, it also contains a concealed portion of malicious code that the user is unaware of.",
+            options: ["True", "False"],
+            correct: "True",
+            explanation: {
+                correct: "This is a precise and accurate definition of a **Trojan horse**. Its key trait is its deceptive appearance as a benign or desirable piece of software to trick the user into executing the malicious code.",
+                incorrect: "The statement is True."
+            }
+        },
+        {
+            question: "Which of the answers listed below refers to a collection of software tools used by a hacker to mask intrusion and obtain administrator-level access on a computer or network?",
+            options: ["Rootkit", "Spyware", "Backdoor", "Trojan"],
+            correct: "Rootkit",
+            explanation: {
+                correct: "A **Rootkit** is a stealthy collection of tools designed to obtain and maintain **administrator-level (root)** control over a computer system while actively hiding its presence from the operating system and security software.",
+                incorrect: "A **Backdoor** is a secret entry method. A **Trojan** is deceptive software. **Spyware** collects information."
+            }
+        },
+        {
+            question: "Which of the following statements apply to the definition of a computer virus? (Select 2 answers)",
+            options: ["A self-replicating computer program that contains a malicious segment", "Malicious code that typically attaches itself to an application or executable component", "A standalone malicious program that replicates itself over a network", "Malware that can operate independently without any interaction", "A self-contained malicious program that does not require a host to propagate"],
+            correct: ["A self-replicating computer program that contains a malicious segment", "Malicious code that typically attaches itself to an application or executable component"],
+            explanation: {
+                correct: "A **virus** is characterized by its need to **attach itself to a host program or file** (like an executable) and its ability to **self-replicate** and spread when that host program is executed.",
+                incorrect: "A 'standalone program that replicates over a network' describes a **worm**, which does not require a host file."
+            }
+        },
+        {
+            question: "Malicious software collecting information about users without their knowledge/consent is referred to as:",
+            options: ["Adware", "Cryptomalware", "Ransomware", "Spyware"],
+            correct: "Spyware",
+            explanation: {
+                correct: "**Spyware** is any malicious software specifically designed to covertly observe, record, and transmit information about a user's activities without their knowledge or consent.",
+                incorrect: "**Ransomware** restricts access to data. **Adware** displays unwanted ads."
+            }
+        },
+        {
+            question: "Malware that restricts access to a computer system by encrypting files or locking the entire system until the user performs a requested action is known as:",
+            options: ["Grayware", "Adware", "Ransomware", "Spyware"],
+            correct: "Ransomware",
+            explanation: {
+                correct: "**Ransomware** is a type of malicious software that blocks access to a system or data, typically by **encrypting files**, and demands a **ransom** payment for the decryption key or system release.",
+                incorrect: "**Grayware** is an ambiguous term for potentially unwanted software. **Adware** and **Spyware** have different primary objectives."
+            }
+        },
+        {
+            question: "Which of the answers listed below refer to examples of spyware? (Select 2 answers)",
+            options: ["Backdoor", "Stalkerware", "Keylogger", "Port scanner", "Rootkit"],
+            correct: ["Stalkerware", "Keylogger"],
+            explanation: {
+                correct: "**Spyware** includes malware designed to monitor and collect user data. A **Keylogger** captures keystrokes, and **Stalkerware** collects location, calls, and messages for continuous monitoring, both falling under the spyware category.",
+                incorrect: "**Rootkits** and **Backdoors** are used for access and concealment, not strictly information gathering."
+            }
+        },
+        {
+            question: "A type of malware that infects the storage drive area containing the necessary data and code used to start the OS is called:",
+            options: ["Rootkit", "Worm", "Boot sector virus", "Trojan horse"],
+            correct: "Boot sector virus",
+            explanation: {
+                correct: "A **Boot sector virus** specifically targets the **boot sector** (like the MBR or VBR) of a storage drive. This is the first code executed when the computer starts, allowing the virus to load before the operating system and making it difficult to detect or remove.",
+                incorrect: "A **Rootkit** hides its presence in the OS layer. A **Worm** is a self-replicating program."
+            }
+        },
+        {
+            question: "Which of the following answers refers to a malware type designed to exploit computing resources without the owner's consent?",
+            options: ["Adware", "PUP", "Fileless malware", "Cryptominer"],
+            correct: "Cryptominer",
+            explanation: {
+                correct: "A **Cryptominer** (or Cryptojacker) is malware that hijacks the host device's **CPU and/or GPU resources** to secretly **mine cryptocurrency** for the attacker, thereby exploiting computing resources without consent.",
+                incorrect: "**Adware** and **PUP**s typically focus on displaying ads or unwanted functions. **Fileless malware** describes a method of operation, not a goal."
+            }
+        },
+        {
+            question: "Which of the answers listed below describes the key characteristics of stalkerware? (Select best answer)",
+            options: ["Provides hidden remote access while transmitting user activity to an external party", "Captures on-screen output and periodic screenshots to reveal user activity", "Installs tracking cookies and monitors user activity across websites for profiling", "Collects location data, call logs, messages, and app usage for continuous monitoring"],
+            correct: "Collects location data, call logs, messages, and app usage for continuous monitoring",
+            explanation: {
+                correct: "**Stalkerware** is a specialized form of spyware designed for intimate partner or domestic surveillance. Its key characteristic is the comprehensive, **continuous collection of personal communication and location data** to track the victim in real-time.",
+                incorrect: "The first option is too broad (could be a general backdoor/RAT), and the others describe specific spyware functions (screen capture, cookies)."
+            }
+        },
+        {
+            question: "Fileless malware: (Select 3 answers)",
+            options: ["Modifies the boot sector of the storage drive for persistence", "Requires a rootkit to hide its presence on a drive", "Abuses legitimate operating system tools to execute code", "Operates entirely in RAM without writing its payload to storage", "Evades traditional signature-based antivirus detection"],
+            correct: ["Abuses legitimate operating system tools to execute code", "Operates entirely in RAM without writing its payload to storage", "Evades traditional signature-based antivirus detection"],
+            explanation: {
+                correct: "**Fileless malware** is advanced malware that **operates in memory (RAM)** and **abuses legitimate OS tools** (like PowerShell) to perform malicious activities, allowing it to **evade traditional signature-based AV** which looks for malicious files on the hard drive.",
+                incorrect: "It does not necessarily require a rootkit or modify the boot sector, as its primary goal is to avoid writing to the disk entirely."
+            }
+        },
+        {
+            question: "Which of the following statements can be used to describe a PUP? (Select all that apply)",
+            options: ["Installed with user consent but often without fully informed agreement", "Not explicitly classified as malware by AV software", "May adversely affect security or performance, compromise privacy, or display unsolicited ads", "Commonly bundled with other software", "Installed without user consent and considered illegal", "Explicitly detected and classified as malware by AV applications"],
+            correct: ["Installed with user consent but often without fully informed agreement", "Not explicitly classified as malware by AV software", "May adversely affect security or performance, compromise privacy, or display unsolicited ads", "Commonly bundled with other software"],
+            explanation: {
+                correct: "A **PUP** (Potentially Unwanted Program) is typically **bundled with other software**, installed with **uninformed consent**, **not always flagged as true malware** by AV, but can still **negatively affect system performance or privacy**.",
+                incorrect: "PUPs are typically installed with some form of 'consent' and are usually considered grayware, not explicitly illegal malware."
+            }
+        },
+        {
+            question: "In Windows 10 and 11, Windows Recovery Environment (WinRE) is the modern recovery and troubleshooting environment that replaces the legacy:",
+            options: ["Startup Repair", "Windows Boot Manager", "System Restore", "Recovery Console"],
+            correct: "Recovery Console",
+            explanation: {
+                correct: "**WinRE** (Windows Recovery Environment) is the modern, graphical troubleshooting environment in Windows 10/11 that effectively replaces the older, command-line only **Recovery Console** used in Windows XP and older OS versions.",
+                incorrect: "**Startup Repair** is a function *within* WinRE. **Windows Boot Manager** is a component of the boot process."
+            }
+        },
+        {
+            question: "Which of the answers listed below refers to a security solution that provides the capability for detection, analysis, response, and real-time monitoring of cyber threats at the device level?",
+            options: ["DLP", "IDS", "UTM", "EDR"],
+            correct: "EDR",
+            explanation: {
+                correct: "**EDR** stands for **Endpoint Detection and Response**. It is an advanced security solution focused on the **endpoint (device) level**, providing continuous monitoring, threat hunting, and automated response capabilities.",
+                incorrect: "**IDS** is focused on detection. **DLP** is for data leakage prevention. **UTM** is a firewall/router appliance."
+            }
+        },
+        {
+            question: "Which dedicated cybersecurity service offers continuous monitoring, threat detection, and incident response typically delivered by an external provider?",
+            options: ["SIEM", "MSP", "MDR", "SaaS"],
+            correct: "MDR",
+            explanation: {
+                correct: "**MDR** stands for **Managed Detection and Response**. This is a dedicated outsourced service provided by a third party, offering 24/7 **threat detection, human analysis, and incident response** capabilities.",
+                incorrect: "**MSP** is a general Managed Service Provider. **SIEM** is a security *tool*, not a service itself. **SaaS** is a general software delivery model."
+            }
+        },
+        {
+            question: "Which of the following acronyms refers to a unified cybersecurity approach that collects and correlates data across multiple security layers (such as endpoint, network, and cloud) for enhanced threat detection and response?",
+            options: ["UTM", "SWG", "XDR", "WAF"],
+            correct: "XDR",
+            explanation: {
+                correct: "**XDR** stands for **Extended Detection and Response**. It is a unified security platform that integrates detection and response capabilities across multiple security layers—**endpoint, network, cloud, and email**—to provide a more complete view of an attack.",
+                incorrect: "**EDR** is endpoint-only. **UTM** is an appliance. **WAF** is a web application firewall."
+            }
+        }
+    ];
+
+    const practiceExamForm = document.getElementById('practice-exam-form');
+    const submitButton = document.getElementById('submit-btn');
+    const resetButton = document.getElementById('reset-btn');
+    const scoreDisplayContainer = document.getElementById('score-display');
+    const summaryContainerElement = document.getElementById('final-summary');
+
+    // Function to handle the immediate answer check and feedback display
+    function handleAnswer(qIndex, userAnswer, q, questionBlock) {
+        const feedbackDiv = questionBlock.querySelector('.feedback');
+        
+        let isCorrect;
+        if (Array.isArray(q.correct)) {
+            // For simplicity in this single-select UI, we will only check if the selected answer is one of the correct ones
+            isCorrect = q.correct.includes(userAnswer);
+        } else {
+            isCorrect = (userAnswer === q.correct);
+        }
+
+        // Disable all options for this question once an answer is selected
+        questionBlock.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
+        questionBlock.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.disabled = true);
+
+        // Find and highlight the user's selection
+        const selectedInput = questionBlock.querySelector(`input[value="${userAnswer}"]`);
+        if (!selectedInput) return;
+
+        const selectedItem = selectedInput.parentElement;
+
+        // Clear previous feedback classes and set the new one
+        questionBlock.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('correct-answer-highlight', 'user-selected-wrong');
+        });
+        feedbackDiv.className = 'feedback';
+        
+        const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
+        let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+        if (isCorrect) {
+            selectedItem.classList.add('correct-answer-highlight');
+            feedbackDiv.classList.add('correct-feedback');
+            feedbackDiv.innerHTML = `✅ **Correct!** (Your Answer: ${userAnswer})<span class="explanation-text"><br>${explanationHTML}</span>`;
+        } else {
+            selectedItem.classList.add('user-selected-wrong');
+            feedbackDiv.classList.add('incorrect-feedback');
+            
+            // Highlight the correct answer(s)
+            questionBlock.querySelectorAll('.option-item').forEach(item => {
+                const itemLabel = item.querySelector('label').textContent;
+                if (Array.isArray(q.correct) ? q.correct.includes(itemLabel) : itemLabel === q.correct) {
+                    item.classList.add('correct-answer-highlight');
+                }
+            });
+
+            feedbackDiv.innerHTML = `❌ **Incorrect.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+        }
+        feedbackDiv.style.display = 'block';
+    }
+
+    // Function to render the quiz questions
+    function renderQuiz() {
+        practiceExamForm.innerHTML = '';
+        quizData.forEach((q, index) => {
+            const qNum = index + 1;
+            const questionBlock = document.createElement('div');
+            questionBlock.className = 'question-block';
+            questionBlock.id = `question-${qNum}`;
+            
+            const inputType = Array.isArray(q.correct) ? 'checkbox' : 'radio';
+
+            // Question Text
+            const questionText = document.createElement('p');
+            questionText.className = 'question-text';
+            // Add a note for multi-select questions
+            let selectNote = '';
+            if (Array.isArray(q.correct)) {
+                if (q.correct.length === 2) {
+                    selectNote = ' (Select 2 Answers)';
+                } else if (q.correct.length === 3) {
+                    selectNote = ' (Select 3 Answers)';
+                } else {
+                    selectNote = ' (Select all that apply)';
+                }
+            }
+            // Add note for best answer questions (single select)
+            if (inputType === 'radio' && q.question.includes("Select best answer")) {
+                 selectNote = ' (Select best answer)';
+            }
+            questionText.textContent = `${qNum}. ${q.question.replace(" (Select best answer)", "")}${selectNote}`;
+            questionBlock.appendChild(questionText);
+
+            // Options List
+            const optionsList = document.createElement('ul');
+            optionsList.className = 'options-list';
+
+            q.options.forEach((option, optionIndex) => {
+                const optionItem = document.createElement('li');
+                optionItem.className = 'option-item';
+
+                const radioInput = document.createElement('input');
+                radioInput.type = inputType;
+                radioInput.name = `q${qNum}`;
+                radioInput.value = option;
+                radioInput.id = `q${qNum}-opt${optionIndex}`;
+
+                // Attach the immediate feedback handler for single-select (radio)
+                if (inputType === 'radio') {
+                    radioInput.onchange = (e) => handleAnswer(qNum, e.target.value, q, questionBlock);
+                } 
+
+                const label = document.createElement('label');
+                label.htmlFor = `q${qNum}-opt${optionIndex}`;
+                label.textContent = option;
+
+                optionItem.appendChild(radioInput);
+                optionItem.appendChild(label);
+                optionsList.appendChild(optionItem);
+            });
+
+            questionBlock.appendChild(optionsList);
+
+            // Feedback container (hidden by default)
+            const feedback = document.createElement('div');
+            feedback.className = 'feedback';
+            questionBlock.appendChild(feedback);
+
+            practiceExamForm.appendChild(questionBlock);
+        });
+    }
+
+    // Function to display the final summary report
+    function displaySummary() {
+        summaryContainerElement.innerHTML = '<h2>Summary of All Questions and Detailed Answers</h2>';
+        quizData.forEach((q, index) => {
+            const div = document.createElement('div');
+            div.className = 'summary-question-detail';
+            
+            const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
+            let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+            div.innerHTML = `
+                <p><strong>${index + 1}. ${q.question}</strong></p>
+                <p><strong>Correct Answer:</strong> ${correctAnswersText}</p>
+                <p class="explanation-text">${explanationHTML}</p>
+            `;
+            summaryContainerElement.appendChild(div);
+        });
+        summaryContainerElement.style.display = 'block';
+    }
+
+    // Function to tally the final score and initiate the summary
+    function tallyFinalScore() {
+        let score = 0;
+        const totalQuestions = quizData.length;
+
+        quizData.forEach((q, index) => {
+            const qNum = index + 1;
+            const questionBlock = document.getElementById(`question-${qNum}`);
+            const inputType = Array.isArray(q.correct) ? 'checkbox' : 'radio';
+            
+            // Collect selected answer(s)
+            let selectedOptions = [];
+            questionBlock.querySelectorAll(`input[name="q${qNum}"]:checked`).forEach(input => {
+                selectedOptions.push(input.value);
+            });
+            
+            const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
+            const feedbackDiv = questionBlock.querySelector('.feedback');
+            
+            let isCorrect = false;
+
+            if (inputType === 'radio') {
+                const selectedOption = selectedOptions[0];
+                if (selectedOption && selectedOption === q.correct) {
+                    score++;
+                    isCorrect = true;
+                }
+                
+                // Manually trigger handleAnswer logic for score/display if unanswered or for final highlight
+                if (selectedOption) {
+                    handleAnswer(qNum, selectedOption, q, questionBlock);
+                } else {
+                    // Force display for unanswered questions
+                    feedbackDiv.className = 'feedback incorrect-feedback';
+                    questionBlock.querySelectorAll('.option-item').forEach(item => {
+                        if (item.querySelector('label').textContent === q.correct) {
+                            item.classList.add('correct-answer-highlight');
+                        }
+                    });
+
+                    let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+                    feedbackDiv.innerHTML = `❌ **Question Unanswered.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+                    feedbackDiv.style.display = 'block';
+                }
+
+            } else if (inputType === 'checkbox') {
+                // Multi-select scoring: must match all correct answers exactly
+                const correctSet = new Set(q.correct);
+                const selectedSet = new Set(selectedOptions);
+
+                // Check if the two sets are equal (same size and all elements match)
+                if (correctSet.size === selectedSet.size && [...correctSet].every(value => selectedSet.has(value))) {
+                    score++;
+                    isCorrect = true;
+                }
+                
+                // Display final feedback for multi-select
+                const isAnswered = selectedOptions.length > 0;
+                let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
+
+                feedbackDiv.className = 'feedback';
+                
+                // Highlight correct/incorrect items
+                questionBlock.querySelectorAll('.option-item').forEach(item => {
+                    const itemLabel = item.querySelector('label').textContent;
+                    const isCorrectOption = q.correct.includes(itemLabel);
+                    const isSelected = selectedOptions.includes(itemLabel);
+                    
+                    if (isCorrectOption) {
+                         item.classList.add('correct-answer-highlight');
+                    }
+                    if (isSelected && !isCorrectOption) {
+                        item.classList.add('user-selected-wrong');
+                    }
+                });
+                
+                if (isCorrect) {
+                    feedbackDiv.classList.add('correct-feedback');
+                    feedbackDiv.innerHTML = `✅ **Correct!** (Your Answers: ${selectedOptions.join(' AND ')})<span class="explanation-text"><br>${explanationHTML}</span>`;
+                } else if (isAnswered) {
+                    feedbackDiv.classList.add('incorrect-feedback');
+                    feedbackDiv.innerHTML = `❌ **Incorrect.** The correct answer is: <strong>${correctAnswersText}</strong>. You selected: ${selectedOptions.join(' AND ')}<span class="explanation-text"><br>${explanationHTML}</span>`;
+                } else {
+                    feedbackDiv.classList.add('incorrect-feedback');
+                    feedbackDiv.innerHTML = `❌ **Question Unanswered.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
+                }
+                feedbackDiv.style.display = 'block';
+            }
+
+            // Ensure all inputs are disabled upon submission
+            questionBlock.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
+            questionBlock.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.disabled = true);
+        });
+        
+        // Display Final Score
+        scoreDisplayContainer.textContent = `Final Score: ${score}/${totalQuestions} (${((score / totalQuestions) * 100).toFixed(2)}%)`;
+        scoreDisplayContainer.style.display = 'block';
+        submitButton.style.display = 'none';
+        resetButton.style.display = 'inline-block';
+        
+        // Display the final summary report
+        displaySummary();
+    }
+
+    // Function to reset the quiz
+    function resetQuiz() {
+        document.getElementById('practice-exam-form').reset();
+        submitButton.style.display = 'inline-block';
+        resetButton.style.display = 'none';
+        scoreDisplayContainer.style.display = 'none';
+        summaryContainerElement.style.display = 'none';
+
+        // Re-enable inputs and remove highlights/feedback
+        document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => input.disabled = false);
+        
+        document.querySelectorAll('.feedback').forEach(div => div.style.display = 'none');
+        document.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('correct-answer-highlight', 'user-selected-wrong');
+        });
+    }
+
+    // Initialize Quiz and attach event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+        renderQuiz();
+        submitButton.addEventListener('click', tallyFinalScore);
+        resetButton.addEventListener('click', resetQuiz);
+    });
+</script>
+
+</body>
+</html>
