@@ -6,139 +6,75 @@
     <title>Linux Command Challenge | A+ Core 2 Game</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-main: #f4f7f9;
-            --primary-accent: #0072C6;
-            --linux-accent: #FFA500;
-            --text-main: #212529;
-            --text-muted: #6c757d;
-            --card-bg: #ffffff;
-            --border-color: #e9ecef;
-            --success-color: #28a745;
-            --error-color: #dc3545;
-            --terminal-bg: #212529;
-            --terminal-text: #f8f9fa;
-        }
-
-        * { box-sizing: border-box; }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
         body {
-            font-family: "Poppins", sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
+            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: linear-gradient(135deg, #a8dadc 0%, #457b9d 100%);
+            overflow: hidden; padding: 20px; color: #fff;
+            /* DEBUG FIX: Added text-shadow for global readability */
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
+        .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.7; }
+        .shape-1 { width: 300px; height: 300px; top: 10%; left: 15%; background: linear-gradient(to right, #e63946, #f1faee); }
+        .shape-2 { width: 400px; height: 400px; bottom: 5%; right: 10%; background: linear-gradient(to right, #457b9d, #a8dadc); }
 
         #game-container {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 700px;
-            padding: 30px;
-            border-top: 5px solid var(--linux-accent);
-        }
-
-        h1 {
-            color: var(--linux-accent);
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        #task-prompt {
-            background-color: var(--bg-main);
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            font-size: 1.1em;
-            line-height: 1.6;
+            width: 90%; max-width: 700px; padding: 40px; border-radius: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             text-align: center;
-            border-left: 5px solid var(--linux-accent);
         }
 
+        h1 { margin: 0 0 20px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); color: #FFA500; /* Linux Accent */ }
+        #task-prompt {
+            padding: 20px; border-radius: 10px; margin-bottom: 25px; line-height: 1.6;
+            text-align: left; background: rgba(0, 0, 0, 0.2);
+        }
         .terminal {
-            background-color: var(--terminal-bg);
-            color: var(--terminal-text);
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            text-align: left;
+            background: rgba(0, 0, 0, 0.3); padding: 20px; border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace; text-align: left;
         }
-
-        .prompt-user {
-            color: #8AE234; /* Linux green prompt */
-        }
+        .prompt-user { color: #8AE234; text-shadow: none; }
+        .prompt-symbol { text-shadow: none; }
+        #command-input { background: transparent; border: none; color: #f1faee; font-family: inherit; font-size: 1em; width: 70%; text-shadow: none; }
+        #command-input:focus { outline: none; }
         
-        .prompt-symbol {
-            color: var(--terminal-text);
-        }
-
-        #command-input {
-            background: transparent;
-            border: none;
-            color: var(--terminal-text);
-            font-family: inherit;
-            font-size: 1em;
-            width: 70%;
-        }
-
-        #command-input:focus {
-            outline: none;
-        }
-        
-        #feedback {
-            font-size: 1.2em;
-            font-weight: 700;
-            margin-top: 20px;
-            height: 30px;
-        }
-        
-        .correct { color: var(--success-color); }
-        .incorrect { color: var(--error-color); }
-        
-        #score-display, #timer-display {
-            font-size: 1.2em;
-            margin-top: 15px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
+        #feedback { font-size: 1.2em; font-weight: 700; margin-top: 20px; height: 30px; }
+        .correct { color: #28a745; text-shadow: 0 0 5px #28a745; }
+        .incorrect { color: #e63946; text-shadow: 0 0 5px #e63946; }
+        #score-display, #timer-display { font-size: 1.2em; margin-top: 15px; color: #f1faee; opacity: 0.8; }
         .home-link {
-            display: inline-block;
-            margin-top: 25px;
-            color: var(--primary-accent);
-            text-decoration: none;
-            font-weight: 500;
+            display: inline-block; margin-top: 25px; color: #fff; text-decoration: none; font-weight: 500;
+            padding: 5px 10px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
         }
+        .home-link:hover { color: #457b9d; background: #f1faee; text-shadow: none; }
     </style>
 </head>
 <body>
-
+    <div class="background-container">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+    
     <div id="game-container">
         <h1>Linux Command Challenge</h1>
         <div id="task-prompt">Loading challenge...</div>
-        
         <div class="terminal">
             <label for="command-input">
                 <span class="prompt-user">user@a-plus-exam</span><span class="prompt-symbol">:~$ </span>
             </label>
             <input type="text" id="command-input" autocomplete="off" spellcheck="false" autofocus>
         </div>
-
         <div id="feedback"></div>
         <div id="score-display">Score: 0</div>
         <div id="timer-display">Time Left: 20</div>
     </div>
     <a href="index.html" class="home-link">&larr; Back to Main Menu</a>
-
+    
     <script>
         const challenges = [
             { task: "List the contents of the current directory in long format.", answer: "ls -l" },
@@ -148,7 +84,7 @@
             { task: "Change the owner of 'file.txt' to the user 'sandra'.", answer: "chown sandra file.txt" },
             { task: "Find lines containing the word 'error' in 'app.log'.", answer: "grep error app.log" },
             { task: "Execute the command 'apt update' with superuser privileges.", answer: "sudo apt update" },
-            { task: "Display the amount of free disk space on the system.", answer: "df -h" }
+            { task: "Display the amount of free disk space on the system in a human-readable format.", answer: "df -h" }
         ];
 
         let currentChallengeIndex = 0;

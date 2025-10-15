@@ -7,106 +7,174 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="/favicon.png">
 <style>
-    :root {
-        --bg-main: #f4f7f9;
-        --primary-accent: #0072C6;
-        --secondary-accent: #D9232E;
-        --text-main: #212529;
-        --text-muted: #6c757d;
-        --card-bg: #ffffff;
-        --border-color: #e9ecef;
-        --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #a8dadc 0%, #457b9d 100%);
+        overflow-y: auto;
+        padding: 40px 20px;
+        color: #fff;
+        /* DEBUG FIX: Added text-shadow for global readability */
+        text-shadow: 0 1px 3px rgba(0,0,0,0.5);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: "Poppins", sans-serif; background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; }
-    .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-    header { text-align: center; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
-    header h1 { font-size: 2.2em; color: var(--primary-accent); font-weight: 700; }
-    .content-card { background-color: var(--card-bg); border-radius: 10px; padding: 30px; box-shadow: var(--shadow-subtle); border: 1px solid var(--border-color); }
+    .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+    .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.7; }
+    .shape-1 { width: 300px; height: 300px; top: 10%; left: 15%; background: linear-gradient(to right, #e63946, #f1faee); }
+    .shape-2 { width: 400px; height: 400px; bottom: 5%; right: 10%; background: linear-gradient(to right, #457b9d, #a8dadc); }
     
-    /* Styles for the provided table */
-    .table-custom { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    .table-custom td { padding: 10px; border: 1px solid var(--border-color); }
-    .table-custom a { text-decoration: none; color: var(--primary-accent); font-weight: 500; }
-    .table-custom a:hover { text-decoration: underline; }
-    .content-card h2 { font-size: 1.5em; color: var(--text-main); margin-bottom: 10px; }
-    
-    .home-link { display: inline-block; margin-top: 30px; padding: 12px 25px; background-color: var(--primary-accent); color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 500; transition: background-color 0.2s; }
-    .home-link:hover { background-color: #005a9e; }
+    .container {
+        width: 90%;
+        max-width: 900px;
+        padding: 40px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        text-align: center;
+    }
+    header h1 {
+        font-size: 2.2em;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        margin-bottom: 30px;
+    }
+    h2 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        font-weight: 500;
+    }
+    .table-custom {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        overflow: hidden; /* Ensures border-radius is respected */
+    }
+    .table-custom td {
+        padding: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .table-custom a {
+        text-decoration: none;
+        color: #f1faee;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+    .table-custom a:hover {
+        text-decoration: underline;
+        color: #fff;
+    }
+    /* Style for the special red links */
+    .table-custom a.special-link {
+        color: #e63946;
+        font-weight: 700;
+        text-shadow: 0 0 5px rgba(0,0,0,0.7);
+    }
+    .table-custom a.special-link:hover {
+        color: #ff8a93;
+    }
+
+    .home-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 50px;
+        background: #e63946;
+        color: #fff;
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+        text-shadow: none;
+    }
+    .home-link:hover {
+        background: #457b9d;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    }
 </style>
 </head>
 <body>
+<div class="background-container">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+</div>
 <div class="container">
     <header><h1>External Practice Tests & Resources</h1></header>
     <main>
-        <div class="content-card">
-            <h2>CompTIA A+ Certification Exam Core 2 (220-1202) Practice Tests</h2>
-            <table class="table-custom">
-                <tr>
-                    <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-1-exam-220-1202" target="_blank">A+ Practice Test 1</a></td>
-                    <td><a href="Practice_Test_15_Review.html" style="color: var(--secondary-accent); font-weight: 700;" target="_blank">Practice Test 15</a></td>
-                </tr>
-                <tr>
-                    <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-2-exam-220-1202" target="_blank">A+ Practice Test 2</a></td>
-                    <td><a href="Practice_Test_16_Review.html" style="color: var(--secondary-accent); font-weight: 700;" target="_blank">Practice Test 16</a></td>
-                </tr>
-                <tr>
-                    <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-3-exam-220-1202" target="_blank">A+ Practice Test 3</a></td>
-                    <td><a href="Practice_Test_17_Review.html" style="color: var(--secondary-accent); font-weight: 700;" target="_blank">Practice Test 17</a></td>
-                </tr>
-                <tr>
-                    <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-4-exam-220-1202" target="_blank">A+ Practice Test 4</a></td>
-                    <td><a href="Practice_Test_18_Review.html" style="color: var(--secondary-accent); font-weight: 700;" target="_blank">Practice Test 18</a></td>
-                </tr>
-                <tr>
-                    <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-5-exam-220-1202" target="_blank">A+ Practice Test 5</a></td>
-                    <td><a href="Practice_Test_19_Review.html" style="color: var(--secondary-accent); font-weight: 700;" target="_blank">Practice Test 19</a></td>
-                </tr>
-                <tr>
-                    <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-6-exam-220-1202" target="_blank">A+ Practice Test 6</a></td>
-                    <td><a href="Practice_Test_20_Review.html" style="color: var(--secondary-accent); font-weight: 700;" target="_blank">Practice Test 20</a></td>
-                </tr>
-                <tr>
-                    <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-7-exam-220-1202" target="_blank">A+ Practice Test 7</a></td>
-                    <td>...</td>
-                </tr>
-                <tr>
-                    <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-8-exam-220-1202" target="_blank">A+ Practice Test 8</a></td>
-                    <td>...</td>
-                </tr>
-                <tr>
-                    <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-9-exam-220-1202" target="_blank">A+ Practice Test 9</a></td>
-                    <td>...</td>
-                </tr>
-                <tr>
-                    <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-10-exam-220-1202" target="_blank">A+ Practice Test 10</a></td>
-                    <td>...</td>
-                </tr>
-                <tr>
-                    <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-11-exam-220-1202" target="_blank">A+ Practice Test 11</a></td>
-                    <td>...</td>
-                </tr>
-                <tr>
-                    <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-12-exam-220-1202" target="_blank">A+ Practice Test 12</a></td>
-                    <td>...</td>
-                </tr>
-                <tr>
-                    <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-13-exam-220-1202" target="_blank">A+ Practice Test 13</a></td>
-                    <td>...</td>
-                </tr>
-                <tr>
-                    <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-14-exam-220-1202" target="_blank">A+ Practice Test 14</a></td>
-                    <td>...</td>
-                </tr>
-            </table>
+        <h2>CompTIA A+ Certification Exam Core 2 (220-1202) Practice Tests</h2>
+        <table class="table-custom">
+            <tr>
+                <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-1-exam-220-1202" target="_blank">A+ Practice Test 1</a></td>
+                <td><a href="Practice_Test_15_Review.html" class="special-link" target="_blank">Practice Test 15</a></td>
+            </tr>
+            <tr>
+                <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-2-exam-220-1202" target="_blank">A+ Practice Test 2</a></td>
+                <td><a href="Practice_Test_16_Review.html" class="special-link" target="_blank">Practice Test 16</a></td>
+            </tr>
+            <tr>
+                <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-3-exam-220-1202" target="_blank">A+ Practice Test 3</a></td>
+                <td><a href="Practice_Test_17_Review.html" class="special-link" target="_blank">Practice Test 17</a></td>
+            </tr>
+            <tr>
+                <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-4-exam-220-1202" target="_blank">A+ Practice Test 4</a></td>
+                <td><a href="Practice_Test_18_Review.html" class="special-link" target="_blank">Practice Test 18</a></td>
+            </tr>
+            <tr>
+                <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-5-exam-220-1202" target="_blank">A+ Practice Test 5</a></td>
+                <td><a href="Practice_Test_19_Review.html" class="special-link" target="_blank">Practice Test 19</a></td>
+            </tr>
+            <tr>
+                <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-6-exam-220-1202" target="_blank">A+ Practice Test 6</a></td>
+                <td><a href="Practice_Test_20_Review.html" class="special-link" target="_blank">Practice Test 20</a></td>
+            </tr>
+            <tr>
+                <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-7-exam-220-1202" target="_blank">A+ Practice Test 7</a></td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-8-exam-220-1202" target="_blank">A+ Practice Test 8</a></td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-9-exam-220-1202" target="_blank">A+ Practice Test 9</a></td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-10-exam-220-1202" target="_blank">A+ Practice Test 10</a></td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-11-exam-220-1202" target="_blank">A+ Practice Test 11</a></td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-12-exam-220-1202" target="_blank">A+ Practice Test 12</a></td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-13-exam-220-1202" target="_blank">A+ Practice Test 13</a></td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td><a href="https://www.examcompass.com/comptia-a-plus-certification-practice-test-14-exam-220-1202" target="_blank">A+ Practice Test 14</a></td>
+                <td>...</td>
+            </tr>
+        </table>
 
-            <table class="table-custom" style="margin-top: 40px;">
-                <tr>
-                    <td colspan="2"><a title="View the CompTIA A+ Core 2 220-1202 (V15) exam objectives document in PDF format" href="#" target="_blank">CompTIA A+ Core 2 220-1202 (V15) Exam Objectives</a></td>
-                </tr>
-            </table>
-            <a href="index.html" class="home-link">&larr; Back to Main Menu</a>
-        </div>
+        <table class="table-custom" style="margin-top: 40px;">
+            <tr>
+                <td colspan="2"><a title="View the CompTIA A+ Core 2 220-1202 (V15) exam objectives document in PDF format" href="objectives.html" target="_blank">CompTIA A+ Core 2 220-1202 (V15) Exam Objectives</a></td>
+            </tr>
+        </table>
+        <a href="index.html" class="home-link">&larr; Back to Main Menu</a>
     </main>
 </div>
 </body>

@@ -4,180 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CompTIA A+ 220-1202 Practice Test 17 with Explanations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f9;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #a8dadc 0%, #457b9d 100%);
+            background-attachment: fixed;
+            overflow-y: auto;
+            padding: 40px 20px;
+            color: #fff;
+            /* DEBUG FIX: Added text-shadow for global readability */
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
+        .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.7; }
+        .shape-1 { width: 300px; height: 300px; top: 10%; left: 15%; background: linear-gradient(to right, #e63946, #f1faee); }
+        .shape-2 { width: 400px; height: 400px; bottom: 5%; right: 10%; background: linear-gradient(to right, #457b9d, #a8dadc); }
+
         .container {
-            max-width: 900px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            width: 90%; max-width: 900px; padding: 40px; margin: 0 auto; border-radius: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        h1 {
-            color: #D9232E; /* Matching the secondary accent from examcomp.html */
-            text-align: center;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #D9232E;
-        }
-        .question-block {
-            margin-bottom: 30px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #ffffff;
-        }
-        .question-text {
-            font-size: 1.15em;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 15px;
-        }
-        .options-list {
-            list-style: none;
-            padding: 0;
-        }
+        h1 { color: #f1faee; text-align: center; padding-bottom: 15px; margin-bottom: 20px; border-bottom: 2px solid rgba(255,255,255,0.3); text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        .question-block { margin-bottom: 30px; padding: 20px; border-radius: 10px; background: rgba(0, 0, 0, 0.2); }
+        .question-text { font-size: 1.15em; font-weight: bold; margin-bottom: 15px; }
+        .options-list { list-style: none; padding: 0; }
         .option-item {
-            display: block;
-            margin: 10px 0;
-            padding: 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 1px solid #ccc;
+            display: flex; align-items: center; margin: 10px 0; padding: 12px;
+            border-radius: 6px; cursor: pointer; border: 1px solid rgba(255,255,255,0.3);
             transition: background-color 0.2s;
         }
+        .option-item:hover { background-color: rgba(255,255,255,0.1); }
+        .option-item input[type="radio"], .option-item input[type="checkbox"] { margin-right: 15px; }
         
         /* Feedback Styling */
-        .feedback {
-            margin-top: 15px;
-            font-weight: bold;
-            padding: 10px 15px;
-            border-radius: 6px;
-            display: none;
-            font-size: 1em;
-            border-left: 5px solid;
-            white-space: pre-wrap;
-        }
-        .correct-feedback {
-            background-color: #e6ffec;
-            color: #155724;
-            border-color: #155724;
-        }
-        .incorrect-feedback {
-            background-color: #ffeded;
-            color: #721c24;
-            border-color: #721c24;
-        }
-        .explanation-text {
-            font-weight: normal;
-            margin-top: 5px;
-            display: block;
-        }
-        .correct-answer-highlight {
-            background-color: #28a745 !important;
-            color: white;
-            border-color: #1e7e34 !important;
-            font-weight: bold;
-        }
-        .user-selected-wrong {
-            background-color: #dc3545;
-            color: white;
-            border-color: #b02a37;
-            font-weight: bold;
-        }
+        .feedback { margin-top: 15px; font-weight: bold; padding: 15px; border-radius: 6px; display: none; border-left: 5px solid; }
+        .correct-feedback { background-color: rgba(40, 167, 69, 0.2); color: #f1faee; border-color: #28a745; }
+        .incorrect-feedback { background-color: rgba(220, 53, 69, 0.2); color: #f1faee; border-color: #dc3545; }
+        .explanation-text { font-weight: normal; margin-top: 5px; display: block; opacity: 0.9; }
+        .correct-answer-highlight { background-color: rgba(40, 167, 69, 0.4) !important; border-color: #28a745 !important; }
+        .user-selected-wrong { background-color: rgba(220, 53, 69, 0.4) !important; border-color: #dc3545 !important; }
 
-        /* Buttons and Score */
-        .quiz-controls {
-            text-align: center;
-            margin-top: 40px;
+        /* Buttons, Score, Summary */
+        .quiz-controls { text-align: center; margin-top: 40px; }
+        .quiz-controls button, .back-button {
+            padding: 12px 25px; font-size: 1.1em; margin: 0 10px; cursor: pointer;
+            border: none; border-radius: 50px; color: #fff; font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+            text-shadow: none;
         }
-        .quiz-controls button {
-            padding: 12px 25px;
-            font-size: 1.1em;
-            margin: 0 10px;
-            cursor: pointer;
-            border: none;
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
-        }
-        #submit-btn {
-            background-color: #007bff;
-            color: white;
-        }
-        #submit-btn:hover:not(:disabled) {
-            background-color: #0056b3;
-        }
-        #submit-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        #reset-btn {
-            background-color: #6c757d;
-            color: white;
-        }
-        #reset-btn:hover {
-            background-color: #5a6268;
-        }
-        #score-display {
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #e9ecef;
-            display: none;
-        }
-        #final-summary {
-            margin-top: 40px;
-            padding: 20px;
-            border: 2px solid #0056b3;
-            border-radius: 8px;
-            background-color: #f0f8ff;
-            display: none;
-        }
-        #final-summary h2 {
-            margin-top: 0;
-            color: #0056b3;
-            border-bottom: 1px solid #0056b3;
-            padding-bottom: 10px;
-        }
-        .summary-question-detail {
-            border-bottom: 1px dashed #ccc;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
-        
-        /* NEW: Back Button Style */
-        .back-button {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 1em;
-            text-decoration: none;
-            color: white;
-            background-color: #6c757d; /* A neutral gray, matching reset button */
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
-            margin-bottom: 20px; /* Space it from the h1 */
-            border: none;
-        }
-        .back-button:hover {
-            background-color: #5a6268;
-        }
+        .quiz-controls button:hover:not(:disabled), .back-button:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); }
+        #submit-btn { background-color: #e63946; }
+        #submit-btn:hover:not(:disabled) { background-color: #c02a36; }
+        #reset-btn, .back-button { background-color: #457b9d; }
+        #reset-btn:hover, .back-button:hover { background-color: #1d3557; }
+        .back-button { text-decoration: none; display: inline-block; margin-bottom: 20px; font-size: 1em; }
+        #score-display, #final-summary { margin-top: 20px; padding: 15px; border-radius: 8px; background: rgba(0,0,0,0.3); display: none; }
     </style>
 </head>
 <body>
-
+<div class="background-container">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+</div>
 <div class="container">
     <a href="examcomp.html" class="back-button">&larr; Back to Practice Tests Menu</a>
     
     <h1>CompTIA A+ Certification Exam 220-1202 Practice Test 17</h1>
-    <p>Select an answer for each question to see the detailed explanation immediately.</p>
+    <p style="text-align: center; opacity: 0.9;">Select an answer for each question to see the detailed explanation immediately.</p>
     <form id="practice-exam-form">
         </form>
 
@@ -432,47 +332,33 @@
         
         let isCorrect;
         if (Array.isArray(q.correct)) {
-            // For simplicity in this single-select UI, we will only check if the selected answer is one of the correct ones
-            isCorrect = q.correct.includes(userAnswer);
+            const selectedOptions = Array.from(questionBlock.querySelectorAll(`input[name="q${qIndex+1}"]:checked`)).map(input => input.value);
+            const correctSet = new Set(q.correct);
+            const selectedSet = new Set(selectedOptions);
+            isCorrect = correctSet.size === selectedSet.size && [...correctSet].every(value => selectedSet.has(value));
         } else {
             isCorrect = (userAnswer === q.correct);
         }
 
-        // Disable all options for this question once an answer is selected
-        questionBlock.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
-        questionBlock.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.disabled = true);
+        questionBlock.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => input.disabled = true);
 
-        // Find and highlight the user's selection
-        const selectedInput = questionBlock.querySelector(`input[value="${userAnswer}"]`);
-        if (!selectedInput) return;
-
-        const selectedItem = selectedInput.parentElement;
-
-        // Clear previous feedback classes and set the new one
-        questionBlock.querySelectorAll('.option-item').forEach(item => {
-            item.classList.remove('correct-answer-highlight', 'user-selected-wrong');
-        });
-        feedbackDiv.className = 'feedback';
-        
         const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
         let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
 
-        if (isCorrect) {
-            selectedItem.classList.add('correct-answer-highlight');
-            feedbackDiv.classList.add('correct-feedback');
-            feedbackDiv.innerHTML = `✅ **Correct!** (Your Answer: ${userAnswer})<span class="explanation-text"><br>${explanationHTML}</span>`;
-        } else {
-            selectedItem.classList.add('user-selected-wrong');
-            feedbackDiv.classList.add('incorrect-feedback');
+        questionBlock.querySelectorAll('.option-item').forEach(item => {
+            const itemLabel = item.querySelector('label').textContent;
+            const isCorrectOption = Array.isArray(q.correct) ? q.correct.includes(itemLabel) : itemLabel === q.correct;
+            const isSelected = Array.isArray(q.correct) ? userAnswer.includes(itemLabel) : itemLabel === userAnswer;
             
-            // Highlight the correct answer(s)
-            questionBlock.querySelectorAll('.option-item').forEach(item => {
-                const itemLabel = item.querySelector('label').textContent;
-                if (Array.isArray(q.correct) ? q.correct.includes(itemLabel) : itemLabel === q.correct) {
-                    item.classList.add('correct-answer-highlight');
-                }
-            });
+            if(isCorrectOption) item.classList.add('correct-answer-highlight');
+            if(isSelected && !isCorrectOption) item.classList.add('user-selected-wrong');
+        });
 
+        if (isCorrect) {
+            feedbackDiv.classList.add('correct-feedback');
+            feedbackDiv.innerHTML = `✅ **Correct!**<span class="explanation-text"><br>${explanationHTML}</span>`;
+        } else {
+            feedbackDiv.classList.add('incorrect-feedback');
             feedbackDiv.innerHTML = `❌ **Incorrect.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
         }
         feedbackDiv.style.display = 'block';
@@ -488,57 +374,72 @@
             questionBlock.id = `question-${qNum}`;
             
             const inputType = Array.isArray(q.correct) ? 'checkbox' : 'radio';
-
-            // Question Text
-            const questionText = document.createElement('p');
-            questionText.className = 'question-text';
-            // Add a note for multi-select questions
             const selectNote = Array.isArray(q.correct) ? ' (Select 3 Answers)' : '';
-            questionText.textContent = `${qNum}. ${q.question}${selectNote}`;
-            questionBlock.appendChild(questionText);
 
-            // Options List
-            const optionsList = document.createElement('ul');
-            optionsList.className = 'options-list';
+            questionBlock.innerHTML = `<p class="question-text">${qNum}. ${q.question}${selectNote}</p><ul class="options-list"></ul><div class="feedback"></div>`;
+            const optionsList = questionBlock.querySelector('.options-list');
 
             q.options.forEach((option, optionIndex) => {
                 const optionItem = document.createElement('li');
                 optionItem.className = 'option-item';
-
-                const radioInput = document.createElement('input');
-                radioInput.type = inputType;
-                radioInput.name = `q${qNum}`;
-                radioInput.value = option;
-                radioInput.id = `q${qNum}-opt${optionIndex}`;
-
-                // Attach the immediate feedback handler for single-select (radio)
+                optionItem.innerHTML = `<input type="${inputType}" name="q${qNum}" value="${option}" id="q${qNum}-opt${optionIndex}"><label for="q${qNum}-opt${optionIndex}">${option}</label>`;
+                
                 if (inputType === 'radio') {
-                    radioInput.onchange = (e) => handleAnswer(qNum, e.target.value, q, questionBlock);
-                } 
-
-                const label = document.createElement('label');
-                label.htmlFor = `q${qNum}-opt${optionIndex}`;
-                label.textContent = option;
-
-                optionItem.appendChild(radioInput);
-                optionItem.appendChild(label);
+                    optionItem.querySelector('input').onchange = (e) => handleAnswer(index, e.target.value, q, questionBlock);
+                }
                 optionsList.appendChild(optionItem);
             });
-
-            questionBlock.appendChild(optionsList);
-
-            // Feedback container (hidden by default)
-            const feedback = document.createElement('div');
-            feedback.className = 'feedback';
-            questionBlock.appendChild(feedback);
+            
+            if (inputType === 'checkbox') {
+                const checkButton = document.createElement('button');
+                checkButton.textContent = "Check Answer";
+                checkButton.type = "button";
+                checkButton.onclick = () => {
+                     const selectedOptions = Array.from(questionBlock.querySelectorAll(`input[name="q${qNum}"]:checked`)).map(input => input.value);
+                     handleAnswer(index, selectedOptions, q, questionBlock);
+                };
+                questionBlock.appendChild(checkButton);
+            }
 
             practiceExamForm.appendChild(questionBlock);
         });
     }
 
+    function tallyFinalScore() {
+        let score = 0;
+        quizData.forEach((q, index) => {
+             const questionBlock = document.getElementById(`question-${index + 1}`);
+             const selectedInputs = questionBlock.querySelectorAll('input:checked');
+             
+             let isCorrect = false;
+             if (Array.isArray(q.correct)) {
+                 const selectedValues = Array.from(selectedInputs).map(i => i.value);
+                 const correctSet = new Set(q.correct);
+                 const selectedSet = new Set(selectedValues);
+                 if (correctSet.size === selectedSet.size && [...correctSet].every(v => selectedSet.has(v))) {
+                     isCorrect = true;
+                 }
+                 if(selectedInputs.length > 0) handleAnswer(index, selectedValues, q, questionBlock);
+
+             } else {
+                 if (selectedInputs.length === 1 && selectedInputs[0].value === q.correct) {
+                     isCorrect = true;
+                 }
+             }
+             if (isCorrect) score++;
+        });
+
+        const totalQuestions = quizData.length;
+        scoreDisplayContainer.textContent = `Final Score: ${score}/${totalQuestions} (${((score / totalQuestions) * 100).toFixed(2)}%)`;
+        scoreDisplayContainer.style.display = 'block';
+        submitButton.style.display = 'none';
+        resetButton.style.display = 'inline-block';
+        displaySummary();
+    }
+
     // Function to display the final summary report
     function displaySummary() {
-        summaryContainerElement.innerHTML = '<h2>Summary of All Questions and Detailed Answers</h2>';
+         summaryContainerElement.innerHTML = '<h2>Summary of All Questions and Detailed Answers</h2>';
         quizData.forEach((q, index) => {
             const div = document.createElement('div');
             div.className = 'summary-question-detail';
@@ -556,129 +457,17 @@
         summaryContainerElement.style.display = 'block';
     }
 
-    // Function to tally the final score and initiate the summary
-    function tallyFinalScore() {
-        let score = 0;
-        const totalQuestions = quizData.length;
-
-        quizData.forEach((q, index) => {
-            const qNum = index + 1;
-            const questionBlock = document.getElementById(`question-${qNum}`);
-            const inputType = Array.isArray(q.correct) ? 'checkbox' : 'radio';
-            
-            // Collect selected answer(s)
-            let selectedOptions = [];
-            questionBlock.querySelectorAll(`input[name="q${qNum}"]:checked`).forEach(input => {
-                selectedOptions.push(input.value);
-            });
-            
-            const correctAnswersText = Array.isArray(q.correct) ? q.correct.join(' AND ') : q.correct;
-            const feedbackDiv = questionBlock.querySelector('.feedback');
-            
-            let isCorrect = false;
-
-            if (inputType === 'radio') {
-                const selectedOption = selectedOptions[0];
-                if (selectedOption && selectedOption === q.correct) {
-                    score++;
-                    isCorrect = true;
-                }
-                
-                // Manually trigger handleAnswer logic for score/display if unanswered or for final highlight
-                if (selectedOption) {
-                    // For single-select, re-run to ensure proper final highlighting/feedback on submit
-                    handleAnswer(qNum, selectedOption, q, questionBlock);
-                } else {
-                    // Force display for unanswered questions
-                    feedbackDiv.className = 'feedback incorrect-feedback';
-                    questionBlock.querySelectorAll('.option-item').forEach(item => {
-                        if (item.querySelector('label').textContent === q.correct) {
-                            item.classList.add('correct-answer-highlight');
-                        }
-                    });
-
-                    let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
-                    feedbackDiv.innerHTML = `❌ **Question Unanswered.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
-                    feedbackDiv.style.display = 'block';
-                }
-
-            } else if (inputType === 'checkbox') {
-                // Multi-select scoring: must match all correct answers exactly
-                const correctSet = new Set(q.correct);
-                const selectedSet = new Set(selectedOptions);
-
-                // Check if the two sets are equal (same size and all elements match)
-                if (correctSet.size === selectedSet.size && [...correctSet].every(value => selectedSet.has(value))) {
-                    score++;
-                    isCorrect = true;
-                }
-                
-                // Display final feedback for multi-select
-                const isAnswered = selectedOptions.length > 0;
-                let explanationHTML = `<strong>Explanation:</strong> ${q.explanation.correct}<br><br><strong>Why the others are wrong:</strong> ${q.explanation.incorrect}`;
-
-                feedbackDiv.className = 'feedback';
-                
-                // Highlight correct/incorrect items
-                questionBlock.querySelectorAll('.option-item').forEach(item => {
-                    const itemLabel = item.querySelector('label').textContent;
-                    const isCorrectOption = q.correct.includes(itemLabel);
-                    const isSelected = selectedOptions.includes(itemLabel);
-                    
-                    if (isCorrectOption) {
-                         item.classList.add('correct-answer-highlight');
-                    }
-                    if (isSelected && !isCorrectOption) {
-                        item.classList.add('user-selected-wrong');
-                    }
-                });
-                
-                if (isCorrect) {
-                    feedbackDiv.classList.add('correct-feedback');
-                    feedbackDiv.innerHTML = `✅ **Correct!** (Your Answers: ${selectedOptions.join(' AND ')})<span class="explanation-text"><br>${explanationHTML}</span>`;
-                } else if (isAnswered) {
-                    feedbackDiv.classList.add('incorrect-feedback');
-                    feedbackDiv.innerHTML = `❌ **Incorrect.** The correct answer is: <strong>${correctAnswersText}</strong>. You selected: ${selectedOptions.join(' AND ')}<span class="explanation-text"><br>${explanationHTML}</span>`;
-                } else {
-                    feedbackDiv.classList.add('incorrect-feedback');
-                    feedbackDiv.innerHTML = `❌ **Question Unanswered.** The correct answer is: <strong>${correctAnswersText}</strong><span class="explanation-text"><br>${explanationHTML}</span>`;
-                }
-                feedbackDiv.style.display = 'block';
-            }
-
-            // Ensure all inputs are disabled upon submission
-            questionBlock.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
-            questionBlock.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.disabled = true);
-        });
-        
-        // Display Final Score
-        scoreDisplayContainer.textContent = `Final Score: ${score}/${totalQuestions} (${((score / totalQuestions) * 100).toFixed(2)}%)`;
-        scoreDisplayContainer.style.display = 'block';
-        submitButton.style.display = 'none';
-        resetButton.style.display = 'inline-block';
-        
-        // Display the final summary report
-        displaySummary();
-    }
-
     // Function to reset the quiz
     function resetQuiz() {
-        document.getElementById('practice-exam-form').reset();
+        practiceExamForm.innerHTML = ''; // Clear old form
+        renderQuiz(); // Re-render the form from scratch
+        
         submitButton.style.display = 'inline-block';
         resetButton.style.display = 'none';
         scoreDisplayContainer.style.display = 'none';
         summaryContainerElement.style.display = 'none';
-
-        // Re-enable inputs and remove highlights/feedback
-        document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => input.disabled = false);
-        
-        document.querySelectorAll('.feedback').forEach(div => div.style.display = 'none');
-        document.querySelectorAll('.option-item').forEach(item => {
-            item.classList.remove('correct-answer-highlight', 'user-selected-wrong');
-        });
     }
 
-    // Initialize Quiz and attach event listeners
     document.addEventListener('DOMContentLoaded', () => {
         renderQuiz();
         submitButton.addEventListener('click', tallyFinalScore);
@@ -688,3 +477,5 @@
 
 </body>
 </html>
+}
+update the Practice_Test_17_Review file with the contents inside this test file retaining the glass look design with updated text colors so that it is more visible

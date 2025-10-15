@@ -7,52 +7,65 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="/favicon.png">
 <style>
-    :root {
-        --bg-main: #f4f7f9;
-        --primary-accent: #0072C6;
-        --secondary-accent: #D9232E;
-        --text-main: #212529;
-        --text-muted: #6c757d;
-        --text-light: #ffffff;
-        --card-bg: #ffffff;
-        --border-color: #e9ecef;
-        --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
     html { scroll-behavior: smooth; }
     body {
-        font-family: "Poppins", sans-serif;
-        background-color: var(--bg-main);
-        color: var(--text-main);
-        line-height: 1.6;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
         min-height: 100vh;
+        background: linear-gradient(135deg, #a8dadc 0%, #457b9d 100%);
+        background-attachment: fixed;
+        overflow-y: auto;
+        padding: 40px 20px;
+        color: #fff;
+        /* DEBUG FIX: Added text-shadow for global readability */
+        text-shadow: 0 1px 3px rgba(0,0,0,0.5);
     }
-    .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; width: 100%; }
-    header { text-align: center; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
-    header h1 { font-size: 2.2em; color: var(--primary-accent); font-weight: 700; }
-    header p { color: var(--text-muted); font-size: 1.1em; }
-    .content-card { background-color: var(--card-bg); border-radius: 10px; padding: 30px; box-shadow: var(--shadow-subtle); border: 1px solid var(--border-color); }
-    .content-card h2 { font-size: 1.6em; color: var(--primary-accent); border-bottom: 2px solid var(--primary-accent); padding-bottom: 10px; margin-bottom: 20px; }
-    .content-card h3 { font-size: 1.3em; margin-top: 25px; margin-bottom: 10px; color: var(--text-main); }
-    .content-card p, .content-card li { color: var(--text-muted); font-size: 1em; }
+    .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+    .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.7; }
+    .shape-1 { width: 300px; height: 300px; top: 10%; left: 15%; background: linear-gradient(to right, #e63946, #f1faee); }
+    .shape-2 { width: 400px; height: 400px; bottom: 5%; right: 10%; background: linear-gradient(to right, #457b9d, #a8dadc); }
+
+    .container {
+        width: 90%; max-width: 900px; padding: 40px; margin: 0 auto; border-radius: 20px;
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    header { text-align: center; margin-bottom: 30px; }
+    header h1 { font-size: 2.2em; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+    header p { opacity: 0.9; }
+    
+    .content-card h2 { font-size: 1.6em; border-bottom: 2px solid rgba(255, 255, 255, 0.3); padding-bottom: 10px; margin-bottom: 20px; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+    .content-card h3 { font-size: 1.3em; margin-top: 25px; margin-bottom: 10px; }
+    .content-card p, .content-card li { opacity: 0.9; }
     .content-card ul { list-style-type: none; padding-left: 0; }
-    .content-card li { background-color: var(--bg-main); margin-bottom: 10px; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary-accent); }
-    .content-card strong { color: var(--text-main); font-weight: 600; }
+    .content-card li { background: rgba(0, 0, 0, 0.2); margin-bottom: 10px; padding: 15px; border-radius: 8px; border-left: 4px solid #a8dadc; }
+    .content-card strong { color: #f1faee; font-weight: 600; }
+    
     .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center; margin-bottom: 25px; }
-    .summary-item { background: var(--bg-main); padding: 20px; border-radius: 8px; }
-    .summary-item .label { font-size: 0.9em; color: var(--text-muted); }
-    .summary-item .value { font-size: 1.5em; font-weight: 700; color: var(--primary-accent); }
-    .home-link { display: inline-block; margin-top: 30px; padding: 12px 25px; background-color: var(--primary-accent); color: var(--text-light); text-decoration: none; border-radius: 8px; font-weight: 500; transition: background-color 0.2s; }
-    .home-link:hover { background-color: #005a9e; }
-    .video-link { display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: var(--secondary-accent); color: var(--text-light); text-decoration: none; border-radius: 8px; font-weight: 500; transition: background-color 0.2s; }
-    .video-link:hover { background-color: #b81c26; }
+    .summary-item { background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 8px; }
+    .summary-item .label { font-size: 0.9em; opacity: 0.8; }
+    .summary-item .value { font-size: 1.5em; font-weight: 700; color: #f1faee; }
+    
+    .home-link, .video-link {
+        display: inline-block; text-align: center; margin-top: 20px; padding: 12px 25px; border: none; border-radius: 50px;
+        color: #fff; font-weight: bold; text-decoration: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+        text-shadow: none;
+    }
+    .home-link { background: #457b9d; }
+    .video-link { background: #e63946; margin-right: 10px; }
+    .home-link:hover { background: #1d3557; transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); }
+    .video-link:hover { background: #d02a36; transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); }
 </style>
 </head>
 <body>
-
+<div class="background-container">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+</div>
 <div class="container">
     <header>
         <h1>A+ Core 2 (220-1202) Exam Details</h1>
@@ -76,17 +89,17 @@
                     <div class="value">MCQ & PBQ</div>
                 </div>
             </div>
-            <p>To pass, you must achieve a score of **700** on a scale of 100-900. The exam features a mix of multiple-choice questions (MCQs), drag-and-drop, and performance-based questions (PBQs) that test your hands-on skills.</p>
+            <p>To pass, you must achieve a score of <strong>700</strong> on a scale of 100-900. The exam features a mix of multiple-choice questions (MCQs), drag-and-drop, and performance-based questions (PBQs) that test your hands-on skills.</p>
             
             <h2>Core Exam Domains</h2>
             <ul>
                 <li>
                     <h3>Operating Systems (28%)</h3>
-                    <p>Covers installation, configuration, and management of **Windows, macOS, and Linux**. Includes knowledge of command-line tools, system utilities, and file systems.</p>
+                    <p>Covers installation, configuration, and management of <strong>Windows, macOS, and Linux</strong>. Includes knowledge of command-line tools, system utilities, and file systems.</p>
                 </li>
                 <li>
                     <h3>Security (28%)</h3>
-                    <p>Focuses on identifying and mitigating security threats. Topics include **malware removal, security protocols, encryption**, and best practices for securing networks and devices.</p>
+                    <p>Focuses on identifying and mitigating security threats. Topics include <strong>malware removal, security protocols, encryption</strong>, and best practices for securing networks and devices.</p>
                 </li>
                 <li>
                     <h3>Software Troubleshooting (23%)</h3>
@@ -94,12 +107,11 @@
                 </li>
                 <li>
                     <h3>Operational Procedures (21%)</h3>
-                    <p>Covers best practices for IT professionals, such as **documentation, safety procedures, backup and recovery**, and professional communication.</p>
+                    <p>Covers best practices for IT professionals, such as <strong>documentation, safety procedures, backup and recovery</strong>, and professional communication.</p>
                 </li>
             </ul>
 
             <a href="https://www.youtube.com/watch?v=AIfIA7hEgrw" target="_blank" class="video-link">Watch Professor Messer's Overview</a>
-            <br>
             <a href="index.html" class="home-link">&larr; Back to Main Menu</a>
         </div>
     </main>

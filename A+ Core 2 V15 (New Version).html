@@ -5,134 +5,247 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CompTIA A+ Core 2 (220-1202) Exam Details & Objectives</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --bg-gradient-start: #a8dadc;
+            --bg-gradient-end: #457b9d;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-light: #f1faee;
+            --text-muted: #d1d1d1;
+            --accent-primary: #e63946;
+            --accent-secondary: #f1faee;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { 
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-light); 
+            line-height: 1.7;
+            padding: 40px 20px;
+            min-height: 100vh;
+            /* Added text-shadow for global readability */
+            text-shadow: 0 1px 3px var(--shadow-color);
+        }
+        .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.7; }
+        .shape-1 { width: 300px; height: 300px; top: 10%; left: 15%; background: linear-gradient(to right, #e63946, #f1faee); }
+        .shape-2 { width: 400px; height: 400px; bottom: 5%; right: 10%; background: linear-gradient(to right, #457b9d, #a8dadc); }
 
-    </head>
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 20px;
+            background: var(--glass-bg);
+            box-shadow: 0 8px 32px 0 var(--shadow-color);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+        }
+        .home-button {
+            display: inline-block;
+            background-color: rgba(255,255,255,0.1);
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            z-index: 100;
+            transition: all 0.2s;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+        .home-button:hover {
+            background-color: var(--text-light);
+            color: var(--text-dark);
+            text-shadow: none;
+        }
+        header { text-align: center; margin-bottom: 50px; }
+        .logo {
+            width: 60px; height: 60px; margin: 0 auto 15px;
+            background: rgba(255,255,255,0.1); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8em; font-weight: 700; border: 1px solid var(--glass-border);
+        }
+        header h1 { font-size: 2.5em; margin-bottom: 5px; text-shadow: 0 2px 5px var(--shadow-color); }
+        header p { color: var(--text-muted); max-width: 700px; margin: 10px auto 0; }
+        
+        section { margin-bottom: 40px; }
+        section h2 {
+            font-size: 1.8em; margin-bottom: 25px;
+            border-bottom: 2px solid var(--glass-border);
+            padding-bottom: 15px;
+            text-shadow: 0 1px 4px var(--shadow-color);
+        }
+        .details-list dt { font-weight: 500; color: var(--text-light); margin-top: 15px; }
+        .details-list dd { margin-left: 20px; color: var(--text-muted); }
+        
+        .objectives-content { display: flex; flex-wrap: wrap; gap: 30px; }
+        .toc-container { flex: 1 1 250px; }
+        .toc-container h3 { margin-bottom: 10px; color: var(--text-light); }
+        .toc-container ul { list-style: none; padding: 0; }
+        .toc-container li a {
+            display: block; padding: 8px 12px; text-decoration: none;
+            color: var(--text-muted); border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        .toc-container li a:hover { background-color: rgba(255,255,255,0.1); color: var(--text-light); }
+        
+        .objectives-list { flex: 2 1 500px; }
+        .objective-card {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--glass-border);
+            padding: 25px; border-radius: 10px; margin-bottom: 20px;
+        }
+        .objective-card h3 {
+            display: flex; justify-content: space-between; align-items: center;
+            color: var(--text-light); margin-bottom: 15px; text-shadow: 0 1px 3px var(--shadow-color);
+        }
+        .objective-card h3 span {
+            background: var(--accent-primary); color: var(--text-light); font-size: 0.7em;
+            padding: 5px 10px; border-radius: 50px; font-weight: 700;
+            text-shadow: none;
+        }
+        .objective-card ul { list-style: square; padding-left: 20px; }
+        .objective-card li { margin-bottom: 10px; color: var(--text-muted); }
+        .objective-card li strong { color: var(--text-light); }
+        
+        .skills-list { list-style: none; padding: 0; }
+        .skills-list li { padding: 10px; border-bottom: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); border-radius: 5px; margin-bottom: 5px; }
+        .skills-list li:last-child { border-bottom: none; }
+        .skills-list strong { color: var(--text-light); }
+        
+        footer { text-align: center; color: var(--text-muted); font-size: 0.9em; padding-top: 20px; border-top: 1px solid var(--glass-border); }
+    </style>
+</head>
 <body>
+<div class="background-container">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+</div>
     
+<div class="container">
     <a href="index.html" class="home-button">
         <span>🏠</span> Home
     </a>
-    
-    <div class="container">
-        <header>
-            <div class="logo">
-                <span>A+</span>
-            </div>
-            <h1>CompTIA A+ Core 2 (220-1202)</h1>
-            <p>Exam Details & Core Objectives for the V15 Update</p>
-            <p style="margin-top: 0; font-style: italic; font-size: 0.9em; max-width: 650px;">This document outlines the critical information and domain weights for the current CompTIA A+ Core 2 certification (220-1202) based on the latest exam objectives.</p>
-        </header>
+    <header>
+        <div class="logo">
+            <span>A+</span>
+        </div>
+        <h1>CompTIA A+ Core 2 (220-1202)</h1>
+        <p>Exam Details & Core Objectives for the V15 Update</p>
+        <p style="margin-top: 10px; font-style: italic; font-size: 0.9em; max-width: 650px;">This document outlines the critical information and domain weights for the current CompTIA A+ Core 2 certification (220-1202) based on the latest exam objectives.</p>
+    </header>
 
-        <main>
-            <section id="details">
-                <h2>Certification Overview</h2>
-                <dl class="details-list">
-                    <dt>Exam version:</dt>
-                    <dd>V15; Core 1 and Core 2 exams must be taken from the same version, no mixing allowed</dd>
-                    <dt>Exam series code:</dt>
-                    <dd>220-1202 (Core 2)</dd>
-                    <dt>Launch date:</dt>
-                    <dd>March 25, 2025</dd>
-                    <dt>Number of questions:</dt>
-                    <dd>Maximum of 90 per exam, including multiple-choice, drag-and-drop, and performance-based questions</dd>
-                    <dt>Length of test:</dt>
-                    <dd>90 minutes</dd>
-                    <dt>Passing score:</dt>
-                    <dd>700 (on a scale of 900)</dd>
-                    <dt>Recommended experience:</dt>
-                    <dd>12 months of hands-on experience in an IT support specialist job role</dd>
-                    <dt>Languages:</dt>
-                    <dd>English</dd>
-                    <dt>Retirement:</dt>
-                    <dd>Usually three years after launch (estimated 2028)</dd>
-                    <dt>DoD 8140 approved roles:</dt>
-                    <dd>Technical support specialist, system administrator, and cyber defense infrastructure support specialist</dd>
-                </dl>
-            </section>
+    <main>
+        <section id="details">
+            <h2>Certification Overview</h2>
+            <dl class="details-list">
+                <dt>Exam version:</dt>
+                <dd>V15; Core 1 and Core 2 exams must be taken from the same version, no mixing allowed</dd>
+                <dt>Exam series code:</dt>
+                <dd>220-1202 (Core 2)</dd>
+                <dt>Launch date:</dt>
+                <dd>March 25, 2025</dd>
+                <dt>Number of questions:</dt>
+                <dd>Maximum of 90 per exam, including multiple-choice, drag-and-drop, and performance-based questions</dd>
+                <dt>Length of test:</dt>
+                <dd>90 minutes</dd>
+                <dt>Passing score:</dt>
+                <dd>700 (on a scale of 900)</dd>
+                <dt>Recommended experience:</dt>
+                <dd>12 months of hands-on experience in an IT support specialist job role</dd>
+                <dt>Languages:</dt>
+                <dd>English</dd>
+                <dt>Retirement:</dt>
+                <dd>Usually three years after launch (estimated 2028)</dd>
+                <dt>DoD 8140 approved roles:</dt>
+                <dd>Technical support specialist, system administrator, and cyber defense infrastructure support specialist</dd>
+            </dl>
+        </section>
 
-            <section id="objectives">
-                <h2>A+ Core 2 Domain Weights & Detailed Objectives</h2>
-                
-                <div class="objectives-content">
-                    
-                    <div class="toc-container">
-                        <h3>Domain Jump Links</h3>
+        <section id="objectives">
+            <h2>A+ Core 2 Domain Weights & Detailed Objectives</h2>
+            
+            <div class="objectives-content">
+                <div class="toc-container">
+                    <h3>Domain Jump Links</h3>
+                    <ul>
+                        <li><a href="#domain-1">1.0 Operating Systems (28%)</a></li>
+                        <li><a href="#domain-2">2.0 Security (28%)</a></li>
+                        <li><a href="#domain-3">3.0 Software Troubleshooting (23%)</a></li>
+                        <li><a href="#domain-4">4.0 Operational Procedures (21%)</a></li>
+                    </ul>
+                </div>
+
+                <div class="objectives-list">
+                    <div class="objective-card" id="domain-1">
+                        <h3>1.0 Operating Systems <span>28%</span></h3>
                         <ul>
-                            <li><a href="#domain-1">1.0 Operating Systems (28%)</a></li>
-                            <li><a href="#domain-2">2.0 Security (28%)</a></li>
-                            <li><a href="#domain-3">3.0 Software Troubleshooting (23%)</a></li>
-                            <li><a href="#domain-4">4.0 Operational Procedures (21%)</a></li>
+                            <li>**1.1** Compare and contrast **Microsoft Windows** editions and features.</li>
+                            <li>**1.2** Use appropriate Microsoft Windows **command line tools** (**CMD, PowerShell, DISM, SFC**).</li>
+                            <li>**1.3** Use appropriate Microsoft Windows **desktop administrative tools** (**Control Panel, Settings, Device Manager, MMC**).</li>
+                            <li>**1.4** Summarize the functions and basic configuration of **macOS** and **Linux** operating systems.</li>
+                            <li>**1.5** Given a scenario, set up and configure Windows client **network settings** (**IP, DNS, Gateway, VPN, Proxy**).</li>
+                            <li>**1.6** Given a scenario, install, uninstall, and configure operating systems (including boot methods and **UEFI/BIOS**).</li>
                         </ul>
                     </div>
-
-                    <div class="objectives-list">
-                        <div class="objective-card" id="domain-1">
-                            <h3>1.0 Operating Systems <span>28%</span></h3>
-                            <ul>
-                                <li>**1.1** Compare and contrast **Microsoft Windows** editions and features.</li>
-                                <li>**1.2** Use appropriate Microsoft Windows **command line tools** (**CMD, PowerShell, DISM, SFC**).</li>
-                                <li>**1.3** Use appropriate Microsoft Windows **desktop administrative tools** (**Control Panel, Settings, Device Manager, MMC**).</li>
-                                <li>**1.4** Summarize the functions and basic configuration of **macOS** and **Linux** operating systems.</li>
-                                <li>**1.5** Given a scenario, set up and configure Windows client **network settings** (**IP, DNS, Gateway, VPN, Proxy**).</li>
-                                <li>**1.6** Given a scenario, install, uninstall, and configure operating systems (including boot methods and **UEFI/BIOS**).</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="objective-card" id="domain-2">
-                            <h3>2.0 Security <span>28%</span></h3>
-                            <ul>
-                                <li>**2.1** Summarize the importance of **physical security** measures.</li>
-                                <li>**2.2** Explain how to secure the **SOHO wireless network** (including protocols like **WPA3**).</li>
-                                <li>**2.3** Compare and contrast common **security threats** (**Malware, Social Engineering, Ransomware, Phishing**).</li>
-                                <li>**2.4** Implement basic **security features and policies** (**Firewalls, Antivirus/Antimalware, User Account Control**).</li>
-                                <li>**2.5** Given a scenario, follow the proper procedure for **malware removal** and securing the system.</li>
-                                <li>**2.6** Summarize **privacy** and **security best practices** (including data destruction).</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="objective-card" id="domain-3">
-                            <h3>3.0 Software Troubleshooting <span>23%</span></h3>
-                            <ul>
-                                <li>**3.1** Given a scenario, troubleshoot Microsoft Windows **operating system problems** (**Boot issues, Application errors, System crashes**).</li>
-                                <li>**3.2** Given a scenario, troubleshoot **mobile OS** and **application issues** (**Connectivity, Synchronization, Performance**).</li>
-                                <li>**3.3** Given a scenario, troubleshoot **application security issues** (e.g., unauthorized access, application whitelisting).</li>
-                                <li>**3.4** Explain and apply **cloud computing** and **virtualization** best practices and basic concepts (e.g., **IaaS, SaaS, Hypervisors**).</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="objective-card" id="domain-4">
-                            <h3>4.0 Operational Procedures <span>21%</span></h3>
-                            <ul>
-                                <li>**4.1** Compare and contrast best practices for **documentation** and **change management**.</li>
-                                <li>**4.2** Explain basic principles of **disaster prevention** and **recovery** (e.g., redundant systems, **UPS**).</li>
-                                <li>**4.3** Explain best practices for **data backups** and **retention** (e.g., **full, incremental, differential**).</li>
-                                <li>**4.4** Given a scenario, use appropriate **communication techniques** and **professionalism** (e.g., etiquette, tone).</li>
-                                <li>**4.5** Summarize various **licenses, policies, and regulations** (e.g., **EULA, GDPR, DRP**).</li>
-                            </ul>
-                        </div>
+                    
+                    <div class="objective-card" id="domain-2">
+                        <h3>2.0 Security <span>28%</span></h3>
+                        <ul>
+                            <li>**2.1** Summarize the importance of **physical security** measures.</li>
+                            <li>**2.2** Explain how to secure the **SOHO wireless network** (including protocols like **WPA3**).</li>
+                            <li>**2.3** Compare and contrast common **security threats** (**Malware, Social Engineering, Ransomware, Phishing**).</li>
+                            <li>**2.4** Implement basic **security features and policies** (**Firewalls, Antivirus/Antimalware, User Account Control**).</li>
+                            <li>**2.5** Given a scenario, follow the proper procedure for **malware removal** and securing the system.</li>
+                            <li>**2.6** Summarize **privacy** and **security best practices** (including data destruction).</li>
+                        </ul>
                     </div>
-                </div> </section>
+                    
+                    <div class="objective-card" id="domain-3">
+                        <h3>3.0 Software Troubleshooting <span>23%</span></h3>
+                        <ul>
+                            <li>**3.1** Given a scenario, troubleshoot Microsoft Windows **operating system problems** (**Boot issues, Application errors, System crashes**).</li>
+                            <li>**3.2** Given a scenario, troubleshoot **mobile OS** and **application issues** (**Connectivity, Synchronization, Performance**).</li>
+                            <li>**3.3** Given a scenario, troubleshoot **application security issues** (e.g., unauthorized access, application whitelisting).</li>
+                            <li>**3.4** Explain and apply **cloud computing** and **virtualization** best practices and basic concepts (e.g., **IaaS, SaaS, Hypervisors**).</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="objective-card" id="domain-4">
+                        <h3>4.0 Operational Procedures <span>21%</span></h3>
+                        <ul>
+                            <li>**4.1** Compare and contrast best practices for **documentation** and **change management**.</li>
+                            <li>**4.2** Explain basic principles of **disaster prevention** and **recovery** (e.g., redundant systems, **UPS**).</li>
+                            <li>**4.3** Explain best practices for **data backups** and **retention** (e.g., **full, incremental, differential**).</li>
+                            <li>**4.4** Given a scenario, use appropriate **communication techniques** and **professionalism** (e.g., etiquette, tone).</li>
+                            <li>**4.5** Summarize various **licenses, policies, and regulations** (e.g., **EULA, GDPR, DRP**).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div> 
+        </section>
 
-            <section id="skills">
-                <h2>Key Skills Developed</h2>
-                <ul class="skills-list">
-                    <li>**Master core OS functions** on Windows, macOS, and Linux using both GUI and command-line tools.</li>
-                    <li>**Secure endpoints** by implementing physical security, encryption, and strong network protocols (**WPA3**).</li>
-                    <li>**Troubleshoot and remediate** common OS, application, and mobile device issues, including the **malware removal process**.</li>
-                    <li>Apply virtualization concepts and understand **cloud models** like IaaS and SaaS.</li>
-                    <li>Maintain **professionalism** and adhere to operational procedures like **change management** and **data retention** policies.</li>
-                </ul>
-            </section>
-        </main>
-        
-        <footer>
-            Created by: BLaborte. All exam details are based on publicly available CompTIA exam objectives.
-        </footer>
-    </div>
+        <section id="skills">
+            <h2>Key Skills Developed</h2>
+            <ul class="skills-list">
+                <li>**Master core OS functions** on Windows, macOS, and Linux using both GUI and command-line tools.</li>
+                <li>**Secure endpoints** by implementing physical security, encryption, and strong network protocols (**WPA3**).</li>
+                <li>**Troubleshoot and remediate** common OS, application, and mobile device issues, including the **malware removal process**.</li>
+                <li>Apply virtualization concepts and understand **cloud models** like IaaS and SaaS.</li>
+                <li>Maintain **professionalism** and adhere to operational procedures like **change management** and **data retention** policies.</li>
+            </ul>
+        </section>
+    </main>
+    
+    <footer>
+        Created by: BLaborte. All exam details are based on publicly available CompTIA exam objectives.
+    </footer>
+</div>
 </body>
 </html>

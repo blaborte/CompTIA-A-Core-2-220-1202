@@ -6,128 +6,67 @@
     <title>macOS Feature Match | A+ Core 2 Game</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-main: #f4f7f9;
-            --primary-accent: #0072C6;
-            --flashcard-accent: #f7b731;
-            --text-main: #212529;
-            --text-muted: #6c757d;
-            --card-bg: #ffffff;
-            --border-color: #e9ecef;
-            --success-color: #28a745;
-            --error-color: #dc3545;
-        }
-
-        * { box-sizing: border-box; }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
         body {
-            font-family: "Poppins", sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
+            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: linear-gradient(135deg, #a8dadc 0%, #457b9d 100%);
+            overflow: hidden; padding: 20px; color: #fff;
+            /* DEBUG FIX: Added text-shadow for global readability */
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.7; }
+        .shape-1 { width: 300px; height: 300px; top: 10%; left: 15%; background: linear-gradient(to right, #e63946, #f1faee); }
+        .shape-2 { width: 400px; height: 400px; bottom: 5%; right: 10%; background: linear-gradient(to right, #457b9d, #a8dadc); }
+
+        #game-container {
+            width: 90%; max-width: 800px; padding: 40px; border-radius: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             text-align: center;
         }
 
-        #game-container {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 800px;
-            padding: 30px;
-            border-top: 5px solid var(--flashcard-accent);
-        }
-
-        h1 {
-            color: var(--flashcard-accent);
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .game-area {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        #descriptions-container, #options-container {
-            width: 48%;
-            padding: 10px;
-        }
-        
-        #descriptions-container h3, #options-container h3 {
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
+        h1 { margin: 0 0 20px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        .game-area { display: flex; justify-content: space-between; gap: 20px; }
+        #descriptions-container, #options-container { width: 48%; }
+        #descriptions-container h3, #options-container h3 { color: rgba(255,255,255,0.8); margin-bottom: 15px; font-weight: 500; }
 
         .description-box {
-            background-color: var(--bg-main);
-            border: 2px dashed var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 15px;
-            text-align: left;
+            background: rgba(0, 0, 0, 0.2);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 8px; padding: 20px; margin-bottom: 15px; text-align: left;
+            min-height: 120px;
         }
-
         .feature-option {
-            background-color: #e9f5ff;
-            border: 2px solid var(--primary-accent);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            font-weight: 500;
-            cursor: grab;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 8px; padding: 15px; margin-bottom: 15px;
+            font-weight: 500; cursor: grab;
         }
+        .feature-option:active { cursor: grabbing; }
+        .dragging { opacity: 0.5; }
+        .drag-over { border-style: solid; background-color: rgba(255, 255, 255, 0.2); }
         
-        .feature-option:active {
-            cursor: grabbing;
-        }
+        #feedback { font-size: 1.2em; font-weight: 700; margin-top: 20px; height: 30px; }
+        .correct { color: #28a745; text-shadow: 0 0 5px #28a745; }
+        .incorrect { color: #e63946; text-shadow: 0 0 5px #e63946; }
 
-        .dragging {
-            opacity: 0.5;
-        }
-
-        .drag-over {
-            border-style: solid;
-            border-color: var(--primary-accent);
-            background-color: #e9f5ff;
-        }
-        
-        #feedback {
-            font-size: 1.2em;
-            font-weight: 700;
-            margin-top: 20px;
-            height: 30px;
-        }
-
-        .correct { color: var(--success-color); }
-        .incorrect { color: var(--error-color); }
-
-        #score-display {
-            font-size: 1.2em;
-            margin-top: 15px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
+        #score-display { font-size: 1.2em; margin-top: 15px; color: #f1faee; opacity: 0.8; }
         .home-link {
-            display: inline-block;
-            margin-top: 25px;
-            color: var(--primary-accent);
-            text-decoration: none;
-            font-weight: 500;
+            display: inline-block; margin-top: 25px; color: #fff; text-decoration: none; font-weight: 500;
+            padding: 5px 10px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
         }
+        .home-link:hover { color: #457b9d; background: #f1faee; text-shadow: none; }
     </style>
 </head>
 <body>
+    <div class="background-container">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
 
     <div id="game-container">
         <h1>macOS Feature Match</h1>
@@ -218,8 +157,8 @@
                 feedback.textContent = "Correct Match!";
                 feedback.className = 'correct';
                 
-                e.target.style.border = `2px solid var(--success-color)`;
-                e.target.style.backgroundColor = '#d4edda';
+                e.target.style.border = `2px solid #28a745`;
+                e.target.style.background = 'rgba(40, 167, 69, 0.3)';
                 featureElement.style.display = 'none'; // Hide the dragged element
             } else {
                 // Incorrect match

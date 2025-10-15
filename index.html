@@ -12,16 +12,15 @@
 
 <style>
     :root {
-        --bg-main: #f4f7f9;
-        --primary-accent: #0072C6;
-        --secondary-accent: #D9232E;
-        --flashcard-accent: #f7b731;
-        --text-main: #212529;
-        --text-muted: #6c757d;
-        --text-light: #ffffff;
-        --card-bg: #ffffff;
-        --border-color: #e9ecef;
-        --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --bg-gradient-start: #a8dadc;
+        --bg-gradient-end: #457b9d;
+        --glass-bg: rgba(255, 255, 255, 0.1);
+        --glass-border: rgba(255, 255, 255, 0.2);
+        --text-light: #f1faee;
+        --text-dark: #1d3557;
+        --accent-primary: #e63946;
+        --accent-secondary: #f7b731; /* Yellow for tips */
+        --shadow-color: rgba(0, 0, 0, 0.5); /* Darker shadow for better contrast */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,297 +29,131 @@
 
     body {
         font-family: "Poppins", sans-serif;
-        background-color: var(--bg-main);
-        color: var(--text-main);
+        background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+        color: var(--text-light);
         line-height: 1.6;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
+        padding: 40px 20px;
         min-height: 100vh;
+        /* DEBUG FIX: Added text-shadow for global readability */
+        text-shadow: 0 1px 3px var(--shadow-color);
     }
+    
+    .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+    .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.7; }
+    .shape-1 { width: 300px; height: 300px; top: 10%; left: 15%; background: linear-gradient(to right, #e63946, #f1faee); }
+    .shape-2 { width: 400px; height: 400px; bottom: 5%; right: 10%; background: linear-gradient(to right, #457b9d, #a8dadc); }
 
     .container { 
         max-width: 1000px; 
         margin: 0 auto; 
-        padding: 40px 20px; 
         width: 100%;
     }
 
-    header {
-        text-align: center;
-        padding-bottom: 30px;
-        border-bottom: 1px solid var(--border-color);
-        margin-bottom: 30px;
-    }
-
-    header h1 {
-        font-size: 2.5em;
-        margin-bottom: 5px;
-        color: var(--primary-accent);
-        font-weight: 700;
-    }
-
-    header p {
-        color: var(--text-muted);
-        font-size: 1.1em;
-    }
-    
-    .logo {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 15px;
-    }
-
-    .logo-inner {
-        font-size: 2em;
-        font-weight: 700;
-        color: var(--text-light);
-        background-color: var(--primary-accent);
-        padding: 5px 15px;
-        border-radius: 8px;
-        letter-spacing: 2px;
-    }
+    header { text-align: center; padding-bottom: 30px; margin-bottom: 30px; }
+    header h1 { font-size: 2.5em; margin-bottom: 5px; font-weight: 700; text-shadow: 0 2px 5px var(--shadow-color); }
     
     .disclaimer-banner {
-        background-color: var(--secondary-accent); 
+        background-color: var(--accent-primary);
         color: var(--text-light);
         padding: 12px 25px;
         text-align: center;
         font-weight: 500;
-        font-size: 1.1em;
         margin-bottom: 30px; 
         border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(217, 35, 46, 0.3);
-    }
-
-    .hero-section {
-        text-align: center;
-        margin-bottom: 40px;
-        padding: 20px;
-        background-color: var(--card-bg);
-        border-radius: 8px;
-        border: 1px solid var(--border-color);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
     
-    .hero-text {
-        font-size: 1.2em;
-        color: var(--text-main);
-        margin: 5px 0;
-    }
-    .hero-text strong {
-        color: var(--primary-accent);
-    }
-
-    .tip-section {
-        background-color: var(--card-bg);
-        border-radius: 12px;
-        border: 1px solid var(--border-color);
-        padding: 25px;
+    section {
         margin-bottom: 50px;
-        box-shadow: var(--shadow-subtle);
-        text-align: center;
+        padding: 30px;
+        border-radius: 20px;
+        background: var(--glass-bg);
+        box-shadow: 0 8px 32px 0 var(--shadow-color);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
     }
-    .tip-section h2 {
-        color: var(--flashcard-accent);
-        margin-top: 0;
-        margin-bottom: 20px;
-    }
-    .tip-details h3 {
-        margin-top: 0;
-        margin-bottom: 10px;
-        color: var(--text-main);
-        font-size: 1.4em;
-    }
-    .tip-details p {
-        color: var(--text-muted);
-        margin-bottom: 10px;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-     .tip-details strong {
-        color: var(--text-main);
-        font-weight: 600;
-    }
-    .tip-footer {
-        text-align: center;
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-    }
+    
+    .hero-section { background: rgba(0,0,0,0.1); border: none; }
+    .hero-text { font-size: 1.2em; text-align: center; }
+    .hero-text strong { color: var(--text-light); font-weight: 600; }
+
+    .tip-section { text-align: center; }
+    .tip-section h2 { color: var(--accent-secondary); margin-top: 0; margin-bottom: 20px; text-shadow: 0 1px 4px rgba(0,0,0,0.6); }
+    .tip-details h3 { font-size: 1.4em; text-shadow: 0 1px 4px var(--shadow-color); }
+    .tip-details p { opacity: 0.9; max-width: 600px; margin: 10px auto; }
+    .tip-details strong { color: var(--text-light); font-weight: 600; }
+    .tip-footer { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
 
     #next-tip-btn, #prev-tip-btn {
-        border: none;
-        padding: 10px 20px;
-        font-family: "Poppins", sans-serif;
-        font-size: 1em;
-        font-weight: 500;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.2s;
+        border: none; padding: 10px 20px; font-family: "Poppins", sans-serif; font-size: 1em;
+        font-weight: 500; border-radius: 50px; cursor: pointer;
+        transition: transform 0.2s, background-color 0.2s;
+        text-shadow: none; /* Buttons have solid backgrounds, no shadow needed */
     }
+    #next-tip-btn { background-color: var(--accent-secondary); color: var(--text-dark); }
+    #next-tip-btn:hover { background-color: #f8c958; transform: translateY(-2px); }
+    #prev-tip-btn { background: rgba(255, 255, 255, 0.1); color: var(--text-light); border: 1px solid var(--glass-border); }
+    #prev-tip-btn:hover { background-color: rgba(255, 255, 255, 0.2); }
 
-    #next-tip-btn {
-        background-color: var(--flashcard-accent);
-        color: var(--text-main);
-    }
-    #next-tip-btn:hover {
-        background-color: #eab528;
-    }
-
-    #prev-tip-btn {
-        background-color: var(--card-bg);
-        color: var(--text-muted);
-        border: 1px solid var(--border-color);
-    }
-    #prev-tip-btn:hover {
-        background-color: var(--bg-main);
-    }
-
-
-    .selection-section h2 {
-        text-align: center;
-        color: var(--primary-accent);
-        margin-bottom: 25px;
-        font-size: 1.8em;
-        font-weight: 500;
-    }
-    
-    .selection-section {
-        margin-bottom: 50px;
-    }
-
-    .card-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 30px;
-    }
+    .selection-section h2 { text-align: center; margin-bottom: 25px; font-size: 1.8em; font-weight: 500; text-shadow: 0 2px 4px var(--shadow-color); }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
 
     .exam-card {
-        display: flex;
-        flex-direction: column;
-        background-color: var(--card-bg);
-        color: var(--text-main);
-        text-decoration: none;
-        padding: 25px;
-        border-radius: 10px;
-        border: 2px solid var(--border-color);
-        transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+        display: flex; flex-direction: column; background: rgba(255, 255, 255, 0.1);
+        color: var(--text-light); text-decoration: none; padding: 25px; border-radius: 15px;
+        border: 1px solid var(--glass-border); transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
     }
+    .exam-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.5); border-color: var(--accent-secondary); }
+    .exam-card.pbq-card:hover { border-color: var(--accent-primary); }
 
-    .exam-card:hover { 
-        transform: translateY(-5px); 
-        box-shadow: var(--shadow-subtle); 
-        border-color: var(--primary-accent);
+    .exam-card h3 { 
+        font-size: 1.4em; margin-bottom: 10px; font-weight: 700; color: var(--text-light);
+        text-shadow: 0 1px 4px var(--shadow-color);
     }
-    .exam-card.pbq-card:hover { border-color: var(--secondary-accent); }
-    .exam-card.flashcard-card:hover { border-color: var(--flashcard-accent); }
+    .exam-card.pbq-card h3 { color: var(--accent-primary); }
+    .exam-card.flashcard-card h3 { color: var(--accent-secondary); }
 
-    .exam-card h3 { font-size: 1.4em; margin-bottom: 10px; font-weight: 700; color: var(--primary-accent);}
-    .exam-card.pbq-card h3 { color: var(--secondary-accent); }
-    .exam-card.flashcard-card h3 { color: var(--flashcard-accent); }
-    
-    .exam-card p {
-        color: var(--text-muted);
-        flex-grow: 1;
-        margin-bottom: 15px;
-    }
+    .exam-card p { flex-grow: 1; margin-bottom: 15px; opacity: 0.9; }
 
     .card-footer {
-        margin-top: auto;
-        padding-top: 15px;
-        border-top: 1px solid var(--border-color);
-        font-weight: 600;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: var(--primary-accent);
+        margin-top: auto; padding-top: 15px; border-top: 1px solid var(--glass-border);
+        font-weight: 600; display: flex; justify-content: space-between; align-items: center;
+        color: var(--text-light);
     }
-    .exam-card.pbq-card .card-footer { color: var(--secondary-accent); }
-    .exam-card.flashcard-card .card-footer { color: var(--flashcard-accent); }
+    .exam-card.pbq-card .card-footer { color: var(--accent-primary); }
+    .exam-card.flashcard-card .card-footer { color: var(--accent-secondary); }
 
-
-    .card-footer span {
-        font-size: 1.2em;
-        transition: transform 0.2s;
-    }
-
-    .exam-card:hover .card-footer span {
-        transform: translateX(5px);
-    }
-
-    .disclaimer-section {
-        background-color: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-left: 4px solid var(--secondary-accent);
-        padding: 20px 25px;
-        margin: 50px 0;
-        border-radius: 8px;
-        text-align: center;
-    }
-    .disclaimer-section h3 {
-        color: var(--secondary-accent);
-        margin-bottom: 10px;
-        font-size: 1.3em;
-    }
-    .disclaimer-section p {
-        color: var(--text-muted);
-        font-size: 0.95em;
-        max-width: 700px;
-        margin: 0 auto;
-    }
-
-    .trust-section, .credits-section {
-        margin-top: 50px;
-        padding: 20px 0;
-        text-align: center;
-    }
+    .card-footer span { font-size: 1.2em; transition: transform 0.2s; }
+    .exam-card:hover .card-footer span { transform: translateX(5px); }
     
-    .trust-section h3 { color: var(--text-main); margin-bottom: 15px; font-weight: 500; font-size: 1.5em; }
-    
-    .trust-points { list-style: none; display: flex; justify-content: center; gap: 30px; padding: 0; flex-wrap: wrap; }
-    
-    .trust-points li {
-        background-color: var(--card-bg);
-        padding: 10px 20px;
-        border-radius: 6px;
-        font-weight: 500;
-        border-left: 3px solid var(--primary-accent);
-        color: var(--text-main);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
-    
-    .credits-section p { font-size: 0.9em; color: var(--text-muted); margin-bottom: 5px; }
-    .credits-section strong { color: var(--text-main); }
-
-    footer { text-align: center; padding: 20px 0; margin-top: 40px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.85em; }
+    footer { text-align: center; padding: 20px 0; margin-top: 40px; color: var(--text-light); opacity: 0.8; font-size: 0.85em; }
 
     @media (max-width: 768px) {
         header h1 { font-size: 2em; }
         .card-grid { grid-template-columns: 1fr; }
-        .trust-points { flex-direction: column; gap: 15px; align-items: center; }
     }
 </style>
 </head>
 <body>
+
+<div class="background-container">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+</div>
     
 <div class="container">
     <header>
-        <div class="logo">
-            <span class="logo-inner">A+</span>
-        </div>
         <h1>CompTIA A+ Core 2 (220-1202)</h1>
     </header>
 
     <main>
         <div class="disclaimer-banner">
-            ⚠️ **SITE UNDER CONSTRUCTION/BETA:** This is a work in progress. Please report any errors or missing features!
+            ⚠️ **SITE UNDER CONSTRUCTION/BETA:** This is a work in progress. Please report any errors!
         </div>
         
         <section class="hero-section">
-            <p class="hero-text">Welcome to the **A+ Core 2 Training Simulation Environment**.</p>
+            <p class="hero-text">Welcome to the <strong>A+ Core 2 Training Simulation Environment</strong>.</p>
             <p class="hero-text">Select a module below to begin your practice drills.</p>
         </section>
 
@@ -337,132 +170,57 @@
             </div>
         </section>
 
-<section class="selection-section">
-    <h2>Interactive Simulations & Games</h2>
-    <div class="card-grid">
-        
-        <a href="games.html" class="exam-card pbq-card">
-            <h3>GAME ARCADE</h3>
-            <p>Launch the simulation hub to access all interactive games for Windows, macOS, and Linux, including command-line and troubleshooting challenges.</p>
-            <div class="card-footer">ENTER ARCADE <span>&rarr;</span></div>
-        </a>
-        
-        <a href="troubleshooter.html" class="exam-card pbq-card">
-            <h3>TROUBLESHOOTING SIMULATOR</h3>
-            <p>Access the guided, interactive challenge scenarios for Command Line, OS, and Security fixes. Hands-on practice for the Core 2 PBQs.</p>
-            <div class="card-footer">START INTERACTIVE DRILL <span>&rarr;</span></div>
-        </a>
-        
-    </div>
-</section>
+        <section class="selection-section">
+            <h2>Interactive Simulations & Games</h2>
+            <div class="card-grid">
+                <a href="games.html" class="exam-card pbq-card">
+                    <h3>GAME ARCADE</h3>
+                    <p>Launch the hub to access all interactive games for Windows, macOS, and Linux, including command-line and troubleshooting challenges.</p>
+                    <div class="card-footer">ENTER ARCADE <span>&rarr;</span></div>
+                </a>
+                <a href="troubleshooter.html" class="exam-card pbq-card">
+                    <h3>TROUBLESHOOTING SIMULATOR</h3>
+                    <p>Access the guided, interactive challenge scenarios for Command Line, OS, and Security fixes. Hands-on practice for the Core 2 PBQs.</p>
+                    <div class="card-footer">START INTERACTIVE DRILL <span>&rarr;</span></div>
+                </a>
+            </div>
         </section>
         
         <section class="selection-section">
             <h2>General Practice Modules</h2>
             <div class="card-grid">
-                <a href="quiz-a.html" class="exam-card">
-                    <h3>Professor Messer's PRACTICE TEST A</h3>
-                    <p>The first set of questions to test your foundational knowledge across all exam domains. **(85 Questions)**</p>
-                    <div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div>
-                </a>
-                
-                <a href="quiz-b.html" class="exam-card">
-                    <h3>Professor Messer's PRACTICE TEST B</h3>
-                    <p>A second set of practice questions to challenge your understanding and identify weak spots. **(85 Questions)**</p>
-                    <div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div>
-                </a>
-                
-                <a href="quiz-c.html" class="exam-card">
-                    <h3>Professor Messer's PRACTICE TEST C</h3>
-                    <p>The final set of questions, designed to simulate the real exam experience and build confidence. **(85 Questions)**</p>
-                    <div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div>
-                </a>
-                
-                <a href="quiz-random.html" class="exam-card">
-                    <h3>MIXED REVIEW DRILL</h3>
-                    <p>A dynamic, random set of questions pulled from all practice exams to cover a comprehensive range of topics. **(Custom Length)**</p>
-                    <div class="card-footer">INITIATE DATA RANDOMIZER <span>&rarr;</span></div>
-                </a>
-                
-                <a href="flashcards.html" class="exam-card flashcard-card">
-                    <h3>FLASHCARD DRILL: KEY TERMS</h3>
-                    <p>A high-speed review tool for memorizing critical terminology, acronyms, and command-line functions from all domains.</p>
-                    <div class="card-footer">START MEMORY DRILL <span>&rarr;</span></div>
-                </a>
-                
-                <a href="quiz-pbq.html" class="exam-card pbq-card">
-                    <h3>PERFORMANCE-BASED SIMULATION</h3>
-                    <p>Dedicated simulation interface for **troubleshooting** and **config deployment** via drag-and-drop mechanics (Performance-Based Questions).</p>
-                    <div class="card-footer">ACTIVATE SIMULATION <span>&rarr;</span></div>
-                </a>
+                <a href="quiz-a.html" class="exam-card"><h3>Professor Messer's PRACTICE TEST A</h3><p>The first set of questions to test your foundational knowledge across all exam domains. **(85 Questions)**</p><div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div></a>
+                <a href="quiz-b.html" class="exam-card"><h3>Professor Messer's PRACTICE TEST B</h3><p>A second set of practice questions to challenge your understanding and identify weak spots. **(85 Questions)**</p><div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div></a>
+                <a href="quiz-c.html" class="exam-card"><h3>Professor Messer's PRACTICE TEST C</h3><p>The final set of questions, designed to simulate the real exam experience and build confidence. **(85 Questions)**</p><div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div></a>
+                <a href="quiz-random.html" class="exam-card"><h3>MIXED REVIEW DRILL</h3><p>A dynamic, random set of questions pulled from all practice exams to cover a comprehensive range of topics. **(Custom Length)**</p><div class="card-footer">INITIATE DATA RANDOMIZER <span>&rarr;</span></div></a>
+                <a href="flashcards.html" class="exam-card flashcard-card"><h3>FLASHCARD DRILL: KEY TERMS</h3><p>A high-speed review tool for memorizing critical terminology, acronyms, and command-line functions from all domains.</p><div class="card-footer">START MEMORY DRILL <span>&rarr;</span></div></a>
+                <a href="quiz-pbq.html" class="exam-card pbq-card"><h3>PERFORMANCE-BASED SIMULATION</h3><p>Dedicated simulation interface for **troubleshooting** and **config deployment** via drag-and-drop mechanics (Performance-Based Questions).</p><div class="card-footer">ACTIVATE SIMULATION <span>&rarr;</span></div></a>
             </div>
         </section>
         
         <section class="selection-section">
             <h2>Key Resources</h2>
             <div class="card-grid">
-                <a href="objectives.html" class="exam-card">
-                    <h3>EXAM OBJECTIVES</h3>
-                    <p>Review the official domains, scoring details, and a complete breakdown of the CompTIA A+ Core 2 exam structure.</p>
-                    <div class="card-footer">VIEW DETAILS <span>&rarr;</span></div>
-                </a>
-        
-                <a href="glossary.html" class="exam-card">
-                    <h3>GLOSSARY</h3>
-                    <p>A quick-reference list of essential terminology, acronyms, and concepts you will need to know for the exam.</p>
-                    <div class="card-footer">STUDY TERMS <span>&rarr;</span></div>
-                </a>
-        
-                <a href="commands.html" class="exam-card">
-                    <h3>COMMAND REFERENCE</h3>
-                    <p>A reference sheet for common Windows, macOS, and Linux command-line tools covered in the A+ exam.</p>
-                    <div class="card-footer">VIEW COMMANDS <span>&rarr;</span></div>
-                </a>
+                <a href="objectives.html" class="exam-card"><h3>EXAM OBJECTIVES</h3><p>Review the official domains, scoring details, and a complete breakdown of the CompTIA A+ Core 2 exam structure.</p><div class="card-footer">VIEW DETAILS <span>&rarr;</span></div></a>
+                <a href="glossary.html" class="exam-card"><h3>GLOSSARY</h3><p>A quick-reference list of essential terminology, acronyms, and concepts you will need to know for the exam.</p><div class="card-footer">STUDY TERMS <span>&rarr;</span></div></a>
+                <a href="commands.html" class="exam-card"><h3>COMMAND REFERENCE</h3><p>A reference sheet for common Windows, macOS, and Linux command-line tools covered in the A+ exam.</p><div class="card-footer">VIEW COMMANDS <span>&rarr;</span></div></a>
             </div>
         </section>
 
         <section class="selection-section">
             <h2>Video Resources</h2>
             <div class="card-grid">
-                <a href="https://www.youtube.com/watch?v=IhcZqUs1IF8&list=PLG49S3nxzAnn7PDGQ17m5AYbDRhnW7vOb&index=1" target="_blank" class="exam-card">
-                    <h3>PROFESSOR MESSER'S COURSE</h3>
-                    <p>Access the complete, free video training series for the CompTIA A+ Core 2 (220-1202) exam from Professor Messer. A comprehensive resource for visual learners.</p>
-                    <div class="card-footer">WATCH VIDEOS <span>&rarr;</span></div>
-                </a>
-                <a href="https://www.youtube.com/watch?v=SwhGX_JB59c&list=PLc6LqxQFwub_mlYYO4r3MrRKBf-9s84Yq" target="_blank" class="exam-card">
-                    <h3>ICEBURNINGTECH LESSONS</h3>
-                    <p>In-depth video lessons and full-length practice exams for the Core 2 from the IceBurningTech YouTube channel.</p>
-                    <div class="card-footer">WATCH VIDEOS <span>&rarr;</span></div>
-                </a>
+                <a href="https://www.youtube.com/watch?v=IhcZqUs1IF8&list=PLG49S3nxzAnn7PDGQ17m5AYbDRhnW7vOb&index=1" target="_blank" class="exam-card"><h3>PROFESSOR MESSER'S COURSE</h3><p>Access the complete, free video training series for the CompTIA A+ Core 2 (220-1202) exam from Professor Messer.</p><div class="card-footer">WATCH VIDEOS <span>&rarr;</span></div></a>
+                <a href="https://www.youtube.com/watch?v=SwhGX_JB59c&list=PLc6LqxQFwub_mlYYO4r3MrRKBf-9s84Yq" target="_blank" class="exam-card"><h3>ICEBURNINGTECH LESSONS</h3><p>In-depth video lessons and full-length practice exams for the Core 2 from the IceBurningTech YouTube channel.</p><div class="card-footer">WATCH VIDEOS <span>&rarr;</span></div></a>
             </div>
         </section>
 
         <section class="selection-section">
             <h2>External Practice Tests & Resources</h2>
             <div class="card-grid">
-                <a href="examcomp.html" class="exam-card">
-                    <h3>EXAMCOMPASS TESTS</h3>
-                    <p>A supplementary set of 20+ practice tests for the Core 2 (220-1202) exam. (Source: examcompass.com)</p>
-                    <div class="card-footer">ACCESS TESTS <span>&rarr;</span></div>
-                </a>
+                <a href="examcomp.html" class="exam-card"><h3>EXAMCOMPASS TESTS</h3><p>A supplementary set of 20+ practice tests for the Core 2 (220-1202) exam. (Source: examcompass.com)</p><div class="card-footer">ACCESS TESTS <span>&rarr;</span></div></a>
             </div>
         </section>
-		
-		  <section class="trust-section">
-            <h3>CORE COMPETENCY VALIDATED</h3>
-            <ul class="trust-points">
-                <li>✅ **PROTOCOL 220-1202 SYNCHRONIZED**</li>
-                <li>📝 **MAPPED TO OFFICIAL OBJECTIVES**</li>
-                <li>💯 **REAL-TIME DIAGNOSTICS & SCORING**</li>
-            </ul>
-        </section>
-
-        <section class="disclaimer-section">
-            <h3>Disclaimer</h3>
-            <p>The content herein has been compiled from various sources for personal educational and study purposes only. The compiler of this document does not claim ownership of the original works. All rights belong to their respective copyright holders. Unauthorized sharing or distribution is strictly prohibited.</p>
-        </section>
-
-
     </main>
 
     <footer>
@@ -471,6 +229,7 @@
 </div>
 <script src="tips.js"></script>
 <script>
+    // --- SCRIPT FOR 'CORE 2 SPOTLIGHT' SECTION ---
     let currentTipIndex = -1;
     let shuffledTips = [];
 
@@ -491,7 +250,7 @@
         if (typeof tips === 'undefined' || tips.length === 0) {
             tipTitleEl.textContent = 'Error';
             tipDescriptionEl.textContent = 'Could not load tips. Please ensure tips.js is in the same folder.';
-            tipUsageEl.textContent = '';
+            tipUsageEl.textContent = 'N/A';
             return;
         }
         currentTipIndex = (currentTipIndex + 1) % shuffledTips.length;
@@ -513,7 +272,8 @@
             currentTipIndex = -1;
             showNextTip();
         } else {
-            showNextTip(); // This will show the error message
+            // This will show the error message if tips.js is missing
+            showNextTip(); 
         }
     }
 
@@ -521,10 +281,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
