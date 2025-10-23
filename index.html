@@ -555,7 +555,18 @@
     const systemPrompt = "You are 'Cooper AI,' a friendly, encouraging, and helpful AI study pal, represented by a dog. Your personality is positive and eager to help. Your goal is to assist users studying for the CompTIA A+ exam. Answer their questions about tech, exam objectives, and troubleshooting concepts concisely and accurately. Keep your answers to a few sentences when possible.";
 
     // Store the conversation history
-    let chatHistory = [];
+    // **MODIFICATION:** Initialize history to give context to the AI's first greeting.
+    // The API requires a user-model alternating sequence.
+    let chatHistory = [
+        {
+            role: 'user',
+            parts: [{ text: "Hi Cooper, can you help me study?" }] // A plausible "first message" from the user that justifies the bot's greeting. This isn't shown to the user.
+        },
+        {
+            role: 'model',
+            parts: [{ text: "Woof! I'm Cooper AI, your study pal. Ask me anything about the CompTIA A+ exam!" }] // This matches the hardcoded greeting.
+        }
+    ];
 
     // --- DOM Elements ---
     const chatWidgetContainer = document.getElementById('chat-widget-container');
