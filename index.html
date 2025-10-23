@@ -552,7 +552,7 @@
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
     
     // Updated system prompt for "Cooper AI"
-    const systemPrompt = "You are 'Cooper AI,' a friendly, encouraging, and helpful AI study pal, represented by a dog. Your personality is positive and eager to help. Your goal is to assist users studying for the CompTIA A+ exam. Answer their questions about tech, exam objectives, and troubleshooting concepts concisely and accurately. Keep your answers to a few sentences when possible.";
+    const systemPrompt = "You are 'Cooper AI,' a friendly, encouraging, and helpful AI study pal, represented by a dog. Your personality is positive and eager to help. Your goal is to assist users studying for the CompTIA A+ exam. Answer their questions about tech, exam objectives, and troubleshooting concepts concisely and accurately. Keep your answers to a few sentences when possible. If a user's question is very broad or you don't know the answer, you can use Google Search to find relevant information.";
 
     // Store the conversation history
     // **MODIFICATION:** Initialize history to give context to the AI's first greeting.
@@ -620,16 +620,18 @@
 
         // 4. Call the AI API
         try {
-            const aiResponse = await callGeminiAPI(chatHistory);
+            const aiResponseObject = await callGeminiAPI(chatHistory); // Get the object
+            const aiText = aiResponseObject.text;
+            const aiSources = aiResponseObject.sources;
             
             // 5. Add AI response to history
             chatHistory.push({
                 role: 'model',
-                parts: [{ text: aiResponse }]
+                parts: [{ text: aiText }] // Only push text to history
             });
 
-            // 6. Display the AI's response
-            displayMessage(aiResponse, 'model');
+            // 6. Display the AI's response (with sources)
+            displayMessage(aiText, 'model', aiSources);
 
         } catch (error) {
             console.error("Error calling Gemini API:", error);
@@ -644,7 +646,7 @@
     /**
      * Calls the Gemini API with exponential backoff for retries.
      * @param {Array} history - The current chat history.
-     * @returns {Promise<string>} - The AI's text response.
+     * @returns {Promise<object>} - An object with {text, sources}.
      */
     async function callGeminiAPI(history) {
         const payload = {
@@ -652,6 +654,8 @@
             systemInstruction: {
                 parts: [{ text: systemPrompt }]
             },
+            // --- MODIFICATION: Added Google Search tool ---
+            tools: [{ "google_search": {} }],
         };
 
         let response;
@@ -671,13 +675,27 @@
                     const result = await response.json();
                     
                     if (result.candidates && result.candidates[0].content?.parts?.[0]?.text) {
-                        return result.candidates[0].content.parts[0].text;
+                        const text = result.candidates[0].content.parts[0].text;
+                        let sources = [];
+
+                        // --- MODIFICATION: Extract grounding metadata ---
+                        const groundingMetadata = result.candidates[0].groundingMetadata;
+                        if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                            sources = groundingMetadata.groundingAttributions
+                                .map(attribution => ({
+                                    uri: attribution.web?.uri,
+                                    title: attribution.web?.title,
+                                }))
+                                .filter(source => source.uri && source.title); // Ensure sources are valid
+                        }
+                        
+                        return { text, sources }; // Return object
                     } else {
                         let safetyMessage = "Sorry, I can't provide a response to that.";
                         if (result.candidates && result.candidates[0].finishReason === 'SAFETY') {
                             safetyMessage = "I am unable to respond to that request due to safety policies.";
                         }
-                        return safetyMessage;
+                        return { text: safetyMessage, sources: [] }; // Return object
                     }
                 } else if (response.status === 429) { // Throttling
                     await new Promise(resolve => setTimeout(resolve, delay));
@@ -700,8 +718,9 @@
      * Creates and appends a new message bubble to the chat window.
      * @param {string} message - The text to display.
      * @param {'user' | 'model'} sender - The sender of the message.
+     * @param {Array} [sources=[]] - Optional array of source objects.
      */
-    function displayMessage(message, sender) {
+    function displayMessage(message, sender, sources = []) {
         // Create the message element
         const messageElement = document.createElement('div');
         messageElement.classList.add('message-bubble');
@@ -716,6 +735,43 @@
         const messageText = document.createElement('p');
         messageText.textContent = message;
         messageElement.appendChild(messageText);
+
+        // --- MODIFICATION: Add sources if they exist ---
+        if (sources && sources.length > 0) {
+            const sourcesContainer = document.createElement('div');
+            sourcesContainer.style.marginTop = '12px';
+            sourcesContainer.style.paddingTop = '8px';
+            sourcesContainer.style.borderTop = '1px solid var(--glass-border)';
+
+            const sourcesTitle = document.createElement('p');
+            sourcesTitle.textContent = 'Sources:';
+            sourcesTitle.style.fontSize = '0.85em';
+            sourcesTitle.style.fontWeight = '600';
+            sourcesTitle.style.marginBottom = '4px';
+            sourcesTitle.style.opacity = '0.9';
+            sourcesContainer.appendChild(sourcesTitle);
+
+            const sourcesList = document.createElement('ul');
+            sourcesList.style.listStyleType = 'decimal';
+            sourcesList.style.paddingLeft = '20px';
+            sourcesList.style.fontSize = '0.8em';
+            sourcesList.style.lineHeight = '1.4';
+            
+            sources.forEach(source => {
+                const sourceItem = document.createElement('li');
+                const sourceLink = document.createElement('a');
+                sourceLink.href = source.uri;
+                sourceLink.textContent = source.title || 'Source';
+                sourceLink.target = '_blank'; // Open in new tab
+                sourceLink.rel = 'noopener noreferrer';
+                sourceLink.style.color = 'var(--accent-secondary)'; // Use theme color
+                sourceLink.style.textDecoration = 'underline';
+                sourceItem.appendChild(sourceLink);
+                sourcesList.appendChild(sourceItem);
+            });
+            sourcesContainer.appendChild(sourcesList);
+            messageElement.appendChild(sourcesContainer);
+        }
         
         // Append to chat window
         chatMessages.appendChild(messageElement);
