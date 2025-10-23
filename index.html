@@ -133,6 +133,206 @@
         header h1 { font-size: 2em; }
         .card-grid { grid-template-columns: 1fr; }
     }
+
+    /* --- NEW AI CHATBOT STYLES --- */
+
+    #cooper-logo-svg {
+        width: 28px;
+        height: 28px;
+        fill: currentColor;
+    }
+
+    #chat-toggle-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 1000;
+        background-color: var(--accent-primary);
+        color: var(--text-light);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 2px solid var(--text-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 15px var(--shadow-color);
+        transition: transform 0.2s, background-color 0.2s;
+        text-shadow: none;
+    }
+    #chat-toggle-btn:hover {
+        transform: scale(1.1);
+        background-color: #ff5c67; /* Brighter accent-primary */
+    }
+
+    .chat-widget-container {
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+        z-index: 1000;
+        width: 90vw;
+        max-width: 400px;
+        height: 70vh;
+        max-height: 600px;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px 0 var(--shadow-color);
+        display: none; /* Initially hidden */
+        flex-direction: column;
+        overflow: hidden;
+        font-family: "Poppins", sans-serif; /* Match theme font */
+    }
+
+    .chat-header {
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid var(--glass-border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--text-light);
+    }
+    .chat-header-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .chat-header h2 {
+        font-size: 1.5em;
+        font-weight: 700;
+        text-shadow: 0 1px 3px var(--shadow-color);
+    }
+    #chat-close-btn {
+        font-family: Arial, sans-serif;
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--text-light);
+        background: none;
+        border: none;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+        text-shadow: 0 1px 3px var(--shadow-color);
+    }
+    #chat-close-btn:hover {
+        opacity: 1;
+    }
+
+    #chat-messages {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.7); /* Stronger shadow for readability on glass */
+    }
+
+    /* Scrollbar styling for chat */
+    #chat-messages::-webkit-scrollbar {
+        width: 6px;
+    }
+    #chat-messages::-webkit-scrollbar-thumb {
+        background-color: var(--glass-border);
+        border-radius: 3px;
+    }
+    #chat-messages::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    .message-bubble {
+        padding: 12px 16px;
+        border-radius: 18px;
+        max-width: 80%;
+        line-height: 1.5;
+        font-size: 0.95em;
+    }
+    .message-bubble.user {
+        background: rgba(255, 255, 255, 0.2);
+        align-self: flex-end;
+        border-bottom-right-radius: 4px;
+    }
+    .message-bubble.model {
+        background: rgba(0, 0, 0, 0.2);
+        align-self: flex-start;
+        border-bottom-left-radius: 4px;
+    }
+
+    /* Loading indicator bubbles */
+    #loading-indicator {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 12px 16px;
+    }
+    #loading-indicator .dot {
+        width: 8px;
+        height: 8px;
+        background-color: var(--text-light);
+        opacity: 0.7;
+        border-radius: 50%;
+        animation: bounce 1.4s infinite ease-in-out both;
+    }
+    .dot:nth-child(1) { animation-delay: -0.32s; }
+    .dot:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes bounce {
+        0%, 80%, 100% { transform: scale(0); }
+        40% { transform: scale(1.0); }
+    }
+    /* Wrapper to hide/show indicator */
+    .loading-wrapper.hidden {
+        display: none;
+    }
+
+
+    .chat-input-area {
+        padding: 20px;
+        border-top: 1px solid var(--glass-border);
+        background: rgba(0, 0, 0, 0.1);
+        display: flex;
+        gap: 10px;
+    }
+    #chat-input {
+        flex-grow: 1;
+        border: 1px solid var(--glass-border);
+        background: var(--glass-bg);
+        border-radius: 50px;
+        padding: 12px 18px;
+        color: var(--text-light);
+        font-family: "Poppins", sans-serif;
+        font-size: 1em;
+        text-shadow: none;
+    }
+    #chat-input:focus {
+        outline: none;
+        border-color: var(--accent-secondary);
+        box-shadow: 0 0 10px rgba(247, 183, 49, 0.5);
+    }
+    #chat-input::placeholder {
+        color: var(--text-light);
+        opacity: 0.6;
+    }
+    #chat-send-btn {
+        border: none;
+        background-color: var(--accent-secondary);
+        color: var(--text-dark);
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        padding: 0 20px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: transform 0.2s, background-color 0.2s;
+        text-shadow: none;
+        font-size: 1em;
+    }
+    #chat-send-btn:hover {
+        background-color: #f8c958;
+        transform: scale(1.05);
+    }
 </style>
 </head>
 <body>
@@ -170,6 +370,8 @@
             </div>
         </section>
 
+        <!-- ... (Rest of your existing sections remain unchanged) ... -->
+        
         <section class="selection-section">
             <h2>Interactive Simulations & Games</h2>
             <div class="card-grid">
@@ -227,6 +429,64 @@
         CONSOLE LOG: © 2025 • INTERFACE DESIGN BY <strong>BLABORTE</strong>
     </footer>
 </div>
+
+<!-- --- NEW AI CHATBOT HTML --- -->
+
+<!-- 1. Chat Toggle Button (Dog Paw Logo) -->
+<button id="chat-toggle-btn" aria-label="Open AI Chat">
+    <svg id="cooper-logo-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM164.1 325.5C182 346.2 212.6 368 256 368s74-21.8 91.9-42.5c5.8-6.7 15.9-7.4 22.6-1.6s7.4 15.9 1.6 22.6C349.8 372.1 311.1 400 256 400s-93.8-27.9-116.1-53.5c-5.8-6.7-5.1-16.8 1.6-22.6s16.8-5.1 22.6 1.6zM144.4 208C159.6 208 172 193.3 172 176C172 158.7 159.6 144 144.4 144C129.2 144 116.8 158.7 116.8 176C116.8 193.3 129.2 208 144.4 208zM367.6 144C352.4 144 340 158.7 340 176C340 193.3 352.4 208 367.6 208C382.8 208 395.2 193.3 395.2 176C395.2 158.7 382.8 144 367.6 144z"/>
+    </svg>
+</button>
+
+<!-- 2. Chat Widget Container -->
+<div class="chat-widget-container" id="chat-widget-container">
+    
+    <!-- Header -->
+    <div class="chat-header">
+        <div class="chat-header-title">
+            <svg id="cooper-logo-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" style="fill: var(--text-light); width: 28px; height: 28px;">
+                 <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM164.1 325.5C182 346.2 212.6 368 256 368s74-21.8 91.9-42.5c5.8-6.7 15.9-7.4 22.6-1.6s7.4 15.9 1.6 22.6C349.8 372.1 311.1 400 256 400s-93.8-27.9-116.1-53.5c-5.8-6.7-5.1-16.8 1.6-22.6s16.8-5.1 22.6 1.6zM144.4 208C159.6 208 172 193.3 172 176C172 158.7 159.6 144 144.4 144C129.2 144 116.8 158.7 116.8 176C116.8 193.3 129.2 208 144.4 208zM367.6 144C352.4 144 340 158.7 340 176C340 193.3 352.4 208 367.6 208C382.8 208 395.2 193.3 395.2 176C395.2 158.7 382.8 144 367.6 144z"/>
+            </svg>
+            <h2>Cooper</h2>
+        </div>
+        <button id="chat-close-btn" aria-label="Close Chat">&times;</button>
+    </div>
+
+    <!-- Chat Messages Area -->
+    <div id="chat-messages">
+        <!-- Initial bot message -->
+        <div class="message-bubble model">
+            <p>Woof! I'm Cooper, your study pal. Ask me anything about the CompTIA A+ exam!</p>
+        </div>
+        <!-- Chat messages will be dynamically added here -->
+    </div>
+
+    <!-- Loading Indicator -->
+    <div class="loading-wrapper hidden" id="loading-wrapper">
+        <div class="message-bubble model">
+            <div id="loading-indicator">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="chat-input-area">
+        <input 
+            type="text" 
+            id="chat-input" 
+            placeholder="Ask Cooper..."
+        >
+        <button id="chat-send-btn">
+            Send
+        </button>
+    </div>
+</div>
+
+
 <script src="tips.js"></script>
 <script>
     // --- SCRIPT FOR 'CORE 2 SPOTLIGHT' SECTION ---
@@ -240,6 +500,10 @@
     const prevTipBtn = document.getElementById('prev-tip-btn');
 
     function showTip() {
+        if (!shuffledTips || shuffledTips.length === 0 || !shuffledTips[currentTipIndex]) {
+            console.warn("Tips data not ready or index out of bounds.");
+            return;
+        }
         const tip = shuffledTips[currentTipIndex];
         tipTitleEl.textContent = tip.title;
         tipDescriptionEl.textContent = tip.description;
@@ -278,6 +542,176 @@
     }
 
     document.addEventListener('DOMContentLoaded', startTips);
+
+
+    // --- NEW AI CHATBOT SCRIPT ---
+    
+    // --- Configuration ---
+    const apiKey = ""; // Provided at runtime
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+    
+    // Updated system prompt for "Cooper"
+    const systemPrompt = "You are 'Cooper,' a friendly, encouraging, and helpful AI study pal, represented by a dog. Your personality is positive and eager to help. Your goal is to assist users studying for the CompTIA A+ exam. Answer their questions about tech, exam objectives, and troubleshooting concepts concisely and accurately. Keep your answers to a few sentences when possible.";
+
+    // Store the conversation history
+    let chatHistory = [];
+
+    // --- DOM Elements ---
+    const chatWidgetContainer = document.getElementById('chat-widget-container');
+    const chatToggleBtn = document.getElementById('chat-toggle-btn');
+    const chatCloseBtn = document.getElementById('chat-close-btn');
+    const chatMessages = document.getElementById('chat-messages');
+    const userInput = document.getElementById('chat-input');
+    const sendButton = document.getElementById('chat-send-btn');
+    const loadingWrapper = document.getElementById('loading-wrapper'); // Changed from loadingIndicator
+
+    // --- Event Listeners ---
+    
+    // Toggle chat widget visibility
+    chatToggleBtn.addEventListener('click', () => {
+        chatWidgetContainer.style.display = 'flex';
+    });
+    chatCloseBtn.addEventListener('click', () => {
+        chatWidgetContainer.style.display = 'none';
+    });
+
+    // Send message listeners
+    sendButton.addEventListener('click', handleSendMessage);
+    userInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            handleSendMessage();
+        }
+    });
+
+    // --- Core Functions ---
+
+    /**
+     * Handles sending the user's message.
+     */
+    async function handleSendMessage() {
+        const message = userInput.value.trim();
+        if (!message) return;
+
+        // 1. Display the user's message
+        displayMessage(message, 'user');
+        userInput.value = ''; // Clear input
+
+        // 2. Add user message to history
+        chatHistory.push({
+            role: 'user',
+            parts: [{ text: message }]
+        });
+
+        // 3. Show loading indicator
+        loadingWrapper.classList.remove('hidden');
+        chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll down
+
+        // 4. Call the AI API
+        try {
+            const aiResponse = await callGeminiAPI(chatHistory);
+            
+            // 5. Add AI response to history
+            chatHistory.push({
+                role: 'model',
+                parts: [{ text: aiResponse }]
+            });
+
+            // 6. Display the AI's response
+            displayMessage(aiResponse, 'model');
+
+        } catch (error) {
+            console.error("Error calling Gemini API:", error);
+            displayMessage("Ruff! I'm having some trouble connecting. Please try again in a moment.", 'model');
+        } finally {
+            // 7. Hide loading indicator
+            loadingWrapper.classList.add('hidden');
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the new message
+        }
+    }
+
+    /**
+     * Calls the Gemini API with exponential backoff for retries.
+     * @param {Array} history - The current chat history.
+     * @returns {Promise<string>} - The AI's text response.
+     */
+    async function callGeminiAPI(history) {
+        const payload = {
+            contents: history,
+            systemInstruction: {
+                parts: [{ text: systemPrompt }]
+            },
+        };
+
+        let response;
+        let delay = 1000; // Start with 1 second
+        
+        for (let i = 0; i < 5; i++) { // Try up to 5 times
+            try {
+                response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    
+                    if (result.candidates && result.candidates[0].content?.parts?.[0]?.text) {
+                        return result.candidates[0].content.parts[0].text;
+                    } else {
+                        let safetyMessage = "Sorry, I can't provide a response to that.";
+                        if (result.candidates && result.candidates[0].finishReason === 'SAFETY') {
+                            safetyMessage = "I am unable to respond to that request due to safety policies.";
+                        }
+                        return safetyMessage;
+                    }
+                } else if (response.status === 429) { // Throttling
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2; // Exponential backoff
+                } else {
+                    throw new Error(`API Error: ${response.status} ${response.statusText}`);
+                }
+            } catch (error) {
+                if (i === 4) { // Last retry failed
+                    throw error;
+                }
+                await new Promise(resolve => setTimeout(resolve, delay));
+                delay *= 2;
+            }
+        }
+        throw new Error("Failed to get a response from the AI after several retries.");
+    }
+
+    /**
+     * Creates and appends a new message bubble to the chat window.
+     * @param {string} message - The text to display.
+     * @param {'user' | 'model'} sender - The sender of the message.
+     */
+    function displayMessage(message, sender) {
+        // Create the message element
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message-bubble');
+        
+        if (sender === 'user') {
+            messageElement.classList.add('user');
+        } else {
+            messageElement.classList.add('model');
+        }
+
+        // Sanitize text to prevent HTML injection
+        const messageText = document.createElement('p');
+        messageText.textContent = message;
+        messageElement.appendChild(messageText);
+        
+        // Append to chat window
+        chatMessages.appendChild(messageElement);
+
+        // Scroll to the bottom
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
 </script>
 </body>
 </html>
+
