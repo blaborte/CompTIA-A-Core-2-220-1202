@@ -475,11 +475,6 @@
             ⚠️ **SITE UNDER CONSTRUCTION/BETA:** This is a work in progress. Please report any errors!
         </div>
         
-        <section class="hero-section">
-            <p class="hero-text">Welcome to the <strong>A+ Core 2 Training Simulation Environment</strong>.</p>
-            <p class="hero-text">Select a module below to begin your practice drills.</p>
-        </section>
-
         <section class="tip-section">
             <h2>Core 2 Spotlight</h2>
             <div class="tip-details">
@@ -599,8 +594,7 @@
 
 
 <script>
-    // --- TIP DATA (MOCKED if tips.js is not present) ---
-    // This is now included directly in index.html to guarantee functionality.
+    // --- TIP DATA (Integrated to guarantee functionality) ---
     const tips = [
         {
             title: "A+ Troubleshooting Steps",
@@ -628,22 +622,16 @@
             usage: "cd, chmod, shutdown, sudo",
         }
     ];
-
+    
     // --- TIP DISPLAY LOGIC ---
     let currentTipIndex = -1;
     let shuffledTips = [];
 
-    const tipTitleEl = document.getElementById('tip-title');
-    const tipDescriptionEl = document.getElementById('tip-description');
-    const tipUsageEl = document.getElementById('tip-usage');
-    const nextTipBtn = document.getElementById('next-tip-btn');
-    const prevTipBtn = document.getElementById('prev-tip-btn');
-
-    function showTip() {
+    // NOTE: Elements are retrieved inside DOMContentLoaded
+    function showTip(tipTitleEl, tipDescriptionEl, tipUsageEl) {
         if (!shuffledTips || shuffledTips.length === 0 || !shuffledTips[currentTipIndex]) {
-            // Handle case where tips data is missing or loading
             tipTitleEl.textContent = 'Tips Loading Error';
-            tipDescriptionEl.textContent = 'Could not load tips. Ensure tips data is available.';
+            tipDescriptionEl.textContent = 'Could not load tips. Data array may be empty.';
             tipUsageEl.textContent = 'N/A';
             return;
         }
@@ -653,37 +641,31 @@
         tipUsageEl.textContent = tip.usage;
     }
 
-    function showNextTip() {
+    function showNextTip(tipTitleEl, tipDescriptionEl, tipUsageEl) {
         if (shuffledTips.length === 0) return;
         currentTipIndex = (currentTipIndex + 1) % shuffledTips.length;
-        showTip();
+        showTip(tipTitleEl, tipDescriptionEl, tipUsageEl);
     }
 
-    function showPrevTip() {
+    function showPrevTip(tipTitleEl, tipDescriptionEl, tipUsageEl) {
         if (shuffledTips.length === 0) return;
         currentTipIndex = (currentTipIndex - 1 + shuffledTips.length) % shuffledTips.length;
-        showTip();
+        showTip(tipTitleEl, tipDescriptionEl, tipUsageEl);
     }
     
-    // Attach listeners once DOM is loaded
-    document.addEventListener('DOMContentLoaded', () => {
-        nextTipBtn.addEventListener('click', showNextTip);
-        prevTipBtn.addEventListener('click', showPrevTip);
-    });
-    
-
-    function startTips() {
+    function startTips(tipTitleEl, tipDescriptionEl, tipUsageEl) {
         if (typeof tips !== 'undefined' && tips.length > 0) {
             shuffledTips = [...tips].sort(() => 0.5 - Math.random());
             currentTipIndex = -1;
-            showNextTip();
+            showNextTip(tipTitleEl, tipDescriptionEl, tipUsageEl);
         } else {
-            showTip(); // Display error message if present
+            showTip(tipTitleEl, tipDescriptionEl, tipUsageEl); // Display error message if present
         }
     }
+    // --- END TIP DISPLAY LOGIC ---
 
-
-    // --- LOCAL CLOCK LOGIC (FIXED) ---
+    // --- LOCAL CLOCK LOGIC ---
+    // NOTE: timeClockEl and timeDateEl are now retrieved globally, but the function updates them safely.
     const timeClockEl = document.getElementById('local-time-clock');
     const timeDateEl = document.getElementById('local-time-date');
 
@@ -692,11 +674,10 @@
         const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
         const dateString = now.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
         
-        timeClockEl.textContent = timeString;
-        timeDateEl.textContent = dateString;
+        if (timeClockEl) timeClockEl.textContent = timeString;
+        if (timeDateEl) timeDateEl.textContent = dateString;
     }
     
-    // Initialize time and set intervals
     updateSystemClock();
     setInterval(updateSystemClock, 1000);
     // --- END LOCAL CLOCK LOGIC ---
@@ -1072,7 +1053,41 @@
     
     // ENHANCEMENT 1: Highlight Active Module (Navigation)
     document.addEventListener('DOMContentLoaded', () => {
-        // Find the module based on current filename
+        // --- Sidebar/Clock Initialization ---
+        const timeClockEl = document.getElementById('local-time-clock');
+        const timeDateEl = document.getElementById('local-time-date');
+
+        function updateSystemClock() { 
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+            const dateString = now.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+            
+            if (timeClockEl) timeClockEl.textContent = timeString;
+            if (timeDateEl) timeDateEl.textContent = dateString;
+        }
+        updateSystemClock();
+        setInterval(updateSystemClock, 1000);
+
+
+        // --- Core 2 Spotlight Initialization ---
+        const tipTitleEl = document.getElementById('tip-title');
+        const tipDescriptionEl = document.getElementById('tip-description');
+        const tipUsageEl = document.getElementById('tip-usage');
+        const nextTipBtn = document.getElementById('next-tip-btn');
+        const prevTipBtn = document.getElementById('prev-tip-btn');
+        
+        // 1. Attach event listeners for the Prev/Next buttons (using guaranteed elements)
+        if (nextTipBtn) {
+            nextTipBtn.addEventListener('click', () => showNextTip(tipTitleEl, tipDescriptionEl, tipUsageEl));
+        }
+        if (prevTipBtn) {
+            prevTipBtn.addEventListener('click', () => showPrevTip(tipTitleEl, tipDescriptionEl, tipUsageEl));
+        }
+
+        // 2. Start the tip cycle
+        startTips(tipTitleEl, tipDescriptionEl, tipUsageEl); 
+
+        // --- Active Module Highlighting ---
         const path = window.location.pathname.split('/').pop();
         if (path === 'index.html' || path === '') return;
         
@@ -1080,9 +1095,6 @@
         if (activeLink) {
             activeLink.classList.add('active-module');
         }
-        
-        // --- FIX: Initialize the tips section here after all elements are loaded ---
-        startTips(); 
     });
 
 </script>
