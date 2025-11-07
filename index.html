@@ -36,6 +36,7 @@
         min-height: 100vh;
         /* DEBUG FIX: Added text-shadow for global readability */
         text-shadow: 0 1px 3px var(--shadow-color);
+        padding-right: 200px; /* Space for the new fixed sidebar */
     }
     
     .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
@@ -48,6 +49,60 @@
         margin: 0 auto; 
         width: 100%;
     }
+
+    /* --- NEW: Info Sidebar Styles --- */
+    #info-sidebar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 180px;
+        height: 100%;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.3);
+        box-shadow: -4px 0 15px rgba(0, 0, 0, 0.4);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        z-index: 999; 
+        color: var(--text-light);
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        border-left: 1px solid var(--glass-border);
+    }
+    #local-time-clock {
+        font-size: 2.2em;
+        font-weight: 700;
+        margin-top: 10px;
+        color: var(--accent-secondary);
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
+    }
+    #local-time-date {
+        font-size: 0.9em;
+        opacity: 0.8;
+        margin-bottom: 20px;
+    }
+    #weather-container {
+        width: 100%;
+        padding: 10px 0;
+        border-top: 1px solid var(--glass-border);
+        text-align: center;
+    }
+    #weather-container h3 {
+        font-size: 1em;
+        margin: 10px 0 5px;
+        color: var(--accent-secondary);
+    }
+    #weather-details p {
+        font-size: 0.9em;
+        margin: 5px 0;
+    }
+    .weather-temp {
+        font-size: 1.4em;
+        font-weight: 500;
+        margin-top: 5px;
+    }
+    /* --- END NEW: Info Sidebar Styles --- */
 
     header { text-align: center; padding-bottom: 30px; margin-bottom: 30px; }
     header h1 { font-size: 2.5em; margin-bottom: 5px; font-weight: 700; text-shadow: 0 2px 5px var(--shadow-color); }
@@ -115,6 +170,13 @@
     .exam-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.5); border-color: var(--accent-primary); }
     .exam-card.pbq-card:hover { border-color: var(--accent-primary); }
 
+    /* ENHANCEMENT 1: Highlight Active Module (Navigation) */
+    .exam-card.active-module {
+        border-color: var(--accent-secondary);
+        box-shadow: 0 0 15px var(--accent-secondary);
+    }
+
+
     .exam-card h3 { 
         font-size: 1.4em; margin-bottom: 10px; font-weight: 700; 
         text-shadow: 0 1px 4px var(--shadow-color);
@@ -127,12 +189,21 @@
         color: var(--text-light); 
     }
     
-    /* General Default Title Color */
+    /* General Default Title Color (ENHANCEMENT 5) */
     .exam-card h3 {
         color: var(--text-light);
     }
+    .exam-card:hover h3 {
+        color: var(--accent-primary); /* Title turns RED on hover */
+    }
 
     .exam-card p { flex-grow: 1; margin-bottom: 15px; opacity: 0.9; }
+    
+    /* ENHANCEMENT 4: Use Accent Colors in Text (Question Count) */
+    .exam-card p strong {
+        color: var(--accent-secondary); /* Highlight question counts in yellow */
+        font-weight: 700;
+    }
 
     .card-footer {
         margin-top: auto; padding-top: 15px; border-top: 1px solid var(--glass-border);
@@ -158,12 +229,17 @@
     footer { text-align: center; padding: 20px 0; margin-top: 40px; color: var(--text-light); opacity: 0.8; font-size: 0.85em; }
 
     @media (max-width: 768px) {
+        body {
+            padding-right: 20px; /* Remove sidebar padding on small screens */
+        }
+        #info-sidebar {
+            display: none; /* Hide sidebar on small screens to prioritize content */
+        }
         header h1 { font-size: 2em; }
         .card-grid { grid-template-columns: 1fr; }
     }
 
-    /* --- NEW AI CHATBOT STYLES --- */
-
+    /* --- AI CHATBOT STYLES (Copied for completeness) --- */
     #cooper-logo-svg {
         width: 28px;
         height: 28px;
@@ -370,7 +446,21 @@
     <div class="shape shape-1"></div>
     <div class="shape shape-2"></div>
 </div>
-    
+
+<div id="info-sidebar">
+    <h3 style="margin-top: 0; color: var(--text-light);">System Info</h3>
+    <div id="local-time-clock">--:--</div>
+    <div id="local-time-date">--/--/----</div>
+
+    <div id="weather-container">
+        <h3>Local Weather</h3>
+        <div id="weather-details">Loading...</div>
+        <div style="font-size: 0.7em; opacity: 0.7; margin-top: 10px;">
+            <p>API Key Required (OpenWeatherMap)</p>
+            <p>Edit JS variables to update.</p>
+        </div>
+    </div>
+</div>
 <div class="container">
     <header>
         <h1>CompTIA A+ Core 2 (220-1202)</h1>
@@ -402,12 +492,12 @@
         <section class="selection-section">
             <h2>Interactive Simulations & Games</h2>
             <div class="card-grid">
-                <a href="games.html" class="exam-card pbq-card">
+                <a href="games.html" class="exam-card pbq-card" onclick="setLoading(this); return false;">
                     <h3>GAME ARCADE</h3>
                     <p>Launch the hub to access all interactive games for Windows, macOS, and Linux, including command-line and troubleshooting challenges.</p>
                     <div class="card-footer">ENTER ARCADE <span>&rarr;</span></div>
                 </a>
-                <a href="troubleshooter.html" class="exam-card pbq-card">
+                <a href="troubleshooter.html" class="exam-card pbq-card" onclick="setLoading(this); return false;">
                     <h3>TROUBLESHOOTING SIMULATOR</h3>
                     <p>Access the guided, interactive challenge scenarios for Command Line, OS, and Security fixes. Hands-on practice for the Core 2 PBQs.</p>
                     <div class="card-footer">START INTERACTIVE DRILL <span>&rarr;</span></div>
@@ -418,30 +508,30 @@
         <section class="selection-section">
             <h2>General Practice Modules</h2>
             <div class="card-grid">
-                <a href="quiz-a.html" class="exam-card"><h3>Professor Messer's PRACTICE TEST A</h3><p>The first set of questions to test your foundational knowledge across all exam domains. **(85 Questions)**</p><div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div></a>
-                <a href="quiz-b.html" class="exam-card"><h3>Professor Messer's PRACTICE TEST B</h3><p>A second set of practice questions to challenge your understanding and identify weak spots. **(85 Questions)**</p><div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div></a>
-                <a href="quiz-c.html" class="exam-card"><h3>Professor Messer's PRACTICE TEST C</h3><p>The final set of questions, designed to simulate the real exam experience and build confidence. **(85 Questions)**</p><div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div></a>
-                <a href="dion.html" class="exam-card"><h3>DION TRAINING PRACTICE TEST</h3><p>A supplemental set of questions focused on operating systems, security, and troubleshooting. **(90 Questions)**</p><div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div></a>
-                <a href="quiz-random.html" class="exam-card"><h3>MIXED REVIEW DRILL</h3><p>A dynamic, random set of questions pulled from all practice exams to cover a comprehensive range of topics. **(Custom Length)**</p><div class="card-footer">INITIATE DATA RANDOMIZER <span>&rarr;</span></div></a>
-                <a href="flashcards.html" class="exam-card flashcard-card"><h3>FLASHCARD DRILL: KEY TERMS</h3><p>A high-speed review tool for memorizing critical terminology, acronyms, and command-line functions from all domains.</p><div class="card-footer">START MEMORY DRILL <span>&rarr;</span></div></a>
-                <a href="examcomp.html" class="exam-card"><h3>EXAMCOMPASS TESTS</h3><p>A supplementary set of 20+ practice tests for the Core 2 (220-1202) exam. (Source: examcompass.com)</p><div class="card-footer">ACCESS TESTS <span>&rarr;</span></div></a>
+                <a href="quiz-a.html" class="exam-card" onclick="setLoading(this); return false;"><h3>Professor Messer's PRACTICE TEST A</h3><p>The first set of questions to test your foundational knowledge across all exam domains. **(85 Questions)**</p><div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div></a>
+                <a href="quiz-b.html" class="exam-card" onclick="setLoading(this); return false;"><h3>Professor Messer's PRACTICE TEST B</h3><p>A second set of practice questions to challenge your understanding and identify weak spots. **(85 Questions)**</p><div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div></a>
+                <a href="quiz-c.html" class="exam-card" onclick="setLoading(this); return false;"><h3>Professor Messer's PRACTICE TEST C</h3><p>The final set of questions, designed to simulate the real exam experience and build confidence. **(85 Questions)**</p><div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div></a>
+                <a href="dion.html" class="exam-card" onclick="setLoading(this); return false;"><h3>DION TRAINING PRACTICE TEST</h3><p>A supplemental set of questions focused on operating systems, security, and troubleshooting. **(90 Questions)**</p><div class="card-footer">INITIATE EXAM SEQUENCE <span>&rarr;</span></div></a>
+                <a href="quiz-random.html" class="exam-card" onclick="setLoading(this); return false;"><h3>MIXED REVIEW DRILL</h3><p>A dynamic, random set of questions pulled from all practice exams to cover a comprehensive range of topics. **(Custom Length)**</p><div class="card-footer">INITIATE DATA RANDOMIZER <span>&rarr;</span></div></a>
+                <a href="flashcards.html" class="exam-card flashcard-card" onclick="setLoading(this); return false;"><h3>FLASHCARD DRILL: KEY TERMS</h3><p>A high-speed review tool for memorizing critical terminology, acronyms, and command-line functions from all domains.</p><div class="card-footer">START MEMORY DRILL <span>&rarr;</span></div></a>
+                <a href="examcomp.html" class="exam-card" onclick="setLoading(this); return false;"><h3>EXAMCOMPASS TESTS</h3><p>A supplementary set of 20+ practice tests for the Core 2 (220-1202) exam. (Source: examcompass.com)</p><div class="card-footer">ACCESS TESTS <span>&rarr;</span></div></a>
             </div>
         </section>
         
         <section class="selection-section">
             <h2>Key Resources</h2>
             <div class="card-grid">
-                <a href="objectives.html" class="exam-card"><h3>EXAM OBJECTIVES</h3><p>Review the official domains, scoring details, and a complete breakdown of the CompTIA A+ Core 2 exam structure.</p><div class="card-footer">VIEW DETAILS <span>&rarr;</span></div></a>
-                <a href="glossary.html" class="exam-card"><h3>GLOSSARY</h3><p>A quick-reference list of essential terminology, acronyms, and concepts you will need to know for the exam.</p><div class="card-footer">STUDY TERMS <span>&rarr;</span></div></a>
-                <a href="commands.html" class="exam-card"><h3>COMMAND REFERENCE</h3><p>A reference sheet for common Windows, macOS, and Linux command-line tools covered in the A+ exam.</p><div class="card-footer">VIEW COMMANDS <span>&rarr;</span></div></a>
+                <a href="objectives.html" class="exam-card" onclick="setLoading(this); return false;"><h3>EXAM OBJECTIVES</h3><p>Review the official domains, scoring details, and a complete breakdown of the CompTIA A+ Core 2 exam structure.</p><div class="card-footer">VIEW DETAILS <span>&rarr;</span></div></a>
+                <a href="glossary.html" class="exam-card" onclick="setLoading(this); return false;"><h3>GLOSSARY</h3><p>A quick-reference list of essential terminology, acronyms, and concepts you will need to know for the exam.</p><div class="card-footer">STUDY TERMS <span>&rarr;</span></div></a>
+                <a href="commands.html" class="exam-card" onclick="setLoading(this); return false;"><h3>COMMAND REFERENCE</h3><p>A reference sheet for common Windows, macOS, and Linux command-line tools covered in the A+ exam.</p><div class="card-footer">VIEW COMMANDS <span>&rarr;</span></div></a>
             </div>
         </section>
 
         <section class="selection-section">
             <h2>Video Resources</h2>
             <div class="card-grid">
-                <a href="https://youtube.com/playlist?list=PLG49S3nxzAnn7PDGQ17m5AYbDRhnW7vOb&si=0l8eEgv33MiR1X07" target="_blank" class="exam-card"><h3>PROFESSOR MESSER'S COURSE</h3><p>Access the complete, free video training series for the CompTIA A+ Core 2 (220-1202) exam from Professor Messer.</p><div class="card-footer">WATCH VIDEOS <span>&rarr;</span></div></a>
-                <a href="https://www.youtube.com/watch?v=SwhGX_JB59c&list=PLc6LqxQFwub_mlYYO4r3MrRKBf-9s84Yq" target="_blank" class="exam-card"><h3>ICEBURNINGTECH LESSONS</h3><p>In-depth video lessons and full-length practice exams for the Core 2 from the IceBurningTech YouTube channel.</p><div class="card-footer">WATCH VIDEOS <span>&rarr;</span></div></a>
+                <a href="https://youtube.com/playlist?list=PLG49S3nxzAnn7PDGQ17m5AYbDRhnW7vOb&si=0l8eEgv33MiR1X07" target="_blank" class="exam-card" onclick="setLoading(this); return false;"><h3>PROFESSOR MESSER'S COURSE</h3><p>Access the complete, free video training series for the CompTIA A+ Core 2 (220-1202) exam from Professor Messer.</p><div class="card-footer">WATCH VIDEOS <span>&rarr;</span></div></a>
+                <a href="https://www.youtube.com/watch?v=SwhGX_JB59c&list=PLc6LqxQFwub_mlYYO4r3MrRKBf-9s84Yq" target="_blank" class="exam-card" onclick="setLoading(this); return false;"><h3>ICEBURNINGTECH LESSONS</h3><p>In-depth video lessons and full-length practice exams for the Core 2 from the IceBurningTech YouTube channel.</p><div class="card-footer">WATCH VIDEOS <span>&rarr;</span></div></a>
             </div>
         </section>
 
@@ -501,6 +591,65 @@
 
 <script src="tips.js"></script>
 <script>
+    // --- OPENWEATHERMAP CONFIGURATION (NO API KEY INCLUDED) ---
+    // Since you don't have an API key, the weather function will gracefully display an error.
+    const OPENWEATHER_API_KEY = ''; // <-- PASTE YOUR OPENWEATHERMAP API KEY HERE
+    const CITY_NAME = 'New York'; // <-- SET YOUR CITY HERE
+
+    const timeClockEl = document.getElementById('local-time-clock');
+    const timeDateEl = document.getElementById('local-time-date');
+    const weatherDetailsEl = document.getElementById('weather-details');
+
+    function updateLocalTime() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+        const dateString = now.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+        
+        timeClockEl.textContent = timeString;
+        timeDateEl.textContent = dateString;
+    }
+
+    async function fetchWeatherData(apiKey, city) {
+        if (!apiKey) {
+            weatherDetailsEl.innerHTML = '<p>Key Missing</p><p>Cannot fetch weather.</p>';
+            return;
+        }
+
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            
+            const temp = Math.round(data.main.temp);
+            const description = data.weather[0].description;
+            const icon = data.weather[0].icon;
+
+            weatherDetailsEl.innerHTML = `
+                <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}" style="width: 50px; height: 50px; margin: -10px 0;">
+                <p class="weather-temp">${temp}°F</p>
+                <p style="text-transform: capitalize;">${description}</p>
+                <p style="opacity: 0.7; font-size: 0.8em; margin-top: 5px;">${data.name}</p>
+            `;
+
+        } catch (error) {
+            console.error("Could not fetch weather data:", error);
+            weatherDetailsEl.innerHTML = '<p>Service Unavailable</p>';
+        }
+    }
+    
+    // Initialize time and set intervals
+    updateLocalTime();
+    setInterval(updateLocalTime, 1000);
+
+    // Fetch weather data once on load (will fail gracefully without a key)
+    fetchWeatherData(OPENWEATHER_API_KEY, CITY_NAME);
+    // Optionally, refresh weather every 10 minutes (600000ms)
+    // setInterval(() => fetchWeatherData(OPENWEATHER_API_KEY, CITY_NAME), 600000);
+
     // --- LOCAL AI KNOWLEDGE BASE (FOR KEYWORD MATCHING) ---
     const localKnowledge = [
         {
@@ -528,16 +677,24 @@
             response: "Always start with the source! The **EXAM OBJECTIVES** link under **Key Resources** has the official breakdown of all the domains and skills you need to master."
         },
         {
+            keywords: ["bitlocker", "encryption"],
+            response: "**BitLocker** is the full volume encryption feature built into certain editions of Windows. It protects data by encrypting the entire drive (Data-at-Rest)."
+        },
+        {
+            keywords: ["ddos", "dos", "attack"],
+            response: "A **DDoS** attack (Distributed Denial of Service) overwhelms a system with traffic from multiple sources to make a service unavailable."
+        },
+        {
+            keywords: ["mdm"],
+            response: "**MDM** stands for Mobile Device Management. Companies use it to enforce security policies on corporate phones and tablets, like preventing unauthorized app installation."
+        },
+        {
             keywords: ["hello", "hi", "hey", "cooper"],
-            response: "Woof! Glad you stopped by. What CompTIA A+ Core 2 topic can I help you review today?"
+            response: "Woof! Glad you stopped by. What CompTIA A+ Core 2 topic can I help you review today? Or type **Start Quiz** to test your troubleshooting knowledge!"
         },
         {
-            keywords: ["error", "bug", "broken", "disclaimer"],
-            response: "I see you found the **disclaimer**. This site is currently in beta, so if you find any errors, please report them! We appreciate your help keeping the environment clean."
-        },
-        {
-            keywords: ["color", "red", "yellow", "style"],
-            response: "I like the colors too! The main red color is the `var(--accent-primary)`, and the yellow is `var(--accent-secondary)`."
+            keywords: ["time", "weather", "city"],
+            response: `I'm displaying the current time and local weather for ${CITY_NAME} on the sidebar!`
         }
     ];
     
@@ -546,6 +703,7 @@
         {
             question: "Step 1 of the A+ Troubleshooting Model is to **Identify the problem**. What is the very first thing you should do when identifying the problem?",
             answer: "Question the user and establish device symptoms",
+            hint: "The first step is about gathering information from the human source.",
             options: [
                 "Question the user and establish device symptoms", 
                 "Establish a theory of probable cause", 
@@ -696,155 +854,4 @@
 
         if (quizState.currentQuestionIndex < troubleshootingQuiz.length) {
             const nextQ = troubleshootingQuiz[quizState.currentQuestionIndex];
-            let questionText = `\n\n**A+ TROUBLESHOOTING Q&A: Question ${quizState.currentQuestionIndex + 1}**\n\n${nextQ.question}\n\n`;
-            nextQ.options.forEach((option, i) => {
-                questionText += `Option ${i + 1}: ${option}\n`;
-            });
-            questionText += "\nType the full option text you think is correct.";
-            
-            setTimeout(() => {
-                displayMessage(questionText, 'model');
-            }, 100);
-        } else {
-            quizState.active = false;
-            displayMessage("🎉 Q&A session finished! Type **Start Quiz** to play again, or ask me about a topic!", 'model');
-        }
-        return true;
-    }
-
-
-    // --- AI CHATBOT LOGIC (FRONT-END ONLY) ---
-    
-    // --- DOM Elements ---
-    const chatWidgetContainer = document.getElementById('chat-widget-container');
-    const chatToggleBtn = document.getElementById('chat-toggle-btn');
-    const chatCloseBtn = document.getElementById('chat-close-btn');
-    const chatMessages = document.getElementById('chat-messages');
-    const userInput = document.getElementById('chat-input');
-    const sendButton = document.getElementById('chat-send-btn');
-    const loadingWrapper = document.getElementById('loading-wrapper');
-
-    // --- Event Listeners ---
-    
-    // Toggle chat widget visibility
-    chatToggleBtn.addEventListener('click', () => {
-        chatWidgetContainer.style.display = 'flex';
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom on open
-    });
-    chatCloseBtn.addEventListener('click', () => {
-        chatWidgetContainer.style.display = 'none';
-    });
-
-    // Send message listeners
-    sendButton.addEventListener('click', handleSendMessage);
-    userInput.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            event.preventDefault(); // Prevent new line in input box
-            handleSendMessage();
-        }
-    });
-
-    // --- Core Functions ---
-
-    /**
-     * Finds the best canned response based on user input.
-     * @param {string} message - The user's message.
-     * @returns {string} - The response text.
-     */
-    function getLocalResponse(message) {
-        const normalizedMessage = message.toLowerCase();
-
-        // 1. Check for specific keywords
-        for (const item of localKnowledge) {
-            if (item.keywords.some(keyword => normalizedMessage.includes(keyword))) {
-                return item.response;
-            }
-        }
-
-        // 2. Default fallback response
-        return "I'm Cooper, a training bot! I can help you find modules like the **Troubleshooting Simulator**, **Practice Tests**, or **Command Reference**. Try asking me about those topics!";
-    }
-
-    /**
-     * Handles sending the user's message, checking for quiz mode first.
-     */
-    async function handleSendMessage() {
-        const message = userInput.value.trim();
-        if (!message) return;
-
-        // 1. Display the user's message
-        displayMessage(message, 'user');
-        userInput.value = ''; // Clear input
-
-        // 2. Show loading indicator and disable input
-        loadingWrapper.classList.remove('hidden');
-        userInput.disabled = true;
-        sendButton.disabled = true;
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll down
-
-        let aiResponseText;
-
-        // --- CHECK FOR QUIZ COMMANDS OR ACTIVE QUIZ MODE ---
-        const normalizedMessage = message.trim().toLowerCase();
-        if (normalizedMessage.includes("start quiz")) {
-            startQuizMode();
-            aiResponseText = null; // Quiz mode handles its own display
-        } else if (normalizedMessage.includes("give answer") || normalizedMessage.includes("skip")) {
-            if (quizState.active) {
-                giveQuizAnswer();
-                aiResponseText = null;
-            } else {
-                aiResponseText = "There's no active quiz. Type **Start Quiz** to begin the A+ Troubleshooting Q&A!";
-            }
-        } else if (quizState.active) {
-            // Handle quiz answer if active
-            handleQuizAnswer(message);
-            aiResponseText = null; // Quiz mode handles its own display
-        } else {
-            // Normal conversational response
-            aiResponseText = getLocalResponse(message);
-        }
-
-        // 3. Generate and display the AI's response (only if not handled by quiz mode)
-        if (aiResponseText !== null) {
-            await new Promise(resolve => setTimeout(resolve, 800)); // Simulate thinking time
-            displayMessage(aiResponseText, 'model');
-        }
-
-        // 4. Hide loading indicator and re-enable input
-        loadingWrapper.classList.add('hidden');
-        userInput.disabled = false;
-        sendButton.disabled = false;
-        userInput.focus(); // Return focus to the input box
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the new message
-    }
-
-    /**
-     * Creates and appends a new message bubble to the chat window.
-     * @param {string} message - The text to display.
-     * @param {'user' | 'model'} sender - The sender of the message.
-     */
-    function displayMessage(message, sender) {
-        // Create the message element
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message-bubble');
-        
-        if (sender === 'user') {
-            messageElement.classList.add('user');
-        } else {
-            messageElement.classList.add('model');
-        }
-
-        // Use innerHTML to allow Markdown bolding from the local knowledge base
-        // Also replace newlines with <br> for better readability in chat
-        messageElement.innerHTML = `<p>${message.replace(/\n/g, '<br>')}</p>`; 
-        
-        // Append to chat window
-        chatMessages.appendChild(messageElement);
-
-        // Scroll to the bottom
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-</script>
-</body>
-</html>
+            let questionText = `\n\n**A+ TROUBLESHOOTING Q&A: Question ${quizState.currentQuestion
