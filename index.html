@@ -18,8 +18,8 @@
         --glass-border: rgba(255, 255, 255, 0.2);
         --text-light: #f1faee;
         --text-dark: #1d3557;
-        --accent-primary: #e63946;
-        --accent-secondary: #f7b731; /* Yellow for tips */
+        --accent-primary: #e63946; /* RED */
+        --accent-secondary: #f7b731; /* Yellow */
         --shadow-color: rgba(0, 0, 0, 0.5); /* Darker shadow for better contrast */
     }
 
@@ -79,7 +79,14 @@
     .hero-text strong { color: var(--text-light); font-weight: 600; }
 
     .tip-section { text-align: center; }
-    .tip-section h2 { color: var(--accent-secondary); margin-top: 0; margin-bottom: 20px; text-shadow: 0 1px 4px rgba(0,0,0,0.6); }
+    /* CORE 2 SPOTLIGHT HEADING (Section 2 H2) - Now explicitly YELLOW */
+    .tip-section h2 { 
+        color: var(--accent-secondary); 
+        margin-top: 0; 
+        margin-bottom: 20px; 
+        text-shadow: 0 1px 4px rgba(0,0,0,0.6); 
+    }
+
     .tip-details h3 { font-size: 1.4em; text-shadow: 0 1px 4px var(--shadow-color); }
     .tip-details p { opacity: 0.9; max-width: 600px; margin: 10px auto; }
     .tip-details strong { color: var(--text-light); font-weight: 600; }
@@ -104,25 +111,46 @@
         color: var(--text-light); text-decoration: none; padding: 25px; border-radius: 15px;
         border: 1px solid var(--glass-border); transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
     }
-    .exam-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.5); border-color: var(--accent-secondary); }
+    /* Hover accent remains RED (primary accent) for a strong visual indicator across all cards */
+    .exam-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.5); border-color: var(--accent-primary); }
     .exam-card.pbq-card:hover { border-color: var(--accent-primary); }
 
     .exam-card h3 { 
-        font-size: 1.4em; margin-bottom: 10px; font-weight: 700; color: var(--text-light);
+        font-size: 1.4em; margin-bottom: 10px; font-weight: 700; 
         text-shadow: 0 1px 4px var(--shadow-color);
+        /* Default card titles are WHITE */
+        color: var(--text-light); 
     }
-    .exam-card.pbq-card h3 { color: var(--accent-primary); }
-    .exam-card.flashcard-card h3 { color: var(--accent-secondary); }
+    
+    /* Interactive Simulations & Games (Section 3) - Titles Reverted to WHITE */
+    .exam-card.pbq-card h3 { 
+        color: var(--text-light); 
+    }
+    
+    /* General Default Title Color */
+    .exam-card h3 {
+        color: var(--text-light);
+    }
 
     .exam-card p { flex-grow: 1; margin-bottom: 15px; opacity: 0.9; }
 
     .card-footer {
         margin-top: auto; padding-top: 15px; border-top: 1px solid var(--glass-border);
         font-weight: 600; display: flex; justify-content: space-between; align-items: center;
+        /* Default footer color is WHITE */
         color: var(--text-light);
     }
-    .exam-card.pbq-card .card-footer { color: var(--accent-primary); }
-    .exam-card.flashcard-card .card-footer { color: var(--accent-secondary); }
+    
+    /* Interactive Simulations & Games (Section 3) - Footers Reverted to WHITE */
+    .exam-card.pbq-card .card-footer { 
+        color: var(--text-light); 
+    }
+
+    /* General Default Footer Color */
+    .exam-card .card-footer {
+        color: var(--text-light);
+    }
+
 
     .card-footer span { font-size: 1.2em; transition: transform 0.2s; }
     .exam-card:hover .card-footer span { transform: translateX(5px); }
