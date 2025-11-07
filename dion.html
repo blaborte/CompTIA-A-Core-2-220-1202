@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dion Training CompTIA A+ Core 2 (220-1202) Practice Test</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- STYLES ADAPTED FROM QUIZ-A.HTML --- */
+        :root {
+            --bg-gradient-start: #a8dadc;
+            --bg-gradient-end: #457b9d;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-light: #f1faee;
+            --text-dark: #1d3557;
+            --accent-primary: #e63946;
+            --accent-secondary: #f7b731; /* Yellow */
+            --shadow-color: rgba(0, 0, 0, 0.5); 
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            background-attachment: fixed; /* Keep background from scrolling */
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 40px 20px;
+            min-height: 100vh;
+            text-shadow: 0 1px 3px var(--shadow-color);
+            display: flex; /* Added from original quiz-a */
+            justify-content: center; /* Added from original quiz-a */
+            align-items: center; /* Added from original quiz-a */
+        }
+        
+        .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.7; }
+        .shape-1 { width: 300px; height: 300px; top: 10%; left: 15%; background: linear-gradient(to right, #e63946, #f1faee); }
+        .shape-2 { width: 400px; height: 400px; bottom: 5%; right: 10%; background: linear-gradient(to right, #457b9d, #a8dadc); }
+
+        /* Updated quiz-container */
+        #quiz-container { 
+            background: var(--glass-bg);
+            box-shadow: 0 8px 32px 0 var(--shadow-color);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            width: 100%; 
+            max-width: 700px; 
+            overflow: hidden; 
+            position: relative; 
+            color: var(--text-light);
+        }
+
+        .home-link { 
+            position: absolute; 
+            top: 20px; 
+            left: 20px; 
+            color: var(--text-light); 
+            text-decoration: none; 
+            font-weight: 500; 
+            background: rgba(255,255,255,0.1); 
+            padding: 5px 10px; 
+            border-radius: 6px; 
+            transition: all 0.2s; 
+            z-index: 10; 
+        }
+        .home-link:hover { background-color: var(--text-light); color: var(--text-dark); }
+
+        #timer { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            background: rgba(0,0,0,0.2); 
+            color: var(--text-light); 
+            padding: 5px 10px; 
+            border-radius: 6px; 
+            font-weight: 500; 
+            font-size: 1.1em; 
+            z-index: 10; 
+        }
+
+        /* Updated quiz-header */
+        #quiz-header { 
+            color: var(--text-light); 
+            padding: 20px; 
+            text-align: center; 
+            padding-top: 50px; /* Make space for buttons */
+            padding-left: 80px; /* Match button spacing */
+            padding-right: 80px; /* Match button spacing */
+        }
+        #quiz-header h1 { margin-bottom: 5px; font-size: 1.4em; text-shadow: 0 1px 4px var(--shadow-color); }
+        #creator-tag { margin-top: 5px; font-weight: 300; font-size: 0.9em; opacity: 0.9; }
+        
+        #quiz-body { padding: 30px; }
+        #question-text { font-size: 1.2em; font-weight: 500; margin-bottom: 20px; line-height: 1.5; white-space: pre-wrap; }
+        #options-list { list-style: none; padding: 0; margin: 0; }
+
+        /* Updated option styles */
+        .option { 
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border); 
+            color: var(--text-light);
+            border-radius: 8px; 
+            padding: 15px; 
+            margin-bottom: 10px; 
+            cursor: pointer; 
+            transition: background-color 0.2s, border-color 0.2s; 
+        }
+        .option:hover { background-color: rgba(255, 255, 255, 0.2); }
+        .option.no-click { pointer-events: none; }
+        .option input { margin-right: 10px; }
+        
+        /* Keep clear correct/incorrect colors for readability */
+        .option.correct { 
+            background-color: #d4edda; 
+            border-color: #c3e6cb; 
+            color: #155724; 
+            font-weight: bold; 
+            text-shadow: none; /* Disable shadow on light bg */
+        }
+        .option.incorrect { 
+            background-color: #f8d7da; 
+            border-color: #f5c6cb; 
+            color: #721c24; /* Dark red text */
+            font-weight: bold; 
+            text-shadow: none; /* Disable shadow on light bg */
+        }
+
+        /* Updated quiz-footer */
+        #quiz-footer { 
+            padding: 20px 30px; 
+            border-top: 1px solid var(--glass-border); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        #score-text { font-size: 1.1em; font-weight: bold; }
+
+        /* Updated button styles */
+        button { 
+            background-color: var(--accent-secondary); /* Yellow */
+            color: var(--text-dark); /* Dark text */
+            border: none; 
+            border-radius: 8px; 
+            padding: 12px 24px; 
+            font-size: 1em; 
+            cursor: pointer; 
+            transition: transform 0.2s, background-color 0.2s; 
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            text-shadow: none;
+        }
+        button:hover { 
+            background-color: #f8c958; /* Lighter yellow */
+            transform: translateY(-2px);
+        }
+        
+        button#toggle-explanation-btn { 
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 1px solid var(--glass-border);
+            margin-left: 10px; 
+        }
+        button#toggle-explanation-btn:hover { 
+            background-color: rgba(255, 255, 255, 0.2); 
+            transform: none; /* Disable transform for this button */
+        }
+        
+        button#next-btn {
+            margin-left: 10px;
+        }
+
+        /* Updated setup screen */
+        #setup-screen { padding: 40px; text-align: center; }
+        #setup-screen h2 { margin-top: 0; margin-bottom: 30px; color: var(--text-light); }
+        .setup-option { margin-bottom: 25px; color: var(--text-light); }
+        .setup-option label { font-weight: 500; margin-right: 10px; }
+        select { 
+            padding: 5px; 
+            border-radius: 4px; 
+            border: 1px solid #ccc; 
+            font-family: "Poppins", sans-serif;
+            background: #fff;
+            color: var(--text-dark);
+            text-shadow: none;
+        }
+
+        /* Updated results screen */
+        .results-summary { 
+            text-align: center; 
+            padding-bottom: 20px; 
+            border-bottom: 1px solid var(--glass-border); 
+        }
+        .results-summary h2 { color: var(--text-light); }
+        
+        .results-list { padding: 0 30px 30px; max-height: 60vh; overflow-y: auto; }
+        .result-item { 
+            border-bottom: 1px solid var(--glass-border); 
+            padding: 20px 0; 
+        }
+        .result-question { font-weight: bold; font-size: 1.1em; margin-bottom: 15px; }
+        .result-options { list-style: none; padding: 0; }
+        .result-option { 
+            padding: 8px; 
+            border-radius: 6px; 
+            margin-bottom: 5px; 
+            background: rgba(0,0,0,0.1);
+            color: #eee;
+        }
+        /* Keep clear colors */
+        .result-option.correct-answer { 
+            background-color: #d4edda; 
+            color: #155724; 
+            text-shadow: none;
+            font-weight: 500;
+        }
+        .result-option.incorrect-answer { 
+            background-color: #f8d7da; 
+            color: #721c24; 
+            text-decoration: line-through; 
+            text-shadow: none;
+            font-weight: 500;
+        }
+        
+        /* Updated explanation box style */
+        .result-explanation { 
+            margin-top: 15px; 
+            padding: 15px; 
+            background: rgba(0,0,0,0.2); 
+            border-radius: 6px; 
+            font-size: 0.9em; 
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* Updated explanation container */
+        #explanation-container { 
+            margin-top: 20px; 
+            border-top: 1px solid var(--glass-border); 
+            padding-top: 20px; 
+        }
+        .explanation-title { font-size: 1.1em; font-weight: bold; margin-bottom: 10px; }
+        .explanation-text p { margin: 0 0 10px; line-height: 1.6; }
+        .explanation-text strong { color: var(--accent-secondary); } /* Yellow highlight */
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <div id="quiz-container">
+        </div>
+
+    <script>
+        // Data extracted and formatted from the Dion Training results provided.
+        const allQuizData = [
+            {"id": "D1", "question": "A customer is complaining that they cannot connect to the local network share drive. You run the command 'ipconfig /all' from their workstation, and it returns an IP of 169.254.34.12. Which of the following is the problem with this workstation?", "options": {"A": "The workstation couldn't reach the DHCP server", "B": "The workstation couldn't reach the gateway", "C": "The workstation couldn’t reach the proxy server", "D": "The workstation couldn't reach the DNS server"}, "answer": "A", "explanation": {"correct": "A. The workstation couldn't reach the DHCP server", "A": "Correct. Since the customer's IP address is 169.254.34.12, it is an APIPA address. Since the workstation has an APIPA address, it means the DHCP server was unreachable. Automatic Private IP Addressing (APIPA) is a feature of Windows-based operating systems that enables a computer to automatically assign itself an IP address when there is no Dynamic Host Configuration Protocol (DHCP) server available to perform that function.", "B": "Incorrect. The workstation couldn't reach the gateway, proxy, or DNS server, which are secondary issues; the primary cause of an APIPA address is the inability to reach the DHCP server.", "C": "Incorrect. The workstation couldn't reach the gateway, proxy, or DNS server, which are secondary issues; the primary cause of an APIPA address is the inability to reach the DHCP server.", "D": "Incorrect. The workstation couldn't reach the gateway, proxy, or DNS server, which are secondary issues; the primary cause of an APIPA address is the inability to reach the DHCP server."}},
+            {"id": "D2", "question": "Jason is using a Windows 10 workstation in the Dion Training conference room. The workstation is acting extremely slow and he suspects there are other accounts logged on to the workstation. Which of the following features in the Task Manager should he use to identify if anyone else is currently logged on to the workstation?", "options": {"A": "Users", "B": "Performance", "C": "Services", "D": "Processes"}, "answer": "A", "explanation": {"correct": "A. Users", "A": "Correct. The Users tab in the Task Manager shows a list of signed-in users and their running processes on the workstation.", "B": "Incorrect. The Performance tab monitors resource utilization (CPU, memory, etc.), not actively logged-in user accounts.", "C": "Incorrect. The Services tab lists all installed services on the computer, not logged-in user accounts.", "D": "Incorrect. The Processes tab shows running apps and services but is not the most direct view for all logged-in user accounts."}},
+            {"id": "D3", "question": "Jennifer contacts the help desk, reporting that their smartphone's data usage has significantly increased over the past few days without any change in usage habits. They have received several notifications warning that they are nearing their data limit, and when browsing, they encounter a high number of pop-up ads. Upon further investigation, Jennifer recalls installing a free app from an unofficial source a week ago. Which of the following would be the best solution to address the issue in this scenario?", "options": {"A": "Uninstall the mentioned application and run a mobile malware scan", "B": "Increase the data limit through the carrier’s service settings", "C": "Reset the phone to factory settings without backing up the affected data", "D": "Disable mobile data and connect only to Wi-Fi networks"}, "answer": "A", "explanation": {"correct": "A. Uninstall the mentioned application and run a mobile malware scan", "A": "Correct. High data usage, excessive pop-up ads, and recent app installation from an unofficial source are classic signs of a malicious application consuming data in the background. Uninstalling the app and performing a malware scan directly addresses the root cause.", "B": "Incorrect. Increasing the data limit ignores the underlying problem.", "C": "Incorrect. A factory reset is a last resort after other solutions fail.", "D": "Incorrect. Simply switching to Wi-Fi does not resolve the malware issue."}},
+            {"id": "D4", "question": "An employee at Dion Training complains that every time airplane mode is enabled on their laptop, their external mouse and headphones stop working. Which of the following technologies is being disabled by airplane mode and likely causing the issues experienced by this user?", "options": {"A": "Cellular", "B": "Bluetooth", "C": "Wireless", "D": "GPS"}, "answer": "B", "explanation": {"correct": "B. Bluetooth", "A": "Incorrect. Cellular is disabled but not the cause of the mouse and headphone issue.", "B": "Correct. Bluetooth is a wireless connectivity method usually used by external mice and wireless headphones. When airplane mode is enabled, the Bluetooth radio is usually disabled, causing issues with Bluetooth-connected devices.", "C": "Incorrect. Wireless (Wi-Fi) is disabled, but this is less likely to affect a standard wireless mouse and headphones than Bluetooth.", "D": "Incorrect. GPS is disabled but is not typically used for connecting a mouse or headphones."}},
+            {"id": "D5", "question": "Which type of installation would require an answer file to install the operating system?", "options": {"A": "Upgrade", "B": "Clean", "C": "Unattended", "D": "Repair"}, "answer": "C", "explanation": {"correct": "C. Unattended", "A": "Incorrect. An upgrade is an in-place installation which retains user data and settings.", "B": "Incorrect. A clean install is a fresh installation where all data is deleted.", "C": "Correct. An unattended installation is a traditional method of deploying an OS using an answer file that contains user input to various GUI dialog boxes that would otherwise appear during the installation process.", "D": "Incorrect. A repair is used to check and replace any modified system files."}},
+            {"id": "D6", "question": "Both Apple and Samsung have released their own version of contactless mobile payment solutions. For example, Apple Pay allows users to place their iPhone or Apple Watch within an inch of a credit card machine at a store to make a payment. Which of the following wireless technologies do these types of payment systems rely upon?", "options": {"A": "Bluetooth", "B": "Infrared", "C": "NFC", "D": "Wi-Fi"}, "answer": "C", "explanation": {"correct": "C. NFC", "A": "Incorrect. Bluetooth is a wireless technology standard used for exchanging data over short distances, but typically more than 4 cm.", "B": "Incorrect. Infrared requires a direct line of sight and is not used for mobile payment.", "C": "Correct. NFC, or Near-Field Communication, is a set of communication protocols that enable two electronic devices to establish communication by bringing them within 4 cm of each other. This is commonly used for contactless payment systems.", "D": "Incorrect. Wi-Fi is used for general networking over longer distances, not for ultra-short-range contactless payment."}},
+            {"id": "D7", "question": "Tamera just purchased a Wi-Fi-enabled Nest Thermostat for her home. She has hired you to install it, but she is worried about a hacker breaking into the thermostat since it is an IoT device. Which of the following is the BEST thing to do to mitigate Tamera's security concerns? (Select TWO)", "options": {"A": "Disable wireless connectivity to the thermostat to ensure a hacker cannot access it", "B": "Enable two-factor authentication on the device's website (if supported by the company)", "C": "Configure the thermostat to connect to the wireless network using WPA2 encryption and a long, strong password (if supported)", "D": "Configure the thermostat to use the WEP encryption standard for additional confidentiality", "E": "Upgrade the firmware of the wireless access point to the latest version to improve the security of the network", "F": "Configure the thermostat to use a segregated part of the network by installing it into a screened subnet"}, "answer": ["C", "F"], "explanation": {"correct": "C & F. Configure the thermostat to connect to the wireless network using WPA2 encryption and a long, strong password (if supported) AND Configure the thermostat to use a segregated part of the network by installing it into a screened subnet", "A": "Incorrect. Disabling wireless connectivity makes the device ineffective.", "B": "Incorrect. Enabling 2FA on the *website* is good practice but won't increase the *device's* network security.", "C": "Correct. Using strong encryption (WPA2 is standard, WPA3 is better if available) and a strong password protects the wireless connection.", "D": "Incorrect. WEP is considered a weak and outdated encryption scheme.", "E": "Incorrect. Upgrading the WAP's firmware is good for security, but it isn't specific to the IoT device's network security configuration.", "F": "Correct. Placing IoT devices in a DMZ/screened subnet segregates them from the production network, limiting potential damage from a compromise."}},
+            {"id": "D8", "question": "Which version should you use when installing a Linux operating system and are concerned with end-of-life support?", "options": {"A": "LTS release", "B": "Rolling release", "C": "Developer release", "D": "Beta release"}, "answer": "A", "explanation": {"correct": "A. LTS release", "A": "Correct. The LTS (Long-Term Support) release is well-supported and will be regularly updated by the Linux distribution for an extended period, making it ideal for production systems like servers where stability and longevity are critical.", "B": "Incorrect. Rolling releases are frequently updated over time and lack the stable, long-term support window of an LTS version.", "C": "Incorrect. Developer releases are pre-releases for software developers.", "D": "Incorrect. Beta releases are pre-releases given out to a large group of users for real-world testing."}},
+            {"id": "D9", "question": "Which of the following best describes how cloud-based spreadsheets enhance team collaboration?", "options": {"A": "Each user must download and re-upload the file to apply their updates.", "B": "Editing is locked while another user is working to prevent conflicts.", "C": "Changes made by one user appear in real time for all users with access.", "D": "Only the spreadsheet owner can view or modify the document."}, "answer": "C", "explanation": {"correct": "C. Changes made by one user appear in real time for all users with access.", "A": "Incorrect. Downloading and re-uploading files would create version control issues and slow collaboration.", "B": "Incorrect. Cloud-based spreadsheets allow simultaneous editing, not locking for a single user.", "C": "Correct. Cloud-based spreadsheets allow multiple users to make edits simultaneously, with real-time updates visible to everyone with access, which is the core benefit for team collaboration.", "D": "Incorrect. Spreadsheet owners can allow multiple users to view and edit to facilitate collaboration."}},
+            {"id": "D10", "question": "A system administrator needs to remotely execute PowerShell commands on multiple Windows servers without requiring direct remote desktop access. The solution should allow secure command-line management using standard web-based protocols. Which of the following tools would BEST meet this requirement?", "options": {"A": "SSH", "B": "WinRM", "C": "RDP", "D": "SNMP"}, "answer": "B", "explanation": {"correct": "B. WinRM", "A": "Incorrect. SSH is primarily used for secure remote access on Linux-based systems, though it can be configured for Windows.", "B": "Correct. Windows Remote Management (WinRM) is the best choice because it allows administrators to execute remote PowerShell commands and manage Windows systems securely over a network using web-based protocols such as WS-Management. It is commonly used for remote scripting and automation.", "C": "Incorrect. Remote Desktop Protocol (RDP) provides graphical remote access but is not optimized for command-line automation.", "D": "Incorrect. Simple Network Management Protocol (SNMP) is used for monitoring and managing network devices but does not allow remote execution of commands."}},
+            {"id": "D11", "question": "The physical security manager has asked you to assist with the risk assessment of some proposed new security measures. The manager is concerned that during a power outage, the server room might be targeted for attack. Luckily, they have many different protection measures in place to keep intruders out of the server room. During a power outage, which of the following security controls would still be usable?", "options": {"A": "Motion detectors", "B": "Biometric scanners", "C": "Door locks", "D": "Video surveillance"}, "answer": "C", "explanation": {"correct": "C. Door locks", "A": "Incorrect. Motion detectors require power to function and operate.", "B": "Incorrect. Biometric scanners require power to function and operate.", "C": "Correct. A traditional door lock doesn't require power to operate. Therefore, it will still protect the facility and keep the intruder out of the server room, even during a power outage.", "D": "Incorrect. Video surveillance requires power to function and operate."}},
+            {"id": "D12", "question": "You noticed that your personal files in your Dropbox had been accessed while you were sleeping. Which of the following threats is this an example of?", "options": {"A": "Unauthorized location tracking", "B": "Unauthorized account access", "C": "Unauthorized microphone activation", "D": "Unintended Bluetooth pairing"}, "answer": "B", "explanation": {"correct": "B. Unauthorized account access", "A": "Incorrect. This refers to location-based data being accessed, not files in cloud storage.", "B": "Correct. When files are accessed without authorization from your cloud storage service, it is an example of unauthorized account access, which can lead to the leaking of personal files and data.", "C": "Incorrect. This refers to the microphone being activated remotely.", "D": "Incorrect. This refers to anonymous devices connecting to a Bluetooth-enabled device."}},
+            {"id": "D13", "question": "A computer is infected with malware that has infected the Windows kernel to hide. Which type of malware MOST likely infected this computer?", "options": {"A": "Trojan", "B": "Ransomware", "C": "Botnet", "D": "Rootkit"}, "answer": "D", "explanation": {"correct": "D. Rootkit", "A": "Incorrect. A Trojan is malware disguised as legitimate software, but does not specifically target the kernel to hide its presence.", "B": "Incorrect. Ransomware encrypts files and demands a ransom payment.", "C": "Incorrect. A botnet is a network of infected computers controlled by an attacker.", "D": "Correct. A rootkit is designed to provide continued privileged access to a computer while actively hiding its presence, often operating at the kernel level to disguise itself from detection by the operating system and anti-malware solutions."}},
+            {"id": "D14", "question": "A system administrator has noticed that an employee's account has been attempting to log in to multiple workstations and servers across the network. This employee does not have access to these systems, and the login attempts are unsuccessful. Which of the following actions should the administrator do to this employee's account in Active Directory?", "options": {"A": "Reset the password of the user's account", "B": "Delete the user's account", "C": "Lock the user's account", "D": "Disable the user's account"}, "answer": "D", "explanation": {"correct": "D. Disable the user's account", "A": "Incorrect. Resetting the password would not solve the issue if the account has been compromised or if the user is malicious.", "B": "Incorrect. Deleting the account would remove the user and their files from the system.", "C": "Incorrect. A lockout occurs automatically when the failed login attempts threshold is met; an administrator can disable an account to immediately prevent further attempts.", "D": "Correct. The system administrator should disable the user's account to immediately prevent further login attempts while an investigation into whether the employee or another malicious actor is taking the actions is conducted."}},
+            {"id": "D15", "question": "Shirley is a project manager who has been assigned to create internal training materials for the company’s new IT security policies. Instead of writing original content, she decides it would be easier and take much less time to copy large sections from an external website without proper attribution. The IT manager notices this and informs the employee that their actions violate company policies and ethical standards. Which of the following BEST describes this issue?", "options": {"A": "Insider threat", "B": "Plagiarism", "C": "Data exfiltration", "D": "Copyright infringement"}, "answer": "B", "explanation": {"correct": "B. Plagiarism", "A": "Incorrect. Insider threat refers to an employee intentionally harming or compromising company security, which does not apply here.", "B": "Correct. Plagiarism is the best classification because it involves using someone else's work or ideas without proper attribution, which violates ethical and professional standards.", "C": "Incorrect. Data exfiltration refers to unauthorized data transfer or theft.", "D": "Incorrect. Copyright infringement is a legal matter; plagiarism is the ethical/professional breach in an internal business setting."}},
+            {"id": "D16", "question": "When using an MBR, which of the following types of partitions can only have up to four partitions?", "options": {"A": "Extended", "B": "Swap", "C": "Logical", "D": "Primary"}, "answer": "D", "explanation": {"correct": "D. Primary", "A": "Incorrect. Extended partitions can be divided into additional logical drives to overcome the four-partition limit.", "B": "Incorrect. Swap partitions are used for memory management in Linux and are not limited by the four-partition rule in the same way.", "C": "Incorrect. Logical partitions are contained within an extended partition.", "D": "Correct. Primary partitions are limited to only four partitions on a system using the Master Boot Record (MBR) partition style."}},
+            {"id": "D17", "question": "You just received your monthly smartphone bill. As you review your charges, you notice that this month shows three times as much data usage as a normal month. You don't remember changing your usage pattern, so there should not have been a large increase in data used. Which of the following should you do FIRST to determine the source of the increased usage?", "options": {"A": "Enable biometric login for the lock screen to ensure no one else uses your device", "B": "Check network permissions and data usage for any applications installed within the last month", "C": "Conduct a factory restore of the smartphone and reload your applications", "D": "Configure your applications to only download large files over WiFi"}, "answer": "B", "explanation": {"correct": "B. Check network permissions and data usage for any applications installed within the last month", "A": "Incorrect. Biometric login is a security measure but won't identify the cause of data usage.", "B": "Correct. You should FIRST check your network permissions and data usage for any applications installed within the last month, as some applications use background processes to download data, which can cause a large increase in data usage.", "C": "Incorrect. A factory restore is a drastic and last-resort measure.", "D": "Incorrect. This is a preventative measure, but it won't identify the source of the *current* increase."}},
+            {"id": "D18", "question": "Which of the following backup rotation schemes requires backups to be stored to at least two different types of media?", "options": {"A": "Tower of Hanoi", "B": "Grandfather-father-son", "C": "3-2-1 backup", "D": "FIFO Backup"}, "answer": "C", "explanation": {"correct": "C. 3-2-1 backup", "A": "Incorrect. The Tower of Hanoi is a rotation scheme for media sets.", "B": "Incorrect. Grandfather-father-son (GFS) is a rotation scheme that combines full and incremental backups.", "C": "Correct. The 3-2-1 backup rule states that an organization should create (3) one primary backup and two copies, (2) save the backups to two different types of media, and (1) keep at least one backup copy off-site.", "D": "Incorrect. First In First Out (FIFO) is a simple rotation scheme that overwrites the oldest tape with the newest information."}},
+            {"id": "D19", "question": "Which of the following types of installations would require the use of an XML text file containing the instructions that the Windows Setup program would need to complete the installation?", "options": {"A": "Repair installation", "B": "In-place upgrade", "C": "Remote network installation", "D": "Unattended installation"}, "answer": "D", "explanation": {"correct": "D. Unattended installation", "A": "Incorrect. A repair installation replaces existing OS files with a new copy of the same version.", "B": "Incorrect. An in-place upgrade preserves applications, user settings, and data files.", "C": "Incorrect. Remote network installation is a *method* of delivery, often *used* with unattended installation.", "D": "Correct. An unattended installation is a software or operating system installation where the configuration information is derived from an XML text file (answer file), which contains all of the instructions the Windows Setup program needs without administrator intervention."}},
+            {"id": "D20", "question": "Margaret comes to you with complaints that her web browser is flooded with pop-up ads and new tabs open automatically, even when the browser is idle. She mentions recently downloading a free game from one of her favorite websites that she often uses. The browser homepage and default search engine have also changed without their consent. Which of the following would be the best solution to eliminate the excessive ads and browser changes?", "options": {"A": "Remove and reinstall the browser to reset all of the settings to default", "B": "Disable the use of JavaScript in the browser settings", "C": "Uninstall the recently downloaded app and perform a malware scan", "D": "Clear the browser's cache and cookies, then reboot the system"}, "answer": "C", "explanation": {"correct": "C. Uninstall the recently downloaded app and perform a malware scan", "A": "Incorrect. Reinstalling the browser may not remove the underlying malware/adware.", "B": "Incorrect. Disabling JavaScript is a common security precaution, but it is not a comprehensive solution for this scenario.", "C": "Correct. An influx of pop-up ads, homepage changes, and automatic new tabs strongly indicate adware or a browser hijacker. Uninstalling the suspicious application and running a malware scan removes the underlying issue (malware/adware).", "D": "Incorrect. Clearing cache and cookies may improve performance but won't remove malware."}},
+            {"id": "D21", "question": "Which of the following commands is used on a Linux system to copy a file from one directory to another directory?", "options": {"A": "rm", "B": "cp", "C": "ls", "D": "mv"}, "answer": "B", "explanation": {"correct": "B. cp", "A": "Incorrect. The 'rm' command removes (deletes) files or directories.", "B": "Correct. The 'cp' command is a command-line utility for copying files and directories. Copies of files are independent of the original file.", "C": "Incorrect. The 'ls' command lists the files or directories in the current path.", "D": "Incorrect. The 'mv' command moves (or renames) files or directories."}},
+            {"id": "D22", "question": "A technician is trying to locate a protected .dll file to edit, but they cannot see it in the System32 folder. Which Control Panel utility should the technician use to find the file?", "options": {"A": "File Explorer Options", "B": "System", "C": "Indexing Options", "D": "Programs and Features"}, "answer": "A", "explanation": {"correct": "A. File Explorer Options", "A": "Correct. The File Explorer Options section of the Control Panel allows technicians to customize the display of files and folders, including enabling or disabling the ability to show hidden files and hide file extensions.", "B": "Incorrect. The System section shows information about the workstation (processor, memory, OS version).", "C": "Incorrect. Indexing Options configures the method used by Windows when searching for content.", "D": "Incorrect. Programs and Features is used to install or remove applications, software packages, and features."}},
+            {"id": "D23", "question": "A user contacts the service desk after they just finished attempting to upgrade their laptop to Windows 10. The upgrade failed, and the user asks you to explain why. Which of the following log files should you review to determine the cause of the upgrade failure?", "options": {"A": "Application log", "B": "Security log", "C": "Setup log", "D": "System log"}, "answer": "C", "explanation": {"correct": "C. Setup log", "A": "Incorrect. The Application log contains information regarding application errors.", "B": "Incorrect. The Security log contains information regarding audit data and security.", "C": "Correct. The setup log contains a record of the events generated during the Windows installation or upgrade process. The file (setup.evtx) can be opened using the Event Viewer.", "D": "Incorrect. The System log contains information about service load failures, hardware conflicts, and driver load failures."}},
+            {"id": "D24", "question": "A technician needs to add new features to an existing router on the network. Which of the following should be performed to add the new features?", "options": {"A": "Migrating to IPv6", "B": "Firmware update", "C": "Clone the router", "D": "Vulnerability patching"}, "answer": "B", "explanation": {"correct": "B. Firmware update", "A": "Incorrect. Migrating to IPv6 is a networking change, not a feature addition for the hardware itself.", "B": "Correct. A firmware update will upgrade your device with advanced operational instructions without needing a hardware upgrade, and it can provide new features or functions to an existing device, or patch vulnerabilities.", "C": "Incorrect. Cloning is a process for computer systems; routers can be backed up and restored, but not cloned.", "D": "Incorrect. Vulnerability patching will mitigate software bugs, but it will not add new features to an existing device."}},
+            {"id": "D25", "question": "You are working as a server administrator at Dion Training. You unlock the server room door using your proximity badge and walk through the door. Before the door shuts, another person walks in behind you. What social engineering technique did this person utilize?", "options": {"A": "Impersonation", "B": "Shoulder surfing", "C": "Tailgating", "D": "Spoofing"}, "answer": "C", "explanation": {"correct": "C. Tailgating", "A": "Incorrect. Impersonation is the act of pretending to be someone or something else.", "B": "Incorrect. Shoulder surfing is obtaining confidential data by looking over the victim's shoulder.", "C": "Correct. Tailgating (or piggybacking) is a means of entering a secure area without authorization by following close behind the person that has been allowed to open the door or checkpoint.", "D": "Incorrect. Spoofing is the act of disguising a communication from an unknown source as being from a known, trusted source."}},
+            {"id": "D26", "question": "A manager wants employees to enter data in a shared spreadsheet but needs to prevent accidental modifications to formulas. What is the best way to achieve this?", "options": {"A": "Lock the formula cells while keeping data entry fields editable.", "B": "Require employees to submit data separately for manual entry.", "C": "Convert the spreadsheet to a static file format, preventing further edits.", "D": "Set the entire spreadsheet to read-only mode so no changes can be made."}, "answer": "A", "explanation": {"correct": "A. Lock the formula cells while keeping data entry fields editable.", "A": "Correct. Locking formula cells ensures calculations remain unchanged while still allowing data entry in other cells, which is the most common feature in modern spreadsheets for this purpose.", "B": "Incorrect. Requiring separate data submissions slows efficiency and removes the benefit of real-time collaboration.", "C": "Incorrect. Converting the file to a static format prevents all edits, making it unsuitable for ongoing data updates.", "D": "Incorrect. Making the entire spreadsheet read-only would prevent any updates."}},
+            {"id": "D27", "question": "Which of the following is a connectionless protocol that utilizes on UDP?", "options": {"A": "FTP", "B": "HTTP", "C": "HTTPS", "D": "TFTP"}, "answer": "D", "explanation": {"correct": "D. TFTP", "A": "Incorrect. FTP (File Transfer Protocol) operates over TCP.", "B": "Incorrect. HTTP (Hypertext Transfer Protocol) operates over TCP.", "C": "Incorrect. HTTPS (Hypertext Transfer Protocol Secure) operates over TCP.", "D": "Correct. The Trivial File Transfer Protocol (TFTP) is a connectionless protocol that operates over UDP port 69, commonly used with embedded devices or systems that retrieve firmware or configuration information during the boot process."}},
+            {"id": "D28", "question": "What is the name of a program that monitors user activity and sends that information to someone else?", "options": {"A": "Rootkit", "B": "Virus", "C": "Spyware", "D": "Keylogger"}, "answer": "C", "explanation": {"correct": "C. Spyware", "A": "Incorrect. A rootkit is designed to provide continued privileged access while actively hiding its presence.", "B": "Incorrect. A virus is malicious software designed to infect computer files or disks when activated.", "C": "Correct. Spyware is a program that monitors user activity and sends the information to someone else, invading the device to steal sensitive information and internet usage data.", "D": "Incorrect. A keylogger actively attempts to steal confidential information by capturing keystrokes, which is a specific function of some spyware."}},
+            {"id": "D29", "question": "A business owner's smartphone contains a lot of her customers' PII. Unfortunately, the business owner refuses to set up the phone to automatically wipe the data if the phone is lost or stolen because the data is precious. Based on the business owner's refusal to allow automatic wiping of the data, which of the following is the next BEST method of securing the phone?", "options": {"A": "Enable a passcode lock on the device", "B": "Enable a PIN lock on the device", "C": "Enable a swipe lock on the device", "D": "Enable a fingerprint lock on the device"}, "answer": "D", "explanation": {"correct": "D. Enable a fingerprint lock on the device", "A": "Incorrect. A passcode lock is generally stronger than a PIN but can still be compromised.", "B": "Incorrect. A PIN lock relies on the knowledge of a secret code, which can be compromised.", "C": "Incorrect. A swipe lock relies on the knowledge of a secret pattern, which can be compromised.", "D": "Correct. Out of the options provided, the use of a fingerprint lock (biometric) is considered the best or strongest protection as it ensures the user is physically present with the device to unlock it, providing a stronger factor of authentication than a simple code or pattern."}},
+            {"id": "D30", "question": "You are working as a penetration tester and have discovered a new method of exploiting a vulnerability within the Windows 10 operating system. You conduct some research online and discover that a security patch against this particular vulnerability doesn't exist yet. Which type of threat would this BEST be categorized as?", "options": {"A": "Spoofing", "B": "Brute force", "C": "Zero-day", "D": "DDOS"}, "answer": "C", "explanation": {"correct": "C. Zero-day", "A": "Incorrect. Spoofing is the act of disguising a communication as being from a known, trusted source.", "B": "Incorrect. A brute-force attack is an attempt to systematically try all possible password combinations.", "C": "Correct. A zero-day attack happens once a flaw or vulnerability is exploited, and attackers release malware before a developer has an opportunity to create a patch to fix the vulnerability, hence the term zero-day.", "D": "Incorrect. A Distributed Denial of Service (DDoS) attack is an attempt to make an online service unavailable by overwhelming it with traffic from multiple sources."}},
+            {"id": "D31", "question": "You are the first help desk technician on the scene of a potential data breach. What is the FIRST thing you need to do as part of the incident response?", "options": {"A": "Report it to your supervisor", "B": "Preserve the evidence", "C": "Quarantine the system", "D": "Identify the issue"}, "answer": "D", "explanation": {"correct": "D. Identify the issue", "A": "Incorrect. Reporting the issue is the second step after identification.", "B": "Incorrect. Preservation of evidence comes after identifying and reporting the issue.", "C": "Incorrect. Quarantine (isolation) comes after identifying and reporting the issue.", "D": "Correct. When conducting an incident response, you must (1) identify, (2) report, and (3) preserve the data/device. Therefore, the first step of the incident response is to identify the issue."}},
+            {"id": "D32", "question": "Which of the following Windows tools should a technician use to import and install data in the x.509 format?", "options": {"A": "RDS", "B": "Group policy editor", "C": "Certificate manager", "D": "Device manager"}, "answer": "C", "explanation": {"correct": "C. Certificate manager", "A": "Incorrect. Remote Desktop Services (RDS) is used to connect to a remote desktop session host server.", "B": "Incorrect. Group policy editor (gpedit.msc) is used to define and control how programs and the operating system operate for users and computers.", "C": "Correct. Certificate manager (certmgr.msc) is a utility used to manage digital certificates on a Windows system, including the import and installation of data in the x.509 format.", "D": "Incorrect. Device manager (devmgmt.msc) is a utility used to view and control the hardware attached to the computer."}},
+            {"id": "D33", "question": "Which of the following types of attacks occurs when an attacker attempts to gain confidential information or login credentials by sending targeted emails to a specific set of recipients within an organization?", "options": {"A": "Whaling", "B": "Spear phishing", "C": "Phishing", "D": "Vishing"}, "answer": "B", "explanation": {"correct": "B. Spear phishing", "A": "Incorrect. Whaling is an email-based or web-based form of phishing that targets senior executives or wealthy individuals.", "B": "Correct. Spear phishing is the fraudulent practice of sending emails from a seemingly known or trusted sender to induce *targeted individuals* to reveal confidential information.", "C": "Incorrect. Phishing is an indiscriminate email-based social engineering attack on a large group of random people.", "D": "Incorrect. Vishing is a social-engineering attack conducted over the phone or leveraging VoIP services."}},
+            {"id": "D34", "question": "The network administrator noticed that the border router has high network capacity loading during non-working hours. This excessive load is causing outages for the company's web servers. Which of the following is the MOST likely cause of the issue?", "options": {"A": "Distributed DoS", "B": "Session hijacking", "C": "Evil twin", "D": "ARP spoofing"}, "answer": "A", "explanation": {"correct": "A. Distributed DoS", "A": "Correct. A distributed denial-of-service (DDoS) attack occurs when multiple systems flood the bandwidth or resources of a targeted system, causing outages. The high network capacity loading during non-working hours indicates an attack designed to overwhelm the network.", "B": "Incorrect. Session hijacking is a method of taking over a web user session.", "C": "Incorrect. An evil twin is a rogue wireless access point.", "D": "Incorrect. ARP spoofing is a type of attack that involves sending falsified ARP messages over a local area network."}},
+            {"id": "D35", "question": "You need to move a 75-pound box with a rack-mounted UPS in it. Which of the following actions should you take?", "options": {"A": "Open the box and carry up the UPS in pieces", "B": "Lift with your back and not your legs", "C": "Lift with your legs and not your back", "D": "Ask a coworker to team lift it with you"}, "answer": "D", "explanation": {"correct": "D. Ask a coworker to team lift it with you", "A": "Incorrect. A rack-mounted UPS is a self-contained unit that is impossible to carry up in multiple pieces.", "B": "Incorrect. When lifting objects, always lift using your legs and not your back.", "C": "Incorrect. While you should always lift with your legs, since the box is over 50 pounds, you should ask a coworker to team lift the box with you for safety.", "D": "Correct. Since the box is over 50 pounds, you should ask a coworker to team lift the box with you, as lifting heavy or bulky objects requires two or more people to safely move it."}},
+            {"id": "D36", "question": "You have just completed a repair for a customer's smartphone that took you three days. The customer complained that the repair took too long and began to question you about the steps you took to repair the device. What should you do NEXT?", "options": {"A": "Become defensive and explain why each step was necessary to repair the device", "B": "Clearly tell the customer that if they had been more careful with the device then it wouldn't have needed to be fixed in the first place", "C": "Provide documentation of the repair to the customer and thank them for their patience", "D": "Listen to the customer's complaints with concern and then post about the encounter on Facebook"}, "answer": "C", "explanation": {"correct": "C. Provide documentation of the repair to the customer and thank them for their patience", "A": "Incorrect. You should not argue with customers and/or become defensive.", "B": "Incorrect. You should avoid being judgmental or dismissing customer problems.", "C": "Correct. When dealing with a difficult customer, you should follow professional communication skills, which include providing documentation of the repair to the customer and thanking them for their patience.", "D": "Incorrect. You should not disclose experiences via social media outlets."}},
+            {"id": "D37", "question": "Which of the following commands is used on a Linux system to delete all the files and directories in a Linux system's filesystem?", "options": {"A": "rm -rf *.*", "B": "rm -rf /", "C": "rm *.*", "D": "rm /"}, "answer": "B", "explanation": {"correct": "B. rm -rf /", "A": "Incorrect. The '*.*' would only begin deleting from the current working directory, not the entire file system.", "B": "Correct. The 'rm -rf /' is the most dangerous command to issue in Linux. The '-r' option recursively deletes the folder and its subfolders, '-f' forces the removal without asking the user, and '/' indicates that the remove command should begin at the root directory and recursively force all files and folders to be deleted under the root, thus deleting everything on the system.", "C": "Incorrect. This is a common-line utility for removing files or directories and would only begin deleting from the current working directory, not the entire file system.", "D": "Incorrect. This is a common-line utility for removing files or directories and would only begin deleting from the current working directory, not the entire file system."}},
+            {"id": "D38", "question": "Which RAID solution will provide the BEST speed and redundancy for a backup and disaster recovery server?", "options": {"A": "RAID 10", "B": "RAID 1", "C": "RAID 5", "D": "RAID 0"}, "answer": "A", "explanation": {"correct": "A. RAID 10", "A": "Correct. RAID 10 (or RAID 1+0) provides the system with both speed (from striping - RAID 0) and redundancy (from mirroring - RAID 1), making it the best choice for both performance and fault tolerance.", "B": "Incorrect. RAID 1 provides redundancy (mirroring) but not speed (striping).", "C": "Incorrect. RAID 5 provides block-level striping with distributed parity (redundancy) but is slower than RAID 10 for write operations.", "D": "Incorrect. RAID 0 provides speed (striping) but no redundancy."}},
+            {"id": "D39", "question": "You are renting space in another company's data center. To protect your server from being physically accessed when you are not in the building, what device should you use?", "options": {"A": "Server lock", "B": "Entry control roster", "C": "Smart card", "D": "USB lock"}, "answer": "A", "explanation": {"correct": "A. Server lock", "A": "Correct. A server lock is a physical locking mechanism installed on a server cabinet to prevent unauthorized physical access to the servers.", "B": "Incorrect. An entry control roster is an administrative control used to log people who enter or leave a secure room.", "C": "Incorrect. A smart card is a physical electronic authorization device used to control access to a resource, like a door lock or a computer login, but not the server cabinet itself.", "D": "Incorrect. A USB lock prevents unauthorized data transfer through USB ports."}},
+            {"id": "D40", "question": "You have just updated the graphics card's driver to the latest version. After installation, the Windows workstation crashes and reports an error code. You attempt to reboot the workstation, but it fails again. You decide to reboot the workstation into Safe Mode. What should you do NEXT?", "options": {"A": "Disable the graphics driver", "B": "Perform a Windows Update", "C": "Rollback the graphics driver", "D": "Perform an antivirus scan"}, "answer": "C", "explanation": {"correct": "C. Rollback the graphics driver", "A": "Incorrect. Disabling the driver would prevent the device from working, but rolling back to a known working version is preferred.", "B": "Incorrect. This is a driver issue, not a missing Windows Update.", "C": "Correct. Since the issue began once you installed the latest graphics driver, you should roll back the driver to the last stable version using the 'Roll Back Driver' feature in Device Manager (accessed from Safe Mode) to resolve the issue.", "D": "Incorrect. This is a driver issue, not a malware issue."}},
+            {"id": "D41", "question": "A network administrator has set up a firewall and set up only three allow rules so that traffic can be sent over ports 21, 110, and 25. Next, they added a final rule of 'deny any any' to the end of the ACL to minimize the attack surface and better secure the network. Unfortunately, now the administrator is receiving complaints from users that they cannot access any web pages using their URLs, such as DionTraining.com. Which of the following should the administrator do to correct this issue?", "options": {"A": "Add a rule to the ACL to allow traffic on ports 143 and 22", "B": "Add a rule to the ACL to allow traffic on ports 80 and 53", "C": "Add a rule to the ACL to allow traffic on ports 139 and 445", "D": "Add a rule to the ACL to allow traffic on ports 110 and 389"}, "answer": "B", "explanation": {"correct": "B. Add a rule to the ACL to allow traffic on ports 80 and 53", "A": "Incorrect. Ports 143 (IMAP) and 22 (SSH) are not required for web page access via URL.", "B": "Correct. To access a web page using a URL, the Hypertext Transfer Protocol (HTTP) on port 80 and the Domain Name System (DNS) on port 53 must be open to allow for website content transfer and name resolution, respectively.", "C": "Incorrect. Ports 139 and 445 are used for SMB (Windows file sharing), which is not required for web page access via URL.", "D": "Incorrect. Port 110 (POP3) and 389 (LDAP) are not required for web page access via URL."}},
+            {"id": "D42", "question": "Charlie has submitted a ticket reporting that their operating system has become corrupted, but their personal files and installed applications are still intact. You are assigned as the IT technician and need to reinstall the operating system without deleting user data or installed programs while restoring system functionality. Which of the following recovery methods would BEST accomplish this?", "options": {"A": "Image-based recovery", "B": "Clean install", "C": "In-place recovery", "D": "File-level restore"}, "answer": "C", "explanation": {"correct": "C. In-place recovery", "A": "Incorrect. Image-based recovery may overwrite user data and settings with the image's contents.", "B": "Incorrect. A clean install completely removes all files and applications before reinstalling the OS.", "C": "Correct. An in-place (aka overwrite) recovery reinstalls the operating system while preserving user data, settings, and installed applications, making it the best option for restoring system functionality without losing user data.", "D": "Incorrect. A file-level restore is used to recover individual files rather than repairing the entire operating system."}},
+            {"id": "D43", "question": "A programmer is writing a script to calculate the disk space needed to perform a daily backup. The programming wants to document his script so that other programmers can understand what his logic was when he wrote it. Which of the following should he use?", "options": {"A": "Loop", "B": "Constant", "C": "Variable", "D": "Comment"}, "answer": "D", "explanation": {"correct": "D. Comment", "A": "Incorrect. A loop repeats a task until a condition is met.", "B": "Incorrect. A constant is a specific identifier that contains a value that cannot be changed within the program.", "C": "Incorrect. A variable is a placeholder in a script containing a number, character, or string of characters.", "D": "Correct. A comment is written into the code to help a human understand the initial programmer's logic and is ignored by the computer when the script is being executed."}},
+            {"id": "D44", "question": "A printing company uses an isolated Windows XP workstation to print out large format banners for its customers on a custom printer. Unfortunately, the printer does not support newer versions of Windows and would cost $50,000 to replace it. To mitigate this risk, the workstation is not connected to the internet or a local area network. When a customer needs a banner printer, the technician takes a copy of their PDF file and moves it to the Windows XP workstation using a USB thumb drive. The workstation recently became infected with malware when printing a customer's file. The technician remediated the issue, but the workstation became infected again three weeks later. Which of the following actions did the technician forget to perform?", "options": {"A": "Disable System Restore and remove the previous restore points", "B": "Connect the workstation to the Internet to receive the latest Windows XP patches", "C": "Manually update the antivirus on the workstation and set it to perform on-access scans", "D": "Perform a data wipe operation on the USB thumb drive before its next use"}, "answer": "C", "explanation": {"correct": "C. Manually update the antivirus on the workstation and set it to perform on-access scans", "A": "Incorrect. While disabling System Restore is a good step in the removal process, the reinfection cause here is likely the introduction of new malware from the USB drive.", "B": "Incorrect. Windows XP is end-of-life and will not receive security patches/updates.", "C": "Correct. Since the workstation is isolated and receives files only through a USB thumb drive, the most likely cause of reinfection is new malware introduced via the drive. The technician most likely neglected to manually update the antivirus/antimalware software on this isolated workstation after the initial remediation, leaving it vulnerable to new threats.", "D": "Incorrect. Performing a data wipe on the USB drive before each use is an unnecessary step; a scan would be sufficient."}},
+            {"id": "D45", "question": "Your company works as a contractor to the military and has just finished replacing about 500 workstations across its secure network. You have been asked to properly dispose of the workstations and destroy the data on their hard disk drives. Which of the following methods would be the MOST effective?", "options": {"A": "Fully format each hard drive with a series of 0s", "B": "Conduct a low-level format of each hard drive", "C": "Degauss each of the hard drives", "D": "Physically destroy the drives by drilling each HDD's platter"}, "answer": "C", "explanation": {"correct": "C. Degauss each of the hard drives", "A": "Incorrect. Formatting leaves data potentially recoverable by forensics.", "B": "Incorrect. A low-level format is not guaranteed to destroy data and is time-consuming for 500 drives.", "C": "Correct. Degaussing is the process of erasing/wiping a hard disk drive or magnetic tape using a powerful magnetic field to neutralize or erase the magnetic data. This is the guaranteed, fast, and efficient form of hard drive erasure, especially with many magnetic hard drives.", "D": "Incorrect. While physical destruction works, degaussing is faster and more efficient for a large number of drives using an industrial degausser."}},
+            {"id": "D46", "question": "Which of the following should be configured on a macOS system to enable the Smart Zoom feature on a user's MacBook trackpad?", "options": {"A": "Signals", "B": "Motions", "C": "Gestures", "D": "Movements"}, "answer": "C", "explanation": {"correct": "C. Gestures", "A": "Incorrect. 'Signals' is not the correct terminology for this feature.", "B": "Incorrect. 'Motions' is not the correct terminology for this feature.", "C": "Correct. Gestures are finger movements on a trackpad or mouse that enable a user to scroll, zoom (Smart Zoom), and navigate the desktop, documents, and application content in macOS.", "D": "Incorrect. 'Movements' is not the correct terminology for this feature."}},
+            {"id": "D47", "question": "You are working on a customer's computer when your cellphone begins to ring. What should you do?", "options": {"A": "Answer the phone while continuing to work on the customer's computer", "B": "Ignore the phone and let it continue ringing until it goes to voicemail", "C": "Apologize to the customer and answer the phone", "D": "Apologize to the customer and send the call to voicemail"}, "answer": "D", "explanation": {"correct": "D. Apologize to the customer and send the call to voicemail", "A": "Incorrect. Taking a personal call while working on a customer's computer is unprofessional and a distraction.", "B": "Incorrect. Ignoring the phone while it continues to ring is distracting and unprofessional.", "C": "Incorrect. You should not take personal calls while working on a customer's computer.", "D": "Correct. When working on a customer's computer, you should avoid distractions. If your phone rings, you should send it to voicemail and then apologize to the customer for the interruption to maintain a professional focus."}},
+            {"id": "D48", "question": "A workstation at Dion Training's office is taking a long time to boot up. Once it finishes booting to the Windows 10 desktop, which of the following tools can a technician use to diagnose and fix the boot issues?", "options": {"A": "resmon.exe", "B": "msconfig.exe", "C": "msinfo32.exe", "D": "perfmon.msc"}, "answer": "B", "explanation": {"correct": "B. msconfig.exe", "A": "Incorrect. Resource monitor (resmon.exe) displays information about the use of hardware and software resources in real-time, but it cannot manage or terminate those processes.", "B": "Correct. System configuration (msconfig.exe) is a system utility to troubleshoot the Microsoft Windows startup processes. It is used to disable or re-enable software, device drivers, and Windows services that run at startup to identify the source of a slow boot time.", "C": "Incorrect. System information (msinfo32.exe) is a utility that gathers information about your computer, including hardware and software configuration.", "D": "Incorrect. Performance monitor (perfmon.msc) is a utility in Windows that is used to monitor CPU and memory activity, but it cannot manage or terminate those processes."}},
+            {"id": "D49", "question": "A user contacts the service desk and states a hardware conflict error is showing in their Device Manager. Which of the following log files should you review to determine the source of the conflict?", "options": {"A": "Application log", "B": "System log", "C": "Security log", "D": "Setup"}, "answer": "B", "explanation": {"correct": "B. System log", "A": "Incorrect. The Application log contains information regarding application errors.", "B": "Correct. The System log, viewed in the Event Viewer, contains information about service load failures, hardware conflicts, driver load failures, and more. This is the log to check for hardware errors.", "C": "Incorrect. The Security log contains information regarding audit data and security on a system.", "D": "Incorrect. The Setup log contains a record of the events generated during the Windows installation or upgrade process."}},
+            {"id": "D50", "question": "A user receives the following error message: 'Windows Update cannot currently check for updates because the service is not running.' The user calls the help desk to report the error they received. A support technician uses a remote connection tool to log in to the computer remotely, quickly identifies the issue, and fixes the issue. Which of the following should the technician do NEXT?", "options": {"A": "Register the Windows Update service's DLL files", "B": "Rollback the device drivers", "C": "Reboot the computer", "D": "Restart the network services"}, "answer": "C", "explanation": {"correct": "C. Reboot the computer", "A": "Incorrect. Registering the DLL files may have been the 'fix' that was applied, but is not the next step after the fix is implemented.", "B": "Incorrect. The issue is a service not running, not a driver failure.", "C": "Correct. After any service-related fix, restarting the computer is a critical step to ensure that all changes take full effect and the system is stable and the error is resolved.", "D": "Incorrect. Restarting network services is too broad and may have been part of the fix, but is not the next step after the fix is implemented."}},
+            {"id": "D51", "question": "Which of the following devices should you NEVER disassemble during troubleshooting due to the risk of electrocution?", "options": {"A": "Tablet", "B": "External hard drive enclosure", "C": "Printer", "D": "CRT display"}, "answer": "D", "explanation": {"correct": "D. CRT display", "A": "Incorrect. Tablets have field replaceable parts that a technician can install, remove, or replace.", "B": "Incorrect. External hard drive enclosures have field replaceable parts that a technician can install, remove, or replace.", "C": "Incorrect. Printers have field replaceable parts that a technician can install, remove, or replace.", "D": "Correct. A CRT monitor is an older-style computer monitor that contains large capacitors that could retain high levels of electricity even after being disconnected. A technician should never open a CRT monitor or stick anything into its interior for fear of electrocution."}},
+            {"id": "D52", "question": "Dion Training is replacing the toner cartridges in their laser printers. Tim accidentally spilled some toner on the ground during the replacement of one of the cartridges. He carefully vacuumed up the toner and sealed it in a strong plastic trash bag. Which of the following should Tim do with the plastic bag of loose toner?", "options": {"A": "Place the plastic bag into a cardboard box and place it in the trash", "B": "Place the plastic bag of toner in the recycle bin behind their building", "C": "Research the manufacturer's recommendation for disposing of loose toner", "D": "Review the material safety data sheet for disposal instructions"}, "answer": "C", "explanation": {"correct": "C. Research the manufacturer's recommendation for disposing of loose toner", "A": "Incorrect. Loose toner should not be sent directly to a landfill or recycling center, as it can cause breathing problems and is an irritant.", "B": "Incorrect. Loose toner should not be sent directly to a landfill or recycling center, as it can cause breathing problems and is an irritant.", "C": "Correct. Loose toner should not be sent directly to a landfill or recycling center. Technicians should get the manufacturer's advice on the safe disposal of loose toner, which is a step that precedes reviewing the material safety data sheet.", "D": "Incorrect. Reviewing the MSDS is a step in the process, but the best general advice for disposal is to research the manufacturer's specific recommendation."}},
+            {"id": "D53", "question": "Janice called the help desk to report that her computer will not boot up. The technician begins troubleshooting the issue, but after 20 minutes, the computer is still not booting up. Janice is getting frustrated with the technician, and she tells the technician that she feels that they are wasting her time since the issue isn't resolved yet. How should the technician respond to Janice's frustration?", "options": {"A": "The technician should \"accidentally\" hang up the call so that Janice gets a different technician when she calls the help desk again", "B": "The technician should recommend that Janice call back to the help desk for more assistance when she has more time available", "C": "The technician should tell Janice that they are required to follow a specific troubleshooting procedure to identify the issue and solve the problem", "D": "The technician should ask open-ended questions to properly identify the issue by narrowing down the possible symptoms or causes"}, "answer": "D", "explanation": {"correct": "D. The technician should ask open-ended questions to properly identify the issue by narrowing down the possible symptoms or causes", "A": "Incorrect. This is unprofessional and a violation of the 'Do not argue with customers and/or become defensive' principle.", "B": "Incorrect. This is dismissive of the customer's problem.", "C": "Incorrect. This can come across as defensive and dismissive of the customer's frustration.", "D": "Correct. When dealing with frustrated customers, you should clarify the customer's statements by asking open-ended questions to narrow the scope of the problem, restate the issue, or ask questions to verify understanding, demonstrating active listening and a commitment to solving the problem."}},
+            {"id": "D54", "question": "Karen, a salesperson in your company, is currently on travel this week. She calls your company's help desk and is yelling because she cannot connect to her email using her hotel room's WiFi. Her laptop shows that it is connected to the 'HotelWiFi' network, but Windows states it has 'Limited or no connectivity.' What action should Karen perform to fix this issue?", "options": {"A": "Disable and enable her wireless adapter", "B": "Purchase an ethernet cable and use her room's wired connection", "C": "Open a web browser and agree to the hotel's capture page AUP", "D": "Reboot into Safe Mode and perform an antivirus scan"}, "answer": "C", "explanation": {"correct": "C. Open a web browser and agree to the hotel's capture page AUP", "A": "Incorrect. This is a basic troubleshooting step but will not resolve the captive portal issue.", "B": "Incorrect. This may bypass the issue but is not a fix for the wireless connectivity problem.", "C": "Correct. The 'Limited or no connectivity' message is a common occurrence on public wireless networks (like hotels) that use a captive portal. Many of these networks have a capture page that requires the user to agree to the company's privacy policy or acceptable use policy (AUP) before connecting the device to the internet.", "D": "Incorrect. This is a drastic step and is not related to a public Wi-Fi network's captive portal."}},
+            {"id": "D55", "question": "You receive a ticket where a user reports receiving frequent 'Low Memory' warnings on their Windows 10 laptop while working with multiple applications simultaneously. They mention that the computer has 4 GB of RAM and often runs a web browser with several tabs open alongside spreadsheet and email applications. The user needs a solution that will allow for smoother multitasking without constant warnings. What would be the best solution to prevent future low memory warnings in this situation?", "options": {"A": "Close unused applications and browser tabs", "B": "Upgrade the physical RAM in the laptop", "C": "Reinstall the operating system for better memory management", "D": "Increase the laptop's virtual memory (paging file)"}, "answer": "B", "explanation": {"correct": "B. Upgrade the physical RAM in the laptop", "A": "Incorrect. Closing applications is a temporary fix that doesn’t address the user’s need to multitask.", "B": "Correct. Upgrading the physical RAM provides a long-term solution that significantly enhances the ability to run multiple memory-intensive applications simultaneously and prevents low memory warnings.", "C": "Incorrect. Reinstalling the operating system won’t resolve hardware-based memory limitations.", "D": "Incorrect. Increasing virtual memory can help with minor shortages but is not as efficient as adding physical RAM."}},
+            {"id": "D56", "question": "Which command-line tool is used on a Windows system to display a list of the files and directories within the current directory or path?", "options": {"A": "dir", "B": "sfc", "C": "ls", "D": "chkdsk"}, "answer": "A", "explanation": {"correct": "A. dir", "A": "Correct. The 'dir' command is used on a Windows system to list a directory's files and subdirectories.", "B": "Incorrect. The 'sfc' (System File Checker) command is a utility in Windows that allows users to scan for and restore corrupted Windows system files.", "C": "Incorrect. The 'ls' command is used on a Linux system for the same function.", "D": "Incorrect. The 'chkdsk' command is used to check the file system and file system metadata of a volume for logical and physical errors."}},
+            {"id": "D57", "question": "Susan, an executive at Dion Training, will be traveling to Italy for a conference next week. She is worried about remaining connected to the internet while overseas and plans to use the WiFi in her hotel room and the local coffee shop with her laptop. Which of the following should she purchase and configure before leaving for Italy to ensure her communications remain secure regardless of where she is connecting from?", "options": {"A": "Local SIM card for her smartphone", "B": "International data roaming plan on her cellphone", "C": "Local mobile hotspot", "D": "VPN"}, "answer": "D", "explanation": {"correct": "D. VPN", "A": "Incorrect. A local SIM card is for the phone's cellular connection and doesn't secure the laptop's Wi-Fi connection.", "B": "Incorrect. An international data roaming plan is for the phone's cellular connection and doesn't secure the laptop's Wi-Fi connection.", "C": "Incorrect. A local mobile hotspot provides connectivity but is not a security measure in itself.", "D": "Correct. A Virtual Private Network (VPN) connects the components and resources of two networks over another (public) network, utilizing an encryption tunnel to protect data being transferred to and from her laptop to the Dion Training servers, ensuring security over unsecure public Wi-Fi connections."}},
+            {"id": "D58", "question": "An employee notices their browser is running slowly and often freezes after installing a plug-in from an unknown source. What step should IT advise to promptly resolve this performance issue?", "options": {"A": "Update the browser to the latest software version available.", "B": "Enable the browser’s built-in pop-up blocking capabilities.", "C": "Clear the browser cache to restore faster browsing speeds.", "D": "Disable or remove the recently installed browser plug-in."}, "answer": "D", "explanation": {"correct": "D. Disable or remove the recently installed browser plug-in.", "A": "Incorrect. Updating the browser is beneficial for security but may not resolve performance problems introduced by a specific plug-in.", "B": "Incorrect. Pop-up blockers prevent advertisements but have no effect on plug-in performance issues.", "C": "Incorrect. Clearing the cache improves loading speed but does not specifically resolve issues caused by plug-ins.", "D": "Correct. Disabling or removing the recently installed plug-in directly addresses performance issues caused by potentially harmful or poorly coded plug-ins from an unknown source."}},
+            {"id": "D59", "question": "Which of the following tools is used to duplicate all of the files in one directory to another in the Windows command line?", "options": {"A": "xcopy", "B": "netstat", "C": "format", "D": "dir"}, "answer": "A", "explanation": {"correct": "A. xcopy", "A": "Correct. The 'xcopy' tool copies all of the files from one directory to another and is used in the Windows command line.", "B": "Incorrect. The 'netstat' command is used to display active TCP connections and network statistics.", "C": "Incorrect. The 'format' command creates a new root directory and file system for the disk.", "D": "Incorrect. The 'dir' command is used to list a directory's files and subdirectories."}},
+            {"id": "D60", "question": "A developer uses a MacBook Pro when working from home, but they need access to both a Windows and macOS system to test their programs. Which of the following tools should be used to allow both operating systems to exist on their MacBook Pro?", "options": {"A": "Boot Camp", "B": "Mission Control", "C": "Device Manager", "D": "Terminal"}, "answer": "A", "explanation": {"correct": "A. Boot Camp", "A": "Correct. Boot Camp is a multi-boot utility included with Apple's macOS that assists users in installing Microsoft Windows operating systems on Intel-based Macintosh computers. It allows the user to dual boot into either macOS or Windows.", "B": "Incorrect. Mission Control is an application for facilitating multiple desktops in the macOS environment.", "C": "Incorrect. Device Manager is a utility used in Windows to view and control hardware.", "D": "Incorrect. Terminal in macOS is the equivalent of the Windows Command Prompt window."}},
+            {"id": "D61", "question": "You're educating new staff about mobile security practices, focusing on encryption methods. Which statement accurately describes the primary purpose of device encryption?", "options": {"A": "It restricts network access through secure passwords.", "B": "It prevents the installation of unauthorized software applications.", "C": "It verifies user identity using biometric methods.", "D": "It protects stored data by making it unreadable without an encryption key."}, "answer": "D", "explanation": {"correct": "D. It protects stored data by making it unreadable without an encryption key.", "A": "Incorrect. This is accomplished by network access control mechanisms, not device encryption.", "B": "Incorrect. This is accomplished by Mobile Device Management (MDM) or OS settings, not device encryption.", "C": "Incorrect. This is accomplished by biometric authentication, not device encryption.", "D": "Correct. Device encryption (data-at-rest encryption) protects data stored on devices by transforming it into an unreadable format, accessible only with the appropriate encryption key."}},
+            {"id": "D62", "question": "A user on their desktop computer receives a 'USB Controller Resource Exceeded' warning when connecting multiple USB devices (a mouse, keyboard, and external hard drive). Some devices stop functioning until others are disconnected. The user needs all devices connected for their workflow and seeks a solution to resolve the resource limitation. What would be the best solution to address the USB controller resource issue?", "options": {"A": "Disable USB devices in BIOS to free up resources", "B": "Use a powered USB hub for the external devices", "C": "Replace the motherboard with one that has more USB ports", "D": "Update the computer's operating system to reallocate resources"}, "answer": "B", "explanation": {"correct": "B. Use a powered USB hub for the external devices", "A": "Incorrect. Disabling USB devices reduces functionality rather than solving the problem.", "B": "Correct. A powered USB hub supplies additional power to connected devices, alleviating resource constraints on the USB controller and allowing the use of all devices.", "C": "Incorrect. Replacing the motherboard is an extreme and unnecessary measure for this issue.", "D": "Incorrect. Updating the operating system won’t resolve hardware resource limitations on a saturated controller."}},
+            {"id": "D63", "question": "Which of the following commands is used on a Linux system to safely turn off a server?", "options": {"A": "kill", "B": "rm", "C": "shutdown", "D": "ps"}, "answer": "C", "explanation": {"correct": "C. shutdown", "A": "Incorrect. The 'kill' command sends a signal to specified processes or process groups, typically to terminate them.", "B": "Incorrect. The 'rm' command is a command-line utility for removing (deleting) files or directories.", "C": "Correct. The 'shutdown' command brings the system down in a secure way, notifying all logged-in users and processes that the system is going down and disallowing further logins.", "D": "Incorrect. The 'ps' command is used to list the currently running processes."}},
+            {"id": "D64", "question": "(This is a simulated Performance-Based Question. If this was the real certification exam, you would be asked to drag-and-drop the correct encryption onto the APs.) Your company has purchased a new office building down the street for its executive suites. You have been asked to choose the BEST encryption for AP1, AP2, and AP3 to establish a wireless connection inside the main building for visitors to use. Your boss has stated that the main building's internal wireless network is only going to be used by visitors and should not require the visitors to set up any special configuration on their devices to connect.Which of the following is the BEST encryption to use from the options below to meet your manager's requirements for the new visitors' Wireless Network?", "options": {"A": "Open", "B": "WEP", "C": "WPA", "D": "WPA-CCMP", "E": "WPA2-TKIP"}, "answer": "A", "explanation": {"correct": "A. Open", "A": "Correct. Since your manager has required that the visitors not be required to configure anything on their devices to connect, the only option you can choose is Open. This option requires no password or setup on the user's devices.", "B": "Incorrect. WEP requires a password and setup.", "C": "Incorrect. WPA requires a password and setup.", "D": "Incorrect. WPA-CCMP requires a password and setup.", "E": "Incorrect. WPA2-TKIP requires a password and setup."}},
+            {"id": "D65", "question": "A workstation was patched last night with the latest operating system security update. This morning, the workstation only displays a blank screen. You restart the computer, but the operating system fails to load. What is the NEXT step you should attempt to boot this workstation?", "options": {"A": "Reboot the workstation into safe mode, open RegEdit, and repair the Windows Registry", "B": "Reboot the workstation into safe mode and disable Windows services/applications", "C": "Reboot the workstation into the BIOS and reconfigure boot options", "D": "Reboot the workstation into safe mode and roll back the recent security update"}, "answer": "D", "explanation": {"correct": "D. Reboot the workstation into safe mode and roll back the recent security update", "A": "Incorrect. Repairing the registry is a complex and highly risky step that should only be attempted as a last resort.", "B": "Incorrect. While disabling services can help with slow boots, the system is failing to load the OS completely, indicating a more fundamental issue than a service conflict.", "C": "Incorrect. The issue began after a security update, making a BIOS change unlikely to be the first step.", "D": "Correct. Since the system failed to load after a security update, the most likely cause is a bad patch. The next step should be to boot into Safe Mode and roll back the most recent security update to return the system to its last working state."}},
+            {"id": "D66", "question": "Susan is installing several updates on a Windows computer. Nine of the updates were installed without any issues, but one update produced an error and failed to install. Susan restarts the computer as part of the troubleshooting process, and the computer automatically attempts to install the failed update again. Again, the update fails to install. What should Susan do NEXT?", "options": {"A": "Research the error number for the failed update and determine if there is a known issue with this update", "B": "Manually download and install the failed update", "C": "Download the update from a third-party website like Source Forge and install it", "D": "Review the Event Viewer to determine the cause of the failure and address the findings"}, "answer": "A", "explanation": {"correct": "A. Research the error number for the failed update and determine if there is a known issue with this update", "A": "Correct. If an automated system update fails to install, the most appropriate next step is to research the error number to determine if the issue is a known error or if it provides a specific remediation step (like inadequate hard disk space) that needs to be addressed.", "B": "Incorrect. Manually downloading and installing the failed update is generally the third step (after researching the error) in the process, as the error may still occur if the root cause is not fixed.", "C": "Incorrect. Downloading a system update from a third-party website is a significant security risk.", "D": "Incorrect. Reviewing the Event Viewer is an action that precedes the remediation but is not the most efficient step here, as the specific error code is already available."}},
+            {"id": "D67", "question": "Employees frequently access confidential company information through web-based applications. To increase security, IT recommends disabling certain browser features. Which browser feature would be most appropriate to disable for enhanced security?", "options": {"A": "Automatic clearing of browsing history after each session.", "B": "Automatic updates for the browser to avoid unexpected changes.", "C": "Browser pop-up blocker to allow all necessary notifications.", "D": "JavaScript execution to limit potential script-based attacks."}, "answer": "D", "explanation": {"correct": "D. JavaScript execution to limit potential script-based attacks.", "A": "Incorrect. Clearing history enhances privacy but does not prevent script-based security threats.", "B": "Incorrect. Disabling automatic updates negatively impacts security because browsers require updates to patch vulnerabilities.", "C": "Incorrect. Disabling pop-up blockers reduces security by allowing disruptive ads and potentially harmful content.", "D": "Correct. Disabling JavaScript execution reduces the risk of script-based attacks (like XSS), effectively protecting confidential data from malicious code that might run in the browser."}},
+            {"id": "D68", "question": "A user reports frequent security warnings from outdated antivirus software. What should be done to resolve this?", "options": {"A": "Uninstall and reinstall the antivirus software to reset warnings.", "B": "Disable security alerts to prevent further notifications.", "C": "Enable automatic updates to keep virus definitions current.", "D": "Run a manual scan and ignore update notifications."}, "answer": "C", "explanation": {"correct": "C. Enable automatic updates to keep virus definitions current.", "A": "Incorrect. Reinstalling software may reset settings but does not address the need for updated definitions.", "B": "Incorrect. Disabling security alerts removes notifications but does not fix the underlying issue of outdated definitions.", "C": "Correct. Automatic updates ensure the antivirus program receives the latest threat definitions, maintaining protection against new malware and resolving the 'outdated' status that triggers the warnings.", "D": "Incorrect. Running a manual scan without updating leaves the system vulnerable to new threats."}},
+            {"id": "D69", "question": "Which of the following features is UNIQUE to the NTFS file system when compared to FAT32?", "options": {"A": "Case-sensitive file naming", "B": "Lack of file permission settings", "C": "Support for files larger than 4GB", "D": "Compatibility with all major operating systems"}, "answer": "C", "explanation": {"correct": "C. Support for files larger than 4GB", "A": "Incorrect. While NTFS supports case-sensitive file naming, other file systems (such as ext4) also support it, so it is not unique to NTFS.", "B": "Incorrect. NTFS *has* file permission settings, whereas FAT32 *lacks* them.", "C": "Correct. NTFS supports files larger than 4GB, which is a key limitation of FAT32 (a maximum file size of 4GB).", "D": "Incorrect. NTFS is not fully compatible with macOS and Linux without additional software or drivers."}},
+            {"id": "D70", "question": "A customer brought in a computer that has been infected with a virus. Since the infection, the computer began redirecting all three of the system's web browsers to a series of malicious websites whenever a valid website is requested. You quarantined the system, disabled the system restore, and then perform the remediation to remove the malware. You have scanned the machine with several anti-virus and anti-malware programs and determined it is now cleaned of all malware. You attempt to test the web browsers again, but a small number of valid websites are still being redirected to a malicious website. Luckily, the updated anti-virus you installed blocked any new malware from infecting the system. Which of the following actions should you perform NEXT to fix the redirection issue with the browsers?", "options": {"A": "Install a secondary anti-malware solution on the system", "B": "Reformat the system and reinstall the OS", "C": "Perform a System Restore to an earlier date before the infection", "D": "Verify the hosts.ini file has not been maliciously modified"}, "answer": "D", "explanation": {"correct": "D. Verify the hosts.ini file has not been maliciously modified", "A": "Incorrect. A secondary anti-malware solution is a good idea but will not resolve the specific redirection issue.", "B": "Incorrect. Reformatting the system is a last resort and is unnecessary if a more targeted fix is available.", "C": "Incorrect. System Restore was disabled, and performing a restore would likely reinfect the system with malware from the restore point.", "D": "Correct. If redirection occurs for a small number of sites or occurs in all web browsers on a system, it is most likely a maliciously modified hosts.ini file, which acts as a local DNS server and can redirect a system's internet connection."}},
+            {"id": "D71", "question": "You are working as a technician where your organization has received approval to migrate its email services to a new cloud provider. The IT team has created a detailed plan, including a rollback strategy, communication with end users, and scheduled downtime. They are now ready to execute the migration according to the approved change management process. Which of the following would BEST describe this phase of change management?", "options": {"A": "Risk assessment", "B": "Post-change review", "C": "Implementation", "D": "Change freeze"}, "answer": "C", "explanation": {"correct": "C. Implementation", "A": "Incorrect. Risk assessment is part of the initial planning phase.", "B": "Incorrect. Post-change review occurs after the change is complete to evaluate its success.", "C": "Correct. Implementation is the phase in the change management process where an approved change is executed according to the defined plan, which is what 'ready to execute the migration' describes.", "D": "Incorrect. A change freeze is a restriction on changes during critical periods."}},
+            {"id": "D72", "question": "You have decided to have DNA genetic testing and analysis performed to determine your exact ancestry composition and possibly find some lost relatives through their database. Which of the following types of data should this be classified?", "options": {"A": "CUI", "B": "PII", "C": "IP", "D": "PHI"}, "answer": "D", "explanation": {"correct": "D. PHI", "A": "Incorrect. Controlled Unclassified Information (CUI) is federal non-classified government information.", "B": "Incorrect. Personally identifiable information (PII) is data that can be used to identify, contact, or locate an individual (name, SSN, etc.).", "C": "Incorrect. Intellectual property (IP) is information created and owned by the company.", "D": "Correct. Protected health information (PHI) refers to medical and insurance records, plus associated hospital and laboratory test results. Data collected by genetic mapping and heredity companies includes the subject's DNA, making it PHI."}},
+            {"id": "D73", "question": "You are working on a Windows 10 workstation with a 1 TB HDD and 16 GB of memory that is operating slowly when reading large files from its storage device. Which of the following commands should you use to speed up this workstation?", "options": {"A": "ipconfig", "B": "format", "C": "chkdsk", "D": "diskpart"}, "answer": "C", "explanation": {"correct": "C. chkdsk", "A": "Incorrect. The 'ipconfig' tool displays all current TCP/IP network configuration values.", "B": "Incorrect. The 'format' command creates a new root directory and file system for the disk, deleting all data.", "C": "Correct. The 'chkdsk' command is used to check the file system and file system metadata of a volume for logical and physical errors. Using parameters like '/f', '/r', '/x', or '/b' to fix errors is essential for resolving performance issues related to file system integrity on a hard disk drive (HDD).", "D": "Incorrect. The 'diskpart' command is a command-line disk-partitioning utility."}},
+            {"id": "D74", "question": "Which of the following authentication protocols was developed by Cisco to provide authentication, authorization, and accounting services?", "options": {"A": "CHAP", "B": "RADIUS", "C": "TACACS+", "D": "Kerberos"}, "answer": "C", "explanation": {"correct": "C. TACACS+", "A": "Incorrect. Challenge-Handshake Authentication Protocol (CHAP) is an authentication protocol but does not provide authorization or accounting services.", "B": "Incorrect. Remote Authentication Dial-In User Service (RADIUS) provides AAA management but was not developed by Cisco.", "C": "Correct. TACACS+ (Terminal Access Controller Access-Control System Plus) is an extension to TACACS and was developed as a proprietary protocol by Cisco to provide centralized Authentication, Authorization, and Accounting (AAA) services.", "D": "Incorrect. Kerberos is a network authentication protocol developed by MIT."}},
+            {"id": "D75", "question": "Your IT administrator has proposed a new method for deploying security patches to company servers. Before the change is approved, another senior administrator is assigned to review the plan to ensure it follows best practices, minimizes risks, and aligns with company policies. Which of the following would BEST describe this step in the change management process?", "options": {"A": "Standard change", "B": "Change freeze", "C": "Implementation", "D": "Peer review"}, "answer": "D", "explanation": {"correct": "D. Peer review", "A": "Incorrect. Standard changes are low-risk, routine modifications that follow an established process.", "B": "Incorrect. A change freeze is a temporary halt on modifications.", "C": "Incorrect. Implementation refers to executing an approved change.", "D": "Correct. Peer review is the step in the change management process where another knowledgeable team member reviews a proposed change (patch deployment plan) before approval to ensure it meets best practices, minimizes risks, and aligns with company policies."}},
+            {"id": "D76", "question": "Which of the following features is supported by Kerberos but not by RADIUS?", "options": {"A": "Services for authentication", "B": "Single sign-on capability", "C": "XML for cross-platform interoperability", "D": "Tickets used to identify authenticated users"}, "answer": "D", "explanation": {"correct": "D. Tickets used to identify authenticated users", "A": "Incorrect. Both Kerberos and RADIUS provide services for authentication.", "B": "Incorrect. Both Kerberos and RADIUS can be part of a Single Sign-On (SSO) solution.", "C": "Incorrect. While RADIUS can use XML, this is not a core differentiating feature for Kerberos.", "D": "Correct. Kerberos uses a system of 'tickets' to allow nodes to communicate over a non-secure network and securely prove their identity. RADIUS does not use tickets in this manner."}},
+            {"id": "D77", "question": "Which type of malware is used to actively attempt to steal confidential information by capturing a user's data when typed into a web browser or other application?", "options": {"A": "Spyware", "B": "Rootkit", "C": "Trojan", "D": "Keylogger"}, "answer": "D", "explanation": {"correct": "D. Keylogger", "A": "Incorrect. Spyware is a program that monitors user activity and sends the information to someone else.", "B": "Incorrect. A rootkit is designed to provide continued privileged access while actively hiding its presence.", "C": "Incorrect. A trojan is malware disguised as legitimate software that can take control of your computer.", "D": "Correct. A keylogger actively attempts to steal confidential information by capturing keystrokes (a user's data when typed) entered into a web browser or other application. This is a specific function of some malware."}},
+            {"id": "D78", "question": "Jason's company issued him an old 2018 laptop with an internal hardware security key that he uses to connect to his office network over a VPN while traveling. Without this laptop, Jason cannot access his company's internal servers, email, or share drive files. The Windows 10 laptop is extremely slow, and the screen recently cracked and needs to be replaced. When Jason returns to the company's headquarters, the company will provide him with a new laptop due to the broken screen. Until then, he is working out of his hotel room during a 45-day business trip and needs to continue using this laptop. Jason brings the laptop to the computer store you work at and asks for your assistance. Which of the following do you recommend?", "options": {"A": "Replace the display and contact the manufacturer for reimbursement", "B": "Replace the display and charge him for the parts/installation", "C": "Sell him an external 15\" tablet/monitor to connect to the laptop as a workaround", "D": "Purchase a new laptop as the cost to repair might be more than a new laptop"}, "answer": "C", "explanation": {"correct": "C. Sell him an external 15\" tablet/monitor to connect to the laptop as a workaround", "A": "Incorrect. The laptop is outside of the warranty period, making the recommendation of being reimbursed by the manufacturer incorrect.", "B": "Incorrect. This would likely be more expensive than a simple workaround.", "C": "Correct. Since the laptop has an internal hardware security key required for VPN access, it cannot be easily replaced. The quickest, cheapest, and best workaround until he returns to the office for a new corporate laptop is to purchase an external monitor to bypass the cracked screen issue.", "D": "Incorrect. A new laptop would not have the internal hardware security key required for VPN access."}},
+            {"id": "D79", "question": "Which command-line entry would be used on a Windows system to test if your system can reach diontraining.com?", "options": {"A": "ping diontraining.com", "B": "ipconfig diontraining.com", "C": "net use diontraining.com", "D": "sfc diontraining.com"}, "answer": "A", "explanation": {"correct": "A. ping diontraining.com", "A": "Correct. The 'ping' command is used to test a host's reachability on an Internet Protocol network by sending a series of ICMP packets to the specified host (like diontraining.com).", "B": "Incorrect. The 'ipconfig' tool displays all current TCP/IP network configuration values on a given system.", "C": "Incorrect. The 'net use' command is used to connect to, remove, and configure connections to shared resources such as mapped drives and network printers.", "D": "Incorrect. The 'sfc' (System File Checker) command is a utility in Windows that allows users to scan for and restore corrupted Windows system files."}},
+            {"id": "D80", "question": "Your company wants to ensure that users cannot access USB mass storage devices. You have conducted some research online and found that if you modify the HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\UsbStor key, it will prevent USB storage devices from being used. Which of the following tools should you use to modify this key?", "options": {"A": "RegEdit", "B": "RDS", "C": "MSConfig", "D": "MMC"}, "answer": "A", "explanation": {"correct": "A. RegEdit", "A": "Correct. The registry editor (RegEdit) allows you to view and make changes to system files and programs in the Windows Registry, including modifying the 'UsbStor' key to disable USB storage devices.", "B": "Incorrect. Remote Desktop Services (RDS) is used to connect to a remote desktop session host server.", "C": "Incorrect. MSConfig is a system utility to troubleshoot the Microsoft Windows startup processes.", "D": "Incorrect. The Microsoft management console (MMC) is a utility that uses snap-ins for various Windows tools (like disk management, computer management) but is not used to directly edit the registry."}},
+            {"id": "D81", "question": "Your company's IT department routinely deploys software updates to employee workstations every month. These updates follow a predefined approval process, pose minimal risk to system stability, and require no special authorization beyond the usual change request workflow. The IT manager wants to ensure these updates are properly categorized in the change management process to streamline approval and implementation. Which of the following would BEST describe this type of change?", "options": {"A": "Major change", "B": "Emergency change", "C": "Standard change", "D": "Normal change"}, "answer": "C", "explanation": {"correct": "C. Standard change", "A": "Incorrect. Major changes involve significant modifications that require extensive planning and approval.", "B": "Incorrect. Emergency changes are urgent and typically involve immediate fixes for critical issues.", "C": "Correct. A standard change is the best classification because it refers to routine, low-risk modifications (like monthly software updates) that follow an established process and do not require special approvals beyond the normal change management workflow.", "D": "Incorrect. A normal change involves a non-routine but planned modification that requires a full change management process."}},
+            {"id": "D82", "question": "Dion Training just released a new corporate policy that dictates all access to network resources will be controlled based on the user's job functions and tasks within the organization. For example, only people working in Human Resources can access employee records, and only the people working in finance can access customer payment histories. Which of the following security concepts is BEST described by this new policy?", "options": {"A": "Acceptable use policy", "B": "Zero trust", "C": "Least privilege", "D": "Defense in depth"}, "answer": "C", "explanation": {"correct": "C. Least privilege", "A": "Incorrect. An acceptable use policy (AUP) is a set of rules that restrict how the network, website, or system may be used.", "B": "Incorrect. Zero trust is a security framework that requires all users to be authenticated, authorized, and continuously validated before being granted access.", "C": "Correct. Least privilege is the concept and practice of restricting access rights for users to only those resources absolutely required to perform routine, legitimate activities (i.e., access is controlled based on the user's job functions and tasks).", "D": "Incorrect. Defense in Depth is an approach to cybersecurity in which a series of defensive mechanisms are layered to protect valuable data and information."}},
+            {"id": "D83", "question": "Eduardo is installing Windows 11 (64-bit) in a virtual machine on his macOS desktop. The installation is continually failing and producing an error. Eduardo has configured the virtual machine with a 2.2 GHz processor, 4 GB of memory, a 64 GB hard drive, and a 1280 x 720 screen resolution. Which item in the virtual machine should be increased to fix the installation issue experienced?", "options": {"A": "The screen resolution", "B": "Amount of hard drive space", "C": "Amount of memory", "D": "Number of CPU cores"}, "answer": "D", "explanation": {"correct": "D. Number of CPU cores", "A": "Incorrect. The screen resolution is sufficient (minimum is 720p).", "B": "Incorrect. The amount of hard drive space (64 GB) is the minimum requirement for Windows 11.", "C": "Incorrect. The amount of memory (4 GB) is the minimum requirement for Windows 11.", "D": "Correct. The minimum requirement for the Windows 11 (64-bit) operating system is a dual-core (2) processor. The virtual machine needs to be configured with at least two CPU cores, as one 2.2 GHz core is not sufficient."}},
+            {"id": "D84", "question": "A company is integrating an AI-powered virtual assistant into its internal communication system. Employees will use it to process emails, analyze reports, and summarize meetings. The legal team expresses concern that sensitive business information may be accessible by external entities, depending on how the AI processes and stores its data. Which of the following would be the MOST important concern in this scenario?", "options": {"A": "User interface design", "B": "System update frequency", "C": "Data privacy", "D": "Software licensing terms"}, "answer": "C", "explanation": {"correct": "C. Data privacy", "A": "Incorrect. User interface design affects usability but not data confidentiality.", "B": "Incorrect. System update frequency ensures security patches are applied but does not address potential privacy risks in data handling by the AI model.", "C": "Correct. Data privacy is the most important concern because the AI assistant will be processing sensitive business information (emails, reports, meeting summaries), and the legal team is worried that this information may be accessible by external entities based on how the AI processes and stores its data.", "D": "Incorrect. Software licensing terms determine legal usage rights but do not protect sensitive information."}},
+            {"id": "D85", "question": "Which low power mode is used with Windows 10 laptops to save power, but it takes longer to turn back on and resume where the user left off?", "options": {"A": "Power saver", "B": "Hibernate", "C": "Sleep", "D": "Balanced"}, "answer": "B", "explanation": {"correct": "B. Hibernate", "A": "Incorrect. Power saver is a power plan that favors energy savings over performance.", "B": "Correct. Hibernate mode is used to save the current session to the hard drive before powering off the computer to save battery life. Since it is loaded from the hard drive, the computer takes longer to start up again from hibernate mode than it does from sleep mode.", "C": "Incorrect. Sleep mode is used to save the current session to memory and put the computer into a minimal power state to save battery life. The computer starts up again faster from sleep mode than from hibernate mode.", "D": "Incorrect. Balanced is a power plan that adjusts the performance to conserve energy on capable hardware."}},
+            {"id": "D86", "question": "A client contacts the service desk and complains that their smartphone is warm to the touch and their battery only lasts 4 hours a day, not the 10 hours advertised by your company. You ask them for the status of several settings: Email (never), Maps (always), Calendar (while using), Messages (while using), Photos (never), App Store (while using), Bank (while using), and Weather (while using). Based on the information provided, what should be changed to resolve this client's problem?", "options": {"A": "Change the Weather setting to always", "B": "Change the Email setting to while using", "C": "Change the App Store to never", "D": "Change the Maps setting to while using"}, "answer": "D", "explanation": {"correct": "D. Change the Maps setting to while using", "A": "Incorrect. The Weather setting is already set to 'while using' and does not need to be changed to 'always', as this would increase battery drain.", "B": "Incorrect. The Email setting is set to 'never', and changing it to 'while using' would increase battery drain when the app is open.", "C": "Incorrect. The App Store setting is set to 'while using' and is a good practice.", "D": "Correct. The Maps setting is set to 'always'. This means the app will continue to check the background's GPS location even if the smartphone is in standby mode. Since checking its location uses both the GPS receiver and the cellular modem to triangular its position, it can waste a lot of battery life. Changing it to 'while using' is the best solution."}},
+            {"id": "D87", "question": "Which of the following commands is used on a Linux system to change a file's permissions or directory on a system?", "options": {"A": "passwd", "B": "chown", "C": "chmod", "D": "pwd"}, "answer": "C", "explanation": {"correct": "C. chmod", "A": "Incorrect. The 'passwd' command changes passwords for user accounts.", "B": "Incorrect. The 'chown' command is used to change the owner of the file, directory, or link.", "C": "Correct. The 'chmod' command sets the permissions (modes) of files or directories on a Linux system, which restricts the way a file can be accessed.", "D": "Incorrect. The 'pwd' command displays the present working directory (current directory) path to the terminal or display."}},
+            {"id": "D88", "question": "A team is working on a shared spreadsheet to track inventory. Some employees report seeing different data than their coworkers. What is the most likely reason?", "options": {"A": "Cached data is being displayed instead of live updates.", "B": "Too many users editing has caused hidden updates.", "C": "A system reboot is needed for changes to sync.", "D": "The spreadsheet automatically created multiple versions."}, "answer": "A", "explanation": {"correct": "A. Cached data is being displayed instead of live updates.", "A": "Correct. If employees see different data in a shared, collaborative application, they may be viewing cached (older) information instead of the real-time updates from the server. A simple browser refresh usually resolves this issue.", "B": "Incorrect. Most collaboration tools allow many users, and hidden updates are not typical; the user's view is simply outdated.", "C": "Incorrect. Rebooting is unnecessary, as synchronization is handled by the application itself.", "D": "Incorrect. Cloud-based spreadsheets do not duplicate automatically; multiple versions would need to be created manually."}},
+            {"id": "D89", "question": "Nicole's smartphone works fine when she is at work or the mall, but she has limited bandwidth on the device when she is in her apartment building. Nicole has asked you to help her. What is the FIRST step you should take in troubleshooting this issue?", "options": {"A": "Reset the data usage statistics on the smartphone", "B": "Update the smartphone's applications or OS", "C": "Reset the smartphone's wireless network settings", "D": "Verify the smartphone has adequate signal strength"}, "answer": "D", "explanation": {"correct": "D. Verify the smartphone has adequate signal strength", "A": "Incorrect. Resetting data usage statistics will not solve a bandwidth issue.", "B": "Incorrect. While updates are important, they are not the first step in troubleshooting a localized bandwidth issue.", "C": "Incorrect. Resetting wireless network settings would affect Wi-Fi, not the cellular network which is typically the cause of a localized bandwidth issue.", "D": "Correct. The FIRST step in troubleshooting limited bandwidth on a mobile device that works fine elsewhere is to verify the smartphone has adequate signal strength (cellular signal). Low signal strength in a specific location (like an apartment building) directly leads to significantly reduced bandwidth."}},
+            {"id": "D90", "question": "Which of the following policies or plans would describe the access requirements for connecting a user's laptop to the corporate network?", "options": {"A": "Bring your own device policy", "B": "Password policy", "C": "Onboarding policy", "D": "Remote access policy"}, "answer": "D", "explanation": {"correct": "D. Remote access policy", "A": "Incorrect. A bring your own device (BYOD) policy allows employees to access enterprise networks using personal mobile devices, but it does not specifically outline the *access requirements* for connecting a user's laptop to the corporate network over a VPN.", "B": "Incorrect. A password policy is a set of rules for creating and using dependable, secure passwords.", "C": "Incorrect. An onboarding policy is a documented policy that describes all the requirements for integrating a new employee into the company and its cultures.", "D": "Correct. A remote access policy is a document that outlines and defines acceptable methods of remotely connecting to the internal network, including the specific access requirements for a user's laptop (e.g., VPN usage, security posture checks) to connect to corporate resources."}}
+        ];
+
+        // Global variables and the rest of the JavaScript functions...
+        const quizContainerEl = document.getElementById('quiz-container');
+        let quizData = []; 
+        let userAnswers = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answerSubmitted = false;
+        let timerInterval;
+
+        function showSetupScreen() {
+            quizContainerEl.innerHTML = `
+                <div id="setup-screen">
+                    <h2>Practice Exam Settings</h2>
+                    <div class="setup-option">
+                        <label for="num-questions">Number of Questions:</label>
+                        <select id="num-questions">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                            <option value="all">All (${allQuizData.length})</option>
+                        </select>
+                    </div>
+                    <div class="setup-option">
+                        <label for="time-limit">Time Limit:</label>
+                        <select id="time-limit">
+                            <option value="untimed">Untimed</option>
+                            <option value="15">15 Minutes</option>
+                            <option value="30">30 Minutes</option>
+                            <option value="60">60 Minutes</option>
+                            <option value="90" selected>90 Minutes</option>
+                        </select>
+                    </div>
+                    <button id="start-quiz-btn">Start Quiz</button>
+                </div>
+            `;
+            document.getElementById('start-quiz-btn').addEventListener('click', initializeQuiz);
+        }
+
+        function initializeQuiz() {
+            const numQuestions = document.getElementById('num-questions').value;
+            const timeSelection = document.getElementById('time-limit').value;
+            
+            userAnswers = [];
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            const shuffled = [...allQuizData].sort(() => 0.5 - Math.random());
+            quizData = numQuestions === 'all' ? shuffled : shuffled.slice(0, Number(numQuestions));
+
+            renderQuizUI();
+            
+            if (timeSelection !== 'untimed') {
+                startTimer(Number(timeSelection));
+            }
+        }
+        
+        function renderQuizUI() {
+            quizContainerEl.innerHTML = `
+                <a href="index.html" class="home-link">&larr; Back to Home</a>
+                <div id="timer">--:--</div>
+                <div id="quiz-header">
+                    <h1>Dion Training CompTIA A+ Core 2 (220-1202) Practice Test</h1>
+                    <p id="creator-tag">Created by: BLaborte (Data by Dion Training)</p>
+                </div>
+                <div id="quiz-body">
+                    <p id="question-text"></p>
+                    <ul id="options-list"></ul>
+                    <div id="explanation-container" style="display: none;"></div>
+                </div>
+                <div id="quiz-footer">
+                    <div id="score-text">Score: 0</div>
+                    <div id="footer-buttons">
+                        <button id="submit-btn">Submit Answer</button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('submit-btn').addEventListener('click', checkAnswer);
+            loadQuiz();
+        }
+
+        function startTimer(minutes) {
+            let timeInSeconds = minutes * 60;
+            const timerEl = document.getElementById('timer');
+            
+            timerInterval = setInterval(() => {
+                const mins = Math.floor(timeInSeconds / 60);
+                let secs = timeInSeconds % 60;
+                secs = secs < 10 ? '0' + secs : secs;
+                timerEl.textContent = `${mins}:${secs}`;
+                if (timeInSeconds <= 0) { // Fix: Stop at 0 or below
+                    clearInterval(timerInterval);
+                    timerEl.textContent = "0:00";
+                    if (!answerSubmitted) { // Only auto-submit if not already done
+                        showResults();
+                    }
+                }
+                timeInSeconds--;
+            }, 1000);
+        }
+
+        function loadQuiz() {
+            answerSubmitted = false;
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            document.getElementById('question-text').innerText = `${currentQuestionIndex + 1}. ${currentQuestion.question}`;
+            const optionsListEl = document.getElementById('options-list');
+            optionsListEl.innerHTML = ''; 
+
+            for (const key in currentQuestion.options) {
+                const option = document.createElement('li');
+                option.classList.add('option');
+                // Fix: Put radio inside label for better click target
+                option.innerHTML = `<label for="${key}"><input type="radio" name="option" id="${key}" value="${key}">${key}. ${currentQuestion.options[key]}</label>`;
+                optionsListEl.appendChild(option);
+            }
+            
+            const explanationContainer = document.getElementById('explanation-container');
+            if (explanationContainer) explanationContainer.style.display = 'none';
+
+            document.getElementById('footer-buttons').innerHTML = '<button id="submit-btn">Submit Answer</button>';
+            document.getElementById('submit-btn').addEventListener('click', checkAnswer);
+        }
+
+        function checkAnswer() {
+            if (answerSubmitted) return;
+            const selectedOptionInput = document.querySelector('input[name="option"]:checked');
+            if (!selectedOptionInput) {
+                alert('Please select an answer!');
+                return;
+            }
+            answerSubmitted = true;
+            const selectedAnswer = selectedOptionInput.value;
+            const correctAnswer = quizData[currentQuestionIndex].answer;
+            
+            // Handle multi-select answers (for Q7)
+            let isCorrect;
+            if (Array.isArray(correctAnswer)) {
+                const checkedOptions = Array.from(document.querySelectorAll('input[name="option"]:checked')).map(input => input.value);
+                // Simple check for exact match of all correct answers selected
+                isCorrect = correctAnswer.length === checkedOptions.length && 
+                            correctAnswer.every(answer => checkedOptions.includes(answer));
+
+                // Re-colorize logic for multi-select
+                const options = document.querySelectorAll('.option');
+                options.forEach(option => {
+                    option.classList.add('no-click');
+                    const input = option.querySelector('input');
+                    const isSelected = checkedOptions.includes(input.value);
+                    const isCorrectOption = correctAnswer.includes(input.value);
+
+                    if (isCorrectOption) {
+                        option.classList.add('correct');
+                    } else if (isSelected && !isCorrectOption) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+            } else {
+                // Single select answer logic
+                isCorrect = selectedAnswer === correctAnswer;
+                
+                const options = document.querySelectorAll('.option');
+                options.forEach(option => {
+                    option.classList.add('no-click');
+                    const input = option.querySelector('input');
+                    if (input.value === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (input.value === selectedAnswer) {
+                        option.classList.add('incorrect');
+                    }
+                });
+            }
+
+            userAnswers.push({ question: quizData[currentQuestionIndex], userAnswer: selectedAnswer, isCorrect: isCorrect });
+
+            if (isCorrect) {
+                score++;
+            }
+            document.getElementById('score-text').innerText = `Score: ${score}`;
+            
+            showExplanation();
+            
+            const footerButtons = document.getElementById('footer-buttons');
+            let nextButtonHTML = '';
+            if (currentQuestionIndex < quizData.length - 1) {
+                nextButtonHTML = `<button id="next-btn">Next Question</button>`;
+            } else {
+                nextButtonHTML = `<button id="next-btn">Finish Quiz</button>`;
+            }
+            
+            footerButtons.innerHTML = `<button id="toggle-explanation-btn">Show Explanation</button>${nextButtonHTML}`;
+            
+            document.getElementById('toggle-explanation-btn').addEventListener('click', toggleExplanation);
+            document.getElementById('next-btn').addEventListener('click', () => {
+                if (currentQuestionIndex < quizData.length - 1) {
+                    currentQuestionIndex++;
+                    loadQuiz();
+                } else {
+                    showResults();
+                }
+            });
+        }
+
+        function showExplanation() {
+            const explanationData = quizData[currentQuestionIndex].explanation;
+            let explanationContainer = document.getElementById('explanation-container');
+            if (!explanationContainer) return;
+            
+            // Adjusted logic to display correct answer clearly
+            let correctAnswerDisplay;
+            if (Array.isArray(quizData[currentQuestionIndex].answer)) {
+                const correctOptions = quizData[currentQuestionIndex].answer.map(key => `${key}`);
+                correctAnswerDisplay = correctOptions.join(' & ');
+            } else {
+                correctAnswerDisplay = explanationData.correct;
+            }
+
+            let explanationHTML = `<div class="explanation-title">Correct Answer: ${correctAnswerDisplay}</div>`;
+            explanationHTML += '<div class="explanation-text">';
+            
+            // Simplified explanation display for multi-option data structure
+            const currentQuestion = quizData[currentQuestionIndex];
+            for(const key in currentQuestion.explanation) {
+                // Skip the special 'correct' key if it's not a narrative explanation
+                if(key !== 'correct'){
+                    explanationHTML += `<p><strong>${key.toUpperCase()}:</strong> ${currentQuestion.explanation[key]}</p>`;
+                }
+            }
+            // Fallback for a single block of explanation text (like those from the original data)
+            if (Object.keys(currentQuestion.explanation).length === 1 && currentQuestion.explanation.hasOwnProperty('correct')) {
+                 explanationHTML += `<p>${currentQuestion.explanation.correct}</p>`;
+            }
+
+            explanationHTML += '</div>';
+
+            explanationContainer.innerHTML = explanationHTML;
+            explanationContainer.style.display = 'block'; // Ensure explanation is visible after submission
+        }
+
+        function toggleExplanation() {
+            const explanationContainer = document.getElementById('explanation-container');
+            const toggleBtn = document.getElementById('toggle-explanation-btn');
+            const isHidden = explanationContainer.style.display === 'none';
+            
+            explanationContainer.style.display = isHidden ? 'block' : 'none';
+            toggleBtn.textContent = isHidden ? 'Hide Explanation' : 'Show Explanation';
+        }
+        
+        function showResults() {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            let resultsHTML = `
+                <a href="index.html" class="home-link">&larr; Back to Home</a>
+                <div id="quiz-header"><h1>Quiz Results</h1></div>
+                <div id="quiz-body">
+                    <div class="results-summary">
+                        <h2>Your final score is ${score} out of ${quizData.length} (${Math.round((score/quizData.length)*100)}%)</h2>
+                    </div>
+                    <div class="results-list">
+            `;
+
+            userAnswers.forEach((answer, index) => {
+                const question = answer.question;
+                resultsHTML += `
+                    <div class="result-item">
+                        <p class="result-question">${index + 1}. ${question.question}</p>
+                        <ul class="result-options">
+                `;
+                
+                const isMultiSelect = Array.isArray(question.answer);
+                const correctAnswers = isMultiSelect ? question.answer : [question.answer];
+                const userAnswersSingleSelect = isMultiSelect ? answer.userAnswer : [answer.userAnswer];
+
+
+                for(const key in question.options) {
+                    let className = 'result-option';
+                    const isCorrectAnswer = correctAnswers.includes(key);
+                    let isUserSelection = isMultiSelect ? userAnswersSingleSelect.includes(key) : key === answer.userAnswer;
+                    
+                    if (isCorrectAnswer) {
+                        className += ' correct-answer';
+                    } else if (isUserSelection && !isCorrectAnswer) {
+                        className += ' incorrect-answer';
+                    }
+                    resultsHTML += `<li class="${className}">${key}. ${question.options[key]}</li>`;
+                }
+
+                
+                // Construct a simple explanation string from the structured explanation data
+                let explanationText = "";
+                if (question.explanation.A) { // Check for the structured format
+                    for(const key in question.explanation) {
+                        if (key !== 'correct' && question.explanation[key].startsWith("Correct")) {
+                            explanationText = question.explanation[key];
+                            break;
+                        }
+                    }
+                } else if (question.explanation.correct) {
+                    explanationText = question.explanation.correct; // Use the general feedback if structured answers are missing
+                }
+                
+                
+                resultsHTML += `
+                        </ul>
+                        <div class="result-explanation">
+                            <p><strong>Explanation:</strong> ${explanationText}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultsHTML += `</div></div>`;
+            quizContainerEl.innerHTML = resultsHTML;
+        }
+        
+        showSetupScreen();
+    </script>
+</body>
+</html>
