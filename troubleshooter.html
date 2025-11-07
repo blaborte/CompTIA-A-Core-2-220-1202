@@ -14,7 +14,6 @@
         background: linear-gradient(135deg, #a8dadc 0%, #457b9d 100%);
         background-attachment: fixed;
         overflow-y: auto; padding: 40px 20px; color: #fff;
-        /* DEBUG FIX: Added text-shadow for global readability */
         text-shadow: 0 1px 3px rgba(0,0,0,0.5);
     }
     .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
@@ -57,6 +56,15 @@
     .hint-button { background: #f7b731; color: #1d3557; margin-left: 10px; }
     .hint-button:hover { background-color: #eab528; }
     .home-button { background-color: #e63946; text-decoration: none; }
+    
+    input:disabled, button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    input:disabled:hover, button:disabled:hover {
+        transform: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
 
     .feedback { padding: 10px; margin-top: 10px; border-radius: 6px; font-weight: 500; }
     .correct { background-color: rgba(40, 167, 69, 0.3); border-left: 4px solid #28a745; }
@@ -128,8 +136,117 @@
     </div>
 
 </div>
+
 <script>
-    // The entire original script and question logic from the test file is preserved here...
+    // Answer key (flexible checking)
+    const answers = {
+        1: ["netsh interface", "get-netconnectionprofile"],
+        2: ["netsh"],
+        3: ["telnet", "test-netconnection"]
+    };
+
+    // Helper to get elements by ID
+    function getEl(id) {
+        return document.getElementById(id);
+    }
+
+    // Function to handle pressing Enter in the input field
+    function handleInputKeypress(event, qNum) {
+        if (event.key === "Enter") {
+            checkAnswer(qNum);
+        }
+    }
+
+    // Function to show the hint for a question
+    function showHint(qNum) {
+        getEl(`q${qNum}-hint`).style.display = 'block';
+    }
+
+    // Function to reset the view back to the main menu
+    function resetView() {
+        // Hide all scenario containers
+        getEl('scenario-a').classList.add('hidden');
+        getEl('final-result').classList.add('hidden');
+        // (Add other scenario IDs here if they existed)
+
+        // Hide all question parts for scenario A
+        for (let i = 1; i <= 3; i++) {
+            getEl(`q${i}`).classList.add('hidden');
+            getEl(`q${i}-feedback`).classList.add('hidden');
+            getEl(`q${i}-hint`).style.display = 'none';
+            
+            // Re-enable input for a fresh start
+            const inputEl = getEl(`a${i}-input`);
+            if(inputEl) {
+                inputEl.disabled = false;
+                inputEl.value = '';
+            }
+        }
+        getEl('scenario-a-complete').classList.add('hidden');
+        
+        // Show the main selector
+        getEl('scenario-selector').classList.remove('hidden');
+    }
+
+    // Function to start a scenario
+    function startScenario(startQuestionNum) {
+        getEl('scenario-selector').classList.add('hidden');
+
+        if (startQuestionNum === 1) { // This is Scenario A
+            getEl('scenario-a').classList.remove('hidden');
+            getEl('q1').classList.remove('hidden');
+            getEl('a1-input').focus();
+        } else {
+            // This handles clicks on Scenarios B-L
+            alert("DEBUG: This file is incomplete. The HTML for Scenarios B through L is missing, so they cannot be started.");
+            resetView();
+        }
+    }
+
+    // Function to check the answer
+    function checkAnswer(qNum) {
+        const inputEl = getEl(`a${qNum}-input`);
+        const feedbackEl = getEl(`q${qNum}-feedback`);
+        const userAnswer = inputEl.value.trim().toLowerCase();
+        
+        const correctAnswers = answers[qNum];
+        let isCorrect = false;
+
+        // Flexible check: see if user's answer *contains* a correct command
+        for (const ans of correctAnswers) {
+            if (userAnswer.includes(ans)) {
+                isCorrect = true;
+                break;
+            }
+        }
+
+        if (isCorrect) {
+            feedbackEl.innerHTML = "<strong>Correct!</strong> Your command would provide the necessary info. Moving to the next step.";
+            feedbackEl.className = "feedback correct";
+            inputEl.disabled = true;
+            getEl(`q${qNum}`).querySelector('button').disabled = true; // Disable submit button
+            getEl(`q${qNum}`).querySelector('.hint-button').disabled = true; // Disable hint button
+
+            // Move to next question or complete scenario
+            setTimeout(() => { // Add a short delay
+                getEl(`q${qNum}`).classList.add('hidden'); // Hide current question
+                const nextQNum = qNum + 1;
+                
+                if (getEl(`q${nextQNum}`)) {
+                    getEl(`q${nextQNum}`).classList.remove('hidden');
+                    getEl(`a${nextQNum}-input`).focus();
+                } else {
+                    // This is the last question for this scenario
+                    getEl('scenario-a-complete').classList.remove('hidden');
+                }
+            }, 1500); // 1.5 second delay
+            
+        } else {
+            feedbackEl.innerHTML = "<strong>Not quite.</strong> That command isn't the best fit. Try another, or use the hint.";
+            feedbackEl.className = "feedback incorrect";
+        }
+        feedbackEl.classList.remove('hidden');
+    }
 </script>
 
 </body>
