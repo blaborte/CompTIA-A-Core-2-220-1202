@@ -67,6 +67,10 @@
         .game-card p { color: #f1faee; flex-grow: 1; margin-bottom: 20px; font-weight: 300; opacity: 0.9; }
         
         .start-btn {
+            /* This style now applies to both <button> and <a> tags */
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
             padding: 10px 15px; border: none; border-radius: 50px; color: #fff;
             font-weight: bold; cursor: pointer; text-shadow: none;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -133,7 +137,7 @@
             <div class="game-card" data-game="troubleshooting">
                 <h3>Troubleshooting Tickets</h3>
                 <p>Solve common user support tickets by choosing the correct first step before time runs out.</p>
-                <button class="start-btn">Start Game</button>
+                <a href="game-troubleshoot.html" class="start-btn">Start Game</a>
             </div>
             <div class="game-card" data-game="win-cli">
                 <h3>Windows CLI Challenge</h3>
@@ -163,8 +167,7 @@
         </div>
     </div>
     
-    <div id="troubleshooting-game" class="game-content glass-box"></div>
-    <div id="win-cli-game" class="game-content glass-box"></div>
+    <div id="troubleshooting-game" class="game-content glass-box"></div> <div id="win-cli-game" class="game-content glass-box"></div>
     <div id="linux-cli-game" class="game-content glass-box"></div>
     <div id="linux-perms-game" class="game-content glass-box"></div>
     <div id="macos-match-game" class="game-content glass-box"></div>
@@ -179,15 +182,8 @@
     const gameContents = document.querySelectorAll('.game-content');
     let activeGameCleanup = () => {};
 
+    // MODIFICATION: Removed 'troubleshooting' from gameTemplates
     const gameTemplates = {
-        'troubleshooting': `
-            <h1 style="color: #e63946; text-shadow: 0 1px 3px #000;">Troubleshooting Tickets</h1>
-            <div id="ticket-problem" style="min-height: 80px;">Loading ticket...</div>
-            <div class="options-container" style="min-height: 200px;"></div>
-            <div class="feedback"></div>
-            <div class="score-display" style="margin-top: 15px; font-weight: bold;">Score: 0</div>
-            <div class="timer-display" style="font-weight: 300; opacity: 0.8;">Time Left: 15</div>
-            <button class="back-to-arcade"> &larr; Back to Arcade</button>`,
         'win-cli': `
             <h1 style="color: #457b9d; text-shadow: 0 1px 3px #000;">Windows Command-Line Challenge</h1>
             <div id="task-prompt" style="min-height: 60px;"></div>
@@ -247,8 +243,8 @@
     
     // --- Master Controller Functions ---
     
+    // MODIFICATION: Removed 'troubleshooting' from gameInitializers
     const gameInitializers = {
-        'troubleshooting': initTroubleshootingGame,
         'win-cli': initWindowsCliGame,
         'linux-cli': initLinuxCliGame,
         'linux-perms': initLinuxPermsGame,
@@ -257,6 +253,12 @@
     };
     
     function showGame(gameName) {
+        // MODIFICATION: Check if the gameName exists in our templates.
+        // If not (like 'troubleshooting'), do nothing, as the <a> tag will handle it.
+        if (!gameTemplates[gameName]) {
+            return;
+        }
+
         gameSelection.style.opacity = '0';
         setTimeout(() => {
             gameSelection.style.display = 'none';
@@ -283,98 +285,16 @@
     }
 
     startButtons.forEach(button => {
-        const gameName = button.closest('.game-card').dataset.game;
-        button.addEventListener('click', () => showGame(gameName));
+        // Only add click listeners to actual <button> elements
+        if (button.tagName === 'BUTTON') { 
+            const gameName = button.closest('.game-card').dataset.game;
+            button.addEventListener('click', () => showGame(gameName));
+        }
     });
 
     // --- Game 1: Troubleshooting Tickets ---
-    function initTroubleshootingGame() {
-        const game = document.getElementById('troubleshooting-game');
-        const problemEl = game.querySelector('#ticket-problem');
-        const optionsContainer = game.querySelector('.options-container');
-        const feedbackEl = game.querySelector('.feedback');
-        const scoreEl = game.querySelector('.score-display');
-        const timerEl = game.querySelector('.timer-display');
-        
-        let score = 0;
-        let timer = 15;
-        let timerId = null;
-
-        const tickets = [
-            { problem: "A user's Windows laptop is very slow. You check Task Manager and see `msmpeng.exe` is using 100% CPU. What is the most likely cause?", options: ["Windows Update is stuck", "A cryptomining virus is running", "Windows Defender is running a full scan", "The hard drive is failing"], answer: "Windows Defender is running a full scan" },
-            { problem: "A user reports they can't access `google.com`, but you can ping `8.8.8.8` successfully. What is the most likely issue?", options: ["The default gateway is wrong", "The DNS server is unreachable", "The firewall is blocking Port 80", "The user's IP is an APIPA address"], answer: "The DNS server is unreachable" },
-            { problem: "A user in accounting gets a browser pop-up stating their computer is 'locked' by the FBI and demands payment. What is this?", options: ["Spyware", "A rootkit", "Ransomware / Scareware", "A normal Windows security alert"], answer: "Ransomware / Scareware" },
-            { problem: "A user's laptop screen is very dim, but you can see a faint image with a flashlight. What component has most likely failed?", options: ["The LCD display", "The video card (GPU)", "The display inverter or backlight", "The display cable"], answer: "The display inverter or backlight" },
-            { problem: "A user's phone connects to the office Wi-Fi but has no internet. You see their IP is `169.254.10.20`. What is the problem?", options: ["The phone is in Airplane Mode", "The DHCP server is down or unreachable", "The Wi-Fi password is wrong", "The DNS server is incorrect"], answer: "The DHCP server is down or unreachable" },
-            { problem: "After a thunderstorm, a PC will not turn on. There is no fan spin and no lights. You've tested the wall outlet. What is the FIRST component to test?", options: ["The motherboard", "The Power Supply Unit (PSU)", "The CPU", "The RAM"], answer: "The Power Supply Unit (PSU)" }
-        ];
-        let availableTickets = [...tickets];
-        
-        function loadTicket() {
-            if (availableTickets.length === 0) {
-                availableTickets = [...tickets]; // Reset
-            }
-            
-            // Reset for next question
-            clearInterval(timerId);
-            timer = 15;
-            feedbackEl.textContent = '';
-            
-            // Get random ticket
-            const ticketIndex = Math.floor(Math.random() * availableTickets.length);
-            const ticket = availableTickets.splice(ticketIndex, 1)[0];
-            
-            problemEl.textContent = ticket.problem;
-            optionsContainer.innerHTML = '';
-            
-            // Shuffle options
-            const shuffledOptions = ticket.options.sort(() => 0.5 - Math.random());
-            shuffledOptions.forEach(optionText => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.textContent = optionText;
-                btn.onclick = () => checkAnswer(optionText === ticket.answer, btn);
-                optionsContainer.appendChild(btn);
-            });
-            
-            timerId = setInterval(updateTimer, 1000);
-            updateTimer();
-        }
-        
-        function updateTimer() {
-            timerEl.textContent = `Time Left: ${timer}`;
-            if (timer === 0) {
-                clearInterval(timerId);
-                feedbackEl.textContent = 'Time\'s up!';
-                feedbackEl.className = 'feedback incorrect';
-                optionsContainer.querySelectorAll('button').forEach(b => b.disabled = true);
-                setTimeout(loadTicket, 2000);
-            }
-            timer--;
-        }
-
-        function checkAnswer(isCorrect, btn) {
-            clearInterval(timerId);
-            optionsContainer.querySelectorAll('button').forEach(b => b.disabled = true);
-            
-            if (isCorrect) {
-                feedbackEl.textContent = 'Correct!';
-                feedbackEl.className = 'feedback correct';
-                score++;
-                btn.style.backgroundColor = 'rgba(40, 167, 69, 0.5)';
-            } else {
-                feedbackEl.textContent = 'Incorrect.';
-                feedbackEl.className = 'feedback incorrect';
-                btn.style.backgroundColor = 'rgba(220, 53, 69, 0.5)';
-            }
-            scoreEl.textContent = `Score: ${score}`;
-            setTimeout(loadTicket, 2000);
-        }
-        
-        loadTicket();
-        
-        return () => clearInterval(timerId);
-    }
+    // MODIFICATION: This entire function is no longer needed here.
+    // function initTroubleshootingGame() { ... }
     
     // --- Game 2: Windows CLI Challenge ---
     function initWindowsCliGame() {

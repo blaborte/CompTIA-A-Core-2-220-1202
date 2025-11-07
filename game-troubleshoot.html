@@ -11,7 +11,6 @@
             min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
             background: linear-gradient(135deg, #a8dadc 0%, #457b9d 100%);
             overflow: hidden; padding: 20px; color: #fff;
-            /* DEBUG FIX: Added text-shadow for global readability */
             text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
         .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
@@ -19,16 +18,84 @@
         .shape-1 { width: 300px; height: 300px; top: 10%; left: 15%; background: linear-gradient(to right, #e63946, #f1faee); }
         .shape-2 { width: 400px; height: 400px; bottom: 5%; right: 10%; background: linear-gradient(to right, #457b9d, #a8dadc); }
 
-        #game-container {
-            width: 90%; max-width: 600px; padding: 40px; border-radius: 20px;
+        /* Main wrapper for both setup and game */
+        .main-wrapper {
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .glass-box {
+            width: 100%;
+            padding: 40px;
+            border-radius: 20px;
             background: rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             text-align: center;
         }
+        
+        /* NEW: Header for Home Button */
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .header-section h1, .header-section h2 { /* Apply to both h1 (game) and h2 (setup) */
+            font-size: 2em;
+            margin: 0;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            color: #e63946;
+        }
+        
+        /* NEW: Home Button Style */
+        .home-button {
+            padding: 12px 25px; border: none; border-radius: 50px; background: #e63946;
+            color: #fff; font-weight: bold; cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+            text-shadow: none;
+            text-decoration: none;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+        .home-button:hover {
+            background: #457b9d; transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
 
-        h1 { margin: 0 0 20px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); color: #e63946; }
+        /* NEW: Setup Screen Styles */
+        #setup-screen h2 { margin-top: 0; margin-bottom: 30px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        .setup-option { margin-top: 30px; margin-bottom: 25px; font-size: 1.1em; } /* Added margin-top */
+        .setup-option label { font-weight: 500; margin-right: 10px; }
+        select {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(0,0,0,0.2);
+            color: #fff;
+            font-family: "Poppins", sans-serif;
+            font-size: 1em;
+            text-shadow: none;
+        }
+        select:focus { outline: none; border-color: #f7b731; }
+        .start-btn {
+            padding: 12px 30px; border: none; border-radius: 50px; background: #f7b731;
+            color: #1d3557; font-size: 1.1em; font-weight: bold; cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-shadow: none;
+        }
+        .start-btn:hover {
+            transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* Game Content Styles */
+        #game-container { display: none; } /* Hide game by default */
+        
         #ticket-problem {
             padding: 20px; border-radius: 10px; margin-bottom: 25px; line-height: 1.6;
             text-align: left; background: rgba(0, 0, 0, 0.2);
@@ -54,12 +121,9 @@
         .incorrect { color: #e63946; text-shadow: 0 0 5px #e63946; }
 
         #score-display, #timer-display { font-size: 1.2em; margin-top: 15px; color: #f1faee; opacity: 0.8; }
-        .home-link {
-            display: inline-block; margin-top: 25px; color: #fff; text-decoration: none; font-weight: 500;
-            padding: 5px 10px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .home-link:hover { color: #457b9d; background: #f1faee; text-shadow: none; }
+        
+        /* Hide old home link */
+        .home-link { display: none; }
     </style>
 </head>
 <body>
@@ -68,18 +132,42 @@
         <div class="shape shape-2"></div>
     </div>
 
-    <div id="game-container">
-        <h1>Troubleshooting Tickets</h1>
-        <div id="ticket-problem">Loading ticket...</div>
-        <div id="options-container"></div>
-        <div id="feedback"></div>
-        <div id="score-display">Score: 0</div>
-        <div id="timer-display">Time Left: 15</div>
+    <div class="main-wrapper">
+        <div id="setup-screen" class="glass-box">
+            <div class="header-section">
+                <h2>Troubleshooting Tickets</h2>
+                <a href="games.html" class="home-button" style="padding: 10px 20px;">🎮 Back to Arcade</a>
+            </div>
+            
+            <div class="setup-option">
+                <label for="num-tickets">How many tickets?</label>
+                <select id="num-tickets">
+                    <option value="5">5 Tickets</option>
+                    <option value="10">10 Tickets</option>
+                    <option value="all">All Tickets</option>
+                </select>
+            </div>
+            <button id="start-btn" class="start-btn">Start Game</button>
+        </div>
+
+        <div id="game-container" class="glass-box">
+            <div class="header-section">
+                <h1>Troubleshooting Tickets</h1>
+                <a href="index.html" class="home-button">🏠 Home Menu</a>
+            </div>
+            <div id="ticket-problem">Loading ticket...</div>
+            <div id="options-container"></div>
+            <div id="feedback"></div>
+            <div id="score-display">Score: 0</div>
+            <div id="timer-display">Time Left: 15</div>
+        </div>
     </div>
+    
     <a href="index.html" class="home-link">&larr; Back to Main Menu</a>
 
     <script>
-        const tickets = [
+        // Master list of all tickets
+        const allTickets = [
             {
                 problem: "A user reports their Windows desktop takes 15 minutes to appear after they log in. The issue seems to be related to their network profile.",
                 options: {
@@ -142,19 +230,90 @@
                     c: "mv report.log jdoe/sales"
                 },
                 answer: "b"
+            },
+            // Added more tickets for a better "all" option
+            {
+                problem: "A user's laptop screen is very dim, but you can see a faint image with a flashlight. What component has most likely failed?",
+                options: { a: "The LCD display", b: "The video card (GPU)", c: "The display inverter or backlight" },
+                answer: "c"
+            },
+            {
+                problem: "A user's phone connects to the office Wi-Fi but has no internet. You see their IP is 169.254.10.20. What is the problem?",
+                options: { a: "The phone is in Airplane Mode", b: "The DHCP server is down or unreachable", c: "The Wi-Fi password is wrong" },
+                answer: "b"
+            },
+            {
+                problem: "After a thunderstorm, a PC will not turn on. There is no fan spin and no lights. You've tested the wall outlet. What is the FIRST component to test?",
+                options: { a: "The motherboard", b: "The Power Supply Unit (PSU)", c: "The CPU" },
+                answer: "b"
+            },
+            {
+                problem: "A user in accounting gets a browser pop-up stating their computer is 'locked' by the FBI and demands payment. What is this?",
+                options: { a: "Spyware", b: "A rootkit", c: "Ransomware / Scareware" },
+                answer: "c"
+            },
+            {
+                problem: "You need to scan and repair corrupted system files on a Windows machine. Which command do you use?",
+                options: { a: "sfc /scannow", b: "chkdsk /f", c: "bootrec /fixmbr" },
+                answer: "a"
             }
         ];
 
+        let gameTickets = []; // This array will hold the tickets for the current game
         let currentTicketIndex = 0;
         let score = 0;
         let timeLeft = 15;
         let timerInterval;
 
+        // DOM Elements
+        const setupScreenEl = document.getElementById('setup-screen');
+        const gameContainerEl = document.getElementById('game-container');
+        const startBtnEl = document.getElementById('start-btn');
+        const numTicketsEl = document.getElementById('num-tickets');
+        
         const problemEl = document.getElementById('ticket-problem');
         const optionsContainerEl = document.getElementById('options-container');
         const feedbackEl = document.getElementById('feedback');
         const scoreDisplayEl = document.getElementById('score-display');
         const timerDisplayEl = document.getElementById('timer-display');
+
+        function showSetupScreen() {
+            // Reset game state
+            currentTicketIndex = 0;
+            score = 0;
+            gameTickets = [];
+            clearInterval(timerInterval);
+
+            // Show setup, hide game
+            setupScreenEl.style.display = 'block';
+            gameContainerEl.style.display = 'none';
+        }
+
+        function initializeGame() {
+            const numToPlay = numTicketsEl.value;
+
+            // Shuffle the master list
+            allTickets.sort(() => 0.5 - Math.random());
+
+            // Populate the gameTickets array based on selection
+            if (numToPlay === 'all') {
+                gameTickets = [...allTickets];
+            } else {
+                gameTickets = allTickets.slice(0, Number(numToPlay));
+            }
+
+            // Reset scores and counters
+            currentTicketIndex = 0;
+            score = 0;
+            scoreDisplayEl.textContent = `Score: 0`;
+            timerDisplayEl.style.display = 'block'; // Make sure timer is visible
+
+            // Hide setup, show game
+            setupScreenEl.style.display = 'none';
+            gameContainerEl.style.display = 'block';
+
+            loadTicket();
+        }
 
         function loadTicket() {
             // Reset state
@@ -164,12 +323,12 @@
             timeLeft = 15;
             timerDisplayEl.textContent = `Time Left: ${timeLeft}`;
 
-            if (currentTicketIndex >= tickets.length) {
+            if (currentTicketIndex >= gameTickets.length) {
                 endGame();
                 return;
             }
 
-            const currentTicket = tickets[currentTicketIndex];
+            const currentTicket = gameTickets[currentTicketIndex];
             problemEl.innerHTML = `<strong>User Complaint:</strong> ${currentTicket.problem}`;
 
             for (const key in currentTicket.options) {
@@ -198,7 +357,7 @@
         function selectAnswer(e) {
             clearInterval(timerInterval);
             const selected = e.target.dataset.answer;
-            const correct = tickets[currentTicketIndex].answer;
+            const correct = gameTickets[currentTicketIndex].answer;
 
             if (selected === correct) {
                 score++;
@@ -230,14 +389,19 @@
         function endGame() {
             clearInterval(timerInterval);
             problemEl.innerHTML = `<strong>Simulation Complete!</strong>`;
-            optionsContainerEl.innerHTML = `<h2>Your final score is ${score} out of ${tickets.length}.</h2>`;
+            optionsContainerEl.innerHTML = `<h2>Your final score is ${score} out of ${gameTickets.length}.</h2>
+                                          <button id="play-again-btn" class="start-btn" style="margin-top: 20px;">Play Again</button>`;
             feedbackEl.textContent = '';
             timerDisplayEl.style.display = 'none';
+            
+            // Add event listener for the new "Play Again" button
+            document.getElementById('play-again-btn').addEventListener('click', showSetupScreen);
         }
 
-        // Start the game by shuffling tickets
-        tickets.sort(() => 0.5 - Math.random());
-        loadTicket();
+        // Start by showing the setup screen on page load
+        document.addEventListener('DOMContentLoaded', showSetupScreen);
+        // Add listener for the main start button
+        startBtnEl.addEventListener('click', initializeGame);
     </script>
 </body>
 </html>
