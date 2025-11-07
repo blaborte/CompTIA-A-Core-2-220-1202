@@ -119,13 +119,111 @@
         </div>
         <div class="scenario">
             <p>A user can no longer access their network drive. They can browse the internet. You suspect a recent Windows update reset the firewall profile.</p>
-            <p>You connect to their Windows 10 workstation via a remote command prompt.</p>
         </div>
-        <div id="q1" class="question hidden"><h3>Question 1: Initial Network Profile Check</h3><p>You suspect the profile reset from "Private" to **"Public"**. What command utility can you use to quickly view the current network connection profiles?</p><div class="answer-area"><input type="text" id="a1-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 1)"><button onclick="checkAnswer(1)">Submit Answer</button><button class="hint-button" onclick="showHint(1)">Need a Hint?</button></div><div id="q1-feedback" class="feedback hidden"></div><div id="q1-hint" class="hint-text"><strong>Hint:</strong> You need a command to view connection properties, not IP details.<ul><li>Possible commands: <code>Get-NetConnectionProfile</code> (PowerShell)</li><li>Possible commands: <code>netsh interface show interface</code></li></ul></div></div>
-        <div id="q2" class="question hidden"><h3>Question 2: Identify the Firewall Utility</h3><div class="scenario"><p><strong>Result:</strong> The network profile is set to **Public**. You need to change it back to **Private**. Which utility is designed for managing Windows Firewall settings, including network profiles?</p></div><div class="answer-area"><input type="text" id="a2-input" placeholder="Type the utility name..." onkeydown="handleInputKeypress(event, 2)"><button onclick="checkAnswer(2)">Submit Answer</button><button class="hint-button" onclick="showHint(2)">Need a Hint?</button></div><div id="q2-feedback" class="feedback hidden"></div><div id="q2-hint" class="hint-text"><strong>Hint:</strong> This utility manages configuration of network interfaces, protocols, and the firewall.<ul><li>Possible commands: <code>netsh</code> (Network Shell)</li></ul></div></div>
-        <div id="q3" class="question hidden"><h3>Question 3: Verify the Fix (Port Connectivity)</h3><div class="scenario"><p><strong>Fix:</strong> You used the correct utility to switch the profile back to **Private**. **Verification:** How can you verify from the command line that the server is now reachable on the **SMB port (445)**?</p></div><p><strong>What command utility should you use to test connectivity to the target server on a *specific* port (445)?</strong></p><div class="answer-area"><input type="text" id="a3-input" placeholder="Type the utility name..." onkeydown="handleInputKeypress(event, 3)"><button onclick="checkAnswer(3)">Submit Answer</button><button class="hint-button" onclick="showHint(3)">Need a Hint?</button></div><div id="q3-feedback" class="feedback hidden"></div><div id="q3-hint" class="hint-text"><strong>Hint:</strong> You need a tool that can attempt a connection to a port, not just send an ICMP echo request.<ul><li>Possible commands: <code>telnet server_ip 445</code></li><li>Possible commands: <code>Test-NetConnection -Port 445</code> (PowerShell)</li></ul></div></div>
-        <div id="scenario-a-complete" class="hidden scenario"><h3>Scenario A Complete! ✅</h3><h4>Summary of Actions:</h4><ul><li><b>Check Profile:</b> Used <code>netsh interface show interface</code> to confirm the profile was 'Public'.</li><li><b>Fix Profile:</b> Used <code>netsh</code> to change the profile back to 'Private'.</li><li><b>Verify Port:</b> Used <code>telnet</code> to test connectivity to the server on the SMB port (445).</li></ul><div style="display: flex; justify-content: space-between; margin-top: 20px;"><button class="home-button" onclick="resetView()">Home / Choose Scenario</button><button id="next-scenario-a" class="home-button" onclick="startScenario(4)">Next Scenario &rarr;</button></div></div>
+        <div id="q1" class="question hidden"><h3>Question 1: Initial Network Profile Check</h3><p>You suspect the profile reset from "Private" to **"Public"**. What command utility can you use to quickly view the current network connection profiles?</p><div class="answer-area"><input type="text" id="a1-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 1)"><button onclick="checkAnswer(1)">Submit</button><button class="hint-button" onclick="showHint(1)">Hint</button></div><div id="q1-feedback" class="feedback hidden"></div><div id="q1-hint" class="hint-text"><strong>Hint:</strong> You need a command to view connection properties, not IP details. (e.g., <code>Get-NetConnectionProfile</code> or <code>netsh interface...</code>)</div></div>
+        <div id="q2" class="question hidden"><h3>Question 2: Identify the Firewall Utility</h3><div class="scenario"><p><strong>Result:</strong> The profile is **Public**. You need to change it back to **Private**. Which utility is designed for managing Windows Firewall settings?</p></div><div class="answer-area"><input type="text" id="a2-input" placeholder="Type the utility name..." onkeydown="handleInputKeypress(event, 2)"><button onclick="checkAnswer(2)">Submit</button><button class="hint-button" onclick="showHint(2)">Hint</button></div><div id="q2-feedback" class="feedback hidden"></div><div id="q2-hint" class="hint-text"><strong>Hint:</strong> This utility manages configuration of network interfaces, protocols, and the firewall. (e.g., <code>netsh</code>)</div></div>
+        <div id="q3" class="question hidden"><h3>Question 3: Verify the Fix (Port Connectivity)</h3><div class="scenario"><p><strong>Fix:</strong> You used the correct utility to switch the profile back to **Private**. **Verification:** How can you verify that the server is now reachable on the **SMB port (445)**?</p></div><div class="answer-area"><input type="text" id="a3-input" placeholder="Type the utility name..." onkeydown="handleInputKeypress(event, 3)"><button onclick="checkAnswer(3)">Submit</button><button class="hint-button" onclick="showHint(3)">Hint</button></div><div id="q3-feedback" class="feedback hidden"></div><div id="q3-hint" class="hint-text"><strong>Hint:</strong> You need a tool that can attempt a connection to a specific port. (e.g., <code>telnet</code> or <code>Test-NetConnection</code>)</div></div>
+        <div id="scenario-a-complete" class="hidden scenario"><h3>Scenario A Complete! ✅</h3><h4>Summary of Actions:</h4><ul><li><b>Check Profile:</b> Used <code>netsh interface</code> to confirm the profile was 'Public'.</li><li><b>Fix Profile:</b> Used <code>netsh</code> to change the profile back to 'Private'.</li><li><b>Verify Port:</b> Used <code>telnet</code> to test connectivity to the server on the SMB port (445).</li></ul><div style="display: flex; justify-content: space-between; margin-top: 20px;"><button class="home-button" onclick="resetView()">Home / Choose Scenario</button><button class="home-button" onclick="startScenario(4)">Next Scenario &rarr;</button></div></div>
     </div> 
+
+    <div id="scenario-b" class="hidden">
+        <div class="scenario-header"><h2>Scenario B: Win IP/DNS Failure 🚫</h2><button class="home-button" onclick="resetView()">Home</button></div>
+        <div class="scenario"><p>A user reports "no internet." You open a command prompt on their machine.</p></div>
+        <div id="q4" class="question hidden"><h3>Question 4: Check IP Address</h3><p>What is the first command you type to check the user's IP configuration?</p><div class="answer-area"><input type="text" id="a4-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 4)"><button onclick="checkAnswer(4)">Submit</button><button class="hint-button" onclick="showHint(4)">Hint</button></div><div id="q4-feedback" class="feedback hidden"></div><div id="q4-hint" class="hint-text"><strong>Hint:</strong> This command displays the basic IP, Subnet, and Gateway configuration. (e.g., <code>ipconfig</code>)</div></div>
+        <div id="q5" class="question hidden"><h3>Question 5: Fix APIPA Address</h3><div class="scenario"><p><strong>Result:</strong> The IP address is <code>169.254.x.x</code>. This is an APIPA address. What two commands (separated by <code>&&</code>) can you run to force the computer to get a new IP from the DHCP server?</p></div><div class="answer-area"><input type="text" id="a5-input" placeholder="command1 && command2" onkeydown="handleInputKeypress(event, 5)"><button onclick="checkAnswer(5)">Submit</button><button class="hint-button" onclick="showHint(5)">Hint</button></div><div id="q5-feedback" class="feedback hidden"></div><div id="q5-hint" class="hint-text"><strong>Hint:</strong> You need to let go of the current IP address and then ask for a new one. (e.g., <code>ipconfig /...</code>)</div></div>
+        <div id="q6" class="question hidden"><h3>Question 6: Fix DNS Issue</h3><div class="scenario"><p><strong>Fix:</strong> The user now has a valid IP (<code>192.168.1.50</code>). They can ping <code>8.8.8.8</code> but cannot browse to <code>google.com</code>. What command will clear the local DNS cache?</p></div><div class="answer-area"><input type="text" id="a6-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 6)"><button onclick="checkAnswer(6)">Submit</button><button class="hint-button" onclick="showHint(6)">Hint</button></div><div id="q6-feedback" class="feedback hidden"></div><div id="q6-hint" class="hint-text"><strong>Hint:</strong> This is a switch for the `ipconfig` command. (e.g., <code>ipconfig /...</code>)</div></div>
+        <div id="scenario-b-complete" class="hidden scenario"><h3>Scenario B Complete! ✅</h3><h4>Summary of Actions:</h4><ul><li><b>Check IP:</b> Used <code>ipconfig</code> to identify the APIPA address.</li><li><b>Fix IP:</b> Used <code>ipconfig /release && ipconfig /renew</code> to get a valid IP.</li><li><b>Fix DNS:</b> Used <code>ipconfig /flushdns</code> to resolve the DNS issue.</li></ul><div style="display: flex; justify-content: space-between; margin-top: 20px;"><button class="home-button" onclick="resetView()">Home</button><button class="home-button" onclick="startScenario(7)">Next Scenario &rarr;</button></div></div>
+    </div>
+
+    <div id="scenario-c" class="hidden">
+        <div class="scenario-header"><h2>Scenario C: Win Disk Corruption 💾</h2><button class="home-button" onclick="resetView()">Home</button></div>
+        <div class="scenario"><p>A user's Windows PC is extremely slow and applications are crashing. You suspect file system corruption on the C: drive.</p></div>
+        <div id="q7" class="question hidden"><h3>Question 7: Check Disk</h3><p>What command will check the C: drive for file system errors and **fix them**? (This command will require a restart).</p><div class="answer-area"><input type="text" id="a7-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 7)"><button onclick="checkAnswer(7)">Submit</button><button class="hint-button" onclick="showHint(7)">Hint</button></div><div id="q7-feedback" class="feedback hidden"></div><div id="q7-hint" class="hint-text"><strong>Hint:</strong> The command is "Check Disk," and you need the switch for "fix." (e.g., <code>chkdsk c: /f</code> or <code>/r</code>)</div></div>
+        <div id="q8" class="question hidden"><h3>Question 8: Check System Files</h3><div class="scenario"><p><strong>Result:</strong> The disk check completes, but core OS functions (like the Start Menu) are still broken. What command will scan and repair protected system files?</p></div><div class="answer-area"><input type="text" id="a8-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 8)"><button onclick="checkAnswer(8)">Submit</button><button class="hint-button" onclick="showHint(8)">Hint</button></div><div id="q8-feedback" class="feedback hidden"></div><div id="q8-hint" class="hint-text"><strong>Hint:</strong> This is the System File Checker. (e.g., <code>sfc /...</code>)</div></div>
+        <div id="q9" class="question hidden"><h3>Question 9: Repair Windows Image</h3><div class="scenario"><p><strong>Result:</strong> SFC fails, stating it "found corrupt files but was unable to fix them." What is the *next* command you should use to repair the underlying Windows Component Store image?</p></div><div class="answer-area"><input type="text" id="a9-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 9)"><button onclick="checkAnswer(9)">Submit</button><button class="hint-button" onclick="showHint(9)">Hint</button></div><div id="q9-feedback" class="feedback hidden"></div><div id="q9-hint" class="hint-text"><strong>Hint:</strong> This utility is used for Deployment Image Servicing and Management. (e.g., <code>dism /online /...</code>)</div></div>
+        <div id="scenario-c-complete" class="hidden scenario"><h3>Scenario C Complete! ✅</h3><h4>Summary of Actions:</h4><ul><li><b>Check Disk:</b> Used <code>chkdsk /f</code> to fix file system errors.</li><li><b>Check System Files:</b> Used <code>sfc /scannow</code> to try and repair OS files.</li><li><b>Repair Image:</b> Used <code>dism</code> to repair the component store when SFC failed.</li></ul><div style="display: flex; justify-content: space-between; margin-top: 20px;"><button class="home-button" onclick="resetView()">Home</button><button class="home-button" onclick="startScenario(10)">Next Scenario &rarr;</button></div></div>
+    </div>
+
+    <div id="scenario-d" class="hidden">
+        <div class="scenario-header"><h2>Scenario D: Linux Permissions 🐧</h2><button class="home-button" onclick="resetView()">Home</button></div>
+        <div class="scenario"><p>A user on a Linux server cannot execute a script named `deploy.sh`.</p></div>
+        <div id="q10" class="question hidden"><h3>Question 10: View Permissions</h3><p>What command do you use to view the current permissions for `deploy.sh` in long format?</p><div class="answer-area"><input type="text" id="a10-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 10)"><button onclick="checkAnswer(10)">Submit</button><button class="hint-button" onclick="showHint(10)">Hint</button></div><div id="q10-feedback" class="feedback hidden"></div><div id="q10-hint" class="hint-text"><strong>Hint:</strong> The list command with the "long" flag. (e.g., <code>ls -l ...</code>)</div></div>
+        <div id="q11" class="question hidden"><h3>Question 11: Add Execute Permission</h3><div class="scenario"><p><strong>Result:</strong> The permissions are <code>-rw-r--r--</code>. What command will **add** the **execute** permission for the **user (owner)**?</p></div><div class="answer-area"><input type="text" id="a11-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 11)"><button onclick="checkAnswer(11)">Submit</button><button class="hint-button" onclick="showHint(11)">Hint</button></div><div id="q11-feedback" class="feedback hidden"></div><div id="q11-hint" class="hint-text"><strong>Hint:</strong> Use the "change mode" command with symbolic notation (u+x) or octal (744). (e.g., <code>chmod ...</code>)</div></div>
+        <div id="q12" class="question hidden"><h3>Question 12: Change Ownership</h3><div class="scenario"><p><strong>Fix:</strong> The user can now run the script. **New Task:** You now need to change the **owner** of the script to `jane` and the **group** to `devs`.</p></div><div class="answer-area"><input type="text" id="a12-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 12)"><button onclick="checkAnswer(12)">Submit</button><button class="hint-button" onclick="showHint(12)">Hint</button></div><div id="q12-feedback" class="feedback hidden"></div><div id="q12-hint" class="hint-text"><strong>Hint:</strong> Use the "change owner" command. (e.g., <code>chown ...</code>)</div></div>
+        <div id="scenario-d-complete" class="hidden scenario"><h3>Scenario D Complete! ✅</h3><h4>Summary of Actions:</h4><ul><li><b>View Permissions:</b> Used <code>ls -l deploy.sh</code> to see <code>-rw-r--r--</code>.</li><li><b>Add Execute:</b> Used <code>chmod u+x deploy.sh</code> (or <code>chmod 744</code>).</li><li><b>Change Owner:</b> Used <code>chown jane:devs deploy.sh</code>.</li></ul><div style="display: flex; justify-content: space-between; margin-top: 20px;"><button class="home-button" onclick="resetView()">Home</button><button class="home-button" onclick="startScenario(13)">Next Scenario &rarr;</button></div></div>
+    </div>
+
+    <div id="scenario-e" class="hidden">
+        <div class="scenario-header"><h2>Scenario E: Mac Disk Repair 🍏</h2><button class="home-button" onclick="resetView()">Home</button></div>
+        <div class="scenario"><p>A user's MacBook is failing to boot, stopping on a folder with a question mark. You've booted into macOS Recovery.</p></div>
+        <div id="q13" class="question hidden"><h3>Question 13: List Disks</h3><p>What command-line utility do you use to see all connected disks and their identifiers (e.g., `disk0s2`)?</p><div class="answer-area"><input type="text" id="a13-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 13)"><button onclick="checkAnswer(13)">Submit</button><button class="hint-button" onclick="showHint(13)">Hint</button></div><div id="q13-feedback" class="feedback hidden"></div><div id="q13-hint" class="hint-text"><strong>Hint:</strong> This is the "Disk Utility" command-line tool. (e.g., <code>diskutil ...</code>)</div></div>
+        <div id="q14" class="question hidden"><h3>Question 14: Verify Volume</h3><div class="scenario"><p><strong>Result:</strong> You see the main volume is <code>/dev/disk1s1</code>. What command will **check** this volume for errors?</p></div><div class="answer-area"><input type="text" id="a14-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 14)"><button onclick="checkAnswer(14)">Submit</button><button class="hint-button" onclick="showHint(14)">Hint</button></div><div id="q14-feedback" class="feedback hidden"></div><div id="q14-hint" class="hint-text"><strong>Hint:</strong> Use the `diskutil` command with the "verify" action. (e.g., <code>diskutil verifyVolume ...</code>)</div></div>
+        <div id="q15" class="question hidden"><h3>Question 15: Repair Volume</h3><div class="scenario"><p><strong>Result:</strong> The verification fails with errors. What command will attempt to **repair** the volume <code>/dev/disk1s1</code>?</p></div><div class="answer-area"><input type="text" id="a15-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 15)"><button onclick="checkAnswer(15)">Submit</button><button class="hint-button" onclick="showHint(15)">Hint</button></div><div id="q15-feedback" class="feedback hidden"></div><div id="q15-hint" class="hint-text"><strong>Hint:</strong> Use the `diskutil` command with the "repair" action. (e.g., <code>diskutil repairVolume ...</code>)</div></div>
+        <div id="scenario-e-complete" class="hidden scenario"><h3>Scenario E Complete! ✅</h3><h4>Summary of Actions:</h4><ul><li><b>List Disks:</b> Used <code>diskutil list</code>.</li><li><b>Verify Volume:</b> Used <code>diskutil verifyVolume /dev/disk1s1</code>.</li><li><b>Repair Volume:</b> Used <code>diskutil repairVolume /dev/disk1s1</code>.</li></ul><div style="display: flex; justify-content: space-between; margin-top: 20px;"><button class="home-button" onclick="resetView()">Home</button><button class="home-button" onclick="startScenario(16)">Next Scenario &rarr;</button></div></div>
+    </div>
+
+    <div id="scenario-f" class="hidden">
+        <div class="scenario-header"><h2>Scenario F: Mobile Network 📶</h2><button class="home-button" onclick="resetView()">Home</button></div>
+        <div class="scenario"><p>A user's Android phone suddenly has no Wi-Fi, Bluetooth, or Cellular service. All radios are offline.</p></div>
+        <div id="q16" class="question hidden"><h3>Question 16: Check Radio Status</h3><p>What is the *first* and *most likely* setting that was accidentally enabled to cause this?</p><div class="answer-area"><input type="text" id="a16-input" placeholder="Type the setting name..." onkeydown="handleInputKeypress(event, 16)"><button onclick="checkAnswer(16)">Submit</button><button class="hint-button" onclick="showHint(16)">Hint</button></div><div id="q16-feedback" class="feedback hidden"></div><div id="q16-hint" class="hint-text"><strong>Hint:</strong> This mode's icon is an airplane.</div></div>
+        <div id="q17" class="question hidden"><h3>Question 17: Basic Fix</h3><div class="scenario"><p><strong>Result:</strong> Airplane Mode is OFF, but the issue persists. What is the *next* troubleshooting step for any mobile device glitch?</p></div><div class="answer-area"><input type="text" id="a17-input" placeholder="Type the action..." onkeydown="handleInputKeypress(event, 17)"><button onclick="checkAnswer(17)">Submit</button><button class="hint-button" onclick="showHint(17)">Hint</button></div><div id="q17-feedback" class="feedback hidden"></div><div id="q17-hint" class="hint-text"><strong>Hint:</strong> "Have you tried turning it off and on again?" (e.g., <code>restart</code> or <code>reboot</code>)</div></div>
+        <div id="q18" class="question hidden"><h3>Question 18: Specific Fix</h3><div class="scenario"><p><strong>Result:</strong> A reboot doesn't help. The user can't connect to Wi-Fi. What is the *final* step to fix network issues without wiping the whole phone?</p></div><div class="answer-area"><input type="text" id="a18-input" placeholder="Type the action..." onkeydown="handleInputKeypress(event, 18)"><button onclick="checkAnswer(18)">Submit</button><button class="hint-button" onclick="showHint(18)">Hint</button></div><div id="q18-feedback" class="feedback hidden"></div><div id="q18-hint" class="hint-text"><strong>Hint:</strong> This action will erase all saved Wi-Fi passwords and Bluetooth pairings. (e.g., <code>reset network ...</code>)</div></div>
+        <div id="scenario-f-complete" class="hidden scenario"><h3>Scenario F Complete! ✅</h3><h4>Summary of Actions:</h4><ul><li><b>Check Radios:</b> Checked for <code>Airplane Mode</code>.</li><li><b>Basic Fix:</b> Performed a <code>Restart</code>.</li><li><b>Specific Fix:</b> Performed a <code>Reset Network Settings</code>.</li></ul><div style="display: flex; justify-content: space-between; margin-top: 20px;"><button class="home-button" onclick="resetView()">Home</button><button class="home-button" onclick="startScenario(19)">Next Scenario &rarr;</button></div></div>
+    </div>
+
+    <div id="scenario-g" class="hidden">
+        <div class="scenario-header"><h2>Scenario G: Linux Slowdown/Crash ⏳</h2><button class="home-button" onclick="resetView()">Home</button></div>
+        <div class="scenario"><p>A Linux server has become unresponsive. You suspect a rogue process is consuming 100% CPU.</p></div>
+        <div id="q19" class="question hidden"><h3>Question 19: View Processes</h3><p>What command-line tool shows you a real-time, updating list of all running processes, sorted by CPU usage?</p><div class="answer-area"><input type="text" id="a19-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 19)"><button onclick="checkAnswer(19)">Submit</button><button class="hint-button" onclick="showHint(19)">Hint</button></div><div id="q19-feedback" class="feedback hidden"></div><div id="q19-hint" class="hint-text"><strong>Hint:</strong> This tool is the Linux equivalent of the Task Manager's "Processes" tab. (e.g., <code>top</code> or <code>ps</code>)</div></div>
+        <div id="q20" class="question hidden"><h3>Question 20: Terminate Process</h3><div class="scenario"><p><strong>Result:</strong> You see a process with PID <code>12345</code> is using 99% CPU. What command do you use to terminate this process?</p></div><div class="answer-area"><input type="text" id="a20-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 20)"><button onclick="checkAnswer(20)">Submit</button><button class="hint-button" onclick="showHint(20)">Hint</button></div><div id="q20-feedback" class="feedback hidden"></div><div id="q20-hint" class="hint-text"><strong>Hint:</strong> This command sends a signal to a Process ID. (e.g., <code>kill ...</code>)</div></div>
+        <div id="q21" class="question hidden"><h3>Question 21: Check Logs</h3><div class="scenario"><p><strong>Fix:</strong> The server is stable. Now you must investigate the cause. What directory would you navigate to in order to find system and application logs?</p></div><div class="answer-area"><input type="text" id="a21-input" placeholder="Type the directory path..." onkeydown="handleInputKeypress(event, 21)"><button onclick="checkAnswer(21)">Submit</button><button class="hint-button" onclick="showHint(21)">Hint</button></div><div id="q21-feedback" class="feedback hidden"></div><div id="q21-hint" class="hint-text"><strong>Hint:</strong> This is the standard directory for log files in Linux. (e.g., <code>/var/...</code>)</div></div>
+        <div id="scenario-g-complete" class="hidden scenario"><h3>Scenario G Complete! ✅</h3><h4>Summary of Actions:</h4><ul><li><b>View Processes:</b> Used <code>top</code> to find the rogue process.</li><li><b>Terminate Process:</b> Used <code>kill 12345</code> to stop it.</li><li><b>Check Logs:</b> Navigated to <code>/var/log</code> to investigate.</li></ul><div style="display: flex; justify-content: space-between; margin-top: 20px;"><button class="home-button" onclick="resetView()">Home</button><button class="home-button" onclick="startScenario(22)">Next Scenario &rarr;</button></div></div>
+    </div>
+
+    <div id="scenario-h" class="hidden">
+        <div class="scenario-header"><h2>Scenario H: Win Corrupt Profile 👤</h2><button class="home-button" onclick="resetView()">Home</button></div>
+        <div class="scenario"><p>A user logs into their Windows machine and gets a "Temporary Profile." Their desktop and documents are gone.</p></div>
+        <div id="q22" class="question hidden"><h3>Question 22: Free Up Space (Preparation)</h3><p>Before fixing the profile, you want to clear out old files. What built-in Windows utility is used to remove temporary files?</p><div class="answer-area"><input type="text" id="a22-input" placeholder="Type the utility name..." onkeydown="handleInputKeypress(event, 22)"><button onclick="checkAnswer(22)">Submit</button><button class="hint-button" onclick="showHint(22)">Hint</button></div><div id="q22-feedback" class="feedback hidden"></div><div id="q22-hint"class="hint-text"><strong>Hint:</strong> Its executable is <code>cleanmgr.exe</code>. (e.g., <code>Disk ...</code>)</div></div>
+        <div id="q23" class="question hidden"><h3>Question 23: Fix Profile (Registry)</h3><div class="scenario"><p><strong>Fix:</strong> You've logged in as an Admin. You need to delete the corrupt profile's key (ending in .bak) from the profile list. What utility do you use to edit the Windows Registry?</p></div><div class="answer-area"><input type="text" id="a23-input" placeholder="Type the utility name..." onkeydown="handleInputKeypress(event, 23)"><button onclick="checkAnswer(23)">Submit</button><button class="hint-button" onclick="showHint(23)">Hint</button></div><div id="q23-feedback" class="feedback hidden"></div><div id="q23-hint" class="hint-text"><strong>Hint:</strong> The "Registry Editor." (e.g., <code>regedit</code>)</div></div>
+        <div id="q24" class="question hidden"><h3>Question 24: Final Step</h3><div class="scenario"><p><strong>Fix:</strong> You have renamed the user's folder (e.g., to <code>user.old</code>) and deleted the .bak registry key. What is the final step before having the user log in?</p></div><div class="answer-area"><input type="text" id="a24-input" placeholder="Type the action..." onkeydown="handleInputKeypress(event, 24)"><button onclick="checkAnswer(24)">Submit</button><button class="hint-button" onclick="showHint(24)">Hint</button></div><div id="q24-feedback" class="feedback hidden"></div><div id="q24-hint" class="hint-text"><strong>Hint:</strong> You must do this for the changes to take effect and for Windows to build a new profile. (e.g., <code>restart</code>)</div></div>
+        <div id="scenario-h-complete" class="hidden scenario"><h3>Scenario H Complete! ✅</h3><h4>Summary of Actions:</h4><ul><li><b>Prep:</b> Used <code>Disk Cleanup</code> (cleanmgr).</li><li><b>Fix Profile:</b> Used <code>regedit</code> to remove the corrupt .bak key.</li><li><b>Final Step:</b> <code>Restart</code> the computer so a new profile can be built.</li></ul><div style="display: flex; justify-content: space-between; margin-top: 20px;"><button class="home-button" onclick="resetView()">Home</button><button class="home-button" onclick="startScenario(25)">Next Scenario &rarr;</button></div></div>
+    </div>
+
+    <div id="scenario-i" class="hidden">
+        <div class="scenario-header"><h2>Scenario I: Mac Boot Issues 💻</h2><button class="home-button" onclick="resetView()">Home</button></div>
+        <div class="scenario"><p>A MacBook Pro is failing to boot. The user reports beeping sounds. You suspect a hardware or configuration issue.</p></div>
+        <div id="q25" class="question hidden"><h3>Question 25: Diagnostic Boot Mode</h3><p>What special boot mode for macOS will check the disk and load only essential kernel extensions to bypass bad drivers?</p><div class="answer-area"><input type="text" id="a25-input" placeholder="Type the boot mode..." onkeydown="handleInputKeypress(event, 25)"><button onclick="checkAnswer(25)">Submit</button><button class="hint-button" onclick="showHint(25)">Hint</button></div><div id="q25-feedback" class="feedback hidden"></div><div id="q25-hint" class="hint-text"><strong>Hint:</strong> You hold the Shift key during boot. (e.g., <code>Safe ...</code>)</div></div>
+        <div id="q26" class="question hidden"><h3>Question 26: Resetting Config Data</h3><div class="scenario"><p><strong>Result:</strong> Safe Boot fails. You suspect corrupted settings related to display, sound, or boot selection. What hardware-level reset clears this non-volatile RAM?</p></div><div class="answer-area"><input type="text" id="a26-input" placeholder="Type the reset name..." onkeydown="handleInputKeypress(event, 26)"><button onclick="checkAnswer(26)">Submit</button><button class="hint-button" onclick="showHint(26)">Hint</button></div><div id="q26-feedback" class="feedback hidden"></div><div id="q26-hint" class="hint-text"><strong>Hint:</strong> You hold Option + Command + P + R. (e.g., <code>NVRAM</code> or <code>PRAM</code>)</div></div>
+        <div id="q27" class="question hidden"><h3>Question 27: Resetting Power Controller</h3><div class="scenario"><p><strong>Result:</strong> The issue persists. The fans are also spinning at 100%. This suggests a hardware power management issue. What is the final hardware reset you can perform?</p></div><div class="answer-area"><input type="text" id="a27-input" placeholder="Type the reset name..." onkeydown="handleInputKeypress(event, 27)"><button onclick="checkAnswer(27)">Submit</button><button class="hint-button" onclick="showHint(27)">Hint</button></div><div id="q27-feedback" class="feedback hidden"></div><div id="q27-hint" class="hint-text"><strong>Hint:</strong> Resets the System Management Controller. (e.g., <code>SMC ...</code>)</div></div>
+        <div id="scenario-i-complete" class="hidden scenario"><h3>Scenario I Complete! ✅</h3><h4>Summary of Actions:</h4><ul><li><b>Diagnostic Mode:</b> Tried <code>Safe Boot</code>.</li><li><b>Config Reset:</b> Performed an <code>NVRAM Reset</code>.</li><li><b>Power Reset:</b> Performed an <code>SMC Reset</code>.</li></ul><div style="display: flex; justify-content: space-between; margin-top: 20px;"><button class="home-button" onclick="resetView()">Home</button><button class="home-button" onclick="startScenario(28)">Next Scenario &rarr;</button></div></div>
+    </div>
+
+    <div id="scenario-j" class="hidden">
+        <div class="scenario-header"><h2>Scenario J: Mobile App Issues 📱</h2><button class="home-button" onclick="resetView()">Home</button></div>
+        <div class="scenario"><p>A user's email app on their phone is crashing. They have already restarted the phone, but the app still won't open.</p></div>
+        <div id="q28" class="question hidden"><h3>Question 28: Stop the App</h3><p>What is the first step in troubleshooting a specific app (e.g., in Android's App Info settings)?</p><div class="answer-area"><input type="text" id="a28-input" placeholder="Type the action..." onkeydown="handleInputKeypress(event, 28)"><button onclick="checkAnswer(28)">Submit</button><button class="hint-button" onclick="showHint(28)">Hint</button></div><div id="q28-feedback" class="feedback hidden"></div><div id="q28-hint" class="hint-text"><strong>Hint:</strong> This terminates all the app's processes. (e.g., <code>Force ...</code>)</div></div>
+        <div id="q29" class="question hidden"><h3>Question 29: Clear Temp Files</h3><div class="scenario"><p><strong>Result:</strong> Forcing the app to stop doesn't fix it. What is the *next* step that will delete temporary files but **will not** delete the user's login or data?</p></div><div class="answer-area"><input type="text" id="a29-input" placeholder="Type the action..." onkeydown="handleInputKeypress(event, 29)"><button onclick="checkAnswer(29)">Submit</button><button class="hint-button" onclick="showHint(29)">Hint</button></div><div id="q29-feedback" class="feedback hidden"></div><div id="q29-hint" class="hint-text"><strong>Hint:</strong> <code>Clear ...</code></div></div>
+        <div id="q30" class="question hidden"><h3>Question 30: Clear All Data</h3><div class="scenario"><p><strong>Result:</strong> Clearing the cache also fails. What is the *last* step before uninstalling, which will delete all the user's data and settings for this app?</p></div><div class="answer-area"><input type="text" id="a30-input" placeholder="Type the action..." onkeydown="handleInputKeypress(event, 30)"><button onclick="checkAnswer(30)">Submit</button><button class="hint-button" onclick="showHint(30)">Hint</button></div><div id="q30-feedback" class="feedback hidden"></div><div id="q30-hint" class="hint-text"><strong>Hint:</strong> <code>Clear Storage</code> or <code>Clear ...</code></div></div>
+        <div id="scenario-j-complete" class="hidden scenario"><h3>Scenario J Complete! ✅</h3><h4>Summary of Actions:</h4><ul><li><b>Step 1:</b> <code>Force Stop</code> the application.</li><li><b>Step 2:</b> <code>Clear Cache</code> to remove temporary files.</li><li><b>Step 3:</b> <code>Clear Data</code> (or Clear Storage) to reset the app.</li></ul><div style="display: flex; justify-content: space-between; margin-top: 20px;"><button class="home-button" onclick="resetView()">Home</button><button class="home-button" onclick="startScenario(31)">Next Scenario &rarr;</button></div></div>
+    </div>
+
+    <div id="scenario-k" class="hidden">
+        <div class="scenario-header"><h2>Scenario K: Win Boot Repair 🛠️</h2><button class="home-button" onclick="resetView()">Home</button></div>
+        <div class="scenario"><p>A Windows PC fails to boot with the error "BOOTMGR is missing." You have booted into the Windows Recovery Environment command prompt.</p></div>
+        <div id="q31" class="question hidden"><h3>Question 31: Identify the Utility</h3><p>What is the primary command-line utility used to repair boot issues in the Windows RE?</p><div class="answer-area"><input type="text" id="a31-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 31)"><button onclick="checkAnswer(31)">Submit</button><button class="hint-button" onclick="showHint(31)">Hint</button></div><div id="q31-feedback" class="feedback hidden"></div><div id="q31-hint" class="hint-text"><strong>Hint:</strong> "Boot Recovery" (e.g., <code>bootrec</code>)</div></div>
+        <div id="q32" class="question hidden"><h3>Question 32: Fix the MBR</h3><div class="scenario"><p><strong>Result:</strong> You've identified the utility. What command (with switch) do you use to repair the Master Boot Record?</p></div><div class="answer-area"><input type="text" id="a32-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 32)"><button onclick="checkAnswer(32)">Submit</button><button class="hint-button" onclick="showHint(32)">Hint</button></div><div id="q32-feedback" class="feedback hidden"></div><div id="q32-hint" class="hint-text"><strong>Hint:</strong> <code>bootrec /...</code></div></div>
+        <div id="q33" class="question hidden"><h3>Question 33: Fix the BCD</h3><div class="scenario"><p><strong>Result:</strong> You fixed the MBR, but the error persists. What command (with switch) will scan for Windows installations and rebuild the Boot Configuration Data store?</p></div><div class="answer-area"><input type="text" id="a33-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 33)"><button onclick="checkAnswer(33)">Submit</button><button class="hint-button" onclick="showHint(33)">Hint</button></div><div id="q33-feedback" class="feedback hidden"></div><div id="q33-hint" class="hint-text"><strong>Hint:</strong> <code>bootrec /...</code></div></div>
+        <div id="scenario-k-complete" class="hidden scenario"><h3>Scenario K Complete! ✅</h3><h4>Summary of Actions:</h4><ul><li><b>Utility:</b> Identified <code>bootrec</code> as the correct tool.</li><li><b>Fix MBR:</b> Ran <code>bootrec /fixmbr</code>.</li><li><b>Fix BCD:</b> Ran <code>bootrec /rebuildbcd</code>.</li></ul><div style="display: flex; justify-content: space-between; margin-top: 20px;"><button class="home-button" onclick="resetView()">Home</button><button class="home-button" onclick="startScenario(34)">Next Scenario &rarr;</button></div></div>
+    </div>
+
+    <div id="scenario-l" class="hidden">
+        <div class="scenario-header"><h2>Scenario L: Network Latency 🌐</h2><button class="home-button" onclick="resetView()">Home</button></div>
+        <div class="scenario"><p>A user reports that accessing the company's internal web server is very slow, but other websites are fast. You suspect a routing issue.</p></div>
+        <div id="q34" class="question hidden"><h3>Question 34: Check Connections</h3><p>What command can you use to see all active network connections, their ports, and the foreign addresses they are connected to?</p><div class="answer-area"><input type="text" id="a34-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 34)"><button onclick="checkAnswer(34)">Submit</button><button class="hint-button" onclick="showHint(34)">Hint</button></div><div id="q34-feedback" class="feedback hidden"></div><div id="q34-hint" class="hint-text"><strong>Hint:</strong> "Network Statistics." Use the `-an` flags. (e.g., <code>netstat ...</code>)</div></div>
+        <div id="q35" class="question hidden"><h3>Question 35: Trace the Path</h3><div class="scenario"><p><strong>Result:</strong> You don't see any unusual connections. What command will show you every "hop" (router) between your PC and the slow server (<code>intranet.local</code>)?</p></div><div class="answer-area"><input type="text" id="a35-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 35)"><button onclick="checkAnswer(35)">Submit</button><button class="hint-button" onclick="showHint(35)">Hint</button></div><div id="q35-feedback" class="feedback hidden"></div><div id="q35-hint" class="hint-text"><strong>Hint:</strong> "Trace Route." (e.g., <code>tracert ...</code>)</div></div>
+        <div id="q36" class="question hidden"><h3>Question 36: Clear DNS Cache</h3><div class="scenario"><p><strong>Result:</strong> The trace shows a strange path! It's routing to an old, decommissioned server. You realize the local DNS cache is bad. What command flushes the DNS cache?</p></div><div class="answer-area"><input type="text" id="a36-input" placeholder="Type your command here..." onkeydown="handleInputKeypress(event, 36)"><button onclick="checkAnswer(36)">Submit</button><button class="hint-button" onclick="showHint(36)">Hint</button></div><div id="q36-feedback" class="feedback hidden"></div><div id="q36-hint" class="hint-text"><strong>Hint:</strong> An <code>ipconfig</code> switch. (e.g., <code>ipconfig /...</code>)</div></div>
+        <div id="scenario-l-complete" class="hidden scenario"><h3>Scenario L Complete! ✅</h3><h4>Summary of Actions:</h4><ul><li><b>Check Connections:</b> Used <code>netstat -an</code> to look for strange connections.</li><li><b>Trace Path:</b> Used <code>tracert intranet.local</code> to identify a bad route.</li><li><b>Fix DNS:</b> Used <code>ipconfig /flushdns</code> to clear the bad DNS entry.</li></ul><div style="display: flex; justify-content: space-between; margin-top: 20px;"><button class="home-button" onclick="resetView()">Home</button><button class="home-button" onclick="showFinal()">Finish &rarr;</button></div></div>
+    </div>
 
     <div id="final-result" class="hidden scenario">
         <div class="scenario-header">
@@ -138,11 +236,59 @@
 </div>
 
 <script>
+    // --- REFACTORED JAVASCRIPT ---
+
     // Answer key (flexible checking)
+    // Maps question number to its correct answers and the next element to show
     const answers = {
-        1: ["netsh interface", "get-netconnectionprofile"],
-        2: ["netsh"],
-        3: ["telnet", "test-netconnection"]
+        // Scenario A
+        1: { correct: ["netsh interface", "get-netconnectionprofile"], next: 'q2' },
+        2: { correct: ["netsh"], next: 'q3' },
+        3: { correct: ["telnet", "test-netconnection"], next: 'scenario-a-complete' },
+        // Scenario B
+        4: { correct: ["ipconfig"], next: 'q5' },
+        5: { correct: ["ipconfig /release", "ipconfig /renew"], next: 'q6' },
+        6: { correct: ["ipconfig /flushdns"], next: 'scenario-b-complete' },
+        // Scenario C
+        7: { correct: ["chkdsk c: /f", "chkdsk c: /r", "chkdsk /f", "chkdsk /r"], next: 'q8' },
+        8: { correct: ["sfc /scannow"], next: 'q9' },
+        9: { correct: ["dism", "restorehealth"], next: 'scenario-c-complete' },
+        // Scenario D
+        10: { correct: ["ls -l"], next: 'q11' },
+        11: { correct: ["chmod u+x", "chmod 744"], next: 'q12' },
+        12: { correct: ["chown jane:devs", "chown jane:devs"], next: 'scenario-d-complete' },
+        // Scenario E
+        13: { correct: ["diskutil list"], next: 'q14' },
+        14: { correct: ["diskutil verifyvolume"], next: 'q15' },
+        15: { correct: ["diskutil repairvolume"], next: 'scenario-e-complete' },
+        // Scenario F
+        16: { correct: ["airplane mode"], next: 'q17' },
+        17: { correct: ["restart", "reboot", "power cycle"], next: 'q18' },
+        18: { correct: ["reset network settings"], next: 'scenario-f-complete' },
+        // Scenario G
+        19: { correct: ["top", "ps"], next: 'q20' },
+        20: { correct: ["kill 12345", "kill -9 12345"], next: 'q21' },
+        21: { correct: ["/var/log", "cd /var/log"], next: 'scenario-g-complete' },
+        // Scenario H
+        22: { correct: ["cleanmgr", "disk cleanup"], next: 'q23' },
+        23: { correct: ["regedit", "registry editor"], next: 'q24' },
+        24: { correct: ["restart", "reboot"], next: 'scenario-h-complete' },
+        // Scenario I
+        25: { correct: ["safe boot", "safe mode"], next: 'q26' },
+        26: { correct: ["nvram reset", "pram reset"], next: 'q27' },
+        27: { correct: ["smc reset"], next: 'scenario-i-complete' },
+        // Scenario J
+        28: { correct: ["force stop"], next: 'q29' },
+        29: { correct: ["clear cache"], next: 'q30' },
+        30: { correct: ["clear data", "clear storage"], next: 'scenario-j-complete' },
+        // Scenario K
+        31: { correct: ["bootrec"], next: 'q32' },
+        32: { correct: ["bootrec /fixmbr"], next: 'q33' },
+        33: { correct: ["bootrec /rebuildbcd"], next: 'scenario-k-complete' },
+        // Scenario L
+        34: { correct: ["netstat -an", "netstat"], next: 'q35' },
+        35: { correct: ["tracert"], next: 'q36' },
+        36: { correct: ["ipconfig /flushdns"], next: 'scenario-l-complete' }
     };
 
     // Helper to get elements by ID
@@ -165,42 +311,64 @@
     // Function to reset the view back to the main menu
     function resetView() {
         // Hide all scenario containers
-        getEl('scenario-a').classList.add('hidden');
+        const scenarios = document.querySelectorAll('.container > div[id^="scenario-"]');
+        scenarios.forEach(s => s.classList.add('hidden'));
+        
         getEl('final-result').classList.add('hidden');
-        // (Add other scenario IDs here if they existed)
 
-        // Hide all question parts for scenario A
-        for (let i = 1; i <= 3; i++) {
-            getEl(`q${i}`).classList.add('hidden');
-            getEl(`q${i}-feedback`).classList.add('hidden');
-            getEl(`q${i}-hint`).style.display = 'none';
-            
-            // Re-enable input for a fresh start
-            const inputEl = getEl(`a${i}-input`);
-            if(inputEl) {
-                inputEl.disabled = false;
-                inputEl.value = '';
+        // Hide all question parts & reset inputs
+        for (let i = 1; i <= 36; i++) {
+            const qEl = getEl(`q${i}`);
+            if (qEl) {
+                qEl.classList.add('hidden');
+                getEl(`q${i}-feedback`).classList.add('hidden');
+                getEl(`q${i}-hint`).style.display = 'none';
+
+                const inputEl = getEl(`a${i}-input`);
+                if(inputEl) {
+                    inputEl.disabled = false;
+                    inputEl.value = '';
+                }
+                
+                // Find all buttons inside the answer-area and re-enable them
+                const answerAreaButtons = qEl.querySelectorAll('.answer-area button');
+                answerAreaButtons.forEach(btn => btn.disabled = false);
             }
         }
-        getEl('scenario-a-complete').classList.add('hidden');
         
         // Show the main selector
         getEl('scenario-selector').classList.remove('hidden');
     }
 
     // Function to start a scenario
-    function startScenario(startQuestionNum) {
+    function startScenario(startQNum) {
         getEl('scenario-selector').classList.add('hidden');
-
-        if (startQuestionNum === 1) { // This is Scenario A
-            getEl('scenario-a').classList.remove('hidden');
-            getEl('q1').classList.remove('hidden');
-            getEl('a1-input').focus();
-        } else {
-            // This handles clicks on Scenarios B-L
-            alert("DEBUG: This file is incomplete. The HTML for Scenarios B through L is missing, so they cannot be started.");
-            resetView();
+        
+        let scenarioId;
+        if (startQNum === 1) scenarioId = 'scenario-a';
+        else if (startQNum === 4) scenarioId = 'scenario-b';
+        else if (startQNum === 7) scenarioId = 'scenario-c';
+        else if (startQNum === 10) scenarioId = 'scenario-d';
+        else if (startQNum === 13) scenarioId = 'scenario-e';
+        else if (startQNum === 16) scenarioId = 'scenario-f';
+        else if (startQNum === 19) scenarioId = 'scenario-g';
+        else if (startQNum === 22) scenarioId = 'scenario-h';
+        else if (startQNum === 25) scenarioId = 'scenario-i';
+        else if (startQNum === 28) scenarioId = 'scenario-j';
+        else if (startQNum === 31) scenarioId = 'scenario-k';
+        else if (startQNum === 34) scenarioId = 'scenario-l';
+        
+        if (scenarioId) {
+            getEl(scenarioId).classList.remove('hidden');
+            getEl(`q${startQNum}`).classList.remove('hidden');
+            getEl(`a${startQNum}-input`).focus();
         }
+    }
+    
+    // Show the final completion screen
+    function showFinal() {
+        getEl('scenario-l').classList.add('hidden');
+        getEl('final-result').classList.remove('hidden');
     }
 
     // Function to check the answer
@@ -209,11 +377,13 @@
         const feedbackEl = getEl(`q${qNum}-feedback`);
         const userAnswer = inputEl.value.trim().toLowerCase();
         
-        const correctAnswers = answers[qNum];
+        const answerData = answers[qNum];
+        if (!answerData) return; // Exit if answer key is missing
+
         let isCorrect = false;
 
         // Flexible check: see if user's answer *contains* a correct command
-        for (const ans of correctAnswers) {
+        for (const ans of answerData.correct) {
             if (userAnswer.includes(ans)) {
                 isCorrect = true;
                 break;
@@ -221,23 +391,24 @@
         }
 
         if (isCorrect) {
-            feedbackEl.innerHTML = "<strong>Correct!</strong> Your command would provide the necessary info. Moving to the next step.";
+            feedbackEl.innerHTML = "<strong>Correct!</strong> Moving to the next step.";
             feedbackEl.className = "feedback correct";
+            
+            // Disable current question
             inputEl.disabled = true;
-            getEl(`q${qNum}`).querySelector('button').disabled = true; // Disable submit button
-            getEl(`q${qNum}`).querySelector('.hint-button').disabled = true; // Disable hint button
+            const answerAreaButtons = getEl(`q${qNum}`).querySelectorAll('.answer-area button');
+            answerAreaButtons.forEach(btn => btn.disabled = true);
 
-            // Move to next question or complete scenario
-            setTimeout(() => { // Add a short delay
-                getEl(`q${qNum}`).classList.add('hidden'); // Hide current question
-                const nextQNum = qNum + 1;
+            setTimeout(() => {
+                getEl(`q${qNum}`).classList.add('hidden');
+                const nextElId = answerData.next;
+                getEl(nextElId).classList.remove('hidden');
                 
-                if (getEl(`q${nextQNum}`)) {
-                    getEl(`q${nextQNum}`).classList.remove('hidden');
-                    getEl(`a${nextQNum}-input`).focus();
-                } else {
-                    // This is the last question for this scenario
-                    getEl('scenario-a-complete').classList.remove('hidden');
+                // Check if the next element is a question or a completion screen
+                if (nextElId.startsWith('q')) {
+                    // Focus the input of the next question
+                    const nextInput = getEl(`a${nextElId.substring(1)}-input`);
+                    if (nextInput) nextInput.focus();
                 }
             }, 1500); // 1.5 second delay
             
