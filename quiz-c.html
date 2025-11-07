@@ -4,51 +4,260 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professor Messer's CompTIA A+ Core 2 (220-1202) Practice Test C</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f4f7f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
-        #quiz-container { background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); width: 100%; max-width: 700px; overflow: hidden; position: relative; }
-        .home-link { position: absolute; top: 20px; left: 20px; color: white; text-decoration: none; font-weight: 500; background-color: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 6px; transition: background-color 0.2s; z-index: 10; }
-        .home-link:hover { background-color: rgba(0,0,0,0.4); }
-        #timer { position: absolute; top: 20px; right: 20px; background-color: rgba(0,0,0,0.2); color: white; padding: 5px 10px; border-radius: 6px; font-weight: 500; font-size: 1.1em; z-index: 10; }
-        #quiz-header { background-color: #4a90e2; color: white; padding: 20px; text-align: center; }
-        #quiz-header h1 { margin-bottom: 5px; font-size: 1.4em; padding-top: 30px; padding-left: 80px; padding-right: 80px; }
+        /* --- STYLES ADAPTED FROM INDEX.HTML --- */
+        :root {
+            --bg-gradient-start: #a8dadc;
+            --bg-gradient-end: #457b9d;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-light: #f1faee;
+            --text-dark: #1d3557;
+            --accent-primary: #e63946;
+            --accent-secondary: #f7b731; /* Yellow */
+            --shadow-color: rgba(0, 0, 0, 0.5); 
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            background-attachment: fixed; /* Keep background from scrolling */
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 40px 20px;
+            min-height: 100vh;
+            text-shadow: 0 1px 3px var(--shadow-color);
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        
+        .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.7; }
+        .shape-1 { width: 300px; height: 300px; top: 10%; left: 15%; background: linear-gradient(to right, #e63946, #f1faee); }
+        .shape-2 { width: 400px; height: 400px; bottom: 5%; right: 10%; background: linear-gradient(to right, #457b9d, #a8dadc); }
+
+        /* Updated quiz-container */
+        #quiz-container { 
+            background: var(--glass-bg);
+            box-shadow: 0 8px 32px 0 var(--shadow-color);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            width: 100%; 
+            max-width: 700px; 
+            overflow: hidden; 
+            position: relative; 
+            color: var(--text-light);
+        }
+
+        .home-link { 
+            position: absolute; 
+            top: 20px; 
+            left: 20px; 
+            color: var(--text-light); 
+            text-decoration: none; 
+            font-weight: 500; 
+            background: rgba(255,255,255,0.1); 
+            padding: 5px 10px; 
+            border-radius: 6px; 
+            transition: all 0.2s; 
+            z-index: 10; 
+        }
+        .home-link:hover { background-color: var(--text-light); color: var(--text-dark); }
+
+        #timer { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            background: rgba(0,0,0,0.2); 
+            color: var(--text-light); 
+            padding: 5px 10px; 
+            border-radius: 6px; 
+            font-weight: 500; 
+            font-size: 1.1em; 
+            z-index: 10; 
+        }
+
+        /* Updated quiz-header */
+        #quiz-header { 
+            color: var(--text-light); 
+            padding: 20px; 
+            text-align: center; 
+            padding-top: 50px; /* Make space for buttons */
+            padding-left: 80px; /* Match button spacing */
+            padding-right: 80px; /* Match button spacing */
+        }
+        #quiz-header h1 { margin-bottom: 5px; font-size: 1.4em; text-shadow: 0 1px 4px var(--shadow-color); }
         #creator-tag { margin-top: 5px; font-weight: 300; font-size: 0.9em; opacity: 0.9; }
+        
         #quiz-body { padding: 30px; }
         #question-text { font-size: 1.2em; font-weight: 500; margin-bottom: 20px; line-height: 1.5; white-space: pre-wrap; }
         #options-list { list-style: none; padding: 0; margin: 0; }
-        .option { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin-bottom: 10px; cursor: pointer; transition: background-color 0.2s, border-color 0.2s; }
-        .option:hover { background-color: #e9ecef; }
+
+        /* Updated option styles */
+        .option { 
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border); 
+            color: var(--text-light);
+            border-radius: 8px; 
+            padding: 15px; 
+            margin-bottom: 10px; 
+            cursor: pointer; 
+            transition: background-color 0.2s, border-color 0.2s; 
+        }
+        .option:hover { background-color: rgba(255, 255, 255, 0.2); }
         .option.no-click { pointer-events: none; }
         .option input { margin-right: 10px; }
-        .option.correct { background-color: #d4edda; border-color: #c3e6cb; color: #155724; font-weight: bold; }
-        .option.incorrect { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; font-weight: bold; }
-        #quiz-footer { padding: 20px 30px; border-top: 1px solid #e9ecef; display: flex; justify-content: space-between; align-items: center; }
+        .option label { display: block; cursor: pointer; } /* Make the whole label clickable */
+        
+        /* Keep clear correct/incorrect colors for readability */
+        .option.correct { 
+            background-color: #d4edda; 
+            border-color: #c3e6cb; 
+            color: #155724; 
+            font-weight: bold; 
+            text-shadow: none; /* Disable shadow on light bg */
+        }
+        .option.incorrect { 
+            background-color: #f8d7da; 
+            border-color: #f5c6cb; 
+            color: #721c24; /* Dark red text */
+            font-weight: bold; 
+            text-shadow: none; /* Disable shadow on light bg */
+        }
+
+        /* Updated quiz-footer */
+        #quiz-footer { 
+            padding: 20px 30px; 
+            border-top: 1px solid var(--glass-border); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
         #score-text { font-size: 1.1em; font-weight: bold; }
-        button { background-color: #4a90e2; color: white; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1em; cursor: pointer; transition: background-color 0.2s; }
-        button:hover { background-color: #357abd; }
-        button#next-btn, button#toggle-explanation-btn { background-color: #28a745; margin-left: 10px; }
-        button#next-btn:hover, button#toggle-explanation-btn:hover { background-color: #218838; }
+
+        /* Updated button styles */
+        button { 
+            background-color: var(--accent-secondary); /* Yellow */
+            color: var(--text-dark); /* Dark text */
+            border: none; 
+            border-radius: 8px; 
+            padding: 12px 24px; 
+            font-size: 1em; 
+            cursor: pointer; 
+            transition: transform 0.2s, background-color 0.2s; 
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            text-shadow: none;
+        }
+        button:hover { 
+            background-color: #f8c958; /* Lighter yellow */
+            transform: translateY(-2px);
+        }
+        
+        button#toggle-explanation-btn { 
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 1px solid var(--glass-border);
+            margin-left: 10px; 
+        }
+        button#toggle-explanation-btn:hover { 
+            background-color: rgba(255, 255, 255, 0.2); 
+            transform: none; /* Disable transform for this button */
+        }
+        
+        button#next-btn {
+            margin-left: 10px;
+        }
+
+        /* Updated setup screen */
         #setup-screen { padding: 40px; text-align: center; }
-        #setup-screen h2 { margin-top: 0; margin-bottom: 30px; }
-        .setup-option { margin-bottom: 25px; }
+        #setup-screen h2 { margin-top: 0; margin-bottom: 30px; color: var(--text-light); }
+        .setup-option { margin-bottom: 25px; color: var(--text-light); }
         .setup-option label { font-weight: 500; margin-right: 10px; }
-        select { padding: 5px; border-radius: 4px; border: 1px solid #ccc; }
-        .results-summary { text-align: center; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+        select { 
+            padding: 5px; 
+            border-radius: 4px; 
+            border: 1px solid #ccc; 
+            font-family: "Poppins", sans-serif;
+            background: #fff;
+            color: var(--text-dark);
+            text-shadow: none;
+        }
+
+        /* Updated results screen */
+        .results-summary { 
+            text-align: center; 
+            padding-bottom: 20px; 
+            border-bottom: 1px solid var(--glass-border); 
+        }
+        .results-summary h2 { color: var(--text-light); }
+        
         .results-list { padding: 0 30px 30px; max-height: 60vh; overflow-y: auto; }
-        .result-item { border-bottom: 1px solid #eee; padding: 20px 0; }
+        .result-item { 
+            border-bottom: 1px solid var(--glass-border); 
+            padding: 20px 0; 
+        }
         .result-question { font-weight: bold; font-size: 1.1em; margin-bottom: 15px; }
         .result-options { list-style: none; padding: 0; }
-        .result-option { padding: 8px; border-radius: 6px; margin-bottom: 5px; }
-        .result-option.correct-answer { background-color: #d4edda; }
-        .result-option.incorrect-answer { background-color: #f8d7da; text-decoration: line-through; }
-        .result-explanation { margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-radius: 6px; font-size: 0.9em; }
-        #explanation-container { margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px; }
+        .result-option { 
+            padding: 8px; 
+            border-radius: 6px; 
+            margin-bottom: 5px; 
+            background: rgba(0,0,0,0.1);
+            color: #eee;
+        }
+        /* Keep clear colors */
+        .result-option.correct-answer { 
+            background-color: #d4edda; 
+            color: #155724; 
+            text-shadow: none;
+            font-weight: 500;
+        }
+        .result-option.incorrect-answer { 
+            background-color: #f8d7da; 
+            color: #721c24; 
+            text-decoration: line-through; 
+            text-shadow: none;
+            font-weight: 500;
+        }
+        
+        /* Updated explanation box style */
+        .result-explanation { 
+            margin-top: 15px; 
+            padding: 15px; 
+            background: rgba(0,0,0,0.2); 
+            border-radius: 6px; 
+            font-size: 0.9em; 
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* Updated explanation container */
+        #explanation-container { 
+            margin-top: 20px; 
+            border-top: 1px solid var(--glass-border); 
+            padding-top: 20px; 
+        }
         .explanation-title { font-size: 1.1em; font-weight: bold; margin-bottom: 10px; }
         .explanation-text p { margin: 0 0 10px; line-height: 1.6; }
-        .explanation-text strong { color: #0056b3; }
+        .explanation-text strong { color: var(--accent-secondary); } /* Yellow highlight */
     </style>
 </head>
 <body>
+    <div class="background-container">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
     <div id="quiz-container">
         </div>
 
@@ -122,7 +331,7 @@
             {"id": "C70", "question": "A user would like to use their smartphone for a payment during checkout at the grocery store, but the smartphone is not seen by the payment system. Which of the following would be the BEST next troubleshooting step?", "options": {"A": "Restart the smartphone", "B": "Replace the battery", "C": "Perform a factory reset", "D": "Enable Wi-Fi"}, "answer": "A", "explanation": {"correct": "A. Restart the smartphone", "A": "Correct. Tap-to-pay functionality relies on the NFC (Near Field Communication) radio. Like any other component, the NFC service can sometimes experience a temporary glitch. A simple restart of the smartphone is the easiest and most effective first step to reset the hardware and software services.", "B": "Incorrect. The battery is unrelated to NFC functionality.", "C": "Incorrect. A factory reset is a drastic last resort.", "D": "Incorrect. NFC is separate from Wi-Fi."}},
             {"id": "C71", "question": "A technician is troubleshooting a problem with user’s laptop and very high utilization. The technician views Task Manager and confirms the CPU is operating at 100% utilization, and the network connection is also saturated. Which of the following would be the most likely reason for these issues?", "options": {"A": "System RAM is faulty", "B": "User has not properly authenticated", "C": "Laptop is part of a DDoS attack", "D": "Network adapter is faulty"}, "answer": "C", "explanation": {"correct": "C. Laptop is part of a DDoS attack", "A": "Incorrect. Faulty RAM would more likely cause system crashes (BSODs).", "B": "Incorrect. Authentication issues are unrelated to resource utilization.", "C": "Correct. The combination of maxed-out CPU and network traffic is a classic symptom of a computer that has been infected with botnet malware. The malware is using all available system resources to send a flood of traffic as part of a Distributed Denial of Service (DDoS) attack.", "D": "Incorrect. A faulty network adapter would likely cause a loss of connectivity, not saturated use."}},
             {"id": "C72", "question": "A user's smartphone app shows a splash screen but disappears after a few seconds. Which of the following would be the best way for a technician to view logs and memory statistics for the app?", "options": {"A": "Developer mode", "B": "Cloud storage", "C": "Jailbreaking", "D": "Application spoofing"}, "answer": "A", "explanation": {"correct": "A. Developer mode", "A": "Correct. Both Android and iOS have a hidden Developer Mode (or Developer Options) that can be enabled. This mode provides access to advanced troubleshooting tools, including detailed process statistics, memory usage information, and access to system logs (like logcat on Android) that can help diagnose why an application is crashing.", "B": "Incorrect. Cloud storage is for backups and files.", "C": "Incorrect. Jailbreaking is the process of removing OS restrictions and is not a standard troubleshooting technique.", "D": "Incorrect. Application spoofing is a security attack."}},
-            {"id": "C73", "question": "A company has created an internal process to ensure all PII is encrypted. Which of the following would be the most likely reason for adding this additional security?", "options": {"A": "Helps prevent identity theft", "B": "Improves application performance", "C": "Allows customer data to be easily deleted", "D": "Uses less storage space"}, "answer": "A", "explanation": {"correct": "A. Helps prevent identity theft", "A": "Correct. PII (Personally Identifiable Information) is any data that can be used to identify an individual. If this data is stolen in a breach, it can be used for identity theft. Encrypting PII ensures that even if the data is stolen, it is unreadable and useless to the attacker, thus protecting customers.", "B": "Incorrect. Encryption adds processing overhead and decreases performance.", "C": "Incorrect. Encryption does not make data easier to delete.", "D": "Incorrect. Encrypted data can sometimes take up slightly more storage space."}},
+            {"id":"C73", "question": "A company has created an internal process to ensure all PII is encrypted. Which of the following would be the most likely reason for adding this additional security?", "options": {"A": "Helps prevent identity theft", "B": "Improves application performance", "C": "Allows customer data to be easily deleted", "D": "Uses less storage space"}, "answer": "A", "explanation": {"correct": "A. Helps prevent identity theft", "A": "Correct. PII (Personally Identifiable Information) is any data that can be used to identify an individual. If this data is stolen in a breach, it can be used for identity theft. Encrypting PII ensures that even if the data is stolen, it is unreadable and useless to the attacker, thus protecting customers.", "B": "Incorrect. Encryption adds processing overhead and decreases performance.", "C": "Incorrect. Encryption does not make data easier to delete.", "D": "Incorrect. Encrypted data can sometimes take up slightly more storage space."}},
             {"id": "C74", "question": "A system administrator is installing a file server into the corporate data center. Which of the following would be the best way to improve security of the file sharing service? (Select TWO)", "options": {"A": "Enable a BIOS user password", "B": "Connect the server to a wireless network", "C": "Limit the number of concurrent connections", "D": "Disable guest account", "E": "Enable file storage quotas", "F": "Enable password complexity"}, "answer": ["D", "F"], "explanation": {"correct": "D & F. Disabling the highly-permissive guest account and enforcing strong, complex passwords for all other users are two fundamental security best practices for any server.", "A": "Incorrect. A BIOS password secures the boot process but not the file sharing service.", "B": "Incorrect. Connecting a server to a wireless network is generally less secure than a wired connection.", "C": "Incorrect. This is more of a performance tuning setting than a security one.", "D": "Correct. The guest account is a well-known, low-security account that should always be disabled on a server.", "E": "Incorrect. Quotas are for managing storage space, not security.", "F": "Correct. Enforcing password complexity through Group Policy makes user accounts much harder to compromise through brute-force attacks."}},
             {"id": "C75", "question": "A user has purchased a computer which uses a 32-bit version of an operating system. Which of the following would be the maximum amount of RAM supported in this OS?", "options": {"A": "32 GB", "B": "2 TB", "C": "512 GB", "D": "128 GB", "E": "4 GB", "F": "16 GB"}, "answer": "E", "explanation": {"correct": "E. 4 GB", "A": "Incorrect. Requires a 64-bit OS.", "B": "Incorrect. This relates to disk size, not RAM.", "C": "Incorrect. Requires a 64-bit OS.", "D": "Incorrect. Requires a 64-bit OS.", "E": "Correct. A 32-bit operating system can address a maximum of 2^32 memory addresses, which equates to 4 Gigabytes (GB) of RAM.", "F": "Incorrect. Requires a 64-bit OS."}},
             {"id": "C76", "question": "A financial services company is upgrading the storage drives in their SAN. The security administrator would like to permanently disable the drive and guarantee the data on the drives could not be recovered. Which of the following methods would be the best way to accomplish this goal?", "options": {"A": "Standard format", "B": "Full disk encryption", "C": "Shredder", "D": "Delete the master boot record"}, "answer": "C", "explanation": {"correct": "C. Shredder", "A": "Incorrect. A standard format can still be recovered with forensic tools.", "B": "Incorrect. Encryption protects the data, but does not destroy it.", "C": "Correct. For highly sensitive financial data, the only method that guarantees 100% data destruction is physical destruction. A shredder grinds the drive platters into tiny, unrecoverable pieces.", "D": "Incorrect. This leaves all of the data on the drive intact."}},
@@ -217,7 +426,7 @@
                     </div>
                 </div>
             `;
-            document.getElementById('submit-btn').addEventListener('click', checkAnswer);
+            document.getElementById('submit-btn').addEventListener('click', () => checkAnswer(false));
             loadQuiz();
         }
 
@@ -232,7 +441,11 @@
                 timerEl.textContent = `${mins}:${secs}`;
                 if (timeInSeconds <= 0) {
                     clearInterval(timerInterval);
-                    showResults();
+                    timerEl.textContent = "0:00";
+                    if (!answerSubmitted) {
+                        checkAnswer(true); // Auto-submit on time-out
+                        showResults();
+                    }
                 }
                 timeInSeconds--;
             }, 1000);
@@ -252,7 +465,7 @@
             for (const key in currentQuestion.options) {
                 const option = document.createElement('li');
                 option.classList.add('option');
-                option.innerHTML = `<input type="${inputType}" name="option" id="${key}" value="${key}"><label for="${key}">${key}. ${currentQuestion.options[key]}</label>`;
+                option.innerHTML = `<label for="${key}"><input type="${inputType}" name="option" id="${key}" value="${key}">${key}. ${currentQuestion.options[key]}</label>`;
                 optionsListEl.appendChild(option);
             }
             
@@ -260,14 +473,14 @@
             if (explanationContainer) explanationContainer.style.display = 'none';
 
             document.getElementById('footer-buttons').innerHTML = '<button id="submit-btn">Submit Answer</button>';
-            document.getElementById('submit-btn').addEventListener('click', checkAnswer);
+            document.getElementById('submit-btn').addEventListener('click', () => checkAnswer(false));
         }
 
-        function checkAnswer() {
+        function checkAnswer(isTimeOut = false) {
             if (answerSubmitted) return;
 
             const selectedOptionInputs = document.querySelectorAll('input[name="option"]:checked');
-            if (selectedOptionInputs.length === 0) {
+            if (selectedOptionInputs.length === 0 && !isTimeOut) {
                 alert('Please select an answer!');
                 return;
             }
@@ -278,9 +491,13 @@
             let isCorrect = false;
 
             if (Array.isArray(correctAnswer)) {
-                isCorrect = selectedAnswers.length === correctAnswer.length && selectedAnswers.every(answer => correctAnswer.includes(answer));
+                // Check if the selected answers match the correct answers exactly
+                isCorrect = selectedAnswers.length === correctAnswer.length && 
+                            selectedAnswers.every(answer => correctAnswer.includes(answer)) && 
+                            correctAnswer.every(answer => selectedAnswers.includes(answer));
             } else {
-                isCorrect = selectedAnswers[0] === correctAnswer;
+                // Handle single-answer questions
+                isCorrect = selectedAnswers.length === 1 && selectedAnswers[0] === correctAnswer;
             }
 
             userAnswers.push({ question: quizData[currentQuestionIndex], userAnswer: selectedAnswers, isCorrect: isCorrect });
@@ -306,25 +523,27 @@
 
             showExplanation();
             
-            const footerButtons = document.getElementById('footer-buttons');
-            let nextButtonHTML = '';
-            if (currentQuestionIndex < quizData.length - 1) {
-                nextButtonHTML = `<button id="next-btn">Next Question</button>`;
-            } else {
-                nextButtonHTML = `<button id="next-btn">Finish Quiz</button>`;
-            }
-            
-            footerButtons.innerHTML = `<button id="toggle-explanation-btn">Show Explanation</button>${nextButtonHTML}`;
-            
-            document.getElementById('toggle-explanation-btn').addEventListener('click', toggleExplanation);
-            document.getElementById('next-btn').addEventListener('click', () => {
+            if(!isTimeOut) {
+                const footerButtons = document.getElementById('footer-buttons');
+                let nextButtonHTML = '';
                 if (currentQuestionIndex < quizData.length - 1) {
-                    currentQuestionIndex++;
-                    loadQuiz();
+                    nextButtonHTML = `<button id="next-btn">Next Question</button>`;
                 } else {
-                    showResults();
+                    nextButtonHTML = `<button id="next-btn">Finish Quiz</button>`;
                 }
-            });
+                
+                footerButtons.innerHTML = `<button id="toggle-explanation-btn">Show Explanation</button>${nextButtonHTML}`;
+                
+                document.getElementById('toggle-explanation-btn').addEventListener('click', toggleExplanation);
+                document.getElementById('next-btn').addEventListener('click', () => {
+                    if (currentQuestionIndex < quizData.length - 1) {
+                        currentQuestionIndex++;
+                        loadQuiz();
+                    } else {
+                        showResults();
+                    }
+                });
+            }
         }
         
         function showExplanation() {
@@ -377,7 +596,7 @@
                     let className = 'result-option';
                     const correctAnswer = question.answer;
                     const isCorrectAnswer = Array.isArray(correctAnswer) ? correctAnswer.includes(key) : key === correctAnswer;
-                    const isUserAnswer = Array.isArray(answer.userAnswer) ? answer.userAnswer.includes(key) : key === answer.userAnswer;
+                    const isUserAnswer = Array.isArray(answer.userAnswer) ? answer.userAnswer.includes(key) : key === answer.userAnswer; // Fixed this line
 
                     if (isCorrectAnswer) {
                         className += ' correct-answer';

@@ -4,51 +4,260 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professor Messer's CompTIA A+ Core 2 (220-1202) Practice Test B</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f4f7f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
-        #quiz-container { background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); width: 100%; max-width: 700px; overflow: hidden; position: relative; }
-        .home-link { position: absolute; top: 20px; left: 20px; color: white; text-decoration: none; font-weight: 500; background-color: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 6px; transition: background-color 0.2s; z-index: 10; }
-        .home-link:hover { background-color: rgba(0,0,0,0.4); }
-        #timer { position: absolute; top: 20px; right: 20px; background-color: rgba(0,0,0,0.2); color: white; padding: 5px 10px; border-radius: 6px; font-weight: 500; font-size: 1.1em; z-index: 10; }
-        #quiz-header { background-color: #4a90e2; color: white; padding: 20px; text-align: center; }
-        #quiz-header h1 { margin-bottom: 5px; font-size: 1.4em; padding-top: 30px; padding-left: 80px; padding-right: 80px; }
+        /* --- STYLES ADAPTED FROM INDEX.HTML --- */
+        :root {
+            --bg-gradient-start: #a8dadc;
+            --bg-gradient-end: #457b9d;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-light: #f1faee;
+            --text-dark: #1d3557;
+            --accent-primary: #e63946;
+            --accent-secondary: #f7b731; /* Yellow */
+            --shadow-color: rgba(0, 0, 0, 0.5); 
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            background-attachment: fixed; /* Keep background from scrolling */
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 40px 20px;
+            min-height: 100vh;
+            text-shadow: 0 1px 3px var(--shadow-color);
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        
+        .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.7; }
+        .shape-1 { width: 300px; height: 300px; top: 10%; left: 15%; background: linear-gradient(to right, #e63946, #f1faee); }
+        .shape-2 { width: 400px; height: 400px; bottom: 5%; right: 10%; background: linear-gradient(to right, #457b9d, #a8dadc); }
+
+        /* Updated quiz-container */
+        #quiz-container { 
+            background: var(--glass-bg);
+            box-shadow: 0 8px 32px 0 var(--shadow-color);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            width: 100%; 
+            max-width: 700px; 
+            overflow: hidden; 
+            position: relative; 
+            color: var(--text-light);
+        }
+
+        .home-link { 
+            position: absolute; 
+            top: 20px; 
+            left: 20px; 
+            color: var(--text-light); 
+            text-decoration: none; 
+            font-weight: 500; 
+            background: rgba(255,255,255,0.1); 
+            padding: 5px 10px; 
+            border-radius: 6px; 
+            transition: all 0.2s; 
+            z-index: 10; 
+        }
+        .home-link:hover { background-color: var(--text-light); color: var(--text-dark); }
+
+        #timer { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            background: rgba(0,0,0,0.2); 
+            color: var(--text-light); 
+            padding: 5px 10px; 
+            border-radius: 6px; 
+            font-weight: 500; 
+            font-size: 1.1em; 
+            z-index: 10; 
+        }
+
+        /* Updated quiz-header */
+        #quiz-header { 
+            color: var(--text-light); 
+            padding: 20px; 
+            text-align: center; 
+            padding-top: 50px; /* Make space for buttons */
+            padding-left: 80px; /* Match button spacing */
+            padding-right: 80px; /* Match button spacing */
+        }
+        #quiz-header h1 { margin-bottom: 5px; font-size: 1.4em; text-shadow: 0 1px 4px var(--shadow-color); }
         #creator-tag { margin-top: 5px; font-weight: 300; font-size: 0.9em; opacity: 0.9; }
+        
         #quiz-body { padding: 30px; }
         #question-text { font-size: 1.2em; font-weight: 500; margin-bottom: 20px; line-height: 1.5; white-space: pre-wrap; }
         #options-list { list-style: none; padding: 0; margin: 0; }
-        .option { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin-bottom: 10px; cursor: pointer; transition: background-color 0.2s, border-color 0.2s; }
-        .option:hover { background-color: #e9ecef; }
+
+        /* Updated option styles */
+        .option { 
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border); 
+            color: var(--text-light);
+            border-radius: 8px; 
+            padding: 15px; 
+            margin-bottom: 10px; 
+            cursor: pointer; 
+            transition: background-color 0.2s, border-color 0.2s; 
+        }
+        .option:hover { background-color: rgba(255, 255, 255, 0.2); }
         .option.no-click { pointer-events: none; }
         .option input { margin-right: 10px; }
-        .option.correct { background-color: #d4edda; border-color: #c3e6cb; color: #155724; font-weight: bold; }
-        .option.incorrect { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; font-weight: bold; }
-        #quiz-footer { padding: 20px 30px; border-top: 1px solid #e9ecef; display: flex; justify-content: space-between; align-items: center; }
+        .option label { display: block; cursor: pointer; } /* Make the whole label clickable */
+        
+        /* Keep clear correct/incorrect colors for readability */
+        .option.correct { 
+            background-color: #d4edda; 
+            border-color: #c3e6cb; 
+            color: #155724; 
+            font-weight: bold; 
+            text-shadow: none; /* Disable shadow on light bg */
+        }
+        .option.incorrect { 
+            background-color: #f8d7da; 
+            border-color: #f5c6cb; 
+            color: #721c24; /* Dark red text */
+            font-weight: bold; 
+            text-shadow: none; /* Disable shadow on light bg */
+        }
+
+        /* Updated quiz-footer */
+        #quiz-footer { 
+            padding: 20px 30px; 
+            border-top: 1px solid var(--glass-border); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
         #score-text { font-size: 1.1em; font-weight: bold; }
-        button { background-color: #4a90e2; color: white; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1em; cursor: pointer; transition: background-color 0.2s; }
-        button:hover { background-color: #357abd; }
-        button#next-btn, button#toggle-explanation-btn { background-color: #28a745; margin-left: 10px; }
-        button#next-btn:hover, button#toggle-explanation-btn:hover { background-color: #218838; }
+
+        /* Updated button styles */
+        button { 
+            background-color: var(--accent-secondary); /* Yellow */
+            color: var(--text-dark); /* Dark text */
+            border: none; 
+            border-radius: 8px; 
+            padding: 12px 24px; 
+            font-size: 1em; 
+            cursor: pointer; 
+            transition: transform 0.2s, background-color 0.2s; 
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            text-shadow: none;
+        }
+        button:hover { 
+            background-color: #f8c958; /* Lighter yellow */
+            transform: translateY(-2px);
+        }
+        
+        button#toggle-explanation-btn { 
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 1px solid var(--glass-border);
+            margin-left: 10px; 
+        }
+        button#toggle-explanation-btn:hover { 
+            background-color: rgba(255, 255, 255, 0.2); 
+            transform: none; /* Disable transform for this button */
+        }
+        
+        button#next-btn {
+            margin-left: 10px;
+        }
+
+        /* Updated setup screen */
         #setup-screen { padding: 40px; text-align: center; }
-        #setup-screen h2 { margin-top: 0; margin-bottom: 30px; }
-        .setup-option { margin-bottom: 25px; }
+        #setup-screen h2 { margin-top: 0; margin-bottom: 30px; color: var(--text-light); }
+        .setup-option { margin-bottom: 25px; color: var(--text-light); }
         .setup-option label { font-weight: 500; margin-right: 10px; }
-        select { padding: 5px; border-radius: 4px; border: 1px solid #ccc; }
-        .results-summary { text-align: center; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+        select { 
+            padding: 5px; 
+            border-radius: 4px; 
+            border: 1px solid #ccc; 
+            font-family: "Poppins", sans-serif;
+            background: #fff;
+            color: var(--text-dark);
+            text-shadow: none;
+        }
+
+        /* Updated results screen */
+        .results-summary { 
+            text-align: center; 
+            padding-bottom: 20px; 
+            border-bottom: 1px solid var(--glass-border); 
+        }
+        .results-summary h2 { color: var(--text-light); }
+        
         .results-list { padding: 0 30px 30px; max-height: 60vh; overflow-y: auto; }
-        .result-item { border-bottom: 1px solid #eee; padding: 20px 0; }
+        .result-item { 
+            border-bottom: 1px solid var(--glass-border); 
+            padding: 20px 0; 
+        }
         .result-question { font-weight: bold; font-size: 1.1em; margin-bottom: 15px; }
         .result-options { list-style: none; padding: 0; }
-        .result-option { padding: 8px; border-radius: 6px; margin-bottom: 5px; }
-        .result-option.correct-answer { background-color: #d4edda; }
-        .result-option.incorrect-answer { background-color: #f8d7da; text-decoration: line-through; }
-        .result-explanation { margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-radius: 6px; font-size: 0.9em; }
-        #explanation-container { margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px; }
+        .result-option { 
+            padding: 8px; 
+            border-radius: 6px; 
+            margin-bottom: 5px; 
+            background: rgba(0,0,0,0.1);
+            color: #eee;
+        }
+        /* Keep clear colors */
+        .result-option.correct-answer { 
+            background-color: #d4edda; 
+            color: #155724; 
+            text-shadow: none;
+            font-weight: 500;
+        }
+        .result-option.incorrect-answer { 
+            background-color: #f8d7da; 
+            color: #721c24; 
+            text-decoration: line-through; 
+            text-shadow: none;
+            font-weight: 500;
+        }
+        
+        /* Updated explanation box style */
+        .result-explanation { 
+            margin-top: 15px; 
+            padding: 15px; 
+            background: rgba(0,0,0,0.2); 
+            border-radius: 6px; 
+            font-size: 0.9em; 
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* Updated explanation container */
+        #explanation-container { 
+            margin-top: 20px; 
+            border-top: 1px solid var(--glass-border); 
+            padding-top: 20px; 
+        }
         .explanation-title { font-size: 1.1em; font-weight: bold; margin-bottom: 10px; }
         .explanation-text p { margin: 0 0 10px; line-height: 1.6; }
-        .explanation-text strong { color: #0056b3; }
+        .explanation-text strong { color: var(--accent-secondary); } /* Yellow highlight */
     </style>
 </head>
 <body>
+    <div class="background-container">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
     <div id="quiz-container">
         </div>
 
@@ -86,7 +295,7 @@
             {"id": "B34", "question": "A user is receiving alerts on their desktop computer stating, 'Access to this PC has been blocked for security reasons.' The alert asks the user to call a phone number to get the system unlocked. Which of the following would be the best next step?", "options": {"A": "Update the desktop computer operating system", "B": "Check the certificate of the corporate web server", "C": "Restart the desktop computer", "D": "Run an anti-malware utility"}, "answer": "D", "explanation": {"correct": "D. Run an anti-malware utility", "A": "Incorrect. An OS update will not remove malware.", "B": "Incorrect. This issue is on the local PC, not a web server.", "C": "Incorrect. A restart is unlikely to remove persistent malware.", "D": "Correct. This is a classic example of scareware or ransomware. The message is fake and designed to trick the user into calling a fraudulent number. The system is infected with malware, and the correct response is to run a reputable anti-malware utility to scan for and remove the threat."}},
             {"id": "B35", "question": "A system administrator has inadvertently installed a Trojan horse which has deleted a number of files. The administrator was logged in with an account that was a member of the Domain Admins group. Which of the following would limit the scope of future exploits?", "options": {"A": "Require multi-factor authentication", "B": "Disable all guest accounts", "C": "Modify the default permissions", "D": "Configure full disk encryption"}, "answer": "C", "explanation": {"correct": "C. Modify the default permissions", "A": "Incorrect. MFA protects against unauthorized logins, but not against actions taken by an already logged-in administrator.", "B": "Incorrect. Guest accounts are not relevant here.", "C": "Correct. The issue was that the administrator was using a highly privileged account for daily tasks. The principle of least privilege dictates that users should only have the minimum permissions necessary. By modifying permissions and using a standard user account for daily work (and only elevating to administrator when needed), the scope of damage from malware is significantly reduced.", "D": "Incorrect. Encryption protects data at rest but does not stop malware from deleting files."}},
             {"id": "B36", "question": "A technician has created a Windows image which can be used across all of the computers in a test lab. Which of the following would be the best way to deploy these images?", "options": {"A": "Clean install", "B": "Remote network installation", "C": "Repair installation", "D": "Bootable USB"}, "answer": "B", "explanation": {"correct": "B. Remote network installation", "A": "Incorrect. This is an installation type, not a deployment method.", "B": "Correct. To deploy a single image to multiple computers efficiently, a remote network installation is the best method. Using technologies like PXE booting and a deployment server (e.g., Windows Deployment Services), the technician can install the image on many machines simultaneously over the network.", "C": "Incorrect. A repair installation fixes an existing OS.", "D": "Incorrect. Using a USB for each machine would be slow and inefficient compared to a network deployment."}},
-            {"id": "B37", "question": "Which of the following Windows Share permissions has the priority when assigning access on a mapped drive?", "options": {"A": "Allow", "B": "Full control", "C": "List folder contents", "D": "Deny"}, "answer": "D", "explanation": {"correct": "D. Deny", "A": "Incorrect. 'Allow' is the default, but 'Deny' overrides it.", "B": "Incorrect. Full control is an 'Allow' permission.", "C": "Incorrect. This is an 'Allow' permission.", "D": "Correct. In the Windows permission model, an explicit 'Deny' permission always takes precedence. If a user is a member of one group that is allowed access and another group that is denied access, the 'Deny' permission will win and access will be blocked."}},
+            {"id": "B37", "question": "Which of the following Windows Share permissions has the priority when assigning access on a mapped drive?", "options": {"A": "Allow", "B": "Full control", "C": "List folder contents", "D": "Deny"}, "answer": "D", "explanation": {"correct": "D. Deny", "A": "Incorrect. 'Allow' is the default, but 'Deny' overrides it.", "B": "Incorrect. Full control is an 'Allow' permission.", "C": "Incorrect. This is an 'Allow' permission.", "D": "Correct. In the Windows permission model, an explicit 'DenY' permission always takes precedence. If a user is a member of one group that is allowed access and another group that is denied access, the 'Deny' permission will win and access will be blocked."}},
             {"id": "B38", "question": "A data center manager would like to ensure any potential power fault on a server would not be harmful to employees. Which of the following would be the best choice for this requirement?", "options": {"A": "Electrical ground", "B": "Battery backup", "C": "Air filter mask", "D": "ESD mat"}, "answer": "A", "explanation": {"correct": "A. Electrical ground", "A": "Correct. A proper electrical ground is a fundamental safety feature. It provides a safe path for stray electrical current to travel to the earth in the event of a short circuit or fault. This prevents the metal chassis of the server from becoming energized and posing a severe electrical shock hazard to personnel.", "B": "Incorrect. A battery backup (UPS) provides power continuity, not protection from electrical faults.", "C": "Incorrect. An air filter mask is for respiratory protection.", "D": "Incorrect. An ESD mat protects equipment from static, not people from power faults."}},
             {"id": "B39", "question": "A user in the shipping department has received a call from someone claiming to be from the IT Help Desk. The caller states they need the user’s password to perform an urgent security update. Which of the following would describe this situation?", "options": {"A": "Denial of service", "B": "Social engineering", "C": "Brute force", "D": "Shoulder surfing"}, "answer": "B", "explanation": {"correct": "B. Social engineering", "A": "Incorrect. A denial of service attack aims to make a service unavailable.", "B": "Correct. Social engineering is the art of manipulating people into divulging confidential information or performing actions they shouldn't. This scenario, where an attacker creates a pretext (urgent update) to trick a user into giving up their password, is a classic example of social engineering.", "C": "Incorrect. A brute force attack is an automated attempt to guess a password.", "D": "Incorrect. Shoulder surfing is directly observing someone as they type in their password."}},
             {"id": "B40", "question": "A desktop administrator has just removed malware from a user’s desktop computer. The administrator has already scheduled future anti-virus scans. Which of the following should be the next step in the removal process?", "options": {"A": "Enable System Restore", "B": "Educate the end-user", "C": "Quarantine the computer", "D": "Boot to Safe Mode"}, "answer": "A", "explanation": {"correct": "A. Enable System Restore", "A": "Correct. According to the CompTIA 7-step malware removal process, after remediating the system and scheduling future scans/updates, the next step is to re-enable System Restore and create a new, clean restore point. This is done after the old, potentially infected restore points were deleted by disabling the feature earlier in the process.", "B": "Incorrect. Educating the end-user is the final step in the process.", "C": "Incorrect. Quarantining is the first step.", "D": "Incorrect. Booting to Safe Mode is a troubleshooting technique, not a post-remediation step."}},
@@ -125,10 +334,10 @@
             {"id": "B73", "question": "A system administrator is installing a SOHO network of five Windows computers. The computers need to share files and printers without a centralized server. Which of the following would be the best way to provide this functionality?", "options": {"A": "Domain", "B": "Proxy server", "C": "Workgroup", "D": "Remote Desktop"}, "answer": "C", "explanation": {"correct": "C. Workgroup", "A": "Incorrect. A domain requires a central server (a domain controller) for authentication.", "B": "Incorrect. A proxy server is an intermediary for web traffic.", "C": "Correct. A Workgroup is the peer-to-peer networking model used in Windows for small networks without a central server. Each computer maintains its own local user accounts, but they can share files and printers with each other across the network.", "D": "Incorrect. Remote Desktop is for remote control, not file sharing."}},
             {"id": "B74", "question": "An employee used their tablet to take pictures of the company's newest product. Those pictures were posted on an industry rumor website, even though the employee states they never shared them. Which of the following should be evaluated as the MOST likely security concern?", "options": {"A": "Cloud storage", "B": "USB flash drive use", "C": "Application updates", "D": "Deleted email messages"}, "answer": "A", "explanation": {"correct": "A. Cloud storage", "A": "Correct. Most modern mobile devices are configured by default to automatically sync photos and videos to a personal cloud storage account (like iCloud Photos or Google Photos). It is very likely the employee's tablet automatically uploaded the sensitive product photos to their personal cloud account, which may have been compromised or inadvertently shared.", "B": "Incorrect. This would require a manual action to transfer the photos.", "C": "Incorrect. App updates are not related to photo sharing.", "D": "Incorrect. This is not related to photos taken on a tablet."}},
             {"id": "B75", "question": "A manufacturing company in the United States sells monthly subscriptions from their website. Which of the following regulated data types would be the MOST important to manage?", "options": {"A": "Personal government-issued information", "B": "Credit card transactions", "C": "Healthcare data", "D": "Software license terms"}, "answer": "B", "explanation": {"correct": "B. Credit card transactions", "A": "Incorrect. The company is not likely collecting government ID info like social security numbers.", "B": "Correct. Any organization that accepts, processes, stores, or transmits credit card information must comply with the Payment Card Industry Data Security Standard (PCI DSS). This is a strict set of security standards for handling this type of regulated data.", "C": "Incorrect. This is not a healthcare company, so HIPAA regulations for PHI do not apply.", "D": "Incorrect. License terms are a legal matter, but not a regulated data type."}},
-            {"id": "B76", "question": "A user is traveling to a conference, and they would like to be sure any messages sent from their phone during the event remain private. The conference provides an open, public Wi-Fi network. Which of the following should be configured on this user’s phone?", "options": {"A": "VPN", "B": "Strong password", "C": "Network-based firewall", "D": "Multi-factor authentication"}, "answer": "A", "explanation": {"correct": "A. VPN", "A": "Correct. An open, public Wi-Fi network is inherently insecure and subject to eavesdropping. A VPN (Virtual Private Network) creates a secure, encrypted tunnel between the user's phone and a trusted VPN server. All internet traffic is routed through this tunnel, protecting it from being intercepted on the local public network.", "B": "Incorrect. A strong password protects the device itself, not the data in transit.", "C": "Incorrect. A network-based firewall is part of the network infrastructure, not something the user configures on their phone.", "D": "Incorrect. MFA protects logins, not network traffic."}},
+            {"id": "B76", "question": "A user is traveling to a conference, and they would like to be sure any messages sent from their phone during the event remain private. The conference provides an open, public Wi-Fi network. Which of the following should be configured on this user’s phone?", "options": {"A": "VPN", "B": "Strong password", "C": "Network-based firewall", "D": "Multi-factor authentication"}, "answer": "A", "explanation": {"correct": "A. VPN", "A": "Correct. An open, public Wi-Fi network is inherently insecure and subject to eavesdropping. A VPN (Virtual Private Network) creates a secure, encrypted tunnel between the user's phone and a trusted VPN server. All internet traffic is routed through this tunnel, protecting it from being intercepted on the local public network.", "B": "Incorrect. A strong password protects the device itself, not the data in transit.", "C": "Incorrect. A network-based firewall is part of the network infrastructure, not something the user configes on their phone.", "D": "Incorrect. MFA protects logins, not network traffic."}},
             {"id": "B77", "question": "Last week, a computer on the manufacturing floor was upgraded from 8 GB of RAM to 16 GB. Since the upgrade, the system has rebooted itself randomly. Which of the following would be the best next troubleshooting step?", "options": {"A": "Run Windows Update", "B": "Perform a hardware diagnostic", "C": "Upgrade the BIOS to the latest version", "D": "Replace the storage drive"}, "answer": "B", "explanation": {"correct": "B. Perform a hardware diagnostic", "A": "Incorrect. This is a software solution for a problem that is very likely hardware-related.", "B": "Correct. When system instability (like random reboots) begins immediately after a hardware change, the new hardware is the most likely culprit. A hardware diagnostic, specifically a memory test (like Windows Memory Diagnostic), should be run to check if the new RAM modules are faulty or incompatible.", "C": "Incorrect. A BIOS update is a possible fix but testing the hardware itself should come first.", "D": "Incorrect. The storage drive is not related to the recent RAM upgrade."}},
             {"id": "B78", "question": "A server administrator has configured an automated process to backup VM snapshots each evening to a tape library. How can the administrator confirm these backups will be useful when a server recovery is needed?", "options": {"A": "Send the backups to an off-site facility", "B": "Connect the tape drives to a battery backup", "C": "Create separate file-level backups", "D": "Perform occasional recovery tests"}, "answer": "D", "explanation": {"correct": "D. Perform occasional recovery tests", "A": "Incorrect. Off-site storage is a best practice for disaster recovery, but it doesn't validate the data's integrity.", "B": "Incorrect. A UPS is important for power continuity but doesn't test the backups.", "C": "Incorrect. This creates a different type of backup but doesn't validate the primary one.", "D": "Correct. A backup process is not complete until the restore process has been validated. The only way to be certain that a backup is viable and can be successfully restored is to periodically perform test restores in a non-production environment."}},
-            {"id": "B79", "question": "A system administrator needs to configure a laptop to support inbound Remote Desktop services. The administrator needs to enable the service and configure the firewall. Which of these Control Panel features provides access to these settings?", "options": {"A": "Internet Options", "B": "Devices and Printers", "C": "Network and Sharing Center", "D": "System"}, "answer": "D", "explanation": {"correct": "D. System", "A": "Incorrect. Internet Options is for configuring browser settings.", "B": "Incorrect. Devices and Printers is for managing peripherals.", "C": "Incorrect. Network and Sharing Center is for configuring network adapters and connection settings.", "D": "Correct. The settings to enable or disable Remote Desktop are found within the System Properties window, which can be accessed through the System applet in the Control Panel. Enabling the feature also automatically configures the necessary Windows Firewall exceptions."}},
+            {"id": "B79", "question": "A system administrator needs to configure a laptop to support inbound Remote Desktop services. The administrator needs to enable the service and configure the firewall. Which of these Control Panel features provides access to these settings?", "options": {"A": "Internet Options", "B": "Devices and Printers", "C": "Network and Sharing Center", "D": "System"}, "answer": "D", "explanation": {"correct": "D. System", "A": "Incorrect. Internet Options is for configuring browser settings.", "B": "Incorrect. Devices and Printers is for managing peripherals.", "C": "Incorrect. Network and Sharing Center is for configuring network adapters and connection settings.", "D": "Correct. The settings to enable or disable Remote Desktop are found within the System Properties window, which can be accessed through the System applet in the Control Panel. Enabling the feature also automatically configes the necessary Windows Firewall exceptions."}},
             {"id": "B80", "question": "An Android phone user is traveling internationally and would like to avoid overage charges from their cellular provider. Which of the following would be the best way to control data access?", "options": {"A": "Install a VPN client", "B": "Remove all apps with high data requirements", "C": "Enable data usage notifications", "D": "Connect exclusively through a cellular hotspot"}, "answer": "C", "explanation": {"correct": "C. Enable data usage notifications", "A": "Incorrect. A VPN encrypts data but does not reduce the amount of data used.", "B": "Incorrect. This is impractical and doesn't provide fine-grained control.", "C": "Correct. Android has built-in data usage controls that allow a user to monitor their consumption, set a warning threshold, and even set a hard limit that will automatically disable cellular data when reached. This is the most effective way to actively manage data use and prevent overage charges.", "D": "Incorrect. A cellular hotspot uses the same cellular data and would not prevent overages."}},
             {"id": "B81", "question": "A technician is upgrading the motherboard in a server. Which of the following should be the first task when beginning this upgrade?", "options": {"A": "Wear safety goggles", "B": "Connect an ESD strap", "C": "Remove any motherboard batteries", "D": "Disconnect from all power sources"}, "answer": "D", "explanation": {"correct": "D. Disconnect from all power sources", "A": "Incorrect. Safety goggles are generally not required for this task.", "B": "Incorrect. Connecting an ESD strap is a critical step, but it must be done after the power is off.", "C": "Incorrect. The CMOS battery should be removed after the motherboard is out, if needed.", "D": "Correct. The absolute first step before working inside any computer or server is to ensure personal safety and protect the components by completely powering down the device and unplugging all power cables from the power supplies."}},
             {"id": "B82", "question": "A system administrator is installing a new video editing application on a user’s workstation from a USB flash drive. During the installation, the installation process fails due to lack of available drive space. Which of the following would be the best way to complete the installation process?", "options": {"A": "Use a share drive for the installation source", "B": "Compress the installation files", "C": "Install the application to a network share", "D": "Manually copy the installation files to the application directory"}, "answer": "C", "explanation": {"correct": "C. Install the application to a network share", "A": "Incorrect. The source of the files doesn't change the lack of space on the destination drive.", "B": "Incorrect. Installation files are already compressed; this wouldn't help.", "C": "Correct. If the local drive is full, many application installers provide a 'Custom' installation option that allows the user to change the installation path. For large applications, installing them to a secondary local drive or a fast network share can be a valid solution.", "D": "Incorrect. Manually copying files will not properly install the application, which needs to create registry entries and other system modifications."}},
@@ -218,7 +427,7 @@
                     </div>
                 </div>
             `;
-            document.getElementById('submit-btn').addEventListener('click', checkAnswer);
+            document.getElementById('submit-btn').addEventListener('click', () => checkAnswer(false));
             loadQuiz();
         }
 
@@ -231,9 +440,13 @@
                 let secs = timeInSeconds % 60;
                 secs = secs < 10 ? '0' + secs : secs;
                 timerEl.textContent = `${mins}:${secs}`;
-                if (timeInSeconds < 0) {
+                if (timeInSeconds <= 0) { 
                     clearInterval(timerInterval);
-                    showResults();
+                    timerEl.textContent = "0:00";
+                    if (!answerSubmitted) { 
+                        checkAnswer(true); // Pass flag to indicate time-out
+                        showResults(); // Go to results after auto-submitting
+                    }
                 }
                 timeInSeconds--;
             }, 1000);
@@ -250,7 +463,7 @@
             for (const key in currentQuestion.options) {
                 const option = document.createElement('li');
                 option.classList.add('option');
-                option.innerHTML = `<input type="radio" name="option" id="${key}" value="${key}"><label for="${key}">${key}. ${currentQuestion.options[key]}</label>`;
+                option.innerHTML = `<label for="${key}"><input type="radio" name="option" id="${key}" value="${key}">${key}. ${currentQuestion.options[key]}</label>`;
                 optionsListEl.appendChild(option);
             }
             
@@ -258,22 +471,33 @@
             if (explanationContainer) explanationContainer.style.display = 'none';
 
             document.getElementById('footer-buttons').innerHTML = '<button id="submit-btn">Submit Answer</button>';
-            document.getElementById('submit-btn').addEventListener('click', checkAnswer);
+            document.getElementById('submit-btn').addEventListener('click', () => checkAnswer(false));
         }
 
-        function checkAnswer() {
+        function checkAnswer(isTimeOut = false) {
             if (answerSubmitted) return;
             const selectedOptionInput = document.querySelector('input[name="option"]:checked');
-            if (!selectedOptionInput) {
+            
+            if (!selectedOptionInput && !isTimeOut) {
                 alert('Please select an answer!');
                 return;
             }
+            
             answerSubmitted = true;
-            const selectedAnswer = selectedOptionInput.value;
-            const correctAnswer = quizData[currentQuestionIndex].answer;
-            const isCorrect = Array.isArray(correctAnswer) ? correctAnswer.includes(selectedAnswer) : selectedAnswer === correctAnswer;
+            let selectedAnswer = null;
+            let isCorrect = false;
 
-            userAnswers.push({ question: quizData[currentQuestionIndex], userAnswer: selectedAnswer, isCorrect: isCorrect });
+            if (selectedOptionInput) {
+                selectedAnswer = selectedOptionInput.value;
+                const correctAnswer = quizData[currentQuestionIndex].answer;
+                isCorrect = Array.isArray(correctAnswer) ? correctAnswer.includes(selectedAnswer) : selectedAnswer === correctAnswer;
+            }
+
+            userAnswers.push({ 
+                question: quizData[currentQuestionIndex], 
+                userAnswer: selectedAnswer, 
+                isCorrect: isCorrect 
+            });
 
             if (isCorrect) {
                 score++;
@@ -281,10 +505,14 @@
             document.getElementById('score-text').innerText = `Score: ${score}`;
             
             const options = document.querySelectorAll('.option');
+            const correctAnswer = quizData[currentQuestionIndex].answer;
+            
             options.forEach(option => {
                 option.classList.add('no-click');
                 const input = option.querySelector('input');
-                if ((Array.isArray(correctAnswer) && correctAnswer.includes(input.value)) || input.value === correctAnswer) {
+                const isCorrectAnswer = Array.isArray(correctAnswer) ? correctAnswer.includes(input.value) : input.value === correctAnswer;
+
+                if (isCorrectAnswer) {
                     option.classList.add('correct');
                 } else if (input.value === selectedAnswer) {
                     option.classList.add('incorrect');
@@ -293,25 +521,28 @@
 
             showExplanation();
             
-            const footerButtons = document.getElementById('footer-buttons');
-            let nextButtonHTML = '';
-            if (currentQuestionIndex < quizData.length - 1) {
-                nextButtonHTML = `<button id="next-btn">Next Question</button>`;
-            } else {
-                nextButtonHTML = `<button id="next-btn">Finish Quiz</button>`;
-            }
-            
-            footerButtons.innerHTML = `<button id="toggle-explanation-btn">Show Explanation</button>${nextButtonHTML}`;
-            
-            document.getElementById('toggle-explanation-btn').addEventListener('click', toggleExplanation);
-            document.getElementById('next-btn').addEventListener('click', () => {
+            // Only update buttons if it's not a timeout (to avoid errors)
+            if (!isTimeOut) {
+                const footerButtons = document.getElementById('footer-buttons');
+                let nextButtonHTML = '';
                 if (currentQuestionIndex < quizData.length - 1) {
-                    currentQuestionIndex++;
-                    loadQuiz();
+                    nextButtonHTML = `<button id="next-btn">Next Question</button>`;
                 } else {
-                    showResults();
+                    nextButtonHTML = `<button id="next-btn">Finish Quiz</button>`;
                 }
-            });
+                
+                footerButtons.innerHTML = `<button id="toggle-explanation-btn">Show Explanation</button>${nextButtonHTML}`;
+                
+                document.getElementById('toggle-explanation-btn').addEventListener('click', toggleExplanation);
+                document.getElementById('next-btn').addEventListener('click', () => {
+                    if (currentQuestionIndex < quizData.length - 1) {
+                        currentQuestionIndex++;
+                        loadQuiz();
+                    } else {
+                        showResults();
+                    }
+                });
+            }
         }
 
         function showExplanation() {
@@ -355,6 +586,8 @@
 
             userAnswers.forEach((answer, index) => {
                 const question = answer.question;
+                const correctAnswer = question.answer;
+                
                 resultsHTML += `
                     <div class="result-item">
                         <p class="result-question">${index + 1}. ${question.question}</p>
@@ -362,7 +595,6 @@
                 `;
                 for(const key in question.options) {
                     let className = 'result-option';
-                    const correctAnswer = question.answer;
                     const isCorrectAnswer = Array.isArray(correctAnswer) ? correctAnswer.includes(key) : key === correctAnswer;
                     
                     if (isCorrectAnswer) {
@@ -372,10 +604,14 @@
                     }
                     resultsHTML += `<li class="${className}">${key}. ${question.options[key]}</li>`;
                 }
+                
+                // Find the first correct key to show its explanation
+                const firstCorrectKey = Array.isArray(correctAnswer) ? correctAnswer[0] : correctAnswer;
+                
                 resultsHTML += `
                         </ul>
                         <div class="result-explanation">
-                            <p><strong>Explanation:</strong> ${question.explanation[question.answer[0]]}</p>
+                            <p><strong>Explanation:</strong> ${question.explanation[firstCorrectKey]}</p>
                         </div>
                     </div>
                 `;
