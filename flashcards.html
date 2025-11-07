@@ -17,7 +17,6 @@
             overflow: hidden;
             padding: 40px 20px;
             color: #fff;
-            /* DEBUG FIX: Added text-shadow for global readability */
             text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
         .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
@@ -38,12 +37,34 @@
             text-align: center;
         }
 
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            text-align: left;
+            margin-bottom: 20px;
+        }
         .header-section h1 {
             font-size: 2em;
             margin-bottom: 5px;
             text-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
-        .header-section p { font-weight: 300; margin-bottom: 20px; }
+        .header-section p { font-weight: 300; }
+        
+        .home-button {
+            padding: 12px 25px; border: none; border-radius: 50px; background: #e63946;
+            color: #fff; font-weight: bold; cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+            text-shadow: none;
+            text-decoration: none;
+            font-size: 0.9em;
+            white-space: nowrap; /* Prevent text wrap */
+        }
+        .home-button:hover {
+            background: #457b9d; transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
 
         .flashcard-container {
             perspective: 1200px;
@@ -79,9 +100,18 @@
             text-shadow: none; /* Text is on a solid background, no shadow needed */
         }
         .flashcard-back h3 { font-size: 1.6em; margin-bottom: 15px; color: #1d3557; }
+        .flashcard-back p { font-size: 1.1em; } /* Slightly larger text */
+        .flashcard-back code { 
+            background-color: rgba(0,0,0,0.1); 
+            padding: 2px 5px; 
+            border-radius: 4px;
+            font-family: "Courier New", Courier, monospace;
+            font-weight: 600;
+        }
 
         .controls {
             display: flex; justify-content: space-between; align-items: center; width: 100%;
+            gap: 15px; /* Add gap for new button */
         }
         .control-button {
             padding: 12px 25px; border: none; border-radius: 50px; background: #e63946;
@@ -94,19 +124,21 @@
             background: #457b9d; transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
         }
         .control-button:disabled { background-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); cursor: not-allowed; }
-        .progress-text { font-weight: 500; font-size: 1.1em; }
-
-        .home-link {
-            display: inline-block;
-            margin-top: 30px;
-            color: #fff;
-            text-decoration: none;
-            padding: 5px 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
+        
+        /* New Shuffle Button Style */
+        #shuffle-btn {
+            background-color: #f7b731; /* Yellow */
+            color: #1d3557; /* Dark text */
         }
-        .home-link:hover { color: #457b9d; background: #f1faee; text-shadow: none; }
+        #shuffle-btn:hover:not(:disabled) {
+            background-color: #f8c958; /* Lighter yellow */
+            transform: translateY(-2px);
+        }
+
+        .progress-text { font-weight: 500; font-size: 1.1em; }
+        
+        /* Hide the old home link at the bottom */
+        .home-link { display: none; }
     </style>
 </head>
 <body>
@@ -117,8 +149,10 @@
 
     <div class="main-wrapper">
         <div class="header-section">
-            <h1>A+ Core 2 Terminology Drill</h1>
-            <p>Click the card to reveal the definition. Use the navigation buttons to track your progress.</p>
+            <div> <h1>A+ Core 2 Terminology Drill</h1>
+                <p>Click the card to reveal the definition. Use the navigation buttons to track your progress.</p>
+            </div>
+            <a href="index.html" class="home-button">🏠 Home Menu</a>
         </div>
 
         <div class="flashcard-container">
@@ -130,6 +164,7 @@
 
         <div class="controls">
             <button id="prev-btn" class="control-button" disabled>← Previous</button>
+            <button id="shuffle-btn" class="control-button">Shuffle 🔀</button>
             <span id="progress-indicator" class="progress-text">Card 1 of N</span>
             <button id="next-btn" class="control-button">Next →</button>
         </div>
@@ -138,7 +173,7 @@
     </div>
 
     <script>
-        const flashcardsData = [
+        let flashcardsData = [
             // Domain 1: Operating Systems (20 cards)
             { term: "chkdsk /r", definition: "Windows command that locates bad sectors on a disk and attempts to recover readable information (implies /f). Requires a restart." },
             { term: "SFC /scannow", definition: "System File Checker. A Windows command that scans integrity of all protected system files and replaces incorrect versions with correct Microsoft versions." },
@@ -179,7 +214,7 @@
             { term: "Malware Removal Process Step 3", definition: "Disable System Restore (in Windows) and schedule scans." },
             { term: "Malware Removal Process Step 4", definition: "Remediate the infected system (update, scan, removal)." },
             { term: "Malware Removal Process Step 5", definition: "Enable System Restore and create a new restore point." },
-            { term: "Malware Removal Process Step 6", "definition": "Educate the end user." },
+            { term: "Malware Removal Process Step 6", definition: "Educate the end user." },
             { term: "BSOD (Blue Screen of Death)", definition: "A full-screen error message in Windows indicating a critical system crash (Stop Error)." },
             { term: "Safe Mode", definition: "A Windows diagnostic startup mode that loads the OS with only a minimal set of drivers and services." },
             { term: "Command: 'dism'", definition: "Deployment Image Servicing and Management. Windows command-line tool used to service a Windows image, including system repair." },
@@ -195,7 +230,66 @@
             { term: "AUP (Acceptable Use Policy)", definition: "Document outlining rules for how an organization's resources (internet, email, computers) should be used." },
             { term: "PII (Personally Identifiable Information)", definition: "Information that can be used to distinguish or trace an individual's identity (e.g., name, SSN, biometric data)." },
             { term: "Communication: Tone", definition: "The attitude conveyed in communication, which should remain positive, non-judgemental, and professional during technical support." },
-            { term: "Communication: Etiquette", definition: "The customary code of polite behavior in a technical support setting (e.g., active listening, managing expectations, avoiding jargon)." }
+            { term: "Communication: Etiquette", definition: "The customary code of polite behavior in a technical support setting (e.g., active listening, managing expectations, avoiding jargon)." },
+
+            // --- 50 NEW CARDS ---
+            // Domain 1: Operating Systems (15 New)
+            { term: "msinfo32", definition: "Windows utility (System Information) that provides a comprehensive view of system hardware, components, and software." },
+            { term: "dxdiag", definition: "DirectX Diagnostic Tool. A Windows utility used to troubleshoot video and sound card hardware and driver issues." },
+            { term: "gpupdate /force", definition: "Windows command that forces a client to immediately check for and apply any new or changed Group Policy settings." },
+            { term: "gpresult /r", definition: "Windows command to display the Resultant Set of Policy (RSoP) for a user and computer, showing which GPOs are applied." },
+            { term: "format", definition: "Windows command that prepares a disk partition to be used by an operating system by creating a new file system." },
+            { term: "bootrec /fixmbr", definition: "A Windows recovery command that repairs a corrupted Master Boot Record (MBR)." },
+            { term: "bootrec /rebuildbcd", definition: "A Windows recovery command that scans all disks for Windows installations and rebuilds the Boot Configuration Data (BCD) store." },
+            { term: "Time Machine", definition: "The built-in backup and restore utility for macOS, which creates incremental, hourly backups." },
+            { term: "FileVault", definition: "The native full-disk encryption feature built into macOS to protect data at rest." },
+            { term: "Keychain", definition: "The password management system built into macOS for securely storing passwords, certificates, and private keys." },
+            { term: "Disk Utility", definition: "A macOS utility used to format, partition, and repair storage drives." },
+            { term: "ps", definition: "Linux/macOS command to view a snapshot of the currently running processes." },
+            { term: "kill", definition: "Linux/macOS command used to terminate a running process, typically by its Process ID (PID)." },
+            { term: "ifconfig", definition: "A legacy Linux/macOS command (similar to `ipconfig`) used to view and configure network interface parameters." },
+            { term: "sudo", definition: "Superuser Do. A Linux/macOS command that allows a permitted user to execute a command as the superuser (root)." },
+
+            // Domain 2: Security (15 New)
+            { term: "Trojan", definition: "Malware disguised as legitimate software. It acts as a backdoor, allowing attackers to gain unauthorized access." },
+            { term: "Spyware", definition: "Malware that secretly monitors a user's activity and collects personal information (keystrokes, browsing habits) without consent." },
+            { term: "Rootkit", definition: "Malware designed to gain administrative-level control over a system while remaining hidden. Often targets the kernel." },
+            { term: "Worm", definition: "A standalone malware that replicates itself to spread to other computers, often using a computer network." },
+            { term: "Botnet", definition: "A network of compromised computers (zombies) controlled by a single attacker (bot-herder) to perform malicious tasks like DDoS attacks." },
+            { term: "Windows Defender Firewall", definition: "The host-based firewall built into Windows to protect a system by filtering inbound and outbound network traffic." },
+            { term: "ACL (Access Control List)", definition: "A list of rules that specifies which users or systems are granted or denied access to a resource." },
+            { term: "SSID Broadcast (Disabling)", definition: "A network security measure that prevents an access point from publicly advertising its name. (Security through obscurity)" },
+            { term: "MAC Filtering", definition: "A security method that controls which devices can connect to a network based on their physical hardware (MAC) address." },
+            { term: "RADIUS", definition: "A centralized authentication, authorization, and accounting (AAA) server used to manage network access (e.g., for WPA2-Enterprise)." },
+            { term: "PHI (Protected Health Information)", definition: "Any health-related information that can be linked to a specific individual. Regulated by HIPAA in the U.S." },
+            { term: "PCI DSS", definition: "Payment Card Industry Data Security Standard. A set of security standards for organizations that handle credit cards." },
+            { term: "GDPR", definition: "General Data Protection Regulation. A comprehensive data privacy law in the European Union (EU)." },
+            { term: "Mantrap / Access Control Vestibule", definition: "A physical security control with two sets of doors, where the first door must close before the second one can open." },
+            { term: "Biometrics", definition: "An authentication factor based on unique biological traits of an individual, such as a fingerprint, face, or iris scan." },
+
+            // Domain 3: Software Troubleshooting (10 New)
+            { term: "Mobile: Force Stop", definition: "An Android function used to terminate a non-responsive or problematic application." },
+            { term: "Mobile: Clear App Cache", definition: "Clears temporary files for an app, often fixing slowness or glitches without deleting user data." },
+            { term: "Mobile: Factory Reset", definition: "A last-resort troubleshooting step that erases all user data and settings, returning the device to its original state." },
+            { term: "Mobile: Airplane Mode", definition: "A setting that disables all wireless radios (Cellular, Wi-Fi, Bluetooth). Used to quickly reset network connections." },
+            { term: "System Restore", definition: "A Windows utility that allows a user to revert their computer's state (registry, system files) to a previous point in time." },
+            { term:An: "Windows Update", definition: "A service used to download and install patches for security vulnerabilities and software bugs in the Windows OS." },
+            { term: "Compatibility Mode", definition: "A Windows setting that allows an older application to run using the settings of a previous Windows version." },
+            { term: "macOS: Safe Boot", definition: "A diagnostic startup mode for macOS that performs a basic check of the startup disk and loads only essential kernel extensions." },
+            { term: "Linux: /var/log", definition: "The directory on a Linux system where system and application log files are typically stored, used for troubleshooting." },
+            { term: "Invalid Certificate Error", definition: "A browser error indicating a problem with a website's SSL/TLS certificate. Often caused by an incorrect system date/time." },
+
+            // Domain 4: Operational Procedures (10 New)
+            { term: "Active Listening", definition: "A communication technique that involves focusing fully on the speaker, avoiding interruption, and summarizing their problem." },
+            { term: "Avoiding Jargon", definition: "Communicating technical concepts to a non-technical user in simple, plain language they can understand." },
+            { term: "Setting Expectations", definition: "Clearly informing the user about the repair process, timeline, and potential costs to avoid misunderstandings." },
+            { term: "Chain of Custody", definition: "A formal, documented log of all handling and storage of evidence (like a hard drive) to ensure its integrity for legal use." },
+            { term: "Asset Tagging", definition: "The process of affixing a label with a unique identifier to a piece of company property for inventory management." },
+            { term: "Knowledge Base", definition: "A centralized repository of information and documentation used by a help desk to resolve common issues." },
+            { term: "SDS (Safety Data Sheet)", definition: "A document detailing the potential hazards and proper disposal procedures for a chemical substance (e.g., printer toner)." },
+            { term: "3-2-1 Rule", definition: "A backup strategy: Maintain **3** copies of your data, on **2** different media types, with **1** copy kept off-site." },
+            { term: "Off-site Storage", definition: "The practice of keeping a copy of backups at a separate physical location to protect against local disasters (fire, flood)." },
+            { term: "ESD (Electrostatic Discharge)", definition: "The sudden flow of electricity between two objects, which can permanently damage sensitive electronic components." }
         ];
 
         let currentCardIndex = 0;
@@ -204,7 +298,19 @@
         const cardBackEl = document.getElementById('card-back');
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
+        const shuffleBtn = document.getElementById('shuffle-btn'); // New button
         const progressIndicator = document.getElementById('progress-indicator');
+
+        // New function to shuffle the deck
+        function shuffleCards() {
+            // Fisher-Yates shuffle algorithm
+            for (let i = flashcardsData.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [flashcardsData[i], flashcardsData[j]] = [flashcardsData[j], flashcardsData[i]];
+            }
+            currentCardIndex = 0; // Reset to the first card
+            updateCard();
+        }
 
         function updateCard() {
             const card = flashcardsData[currentCardIndex];
@@ -241,9 +347,14 @@
                 updateCard();
             }
         });
+        
+        // New event listener for shuffle
+        shuffleBtn.addEventListener('click', shuffleCards);
 
-        // Initial Load
-        document.addEventListener('DOMContentLoaded', updateCard);
+        // Initial Load: Shuffle first, then show the first card
+        document.addEventListener('DOMContentLoaded', () => {
+            shuffleCards(); 
+        });
     </script>
 </body>
 </html>
